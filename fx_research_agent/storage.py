@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Any
 
 
-SCHEMA_VERSION = "FX_RESEARCH_AGENT_DB_V1"
+SCHEMA_VERSION = "FX_RESEARCH_AGENT_DB_V2"
 
 
 def canonical_json(value: Any) -> str:
@@ -63,6 +63,21 @@ def initialize(connection: sqlite3.Connection) -> None:
             created_at_utc TEXT NOT NULL
         );
 
+        CREATE TABLE IF NOT EXISTS campaign_events (
+            event_id TEXT PRIMARY KEY,
+            campaign_id TEXT NOT NULL,
+            state TEXT NOT NULL,
+            occurred_at_utc TEXT NOT NULL,
+            actor TEXT NOT NULL,
+            reason TEXT NOT NULL,
+            payload_hash TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            FOREIGN KEY (campaign_id) REFERENCES research_campaigns(campaign_id)
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_campaign_events_campaign_time
+            ON campaign_events(campaign_id, occurred_at_utc, event_id);
+
         CREATE TABLE IF NOT EXISTS experiment_specs (
             experiment_id TEXT PRIMARY KEY,
             hypothesis_id TEXT NOT NULL,
@@ -81,6 +96,15 @@ def initialize(connection: sqlite3.Connection) -> None:
             FOREIGN KEY (experiment_id) REFERENCES experiment_specs(experiment_id)
         );
 
+        CREATE TABLE IF NOT EXISTS experiment_controls (
+            control_id TEXT PRIMARY KEY,
+            experiment_id TEXT NOT NULL,
+            payload_hash TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            created_at_utc TEXT NOT NULL,
+            FOREIGN KEY (experiment_id) REFERENCES experiment_specs(experiment_id)
+        );
+
         CREATE TABLE IF NOT EXISTS findings (
             finding_id TEXT PRIMARY KEY,
             run_id TEXT NOT NULL,
@@ -91,6 +115,14 @@ def initialize(connection: sqlite3.Connection) -> None:
         );
 
         CREATE TABLE IF NOT EXISTS market_data_manifests (
+            manifest_id TEXT PRIMARY KEY,
+            payload_hash TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            registered_at_utc TEXT NOT NULL,
+            usable_for_testing INTEGER NOT NULL CHECK (usable_for_testing IN (0, 1))
+        );
+
+        CREATE TABLE IF NOT EXISTS evidence_manifests (
             manifest_id TEXT PRIMARY KEY,
             payload_hash TEXT NOT NULL,
             payload_json TEXT NOT NULL,

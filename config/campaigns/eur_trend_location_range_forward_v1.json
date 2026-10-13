@@ -1,0 +1,109 @@
+{
+  "schema": "FX_RESEARCH_CAMPAIGN_V1",
+  "campaign_id": "CAMPAIGN_EUR_TREND_LOCATION_RANGE_FORWARD_V1",
+  "hypothesis_id": "HYP_TREND_LOCATION_RANGE_V1_SHADOW_READY",
+  "created_at_utc": "2026-10-13T19:00:00Z",
+  "state": "DRAFT",
+  "title": "EUR/USD failed-auction trend, location, and room forward review",
+  "instrument": "EUR_USD",
+  "mechanism_class": "OBJECTIVE_LEVEL_FAILED_AUCTION_CONTEXT",
+  "research_question": "Do failed auctions with direction-aligned completed-daily trend and at least 2R of room to the next completed objective outperform the complementary forward population?",
+  "null_hypothesis": "The predeclared aligned-and-room slice has no positive net-R lift over its complementary forward population after costs.",
+  "required_data_classes": [
+    "COMPLETED_CANDLES",
+    "SPREAD_SAMPLES",
+    "OBJECTIVE_LEVELS",
+    "FORWARD_FAILED_AUCTION_EPISODES",
+    "FORWARD_RULE_BASELINE_OUTCOMES"
+  ],
+  "population": {
+    "source": "EUR_AGENT_FORWARD_ONLY",
+    "candidate_family": "FAILED_AUCTION_AT_OBJECTIVE_LEVEL",
+    "allowed_levels": [
+      "PRIOR_DAY_HIGH",
+      "PRIOR_DAY_LOW",
+      "ASIA_SESSION_HIGH",
+      "ASIA_SESSION_LOW",
+      "LONDON_SESSION_HIGH",
+      "LONDON_SESSION_LOW",
+      "NY_SESSION_HIGH",
+      "NY_SESSION_LOW"
+    ],
+    "timeframe": "M15",
+    "outcome_horizon_m15_bars": 16,
+    "entry_model": "NEXT_M15_OPEN_WITH_DECISION_SPREAD",
+    "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE"
+  },
+  "independence_unit": {
+    "unit": "FIRST_RULE_BASELINE_OUTCOME_PER_INDEPENDENT_LEVEL_EPISODE",
+    "multiple_arms_count_once": true,
+    "repeated_same_episode_candidates_count_once": true
+  },
+  "exact_specification": {
+    "daily_trend": {
+      "source": "LATEST_COMPLETED_DAILY_CANDLES_AVAILABLE_AT_DECISION",
+      "sma_period": 50,
+      "long_alignment": "LATEST_COMPLETED_DAILY_CLOSE_ABOVE_SMA50",
+      "short_alignment": "LATEST_COMPLETED_DAILY_CLOSE_BELOW_SMA50"
+    },
+    "daily_range": {
+      "atr_period": 14,
+      "trading_day_boundary": "17:00_AMERICA_NEW_YORK",
+      "intraday_source": "COMPLETED_M15_CANDLES",
+      "atr_consumption_is_descriptive_only": true
+    },
+    "structural_stop_estimate": {
+      "entry_estimate": "SIGNAL_CLOSE_DIAGNOSTIC_ONLY",
+      "buffer_pips": "MAX_0_5_OR_SPREAD_X_0_5_OR_M15_ATR_X_0_03",
+      "not_execution_geometry": true
+    },
+    "objective_room": {
+      "objective": "NEAREST_ALREADY_COMPLETED_OBJECTIVE_IN_CANDIDATE_DIRECTION",
+      "minimum_reward_room_r": 2.0
+    },
+    "treatment_slice": "DAILY_DIRECTION_ALIGNED_AND_REWARD_ROOM_GE_2R",
+    "comparator_slice": "ALL_OTHER_ELIGIBLE_INDEPENDENT_EPISODES"
+  },
+  "controls": [
+    {
+      "control_id": "COMPLEMENTARY_FORWARD_POPULATION",
+      "definition": "All eligible independent episodes outside the single predeclared treatment slice",
+      "post_selection_mutation_allowed": false
+    }
+  ],
+  "metrics": {
+    "primary": "AVERAGE_NET_R_LIFT_TREATMENT_MINUS_COMPARATOR",
+    "secondary": [
+      "TREATMENT_AVERAGE_NET_R",
+      "TREATMENT_MEDIAN_NET_R",
+      "TREATMENT_POSITIVE_NET_R_RATE",
+      "COMPARATOR_AVERAGE_NET_R",
+      "SAMPLE_COUNTS"
+    ],
+    "outcome_types_pooled": false
+  },
+  "review_gates": {
+    "minimum_resolved_independent_treatment_episodes": 30,
+    "minimum_resolved_independent_comparator_episodes": 30,
+    "treatment_average_net_r_must_be_positive": true,
+    "primary_lift_must_be_positive": true,
+    "review_is_not_promotion": true
+  },
+  "multiple_comparisons_policy": {
+    "confirmatory_slice_count": 1,
+    "only_confirmatory_slice": "DAILY_DIRECTION_ALIGNED_AND_REWARD_ROOM_GE_2R",
+    "all_other_breakdowns": "DESCRIPTIVE_ONLY",
+    "parameter_sweeps_allowed": false
+  },
+  "stopping_rules": {
+    "no_early_success_declaration": true,
+    "no_early_parameter_retuning": true,
+    "review_only_after_declared_sample_gates": true
+  },
+  "authority": {
+    "automatic_approval": false,
+    "automatic_execution": false,
+    "downstream_activation": false,
+    "order_authority": false
+  }
+}

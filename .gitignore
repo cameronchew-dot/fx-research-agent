@@ -8,6 +8,8 @@ data/*.json
 data/*.log
 data/inbox/*
 !data/inbox/.gitkeep
+data/evidence_inbox/*
+!data/evidence_inbox/.gitkeep
 reports/*
 !reports/.gitkeep
 

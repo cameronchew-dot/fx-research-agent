@@ -1,0 +1,40 @@
+{
+  "schema": "FX_RESEARCH_EVIDENCE_EXPORT_CONTRACT_V1",
+  "direction": "EUR_AGENT_TO_RESEARCH_AGENT_ONLY",
+  "immutable_manifests": true,
+  "required_manifest_fields": [
+    "manifest_id",
+    "schema",
+    "created_at_utc",
+    "source_system",
+    "instrument",
+    "window_start_utc",
+    "window_end_utc",
+    "payload_sha256",
+    "payload_path",
+    "freshness_status",
+    "gap_status"
+  ],
+  "allowed_data_classes": [
+    "OBJECTIVE_LEVELS",
+    "FORWARD_FAILED_AUCTION_EPISODES",
+    "FORWARD_RULE_BASELINE_OUTCOMES",
+    "TREND_LOCATION_RANGE_CONTEXT"
+  ],
+  "prohibited_fields": [
+    "account",
+    "balance",
+    "broker",
+    "credential",
+    "memory",
+    "order",
+    "position",
+    "prompt",
+    "provider",
+    "rationale",
+    "token",
+    "transaction"
+  ],
+  "stale_or_gapped_data_policy": "REGISTER_FOR_AUDIT_BUT_DO_NOT_TEST",
+  "outcome_policy": "RULE_BASELINE_ONLY_AND_OUTCOME_SOURCES_REMAIN_SEPARATE"
+}

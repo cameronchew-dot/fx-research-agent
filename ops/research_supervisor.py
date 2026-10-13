@@ -16,6 +16,17 @@ from fx_research_agent.market_data import (  # noqa: E402
     register_manifest,
     sync_market_exports,
 )
+from fx_research_agent.evidence import (  # noqa: E402
+    evidence_status,
+    register_manifest as register_evidence_manifest,
+    sync_evidence_exports,
+)
+from fx_research_agent.campaigns import (  # noqa: E402
+    approve_campaign,
+    campaign_data_readiness,
+    campaign_report,
+    register_campaign,
+)
 from fx_research_agent.registry import backlog, import_genesis, status  # noqa: E402
 from fx_research_agent.storage import connect  # noqa: E402
 
@@ -26,6 +37,12 @@ DEFAULT_MARKET_SOURCE = Path("/Users/camcam/eur_bot/exports/fx_research")
 DEFAULT_MARKET_INBOX = ROOT / "data" / "inbox"
 DEFAULT_MARKET_SYNC_STATUS = ROOT / "data" / "market_ingest_status.json"
 DEFAULT_MARKET_DATA_STATUS = ROOT / "data" / "market_data_status.json"
+DEFAULT_EVIDENCE_SOURCE = Path("/Users/camcam/eur_agent/exports/fx_research")
+DEFAULT_EVIDENCE_INBOX = ROOT / "data" / "evidence_inbox"
+DEFAULT_EVIDENCE_SYNC_STATUS = ROOT / "data" / "evidence_ingest_status.json"
+DEFAULT_EVIDENCE_STATUS = ROOT / "data" / "research_evidence_status.json"
+DEFAULT_CAMPAIGN = ROOT / "config" / "campaigns" / "eur_trend_location_range_forward_v1.json"
+DEFAULT_CAMPAIGN_STATUS = ROOT / "data" / "campaign_status.json"
 SOURCE_REPO = "https://github.com/cameronchew-dot/eur-usd-agent.git"
 SOURCE_COMMIT = "e168603"
 SOURCE_PATH = "config/research_hypothesis_registry.json"
@@ -58,6 +75,22 @@ def main() -> int:
     sync.add_argument("--source-dir", type=Path, default=DEFAULT_MARKET_SOURCE)
     sync.add_argument("--inbox-dir", type=Path, default=DEFAULT_MARKET_INBOX)
     commands.add_parser("market-data-status")
+    evidence = commands.add_parser("register-research-evidence")
+    evidence.add_argument("manifest", type=Path)
+    evidence_sync = commands.add_parser("sync-research-evidence")
+    evidence_sync.add_argument("--source-dir", type=Path, default=DEFAULT_EVIDENCE_SOURCE)
+    evidence_sync.add_argument("--inbox-dir", type=Path, default=DEFAULT_EVIDENCE_INBOX)
+    commands.add_parser("research-evidence-status")
+    campaign_register = commands.add_parser("register-campaign")
+    campaign_register.add_argument("path", nargs="?", type=Path, default=DEFAULT_CAMPAIGN)
+    campaign_approve = commands.add_parser("approve-campaign")
+    campaign_approve.add_argument("campaign_id")
+    campaign_approve.add_argument("--expected-payload-hash", required=True)
+    campaign_approve.add_argument("--approved-by", required=True)
+    campaign_approve.add_argument("--reason", required=True)
+    campaign_ready = commands.add_parser("campaign-readiness")
+    campaign_ready.add_argument("campaign_id")
+    commands.add_parser("campaign-status")
     args = parser.parse_args()
 
     with connect(args.db) as connection:
@@ -88,6 +121,36 @@ def main() -> int:
         elif args.command == "market-data-status":
             result = market_data_status(connection)
             write_json_atomic(DEFAULT_MARKET_DATA_STATUS, result)
+            print_json(result)
+        elif args.command == "register-research-evidence":
+            print_json(register_evidence_manifest(connection, args.manifest))
+        elif args.command == "sync-research-evidence":
+            result = sync_evidence_exports(connection, args.source_dir, args.inbox_dir)
+            quality = evidence_status(connection)
+            write_json_atomic(DEFAULT_EVIDENCE_SYNC_STATUS, result)
+            write_json_atomic(DEFAULT_EVIDENCE_STATUS, quality)
+            print_json({"sync": result, "quality": quality})
+        elif args.command == "research-evidence-status":
+            result = evidence_status(connection)
+            write_json_atomic(DEFAULT_EVIDENCE_STATUS, result)
+            print_json(result)
+        elif args.command == "register-campaign":
+            print_json(register_campaign(connection, args.path))
+        elif args.command == "approve-campaign":
+            print_json(
+                approve_campaign(
+                    connection,
+                    args.campaign_id,
+                    expected_payload_hash=args.expected_payload_hash,
+                    approved_by=args.approved_by,
+                    reason=args.reason,
+                )
+            )
+        elif args.command == "campaign-readiness":
+            print_json(campaign_data_readiness(connection, args.campaign_id))
+        elif args.command == "campaign-status":
+            result = campaign_report(connection)
+            write_json_atomic(DEFAULT_CAMPAIGN_STATUS, result)
             print_json(result)
     return 0
 

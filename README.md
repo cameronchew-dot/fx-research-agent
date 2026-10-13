@@ -28,6 +28,11 @@ python3 ops/research_supervisor.py status
 python3 ops/research_supervisor.py backlog
 python3 ops/research_supervisor.py sync-market-exports
 python3 ops/research_supervisor.py market-data-status
+python3 ops/research_supervisor.py sync-research-evidence
+python3 ops/research_supervisor.py research-evidence-status
+python3 ops/research_supervisor.py register-campaign
+python3 ops/research_supervisor.py campaign-readiness CAMPAIGN_EUR_TREND_LOCATION_RANGE_FORWARD_V1
+python3 ops/research_supervisor.py campaign-status
 ```
 
 No command in this repository can place a trade or change another repository's
@@ -40,4 +45,21 @@ ID conflicts, stale/gapped packages for testing, and any broker-account field.
 The installed one-shot launch agents run both sides every 15 minutes and write
 local operational status to `data/eur_research_market_export.json` in the bot
 and `data/market_ingest_status.json` plus `data/market_data_status.json` here.
+
+Forward agent evidence follows a separate one-way boundary. `eur_agent`
+exports only objective-level episode facts, locked trend/location/range context,
+and `RULE_BASELINE` outcomes. LLM prompts, rationales, memory, provider data,
+credentials, account state, and order state are rejected. Outcome sources remain
+separate. The exporter and importer run as short one-shot launch agents every
+15 minutes; `state = not running` with exit code 0 is normal between runs.
+
+Campaigns are immutable drafts first. Approval requires the exact displayed
+payload hash, a named human operator, and a reason. Approval seals the
+experiment specification and controls but still does not run the experiment or
+grant any downstream authority.
+
+The first campaign is registered as a draft under
+`config/campaigns/eur_trend_location_range_forward_v1.json`. Once both data
+feeds are healthy, its remaining blocker is deliberately human approval of the
+exact displayed payload hash. Approval still does not execute the experiment.
 
