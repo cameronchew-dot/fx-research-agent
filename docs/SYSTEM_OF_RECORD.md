@@ -36,6 +36,11 @@ tick-rate, quote-pressure/tick-imbalance proxies, regime features, macro
 context, and data-quality flags. It must not export broker-account or trading
 state.
 
+Forward packages are cursor-based deltas. The first operational package seeds a
+recent window; complete historical backfills are separate, predeclared research
+campaigns so scheduled ingestion does not duplicate large datasets or silently
+change an experiment's sample.
+
 ## Tape and CVD language
 
 EUR/USD is decentralized. OANDA provides one venue's prices and liquidity

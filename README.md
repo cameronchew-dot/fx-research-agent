@@ -26,8 +26,18 @@ python3 ops/research_supervisor.py init-db
 python3 ops/research_supervisor.py import-genesis
 python3 ops/research_supervisor.py status
 python3 ops/research_supervisor.py backlog
+python3 ops/research_supervisor.py sync-market-exports
+python3 ops/research_supervisor.py market-data-status
 ```
 
 No command in this repository can place a trade or change another repository's
 lifecycle state.
+
+The normal forward data path is incremental: `eur_bot` writes compressed,
+market-only packages under `exports/fx_research`, and this repository validates,
+copies, and registers them. The importer rejects checksum mismatches, immutable
+ID conflicts, stale/gapped packages for testing, and any broker-account field.
+The installed one-shot launch agents run both sides every 15 minutes and write
+local operational status to `data/eur_research_market_export.json` in the bot
+and `data/market_ingest_status.json` plus `data/market_data_status.json` here.
 

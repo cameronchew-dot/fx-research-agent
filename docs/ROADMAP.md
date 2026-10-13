@@ -6,6 +6,8 @@
 - Produce one consolidated backlog and status report.
 - Validate sanitized market-data manifests and reject sensitive fields.
 - Preserve source repository, commit, path, timestamps, and payload hashes.
+- Import compressed forward market-data deltas and report freshness, gaps, and
+  row counts without broker credentials.
 
 ## Phase 2: controlled research campaigns
 
