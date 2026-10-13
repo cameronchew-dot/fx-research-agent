@@ -21,6 +21,10 @@
 - Track every run, failure, control, and finding without overwriting history.
 - Keep the first locked campaign in draft until a human approves its exact hash;
   campaign approval remains separate from experiment execution.
+- Evaluate approved campaigns only on post-approval evidence, deduplicated by
+  independent episode and separated by outcome source.
+- Persist immutable run and finding records; sample completion permits human
+  review, never automatic promotion or downstream activation.
 
 ## Phase 3: token-efficient assistance
 

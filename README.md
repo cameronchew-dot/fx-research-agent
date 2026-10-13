@@ -33,6 +33,8 @@ python3 ops/research_supervisor.py research-evidence-status
 python3 ops/research_supervisor.py register-campaign
 python3 ops/research_supervisor.py campaign-readiness CAMPAIGN_EUR_TREND_LOCATION_RANGE_FORWARD_V1
 python3 ops/research_supervisor.py campaign-status
+python3 ops/research_supervisor.py run-campaign CAMPAIGN_EUR_TREND_LOCATION_RANGE_FORWARD_V1
+python3 ops/research_supervisor.py experiment-status CAMPAIGN_EUR_TREND_LOCATION_RANGE_FORWARD_V1
 ```
 
 No command in this repository can place a trade or change another repository's
@@ -57,6 +59,15 @@ Campaigns are immutable drafts first. Approval requires the exact displayed
 payload hash, a named human operator, and a reason. Approval seals the
 experiment specification and controls but still does not run the experiment or
 grant any downstream authority.
+
+The experiment runner fails closed unless the campaign is approved and all
+required data classes are available. Confirmatory evidence begins strictly
+after the human approval timestamp, so previously observed outcomes can test
+plumbing but cannot count toward the result. It keeps abstention
+counterfactuals and shadow actions in separate cohorts, takes only the first
+eligible baseline outcome per independent episode, and records immutable runs
+and findings. Reaching a sample gate produces a human-review state only; it
+cannot promote a hypothesis or affect a trading system.
 
 The first campaign is registered as a draft under
 `config/campaigns/eur_trend_location_range_forward_v1.json`. Once both data

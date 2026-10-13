@@ -27,6 +27,7 @@ from fx_research_agent.campaigns import (  # noqa: E402
     campaign_report,
     register_campaign,
 )
+from fx_research_agent.experiments import experiment_report, run_campaign  # noqa: E402
 from fx_research_agent.registry import backlog, import_genesis, status  # noqa: E402
 from fx_research_agent.storage import connect  # noqa: E402
 
@@ -91,6 +92,10 @@ def main() -> int:
     campaign_ready = commands.add_parser("campaign-readiness")
     campaign_ready.add_argument("campaign_id")
     commands.add_parser("campaign-status")
+    campaign_run = commands.add_parser("run-campaign")
+    campaign_run.add_argument("campaign_id")
+    campaign_results = commands.add_parser("experiment-status")
+    campaign_results.add_argument("campaign_id")
     args = parser.parse_args()
 
     with connect(args.db) as connection:
@@ -152,6 +157,10 @@ def main() -> int:
             result = campaign_report(connection)
             write_json_atomic(DEFAULT_CAMPAIGN_STATUS, result)
             print_json(result)
+        elif args.command == "run-campaign":
+            print_json(run_campaign(connection, args.campaign_id, DEFAULT_EVIDENCE_INBOX))
+        elif args.command == "experiment-status":
+            print_json(experiment_report(connection, args.campaign_id))
     return 0
 
 

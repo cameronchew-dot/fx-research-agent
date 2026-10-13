@@ -118,6 +118,11 @@ def validate_manifest(manifest_path: Path) -> dict[str, Any]:
     return manifest
 
 
+def load_validated_package(manifest_path: Path) -> tuple[dict[str, Any], dict[str, Any]]:
+    manifest = validate_manifest(manifest_path)
+    return manifest, _read_payload(resolve_payload_path(manifest_path, manifest))
+
+
 def register_manifest(connection, manifest_path: Path) -> dict[str, Any]:
     manifest = validate_manifest(manifest_path)
     usable = manifest["freshness_status"] == "FRESH" and manifest["gap_status"] == "COMPLETE"
