@@ -159,7 +159,8 @@ def build_evaluation(
     approval_time = str(experiment["approved_at_utc"])
     evidence = _load_evidence(connection, inbox_dir, campaign["instrument"])
     snapshot_end = evidence["snapshot_end_utc"] or requested_evaluation_time
-    evaluated_at = min(requested_evaluation_time, snapshot_end)
+    evidence_cutoff = min(requested_evaluation_time, snapshot_end)
+    evaluated_at = max(approval_time, evidence_cutoff)
 
     outcome_by_candidate: dict[str, list[dict[str, Any]]] = {}
     for outcome in evidence["outcomes"].values():
@@ -173,7 +174,7 @@ def build_evaluation(
             outcome_by_candidate.get(candidate_id, []),
             key=lambda value: (str(value.get("observed_at_utc") or ""), str(value.get("outcome_id") or "")),
         ):
-            built = _eligible_row(candidate, context, outcome, campaign, approval_time, evaluated_at)
+            built = _eligible_row(candidate, context, outcome, campaign, approval_time, evidence_cutoff)
             if built is not None:
                 eligible.append(built)
                 break
@@ -219,6 +220,7 @@ def build_evaluation(
         "campaign_payload_hash": experiment["campaign_payload_hash"],
         "predeclared_at_utc": approval_time,
         "evaluated_at_utc": evaluated_at,
+        "evidence_cutoff_utc": evidence_cutoff,
         "confirmatory_cutover_policy": "CANDIDATE_DECISION_TIME_STRICTLY_AFTER_HUMAN_APPROVAL",
         "legacy_preapproval_evidence_excluded": True,
         "evidence_manifest_ids": evidence["manifest_ids"],

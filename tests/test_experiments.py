@@ -152,6 +152,7 @@ class ExperimentTests(unittest.TestCase):
         self.assertFalse(second["inserted"])
         self.assertEqual(first["independent_episode_count"], 3)
         self.assertFalse(first["outcome_sources_pooled"])
+        self.assertEqual(first["evidence_cutoff_utc"], "2026-10-13T10:00:00Z")
         reports = {row["outcome_source"]: row for row in first["source_reports"]}
         counterfactual = reports["FORWARD_ABSTENTION_COUNTERFACTUAL"]
         self.assertEqual(counterfactual["treatment"]["independent_episode_count"], 1)
@@ -159,6 +160,29 @@ class ExperimentTests(unittest.TestCase):
         self.assertEqual(counterfactual["average_net_r_lift"], 2.0)
         self.assertTrue(counterfactual["sample_gates_met"])
         self.assertEqual(reports["FORWARD_SHADOW_ACTION"]["treatment"]["independent_episode_count"], 1)
+
+    def test_preapproval_snapshot_records_distinct_evidence_cutoff(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            registered = register_campaign(self.connection, self._campaign(root)[0])
+            approve_campaign(
+                self.connection,
+                "CAMPAIGN_1",
+                expected_payload_hash=registered["campaign_payload_hash"],
+                approved_by="CAMERON",
+                reason="Exact specification reviewed",
+                approved_at_utc="2026-10-13T11:00:00Z",
+            )
+            self._evidence(root)
+            result = run_campaign(
+                self.connection,
+                "CAMPAIGN_1",
+                root,
+                evaluated_at_utc="2026-10-13T12:00:00Z",
+            )
+        self.assertEqual(result["evidence_cutoff_utc"], "2026-10-13T10:00:00Z")
+        self.assertEqual(result["evaluated_at_utc"], "2026-10-13T11:00:00Z")
+        self.assertEqual(result["independent_episode_count"], 0)
 
 
 if __name__ == "__main__":
