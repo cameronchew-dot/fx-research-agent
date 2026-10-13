@@ -1,0 +1,21 @@
+{
+  "schema": "FX_RESEARCH_AGENT_CONTRACT_V1",
+  "canonical_hypothesis_store": true,
+  "automatic_hypothesis_proposal_allowed": false,
+  "automatic_experiment_execution_allowed": false,
+  "automatic_downstream_activation_allowed": false,
+  "broker_credentials_allowed": false,
+  "order_code_allowed": false,
+  "human_review_required_for_downstream_export": true,
+  "allowed_hypothesis_states": [
+    "PROPOSED",
+    "PREDECLARED",
+    "TESTING",
+    "SHADOW_READY",
+    "SUPPORTED",
+    "REJECTED",
+    "PARKED",
+    "SUPERSEDED"
+  ]
+}
+

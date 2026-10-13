@@ -1,0 +1,42 @@
+{
+  "schema": "FX_MARKET_DATA_EXPORT_CONTRACT_V1",
+  "direction": "COLLECTOR_TO_RESEARCH_AGENT_ONLY",
+  "immutable_manifests": true,
+  "required_manifest_fields": [
+    "manifest_id",
+    "schema",
+    "created_at_utc",
+    "source_system",
+    "instrument",
+    "window_start_utc",
+    "window_end_utc",
+    "payload_sha256",
+    "payload_path",
+    "freshness_status",
+    "gap_status"
+  ],
+  "allowed_data_classes": [
+    "COMPLETED_CANDLES",
+    "BID_ASK_SNAPSHOTS",
+    "SPREAD_SAMPLES",
+    "TICK_RATE",
+    "OANDA_QUOTE_PRESSURE_PROXY",
+    "OANDA_TICK_IMBALANCE_PROXY",
+    "REGIME_FEATURES",
+    "MACRO_CONTEXT",
+    "DATA_QUALITY_FLAGS"
+  ],
+  "prohibited_fields": [
+    "account_id",
+    "account_name",
+    "balance",
+    "credentials",
+    "order",
+    "position",
+    "token",
+    "transaction"
+  ],
+  "stale_or_gapped_data_policy": "REGISTER_FOR_AUDIT_BUT_DO_NOT_TEST",
+  "cvd_disclosure": "VENUE_SPECIFIC_PROXY_NOT_CENTRALIZED_FX_VOLUME"
+}
+
