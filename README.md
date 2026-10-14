@@ -35,6 +35,15 @@ python3 ops/research_supervisor.py campaign-readiness CAMPAIGN_EUR_TREND_LOCATIO
 python3 ops/research_supervisor.py campaign-status
 python3 ops/research_supervisor.py run-campaign CAMPAIGN_EUR_TREND_LOCATION_RANGE_FORWARD_V1
 python3 ops/research_supervisor.py experiment-status CAMPAIGN_EUR_TREND_LOCATION_RANGE_FORWARD_V1
+python3 ops/research_supervisor.py register-autonomy-policy
+python3 ops/research_supervisor.py register-batch
+python3 ops/research_supervisor.py automation-status
+python3 ops/research_supervisor.py batch-status
+python3 ops/research_supervisor.py add-campaign-to-batch BATCH_ID CAMPAIGN_ID --added-by CAMERON --reason "Reviewed"
+python3 ops/research_supervisor.py refresh-approved-campaigns --trigger MANUAL
+python3 ops/research_supervisor.py proposal-cycle
+python3 ops/research_supervisor.py proposal-status
+python3 ops/research_supervisor.py review-hypothesis HYPOTHESIS_ID --decision REJECT --reviewed-by CAMERON --reason "Reviewed"
 ```
 
 No command in this repository can place a trade or change another repository's
@@ -69,8 +78,29 @@ eligible baseline outcome per independent episode, and records immutable runs
 and findings. Reaching a sample gate produces a human-review state only; it
 cannot promote a hypothesis or affect a trading system.
 
-The first campaign is registered as a draft under
-`config/campaigns/eur_trend_location_range_forward_v1.json`. Once both data
-feeds are healthy, its remaining blocker is deliberately human approval of the
-exact displayed payload hash. Approval still does not execute the experiment.
+The first campaign is defined under
+`config/campaigns/eur_trend_location_range_forward_v1.json`, explicitly
+approved, and accruing only evidence observed after its approval timestamp.
+It cannot promote itself or affect a downstream system.
+
+## Governed autonomy
+
+The automation policy permits at most three concurrent campaigns. Evidence
+ingestion checks whether a predeclared sample gate has just been crossed, and a
+daily local job refreshes all approved evaluations at 17:00. Repeated ingests
+with no new immutable evidence manifest skip evaluation work.
+
+Once per week while the FX market is closed, a bounded Anthropic Sonnet call
+may draft at most three hypotheses. It receives the registry, available data
+classes, and sealed campaign specifications, but never findings, net R, or
+hidden holdouts. Deterministic filters reject duplicates and proposals that
+need unavailable data. Survivors enter only `PROPOSED`; they cannot create a
+campaign, approve themselves, export downstream, or place an order.
+The proposer also pauses without making a provider call whenever three
+machine-authored proposals are already awaiting human review.
+
+Copy `.env.example` to `.env` and set `FX_RESEARCH_ANTHROPIC_API_KEY` before
+enabling the optional weekly proposal job. This credential is kept separate
+from the EUR trading agent. All routine ingestion and evaluation remains
+model-free and consumes no provider tokens.
 

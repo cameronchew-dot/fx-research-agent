@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Any
 
 
-SCHEMA_VERSION = "FX_RESEARCH_AGENT_DB_V2"
+SCHEMA_VERSION = "FX_RESEARCH_AGENT_DB_V3"
 
 
 def canonical_json(value: Any) -> str:
@@ -128,6 +128,58 @@ def initialize(connection: sqlite3.Connection) -> None:
             payload_json TEXT NOT NULL,
             registered_at_utc TEXT NOT NULL,
             usable_for_testing INTEGER NOT NULL CHECK (usable_for_testing IN (0, 1))
+        );
+
+        CREATE TABLE IF NOT EXISTS autonomy_policies (
+            policy_id TEXT PRIMARY KEY,
+            payload_hash TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            registered_at_utc TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS research_batches (
+            batch_id TEXT PRIMARY KEY,
+            payload_hash TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            created_at_utc TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS batch_campaigns (
+            membership_id TEXT PRIMARY KEY,
+            batch_id TEXT NOT NULL,
+            campaign_id TEXT NOT NULL,
+            payload_hash TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            added_at_utc TEXT NOT NULL,
+            UNIQUE(batch_id, campaign_id),
+            FOREIGN KEY (batch_id) REFERENCES research_batches(batch_id),
+            FOREIGN KEY (campaign_id) REFERENCES research_campaigns(campaign_id)
+        );
+
+        CREATE TABLE IF NOT EXISTS campaign_progress_snapshots (
+            snapshot_id TEXT PRIMARY KEY,
+            campaign_id TEXT NOT NULL,
+            payload_hash TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            observed_at_utc TEXT NOT NULL,
+            FOREIGN KEY (campaign_id) REFERENCES research_campaigns(campaign_id)
+        );
+
+        CREATE TABLE IF NOT EXISTS proposal_runs (
+            proposal_run_id TEXT PRIMARY KEY,
+            payload_hash TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            created_at_utc TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS proposal_candidates (
+            proposal_id TEXT PRIMARY KEY,
+            proposal_run_id TEXT NOT NULL,
+            payload_hash TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            filter_status TEXT NOT NULL,
+            created_at_utc TEXT NOT NULL,
+            FOREIGN KEY (proposal_run_id) REFERENCES proposal_runs(proposal_run_id)
         );
 
         CREATE TABLE IF NOT EXISTS downstream_exports (

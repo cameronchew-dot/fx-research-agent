@@ -87,6 +87,75 @@ def backlog(connection) -> list[dict[str, Any]]:
     return [json.loads(row["payload_json"]) for row in rows]
 
 
+def hypothesis_state(connection, hypothesis_id: str) -> str | None:
+    row = connection.execute(
+        "SELECT state FROM hypothesis_events WHERE hypothesis_id=? "
+        "ORDER BY occurred_at_utc DESC, event_id DESC LIMIT 1",
+        (hypothesis_id,),
+    ).fetchone()
+    return str(row["state"]) if row else None
+
+
+def review_hypothesis(
+    connection,
+    hypothesis_id: str,
+    *,
+    decision: str,
+    reviewed_by: str,
+    reason: str,
+    reviewed_at_utc: str | None = None,
+) -> dict[str, Any]:
+    if connection.execute(
+        "SELECT 1 FROM hypotheses WHERE hypothesis_id=?", (hypothesis_id,)
+    ).fetchone() is None:
+        raise ValueError("unknown hypothesis")
+    if hypothesis_state(connection, hypothesis_id) != "PROPOSED":
+        raise ValueError("human review requires a PROPOSED hypothesis")
+    if not reviewed_by.strip() or reviewed_by.upper() in {"SYSTEM", "AGENT", "AUTOMATION"}:
+        raise ValueError("hypothesis review requires a named human")
+    if not reason.strip():
+        raise ValueError("hypothesis review requires a reason")
+    state_by_decision = {
+        "APPROVE_FOR_CAMPAIGN_DRAFT": "REVIEWED_FOR_CAMPAIGN_DRAFT",
+        "REJECT": "REJECTED",
+        "SUPERSEDE": "SUPERSEDED",
+    }
+    if decision not in state_by_decision:
+        raise ValueError("unsupported hypothesis review decision")
+    occurred_at = reviewed_at_utc or utc_now()
+    state = state_by_decision[decision]
+    event = {
+        "event_type": "HUMAN_HYPOTHESIS_REVIEW",
+        "hypothesis_id": hypothesis_id,
+        "decision": decision,
+        "state": state,
+        "reviewed_by": reviewed_by,
+        "reason": reason,
+    }
+    event_id = f"{hypothesis_id}:{state}:{payload_hash(event)[:12]}"
+    insert_immutable(
+        connection,
+        "hypothesis_events",
+        "event_id",
+        event_id,
+        event,
+        {
+            "hypothesis_id": hypothesis_id,
+            "state": state,
+            "occurred_at_utc": occurred_at,
+            "actor": reviewed_by,
+            "reason": reason,
+        },
+    )
+    return {
+        "hypothesis_id": hypothesis_id,
+        "state": state,
+        "campaign_created": False,
+        "campaign_approved": False,
+        "order_authority": False,
+    }
+
+
 def status(connection) -> dict[str, Any]:
     state_rows = connection.execute(
         """

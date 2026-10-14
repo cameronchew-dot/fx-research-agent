@@ -1,0 +1,42 @@
+{
+  "schema": "FX_RESEARCH_AUTONOMY_POLICY_V1",
+  "policy_id": "FX_RESEARCH_AUTONOMY_POLICY_V2",
+  "registered_at_utc": "2026-10-14T01:20:00Z",
+  "objective": "Propose falsifiable, cost-aware FX hypotheses that can add independent qualified opportunities without weakening validation standards.",
+  "campaign_slot_limit": 3,
+  "daily_evaluation_local_hour": 17,
+  "daily_evaluation_local_minute": 0,
+  "threshold_refresh_enabled": true,
+  "proposal_cadence": "WEEKLY_MARKET_CLOSED",
+  "weekly_proposal_local_weekday": 7,
+  "weekly_proposal_local_hour": 10,
+  "weekly_proposal_local_minute": 0,
+  "maximum_proposals_per_cycle": 3,
+  "maximum_pending_machine_proposals": 3,
+  "provider": "ANTHROPIC",
+  "model": "claude-sonnet-5-5",
+  "endpoint": "https://api.anthropic.com/v1/messages",
+  "prompt_version": "FX_RESEARCH_PROPOSER_V1",
+  "temperature": 0.2,
+  "seed": 20261013,
+  "maximum_output_tokens": 1800,
+  "duplicate_statement_jaccard_threshold": 0.65,
+  "maximum_active_campaigns_per_mechanism_class": 1,
+  "proposal_input_policy": {
+    "include_registry": true,
+    "include_available_data_classes": true,
+    "include_campaign_specifications": true,
+    "include_rejected_hypotheses": true,
+    "include_findings": false,
+    "include_net_r": false,
+    "include_hidden_holdouts": false
+  },
+  "authority": {
+    "automatic_hypothesis_proposal": true,
+    "automatic_campaign_creation": false,
+    "automatic_campaign_approval": false,
+    "automatic_policy_change": false,
+    "automatic_downstream_export": false,
+    "order_authority": false
+  }
+}

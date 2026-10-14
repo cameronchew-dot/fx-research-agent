@@ -28,7 +28,18 @@ from fx_research_agent.campaigns import (  # noqa: E402
     register_campaign,
 )
 from fx_research_agent.experiments import experiment_report, run_campaign  # noqa: E402
-from fx_research_agent.registry import backlog, import_genesis, status  # noqa: E402
+from fx_research_agent.automation import (  # noqa: E402
+    automation_status,
+    refresh_approved_campaigns,
+    register_policy,
+)
+from fx_research_agent.batches import add_campaign_to_batch, batch_report, register_batch  # noqa: E402
+from fx_research_agent.proposals import (  # noqa: E402
+    load_local_env,
+    proposal_status,
+    run_proposal_cycle,
+)
+from fx_research_agent.registry import backlog, import_genesis, review_hypothesis, status  # noqa: E402
 from fx_research_agent.storage import connect  # noqa: E402
 
 
@@ -44,6 +55,10 @@ DEFAULT_EVIDENCE_SYNC_STATUS = ROOT / "data" / "evidence_ingest_status.json"
 DEFAULT_EVIDENCE_STATUS = ROOT / "data" / "research_evidence_status.json"
 DEFAULT_CAMPAIGN = ROOT / "config" / "campaigns" / "eur_trend_location_range_forward_v1.json"
 DEFAULT_CAMPAIGN_STATUS = ROOT / "data" / "campaign_status.json"
+DEFAULT_AUTONOMY_POLICY = ROOT / "config" / "autonomy_policy.json"
+DEFAULT_BATCH = ROOT / "config" / "batches" / "eur_forward_batch_v1.json"
+DEFAULT_AUTOMATION_STATUS = ROOT / "data" / "automation_status.json"
+DEFAULT_PROPOSAL_STATUS = ROOT / "data" / "proposal_status.json"
 SOURCE_REPO = "https://github.com/cameronchew-dot/eur-usd-agent.git"
 SOURCE_COMMIT = "e168603"
 SOURCE_PATH = "config/research_hypothesis_registry.json"
@@ -63,6 +78,7 @@ def write_json_atomic(path: Path, payload) -> None:
 
 
 def main() -> int:
+    load_local_env(ROOT / ".env")
     parser = argparse.ArgumentParser(description="FX research system-of-record supervisor")
     parser.add_argument("--db", type=Path, default=DEFAULT_DB)
     commands = parser.add_subparsers(dest="command", required=True)
@@ -96,6 +112,34 @@ def main() -> int:
     campaign_run.add_argument("campaign_id")
     campaign_results = commands.add_parser("experiment-status")
     campaign_results.add_argument("campaign_id")
+    policy_register = commands.add_parser("register-autonomy-policy")
+    policy_register.add_argument("path", nargs="?", type=Path, default=DEFAULT_AUTONOMY_POLICY)
+    commands.add_parser("automation-status")
+    batch_register = commands.add_parser("register-batch")
+    batch_register.add_argument("path", nargs="?", type=Path, default=DEFAULT_BATCH)
+    commands.add_parser("batch-status")
+    batch_add = commands.add_parser("add-campaign-to-batch")
+    batch_add.add_argument("batch_id")
+    batch_add.add_argument("campaign_id")
+    batch_add.add_argument("--added-by", required=True)
+    batch_add.add_argument("--reason", required=True)
+    refresh = commands.add_parser("refresh-approved-campaigns")
+    refresh.add_argument(
+        "--trigger",
+        choices=("DAILY_SCHEDULE", "EVIDENCE_SYNC_THRESHOLD_CHECK", "MANUAL"),
+        default="MANUAL",
+    )
+    commands.add_parser("proposal-cycle")
+    commands.add_parser("proposal-status")
+    review = commands.add_parser("review-hypothesis")
+    review.add_argument("hypothesis_id")
+    review.add_argument(
+        "--decision",
+        choices=("APPROVE_FOR_CAMPAIGN_DRAFT", "REJECT", "SUPERSEDE"),
+        required=True,
+    )
+    review.add_argument("--reviewed-by", required=True)
+    review.add_argument("--reason", required=True)
     args = parser.parse_args()
 
     with connect(args.db) as connection:
@@ -132,9 +176,16 @@ def main() -> int:
         elif args.command == "sync-research-evidence":
             result = sync_evidence_exports(connection, args.source_dir, args.inbox_dir)
             quality = evidence_status(connection)
+            threshold_refresh = None
+            if connection.execute("SELECT COUNT(*) AS n FROM autonomy_policies").fetchone()["n"]:
+                threshold_refresh = refresh_approved_campaigns(
+                    connection,
+                    args.inbox_dir,
+                    trigger="EVIDENCE_SYNC_THRESHOLD_CHECK",
+                )
             write_json_atomic(DEFAULT_EVIDENCE_SYNC_STATUS, result)
             write_json_atomic(DEFAULT_EVIDENCE_STATUS, quality)
-            print_json({"sync": result, "quality": quality})
+            print_json({"sync": result, "quality": quality, "threshold_refresh": threshold_refresh})
         elif args.command == "research-evidence-status":
             result = evidence_status(connection)
             write_json_atomic(DEFAULT_EVIDENCE_STATUS, result)
@@ -161,6 +212,52 @@ def main() -> int:
             print_json(run_campaign(connection, args.campaign_id, DEFAULT_EVIDENCE_INBOX))
         elif args.command == "experiment-status":
             print_json(experiment_report(connection, args.campaign_id))
+        elif args.command == "register-autonomy-policy":
+            print_json(register_policy(connection, args.path))
+        elif args.command == "automation-status":
+            result = automation_status(connection)
+            write_json_atomic(DEFAULT_AUTOMATION_STATUS, result)
+            print_json(result)
+        elif args.command == "register-batch":
+            print_json(register_batch(connection, args.path))
+        elif args.command == "batch-status":
+            print_json(batch_report(connection))
+        elif args.command == "add-campaign-to-batch":
+            print_json(
+                add_campaign_to_batch(
+                    connection,
+                    args.batch_id,
+                    args.campaign_id,
+                    added_by=args.added_by,
+                    reason=args.reason,
+                )
+            )
+        elif args.command == "refresh-approved-campaigns":
+            print_json(
+                refresh_approved_campaigns(
+                    connection,
+                    DEFAULT_EVIDENCE_INBOX,
+                    trigger=args.trigger,
+                )
+            )
+        elif args.command == "proposal-cycle":
+            result = run_proposal_cycle(connection)
+            write_json_atomic(DEFAULT_PROPOSAL_STATUS, proposal_status(connection))
+            print_json(result)
+        elif args.command == "proposal-status":
+            result = proposal_status(connection)
+            write_json_atomic(DEFAULT_PROPOSAL_STATUS, result)
+            print_json(result)
+        elif args.command == "review-hypothesis":
+            print_json(
+                review_hypothesis(
+                    connection,
+                    args.hypothesis_id,
+                    decision=args.decision,
+                    reviewed_by=args.reviewed_by,
+                    reason=args.reason,
+                )
+            )
     return 0
 
 

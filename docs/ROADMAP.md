@@ -29,7 +29,14 @@
 ## Phase 3: token-efficient assistance
 
 - Use deterministic screening to find data gaps, near-misses, and unanswered questions.
-- Permit an LLM to draft proposals only into `PROPOSED` state.
+- Run approved deterministic evaluations daily and immediately when a sealed
+  sample threshold is first crossed.
+- Cap the active confirmatory batch at three campaigns and apply its locked
+  Holm-Bonferroni familywise-error policy.
+- Permit one bounded weekly Anthropic proposal cycle to draft no more than
+  three proposals, only into `PROPOSED` state.
+- Keep proposal context blind to findings, net R, and hidden holdouts; reject
+  duplicate and unavailable-data proposals deterministically.
 - Require human approval before predeclaration or experiment execution.
 - Record model, prompt, input hashes, token use, and proposal lineage.
 

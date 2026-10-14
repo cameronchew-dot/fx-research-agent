@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.camcam.fx-research-agent.daily-evaluation</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Library/Frameworks/Python.framework/Versions/3.14/bin/python3</string>
+    <string>/Users/camcam/fx_research_agent/ops/research_supervisor.py</string>
+    <string>refresh-approved-campaigns</string>
+    <string>--trigger</string>
+    <string>DAILY_SCHEDULE</string>
+  </array>
+  <key>WorkingDirectory</key><string>/Users/camcam/fx_research_agent</string>
+  <key>StartCalendarInterval</key>
+  <dict><key>Hour</key><integer>17</integer><key>Minute</key><integer>0</integer></dict>
+  <key>StandardOutPath</key><string>/Users/camcam/fx_research_agent/data/daily_evaluation.log</string>
+  <key>StandardErrorPath</key><string>/Users/camcam/fx_research_agent/data/daily_evaluation.stderr.log</string>
+</dict>
+</plist>
