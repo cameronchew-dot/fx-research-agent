@@ -105,6 +105,7 @@ def refresh_approved_campaigns(
     connection,
     evidence_inbox: Path,
     *,
+    market_inbox: Path | None = None,
     trigger: str,
     observed_at_utc: str | None = None,
 ) -> dict[str, Any]:
@@ -149,6 +150,7 @@ def refresh_approved_campaigns(
             connection,
             campaign_id,
             evidence_inbox,
+            market_inbox_dir=market_inbox,
             evaluated_at_utc=observed_at,
         )
         gate_reached = any(report["sample_gates_met"] for report in evaluation["source_reports"])
@@ -157,6 +159,7 @@ def refresh_approved_campaigns(
             "campaign_id": campaign_id,
             "predeclared_at_utc": evaluation["predeclared_at_utc"],
             "evidence_manifest_ids": evaluation["evidence_manifest_ids"],
+            "market_data_manifest_ids": evaluation["market_data_manifest_ids"],
         }
         snapshot = {
             "schema": "FX_RESEARCH_CAMPAIGN_PROGRESS_V1",
@@ -166,6 +169,7 @@ def refresh_approved_campaigns(
             "evidence_cutoff_utc": evaluation["evidence_cutoff_utc"],
             "predeclared_at_utc": evaluation["predeclared_at_utc"],
             "evidence_manifest_ids": evaluation["evidence_manifest_ids"],
+            "market_data_manifest_ids": evaluation["market_data_manifest_ids"],
             "independent_episode_count": evaluation["independent_episode_count"],
             "source_reports": evaluation["source_reports"],
             "sample_gate_reached": gate_reached,
@@ -181,7 +185,17 @@ def refresh_approved_campaigns(
         )
         threshold_crossed = gate_reached and not previous_gate_reached
         should_evaluate = trigger in {"DAILY_SCHEDULE", "MANUAL"} or threshold_crossed
-        run = run_campaign(connection, campaign_id, evidence_inbox, evaluated_at_utc=observed_at) if should_evaluate else None
+        run = (
+            run_campaign(
+                connection,
+                campaign_id,
+                evidence_inbox,
+                market_inbox_dir=market_inbox,
+                evaluated_at_utc=observed_at,
+            )
+            if should_evaluate
+            else None
+        )
         campaigns.append(
             {
                 "campaign_id": campaign_id,

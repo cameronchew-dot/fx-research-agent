@@ -1,5 +1,11 @@
 # Roadmap
 
+## Operations
+
+- Low-noise Discord notifications cover sample-gate crossings, ingest failures,
+  and machine proposals awaiting review. They stay inert until the dedicated
+  webhook variable is configured locally.
+
 ## Phase 1: system of record
 
 - Import the seven EUR agent hypotheses as immutable genesis history.
@@ -19,8 +25,9 @@
 - Lock exact hypotheses, geometry, controls, holdouts, and stopping rules before testing.
 - Import completed-candle and market-proxy exports from the credentialed collector.
 - Track every run, failure, control, and finding without overwriting history.
-- Keep the first locked campaign in draft until a human approves its exact hash;
-  campaign approval remains separate from experiment execution.
+- Maintain the three exact-hash-approved EUR/USD campaigns as one fixed
+  confirmatory batch: trend/location/room, spread/liquidity degradation, and
+  first-touch versus repeat-touch degradation.
 - Evaluate approved campaigns only on post-approval evidence, deduplicated by
   independent episode and separated by outcome source.
 - Persist immutable run and finding records; sample completion permits human

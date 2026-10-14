@@ -46,6 +46,19 @@ python3 ops/research_supervisor.py proposal-status
 python3 ops/research_supervisor.py review-hypothesis HYPOTHESIS_ID --decision REJECT --reviewed-by CAMERON --reason "Reviewed"
 ```
 
+## Low-noise research alerts
+
+Set `FX_RESEARCH_DISCORD_WEBHOOK_URL` in the local `.env` to receive alerts only
+when an approved campaign crosses its predeclared sample gate, an ingest fails,
+or a machine proposal passes deterministic filters and needs human review.
+Routine syncs and evaluations stay silent. Successful deliveries are recorded
+once in SQLite, so scheduler reruns cannot repeat the same alert. Delivery
+failures do not stop research jobs, and notifications grant no authority.
+
+```bash
+python3 ops/research_supervisor.py notification-status
+```
+
 No command in this repository can place a trade or change another repository's
 lifecycle state.
 
@@ -78,10 +91,16 @@ eligible baseline outcome per independent episode, and records immutable runs
 and findings. Reaching a sample gate produces a human-review state only; it
 cannot promote a hypothesis or affect a trading system.
 
-The first campaign is defined under
-`config/campaigns/eur_trend_location_range_forward_v1.json`, explicitly
-approved, and accruing only evidence observed after its approval timestamp.
-It cannot promote itself or affect a downstream system.
+The governed EUR/USD batch now contains three explicitly approved campaigns,
+each accruing only evidence observed after its own approval timestamp:
+
+- trend alignment, objective location, and reward room;
+- decision spread relative to the prior 96 completed M15 bars; and
+- first-touch versus repeat-touch objective-level history.
+
+The exact specifications live under `config/campaigns/`. The batch is capped at
+three and uses its locked Holm-Bonferroni familywise-error policy. None of the
+campaigns can promote itself or affect a downstream system.
 
 ## Governed autonomy
 

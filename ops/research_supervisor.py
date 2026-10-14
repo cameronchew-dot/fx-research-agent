@@ -41,6 +41,12 @@ from fx_research_agent.proposals import (  # noqa: E402
 )
 from fx_research_agent.registry import backlog, import_genesis, review_hypothesis, status  # noqa: E402
 from fx_research_agent.storage import connect  # noqa: E402
+from fx_research_agent.notifications import (  # noqa: E402
+    notification_status,
+    notify_gate_crossings,
+    notify_ingest_failures,
+    notify_proposals_for_review,
+)
 
 
 DEFAULT_DB = ROOT / "data" / "fx_research_agent.sqlite3"
@@ -131,6 +137,7 @@ def main() -> int:
     )
     commands.add_parser("proposal-cycle")
     commands.add_parser("proposal-status")
+    commands.add_parser("notification-status")
     review = commands.add_parser("review-hypothesis")
     review.add_argument("hypothesis_id")
     review.add_argument(
@@ -163,10 +170,11 @@ def main() -> int:
             print_json(register_manifest(connection, args.manifest))
         elif args.command == "sync-market-exports":
             result = sync_market_exports(connection, args.source_dir, args.inbox_dir)
+            notifications = notify_ingest_failures(connection, "MARKET_DATA", result)
             quality = market_data_status(connection)
             write_json_atomic(DEFAULT_MARKET_SYNC_STATUS, result)
             write_json_atomic(DEFAULT_MARKET_DATA_STATUS, quality)
-            print_json({"sync": result, "quality": quality})
+            print_json({"sync": result, "quality": quality, "notifications": notifications})
         elif args.command == "market-data-status":
             result = market_data_status(connection)
             write_json_atomic(DEFAULT_MARKET_DATA_STATUS, result)
@@ -175,17 +183,20 @@ def main() -> int:
             print_json(register_evidence_manifest(connection, args.manifest))
         elif args.command == "sync-research-evidence":
             result = sync_evidence_exports(connection, args.source_dir, args.inbox_dir)
+            notifications = notify_ingest_failures(connection, "RESEARCH_EVIDENCE", result)
             quality = evidence_status(connection)
             threshold_refresh = None
             if connection.execute("SELECT COUNT(*) AS n FROM autonomy_policies").fetchone()["n"]:
                 threshold_refresh = refresh_approved_campaigns(
                     connection,
                     args.inbox_dir,
+                    market_inbox=DEFAULT_MARKET_INBOX,
                     trigger="EVIDENCE_SYNC_THRESHOLD_CHECK",
                 )
+                notifications.extend(notify_gate_crossings(connection, threshold_refresh))
             write_json_atomic(DEFAULT_EVIDENCE_SYNC_STATUS, result)
             write_json_atomic(DEFAULT_EVIDENCE_STATUS, quality)
-            print_json({"sync": result, "quality": quality, "threshold_refresh": threshold_refresh})
+            print_json({"sync": result, "quality": quality, "threshold_refresh": threshold_refresh, "notifications": notifications})
         elif args.command == "research-evidence-status":
             result = evidence_status(connection)
             write_json_atomic(DEFAULT_EVIDENCE_STATUS, result)
@@ -209,7 +220,14 @@ def main() -> int:
             write_json_atomic(DEFAULT_CAMPAIGN_STATUS, result)
             print_json(result)
         elif args.command == "run-campaign":
-            print_json(run_campaign(connection, args.campaign_id, DEFAULT_EVIDENCE_INBOX))
+            print_json(
+                run_campaign(
+                    connection,
+                    args.campaign_id,
+                    DEFAULT_EVIDENCE_INBOX,
+                    market_inbox_dir=DEFAULT_MARKET_INBOX,
+                )
+            )
         elif args.command == "experiment-status":
             print_json(experiment_report(connection, args.campaign_id))
         elif args.command == "register-autonomy-policy":
@@ -233,21 +251,24 @@ def main() -> int:
                 )
             )
         elif args.command == "refresh-approved-campaigns":
-            print_json(
-                refresh_approved_campaigns(
-                    connection,
-                    DEFAULT_EVIDENCE_INBOX,
-                    trigger=args.trigger,
-                )
+            result = refresh_approved_campaigns(
+                connection,
+                DEFAULT_EVIDENCE_INBOX,
+                market_inbox=DEFAULT_MARKET_INBOX,
+                trigger=args.trigger,
             )
+            print_json({**result, "notifications": notify_gate_crossings(connection, result)})
         elif args.command == "proposal-cycle":
             result = run_proposal_cycle(connection)
+            notifications = notify_proposals_for_review(connection, result)
             write_json_atomic(DEFAULT_PROPOSAL_STATUS, proposal_status(connection))
-            print_json(result)
+            print_json({**result, "notifications": notifications})
         elif args.command == "proposal-status":
             result = proposal_status(connection)
             write_json_atomic(DEFAULT_PROPOSAL_STATUS, result)
             print_json(result)
+        elif args.command == "notification-status":
+            print_json(notification_status(connection))
         elif args.command == "review-hypothesis":
             print_json(
                 review_hypothesis(

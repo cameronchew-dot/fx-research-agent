@@ -1,0 +1,103 @@
+{
+  "schema": "FX_RESEARCH_CAMPAIGN_V1",
+  "campaign_id": "CAMPAIGN_EUR_SPREAD_LIQUIDITY_DEGRADATION_FORWARD_V1",
+  "hypothesis_id": "HYP_AUTO_D10F37CE388176F58C7F",
+  "created_at_utc": "2026-10-14T04:05:25Z",
+  "state": "DRAFT",
+  "title": "EUR/USD failed-auction spread and liquidity degradation forward review",
+  "instrument": "EUR_USD",
+  "mechanism_class": "SPREAD_LIQUIDITY_STATE_COST_DEGRADATION",
+  "research_question": "Do failed auctions observed at more than 1.5 times the trailing 96-completed-M15-bar median spread perform worse than the normal-spread complement?",
+  "null_hypothesis": "The predeclared high-spread population has no lower average net R than its normal-spread complement after decision-time spread costs.",
+  "required_data_classes": [
+    "SPREAD_SAMPLES",
+    "FORWARD_FAILED_AUCTION_EPISODES",
+    "FORWARD_RULE_BASELINE_OUTCOMES",
+    "DATA_QUALITY_FLAGS"
+  ],
+  "population": {
+    "source": "EUR_AGENT_FORWARD_ONLY",
+    "candidate_family": "FAILED_AUCTION_AT_OBJECTIVE_LEVEL",
+    "allowed_levels": [
+      "PRIOR_DAY_HIGH",
+      "PRIOR_DAY_LOW",
+      "ASIA_SESSION_HIGH",
+      "ASIA_SESSION_LOW",
+      "LONDON_SESSION_HIGH",
+      "LONDON_SESSION_LOW",
+      "NY_SESSION_HIGH",
+      "NY_SESSION_LOW"
+    ],
+    "timeframe": "M15",
+    "outcome_horizon_m15_bars": 16,
+    "entry_model": "NEXT_M15_OPEN_WITH_DECISION_SPREAD",
+    "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE"
+  },
+  "independence_unit": {
+    "unit": "FIRST_RULE_BASELINE_OUTCOME_PER_INDEPENDENT_LEVEL_EPISODE",
+    "multiple_arms_count_once": true,
+    "repeated_same_episode_candidates_count_once": true
+  },
+  "exact_specification": {
+    "cohort_rule": {
+      "type": "DECISION_SPREAD_TO_TRAILING_MEDIAN"
+    },
+    "spread_context": {
+      "decision_spread_source": "CANDIDATE_MARKET_FACTS_AT_DECISION",
+      "bar_spread_statistic": "MEDIAN_OF_TIMESTAMP_VALID_SPREAD_SAMPLES",
+      "trailing_completed_m15_bars": 96,
+      "current_decision_bar_excluded_from_baseline": true,
+      "high_spread_ratio_threshold": 1.5,
+      "comparison_operator": "STRICTLY_GREATER_THAN"
+    },
+    "treatment_slice": "DECISION_SPREAD_RATIO_GT_1_5",
+    "comparator_slice": "DECISION_SPREAD_RATIO_LE_1_5"
+  },
+  "controls": [
+    {
+      "control_id": "NORMAL_SPREAD_COMPLEMENT",
+      "definition": "All otherwise eligible independent episodes at or below 1.5 times the trailing 96-completed-M15-bar median spread.",
+      "post_selection_mutation_allowed": false
+    },
+    {
+      "control_id": "LOCKED_SPREAD_THRESHOLD_AND_WINDOW",
+      "definition": "The 1.5 ratio and 96-bar baseline are fixed before post-approval outcomes; no threshold or lookback sweep is permitted.",
+      "post_selection_mutation_allowed": false
+    }
+  ],
+  "metrics": {
+    "primary": "AVERAGE_NET_R_DIFFERENCE_HIGH_SPREAD_MINUS_NORMAL_SPREAD",
+    "expected_direction": "NEGATIVE",
+    "secondary": [
+      "HIGH_SPREAD_AVERAGE_NET_R",
+      "HIGH_SPREAD_MEDIAN_NET_R",
+      "HIGH_SPREAD_POSITIVE_NET_R_RATE",
+      "NORMAL_SPREAD_AVERAGE_NET_R",
+      "SAMPLE_COUNTS"
+    ],
+    "outcome_types_pooled": false
+  },
+  "review_gates": {
+    "minimum_resolved_independent_treatment_episodes": 30,
+    "minimum_resolved_independent_comparator_episodes": 30,
+    "treatment_average_net_r_must_be_lower_than_comparator": true,
+    "review_is_not_promotion": true
+  },
+  "multiple_comparisons_policy": {
+    "confirmatory_slice_count": 1,
+    "only_confirmatory_slice": "DECISION_SPREAD_RATIO_GT_1_5",
+    "all_other_breakdowns": "DESCRIPTIVE_ONLY",
+    "parameter_sweeps_allowed": false
+  },
+  "stopping_rules": {
+    "no_early_success_declaration": true,
+    "no_early_parameter_retuning": true,
+    "review_only_after_declared_sample_gates": true
+  },
+  "authority": {
+    "automatic_approval": false,
+    "automatic_execution": false,
+    "downstream_activation": false,
+    "order_authority": false
+  }
+}

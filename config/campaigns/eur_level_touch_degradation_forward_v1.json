@@ -1,0 +1,102 @@
+{
+  "schema": "FX_RESEARCH_CAMPAIGN_V1",
+  "campaign_id": "CAMPAIGN_EUR_LEVEL_TOUCH_DEGRADATION_FORWARD_V1",
+  "hypothesis_id": "HYP_LEVEL_TOUCH_DEGRADATION_V1_PROPOSED",
+  "created_at_utc": "2026-10-14T04:05:25Z",
+  "state": "DRAFT",
+  "title": "EUR/USD failed-auction first-touch versus repeat-touch forward review",
+  "instrument": "EUR_USD",
+  "mechanism_class": "OBJECTIVE_LEVEL_TOUCH_HISTORY",
+  "research_question": "Do first-touch failed auctions outperform failed auctions where any contributing objective level has already been touched?",
+  "null_hypothesis": "First-touch failed auctions have no positive average net-R lift over repeat-touch failed auctions.",
+  "required_data_classes": [
+    "OBJECTIVE_LEVELS",
+    "FORWARD_FAILED_AUCTION_EPISODES",
+    "FORWARD_RULE_BASELINE_OUTCOMES"
+  ],
+  "population": {
+    "source": "EUR_AGENT_FORWARD_ONLY",
+    "candidate_family": "FAILED_AUCTION_AT_OBJECTIVE_LEVEL",
+    "allowed_levels": [
+      "PRIOR_DAY_HIGH",
+      "PRIOR_DAY_LOW",
+      "ASIA_SESSION_HIGH",
+      "ASIA_SESSION_LOW",
+      "LONDON_SESSION_HIGH",
+      "LONDON_SESSION_LOW",
+      "NY_SESSION_HIGH",
+      "NY_SESSION_LOW"
+    ],
+    "timeframe": "M15",
+    "outcome_horizon_m15_bars": 16,
+    "entry_model": "NEXT_M15_OPEN_WITH_DECISION_SPREAD",
+    "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE"
+  },
+  "independence_unit": {
+    "unit": "FIRST_RULE_BASELINE_OUTCOME_PER_INDEPENDENT_LEVEL_EPISODE",
+    "multiple_arms_count_once": true,
+    "repeated_same_episode_candidates_count_once": true
+  },
+  "exact_specification": {
+    "cohort_rule": {
+      "type": "MAXIMUM_CONTRIBUTING_TOUCH_INDEX"
+    },
+    "touch_context": {
+      "touch_index_source": "CANDIDATE_OBJECTIVE_LEVEL_FACTS_AT_DECISION",
+      "aggregation_for_confluent_levels": "MAXIMUM_CONTRIBUTING_TOUCH_INDEX",
+      "first_touch_definition": "MAXIMUM_TOUCH_INDEX_EQUALS_1",
+      "repeat_touch_definition": "MAXIMUM_TOUCH_INDEX_GREATER_THAN_OR_EQUAL_TO_2",
+      "additional_touch_buckets_allowed": false
+    },
+    "treatment_slice": "FIRST_TOUCH",
+    "comparator_slice": "REPEAT_TOUCH"
+  },
+  "controls": [
+    {
+      "control_id": "REPEAT_TOUCH_COMPLEMENT",
+      "definition": "All otherwise eligible independent episodes where at least one contributing objective level has touch index 2 or greater.",
+      "post_selection_mutation_allowed": false
+    },
+    {
+      "control_id": "NO_POST_HOC_TOUCH_BUCKETS",
+      "definition": "Only touch 1 versus touch 2+ is confirmatory; no 2-3, 4+, direction, level or session subdivision may be promoted from this campaign.",
+      "post_selection_mutation_allowed": false
+    }
+  ],
+  "metrics": {
+    "primary": "AVERAGE_NET_R_LIFT_FIRST_TOUCH_MINUS_REPEAT_TOUCH",
+    "expected_direction": "POSITIVE",
+    "secondary": [
+      "FIRST_TOUCH_AVERAGE_NET_R",
+      "FIRST_TOUCH_MEDIAN_NET_R",
+      "FIRST_TOUCH_POSITIVE_NET_R_RATE",
+      "REPEAT_TOUCH_AVERAGE_NET_R",
+      "SAMPLE_COUNTS"
+    ],
+    "outcome_types_pooled": false
+  },
+  "review_gates": {
+    "minimum_resolved_independent_treatment_episodes": 30,
+    "minimum_resolved_independent_comparator_episodes": 30,
+    "treatment_average_net_r_must_be_positive": true,
+    "primary_lift_must_be_positive": true,
+    "review_is_not_promotion": true
+  },
+  "multiple_comparisons_policy": {
+    "confirmatory_slice_count": 1,
+    "only_confirmatory_slice": "FIRST_TOUCH_VERSUS_REPEAT_TOUCH",
+    "all_other_breakdowns": "DESCRIPTIVE_ONLY",
+    "parameter_sweeps_allowed": false
+  },
+  "stopping_rules": {
+    "no_early_success_declaration": true,
+    "no_early_parameter_retuning": true,
+    "review_only_after_declared_sample_gates": true
+  },
+  "authority": {
+    "automatic_approval": false,
+    "automatic_execution": false,
+    "downstream_activation": false,
+    "order_authority": false
+  }
+}
