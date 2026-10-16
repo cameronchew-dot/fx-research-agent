@@ -5,10 +5,48 @@ import unittest
 from pathlib import Path
 
 from fx_research_agent.registry import hypothesis_state, import_genesis, review_hypothesis, status
-from fx_research_agent.storage import initialize
+from fx_research_agent.storage import initialize, insert_immutable, payload_hash
+
+
+class RacingConnection:
+    def __init__(self, digest):
+        self.digest = digest
+        self.select_count = 0
+
+    def execute(self, sql, values):
+        if sql.startswith("SELECT payload_hash"):
+            self.select_count += 1
+            return RacingCursor(None if self.select_count == 1 else {"payload_hash": self.digest})
+        if sql.startswith("INSERT INTO"):
+            raise sqlite3.IntegrityError("simulated concurrent immutable insert")
+        raise AssertionError(sql)
+
+    def commit(self):
+        raise AssertionError("idempotent raced insert must not commit a new row")
+
+
+class RacingCursor:
+    def __init__(self, row):
+        self.row = row
+
+    def fetchone(self):
+        return self.row
 
 
 class RegistryTests(unittest.TestCase):
+    def test_concurrent_identical_immutable_insert_is_idempotent(self):
+        payload = {"snapshot_id": "S1", "value": 1}
+        connection = RacingConnection(payload_hash(payload))
+        inserted = insert_immutable(
+            connection,
+            "campaign_progress_snapshots",
+            "snapshot_id",
+            "S1",
+            payload,
+            {"campaign_id": "C1", "observed_at_utc": "2026-10-15T00:00:00Z"},
+        )
+        self.assertFalse(inserted)
+
     def test_genesis_import_is_idempotent_and_conflicts_fail(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "registry.json"

@@ -231,10 +231,26 @@ def insert_immutable(
     columns = [id_column, "payload_hash", "payload_json", *extra_columns.keys()]
     values = [record_id, digest, canonical_json(payload), *extra_columns.values()]
     placeholders = ", ".join("?" for _ in columns)
-    connection.execute(
-        f"INSERT INTO {table} ({', '.join(columns)}) VALUES ({placeholders})",
-        values,
-    )
+    try:
+        connection.execute(
+            f"INSERT INTO {table} ({', '.join(columns)}) VALUES ({placeholders})",
+            values,
+        )
+    except sqlite3.IntegrityError:
+        # A concurrent scheduler may insert the same immutable record after the
+        # preflight read. Re-read it and preserve the normal idempotent/conflict
+        # semantics instead of treating the harmless race as an ingest failure.
+        raced = connection.execute(
+            f"SELECT payload_hash FROM {table} WHERE {id_column} = ?",
+            (record_id,),
+        ).fetchone()
+        if raced is None:
+            raise
+        if raced["payload_hash"] != digest:
+            raise ValueError(
+                f"conflicting immutable rewrite for {table}:{record_id}"
+            )
+        return False
     connection.commit()
     return True
 
