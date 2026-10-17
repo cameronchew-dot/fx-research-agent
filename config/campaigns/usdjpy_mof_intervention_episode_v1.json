@@ -1,0 +1,63 @@
+{
+  "schema": "FX_RESEARCH_CAMPAIGN_V1",
+  "campaign_id": "CAMPAIGN_USDJPY_MOF_INTERVENTION_EPISODE_V1",
+  "hypothesis_id": "HYP_USDJPY_MOF_INTERVENTION_EPISODE_V1",
+  "created_at_utc": "2026-10-17T21:00:00Z",
+  "state": "DRAFT",
+  "title": "USD/JPY official intervention episode impact audit",
+  "instrument": "USD_JPY",
+  "instruments": ["USD_JPY"],
+  "mechanism_class": "OFFICIAL_FX_INTERVENTION",
+  "research_question": "Do independent Japanese FX-intervention episodes produce policy-aligned USD/JPY movement through five trading days after the episode?",
+  "null_hypothesis": "Policy-aligned episode returns are non-positive after hypothetical costs or fail to beat shifted-date controls.",
+  "required_data_classes": ["BIS_DAILY_USDJPY_SPOT", "MOF_DAILY_INTERVENTION_OPERATIONS"],
+  "population": {
+    "source": "JAPAN_MOF_DAILY_INTERVENTIONS_AND_BIS_WS_XRU",
+    "start": "1991-04-01",
+    "currency_pair": "USD_JPY_ONLY",
+    "quote": "JPY_PER_USD",
+    "incomplete_episodes_are_excluded": true
+  },
+  "independence_unit": {"unit": "MOF_INTERVENTION_EPISODE", "new_episode_after": "AT_LEAST_FIVE_CONSECUTIVE_BIS_TRADING_DAYS_WITHOUT_SAME_DIRECTION_INTERVENTION", "direction_change_starts_new_episode": true},
+  "exact_specification": {
+    "confirmatory_study": "POLICY_ALIGNED_RETURN_PRE_EPISODE_TO_FIVE_DAYS_POST_EPISODE",
+    "usd_buy_jpy_sell_direction": "LONG_USD_JPY",
+    "usd_sell_jpy_buy_direction": "SHORT_USD_JPY",
+    "entry_mark": "BIS_DAILY_AVERAGE_ON_LAST_TRADING_DAY_BEFORE_FIRST_INTERVENTION",
+    "exit_mark": "BIS_DAILY_AVERAGE_FIVE_TRADING_DAYS_AFTER_FINAL_INTERVENTION",
+    "primary_hypothetical_cost_bps": 5,
+    "stress_hypothetical_cost_bps": 10,
+    "sample_partition": {"development": "FIRST_60_PERCENT_OF_COMPLETE_EPISODES", "chronological_oos": "NEXT_20_PERCENT", "dated_confirmation": "FINAL_20_PERCENT_UNTOUCHED_UNTIL_LOCK"},
+    "publication_constraint": "EXACT_DAILY_MOF_DATES_ARE_RELEASED_AFTER_EVENTS_AND_ARE_NOT_REAL_TIME_ENTRY_INFORMATION",
+    "parameter_sweeps_allowed": false
+  },
+  "controls": [
+    {"control_id": "OPPOSITE_POLICY_DIRECTION", "definition": "Reverse the policy-aligned direction on identical episode windows"},
+    {"control_id": "SHIFTED_60_TRADING_DAYS", "definition": "Preserve direction and episode duration beginning 60 BIS trading days later, excluding windows containing intervention"},
+    {"control_id": "SHIFTED_120_TRADING_DAYS", "definition": "Preserve direction and episode duration beginning 120 BIS trading days later, excluding windows containing intervention"}
+  ],
+  "metrics": {
+    "primary": "DATED_CONFIRMATION_AVERAGE_NET_POLICY_ALIGNED_RETURN",
+    "secondary": ["OOS_AVERAGE_NET_POLICY_ALIGNED_RETURN", "MEDIAN_NET_POLICY_ALIGNED_RETURN", "POSITIVE_EPISODE_RATE", "CONTROL_EDGE", "EPISODE_COUNTS", "INTERVENTION_AMOUNT"]
+  },
+  "review_gates": {
+    "minimum_development_episodes": 30,
+    "minimum_chronological_oos_episodes": 10,
+    "minimum_dated_confirmation_episodes": 10,
+    "minimum_dated_control_episodes_each": 10,
+    "oos_average_policy_aligned_net_return_must_be_positive": true,
+    "dated_average_policy_aligned_net_return_must_be_positive": true,
+    "dated_control_edge_must_be_positive": true,
+    "primary_and_stress_cases_must_pass": true,
+    "survivor_allows_only_observable_proxy_design": true,
+    "direct_strategy_or_lifecycle_eligibility": false
+  },
+  "multiple_comparisons_policy": {"confirmatory_study_count": 1, "parameter_sweeps_allowed": false, "batch_familywise_policy": "BATCH_FX_LITERATURE_V1_HOLM_BONFERRONI"},
+  "stopping_rules": {"no_post_result_episode_gap_changes": true, "no_post_result_horizon_changes": true, "no_post_result_direction_filtering": true, "no_early_holdout_inspection": true, "failed_gate_closes_exact_specification": true},
+  "research_basis": {
+    "primary_source": "Chaboud and Humpage, An Assessment of the Impact of Japanese Foreign Exchange Intervention: 1991-2004, Federal Reserve IFDP 824",
+    "source_url": "https://www.federalreserve.gov/pubs/ifdp/2005/824/ifdp824.pdf",
+    "translation_note": "The literature motivates short-horizon moderation and reversal effects and episode clustering. This fixed event study uses the expanded official record and does not claim that delayed official labels were tradable in real time."
+  },
+  "authority": {"automatic_approval": false, "automatic_execution": false, "downstream_activation": false, "order_authority": false}
+}

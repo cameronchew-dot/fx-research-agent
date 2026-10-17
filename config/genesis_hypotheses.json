@@ -191,6 +191,21 @@
       "overlap_notes": "Cyclical output residuals are distinct from five-year economic momentum, value, policy stance, and EUR failed-auction campaigns.",
       "evidence_ids": ["CAMPAIGN_G10_RECURSIVE_OUTPUT_GAP_V1_PRIMARY", "CAMPAIGN_G10_RECURSIVE_OUTPUT_GAP_V1_STRESS"],
       "next_action": "CLOSED_FAILED_CHRONOLOGICAL_OOS_COST_STRESS_AND_STALE_CONTROL_DO_NOT_RETUNE"
+    },
+    {
+      "hypothesis_id": "HYP_USDJPY_MOF_INTERVENTION_EPISODE_V1",
+      "proposed_at_utc": "2026-10-17T21:00:00Z",
+      "proposed_by": "OPERATOR_AND_CODEX_LITERATURE_REVIEW",
+      "state": "PROPOSED",
+      "hypothesis_type": "RETROSPECTIVE_MECHANISM_AUDIT",
+      "classification": "CONTEXT",
+      "priority": 13,
+      "statement": "Independent Japanese FX-intervention episodes may produce policy-aligned short-horizon USD/JPY movement that warrants later observable-proxy research.",
+      "data_requirements": ["BIS_DAILY_USDJPY_SPOT", "MOF_DAILY_INTERVENTION_OPERATIONS"],
+      "dependencies": ["EPISODE_DEDUPLICATION", "DELAYED_LABELS_NEVER_USED_AS_REAL_TIME_SIGNAL"],
+      "expected_frequency": "RARE_CLUSTERED_OFFICIAL_EPISODES",
+      "overlap_notes": "Official intervention is a policy-event mechanism distinct from price-pattern, carry, value, and business-cycle campaigns.",
+      "next_action": "RUN_ONLY_LOCKED_RETROSPECTIVE_PRIMARY_AND_STRESS_AUDIT"
     }
   ]
 }

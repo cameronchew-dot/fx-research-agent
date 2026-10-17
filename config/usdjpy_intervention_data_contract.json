@@ -1,0 +1,12 @@
+{
+  "schema": "FX_USDJPY_INTERVENTION_DATA_CONTRACT_V1",
+  "intervention_source": "JAPAN_MINISTRY_OF_FINANCE_DAILY_INTERVENTION_OPERATIONS",
+  "intervention_source_url": "https://www.mof.go.jp/english/policy/international_policy/reference/feio/foreign_exchange_intervention_operations.csv",
+  "spot_source": "BIS_WS_XRU_1_0",
+  "spot_frequency": "DAILY",
+  "spot_collection": "AVERAGE",
+  "spot_identity": {"reference_area": "JP", "currency": "JPY"},
+  "quote": "JPY_PER_USD",
+  "publication_policy": "RETROSPECTIVE_EVENT_LABELS_NOT_REAL_TIME_SIGNAL",
+  "authority": {"credentials_allowed": false, "account_data_allowed": false, "order_authority": false}
+}
