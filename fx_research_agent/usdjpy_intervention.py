@@ -11,8 +11,11 @@ from typing import Any
 def load_spot(path: Path) -> tuple[list[str], dict[str, float]]:
     with gzip.open(path, "rt", encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
+    parsed = {row["date"]: float(row["usd_jpy"]) for row in rows}
+    if any(not math.isfinite(value) or value <= 0 for value in parsed.values()):
+        raise ValueError("BIS USD/JPY panel contains non-finite or non-positive prices")
     dates = [row["date"] for row in rows]
-    return dates, {row["date"]: float(row["usd_jpy"]) for row in rows}
+    return dates, parsed
 
 
 def load_events(path: Path) -> list[dict[str, Any]]:

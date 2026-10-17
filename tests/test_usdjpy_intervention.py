@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 from fx_research_agent.campaigns import load_campaign
-from fx_research_agent.usdjpy_intervention import build_episodes, evaluate
+from fx_research_agent.usdjpy_intervention import build_episodes, evaluate, load_spot
 
 
 class UsdJpyInterventionTests(unittest.TestCase):
@@ -39,10 +39,19 @@ class UsdJpyInterventionTests(unittest.TestCase):
         self.assertEqual(first, second)
         self.assertGreater(first["complete_episode_count"], 20)
 
-    def test_registry_starts_proposed(self):
+    def test_non_finite_spot_is_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "spot.gz"
+            with gzip.open(path, "wt", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=["date", "usd_jpy"]); writer.writeheader()
+                writer.writerow({"date": "2020-01-01", "usd_jpy": "nan"})
+            with self.assertRaisesRegex(ValueError, "non-finite"):
+                load_spot(path)
+
+    def test_registry_records_locked_rejection(self):
         registry = json.loads(Path("config/genesis_hypotheses.json").read_text(encoding="utf-8"))
         states = {row["hypothesis_id"]: row["state"] for row in registry["hypotheses"]}
-        self.assertEqual(states["HYP_USDJPY_MOF_INTERVENTION_EPISODE_V1"], "PROPOSED")
+        self.assertEqual(states["HYP_USDJPY_MOF_INTERVENTION_EPISODE_V1"], "REJECTED")
 
 
 if __name__ == "__main__":

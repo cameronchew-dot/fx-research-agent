@@ -6,6 +6,7 @@ import csv
 import gzip
 import hashlib
 import json
+import math
 import zipfile
 from pathlib import Path
 
@@ -31,6 +32,8 @@ def extract(archive: Path, output: Path, summary_path: Path) -> dict:
                     raise ValueError(f"duplicate BIS USD/JPY day: {date}")
                 seen.add(date)
                 value = float(source["OBS_VALUE:Observation Value"])
+                if not math.isfinite(value):
+                    continue
                 if value <= 0:
                     raise ValueError(f"non-positive BIS USD/JPY observation: {date}")
                 rows.append({"date": date, "usd_jpy": format(value, ".12g"), "collection": "DAILY_AVERAGE", "source": "BIS_WS_XRU_1_0"})

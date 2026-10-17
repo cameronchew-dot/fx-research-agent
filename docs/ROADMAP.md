@@ -66,7 +66,11 @@
 - Campaign 10 is a locked retrospective audit of official Japanese USD/JPY
   intervention episodes. Exact MOF dates are delayed labels, so the audit can
   only support later observable-proxy design and can never directly become a
-  strategy or lifecycle profile. See `USDJPY_INTERVENTION_CAMPAIGN.md`.
+  strategy or lifecycle profile. Policy-aligned returns were positive in
+  development, chronological OOS, dated confirmation, and cost stress, but the
+  audit failed its predeclared +60-trading-day control and minimum dated-control
+  sample gate. It is closed without a proxy campaign; see
+  `CAMPAIGN_10_RESULT.md`.
 - Evaluate approved campaigns only on post-approval evidence, deduplicated by
   independent episode and separated by outcome source.
 - Persist immutable run and finding records; sample completion permits human

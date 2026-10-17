@@ -196,7 +196,7 @@
       "hypothesis_id": "HYP_USDJPY_MOF_INTERVENTION_EPISODE_V1",
       "proposed_at_utc": "2026-10-17T21:00:00Z",
       "proposed_by": "OPERATOR_AND_CODEX_LITERATURE_REVIEW",
-      "state": "PROPOSED",
+      "state": "REJECTED",
       "hypothesis_type": "RETROSPECTIVE_MECHANISM_AUDIT",
       "classification": "CONTEXT",
       "priority": 13,
@@ -205,7 +205,8 @@
       "dependencies": ["EPISODE_DEDUPLICATION", "DELAYED_LABELS_NEVER_USED_AS_REAL_TIME_SIGNAL"],
       "expected_frequency": "RARE_CLUSTERED_OFFICIAL_EPISODES",
       "overlap_notes": "Official intervention is a policy-event mechanism distinct from price-pattern, carry, value, and business-cycle campaigns.",
-      "next_action": "RUN_ONLY_LOCKED_RETROSPECTIVE_PRIMARY_AND_STRESS_AUDIT"
+      "evidence_ids": ["CAMPAIGN_USDJPY_MOF_INTERVENTION_EPISODE_V1_PRIMARY", "CAMPAIGN_USDJPY_MOF_INTERVENTION_EPISODE_V1_STRESS"],
+      "next_action": "CLOSED_FAILED_SHIFT60_CONTROL_AND_MINIMUM_CONTROL_SAMPLE_NO_PROXY_CAMPAIGN_DO_NOT_RETUNE"
     }
   ]
 }
