@@ -49,6 +49,11 @@
   in development, OOS, and dated confirmation and is closed; see
   `CAMPAIGN_9_RESULT.md`. The positive opposite-direction control is post-result
   evidence only and cannot be recycled against the used holdout.
+- Campaign 7 is one locked 60-month industrial-production momentum test on the
+  six-currency subset with complete OECD monthly history. Its exact universe,
+  two-month information lag, top-two/bottom-two construction, costs, and
+  controls are documented in `G10_ECONOMIC_MOMENTUM_CAMPAIGN.md`. Current-vintage
+  data can support rejection, but any survivor requires vintage-aware follow-up.
 - Evaluate approved campaigns only on post-approval evidence, deduplicated by
   independent episode and separated by outcome source.
 - Persist immutable run and finding records; sample completion permits human

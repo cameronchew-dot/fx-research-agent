@@ -1,0 +1,14 @@
+{
+  "schema": "FX_G10_INDUSTRIAL_PRODUCTION_DATA_CONTRACT_V1",
+  "source": "OECD.SDD.STES:DSD_STES@DF_INDSERV(4.3)",
+  "measure": "PRVM",
+  "unit_measure": "IX",
+  "activity": "BTE",
+  "adjustment": "Y",
+  "frequency": "MONTHLY",
+  "area_by_currency": {"EUR": "EA20", "GBP": "GBR", "JPY": "JPN", "CAD": "CAN", "SEK": "SWE", "NOK": "NOR"},
+  "information_lag_months": 2,
+  "vintage_policy": "CURRENT_OFFICIAL_VINTAGE",
+  "missing_value_policy": "EXCLUDE_MONTH",
+  "authority": {"credentials_allowed": false, "account_data_allowed": false, "order_authority": false}
+}
