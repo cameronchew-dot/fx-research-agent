@@ -35,6 +35,8 @@
 - Require every multi-instrument campaign to have complete per-instrument data
   classes before evaluation. Data-blocked campaigns are skipped without
   interrupting ready forward campaigns.
+- Follow `G10_MOMENTUM_DATA_SOURCE_PLAN.md` for Campaign 4. Do not reinterpret
+  public spot histories as the missing historical financing/forward leg.
 - Evaluate approved campaigns only on post-approval evidence, deduplicated by
   independent episode and separated by outcome source.
 - Persist immutable run and finding records; sample completion permits human

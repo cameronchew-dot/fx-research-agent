@@ -47,6 +47,7 @@ from fx_research_agent.notifications import (  # noqa: E402
     notify_ingest_failures,
     notify_proposals_for_review,
 )
+from fx_research_agent.literature_panels import panel_status  # noqa: E402
 
 
 DEFAULT_DB = ROOT / "data" / "fx_research_agent.sqlite3"
@@ -98,6 +99,7 @@ def main() -> int:
     sync.add_argument("--source-dir", type=Path, default=DEFAULT_MARKET_SOURCE)
     sync.add_argument("--inbox-dir", type=Path, default=DEFAULT_MARKET_INBOX)
     commands.add_parser("market-data-status")
+    commands.add_parser("literature-panel-status")
     evidence = commands.add_parser("register-research-evidence")
     evidence.add_argument("manifest", type=Path)
     evidence_sync = commands.add_parser("sync-research-evidence")
@@ -179,6 +181,8 @@ def main() -> int:
             result = market_data_status(connection)
             write_json_atomic(DEFAULT_MARKET_DATA_STATUS, result)
             print_json(result)
+        elif args.command == "literature-panel-status":
+            print_json(panel_status(connection, DEFAULT_MARKET_INBOX))
         elif args.command == "register-research-evidence":
             print_json(register_evidence_manifest(connection, args.manifest))
         elif args.command == "sync-research-evidence":

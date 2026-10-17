@@ -28,6 +28,7 @@ python3 ops/research_supervisor.py status
 python3 ops/research_supervisor.py backlog
 python3 ops/research_supervisor.py sync-market-exports
 python3 ops/research_supervisor.py market-data-status
+python3 ops/research_supervisor.py literature-panel-status
 python3 ops/research_supervisor.py sync-research-evidence
 python3 ops/research_supervisor.py research-evidence-status
 python3 ops/research_supervisor.py register-campaign
@@ -107,6 +108,14 @@ points, implementable bid/ask costs, and computed excess returns. MOM(6,1) and
 MOM(12,1) are descriptive only and cannot qualify. Each batch uses its own locked
 Holm-Bonferroni familywise-error budget. No campaign can promote itself or affect
 a downstream system.
+
+Campaign 4's market input follows `config/g10_literature_panel_contract.json`.
+Each currency is imported as an immutable monthly panel using normalized USD
+quotes, observed one-month forward points or observed historical financing,
+and historical bid/ask transaction costs. The importer independently recomputes
+gross and net excess returns. Spot-only panels, inferred or zero-filled
+financing, incomplete currency coverage, and fewer than 192 common months remain
+blocked. Use `literature-panel-status` to see the exact coverage shortfall.
 
 ## Governed autonomy
 

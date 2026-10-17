@@ -83,6 +83,15 @@ def validate_manifest(manifest_path: Path) -> dict[str, Any]:
     prohibited_payload = sorted(_walk_keys(payload) & PROHIBITED_KEYS)
     if prohibited_payload:
         raise ValueError(f"market payload contains prohibited fields: {prohibited_payload}")
+    data_classes = {str(value) for value in manifest.get("data_classes", [])}
+    if data_classes & {
+        "COMPLETED_DAILY_BID_ASK_CANDLES",
+        "MONTHLY_FINANCING_OR_FORWARD_POINTS",
+        "CURRENCY_EXCESS_RETURNS",
+    }:
+        from .literature_panels import validate_panel_payload
+
+        validate_panel_payload(manifest, payload)
     return manifest
 
 

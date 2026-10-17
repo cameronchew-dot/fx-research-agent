@@ -25,6 +25,10 @@
     "REGIME_FEATURES",
     "MACRO_CONTEXT",
     "DATA_QUALITY_FLAGS"
+    ,
+    "COMPLETED_DAILY_BID_ASK_CANDLES",
+    "MONTHLY_FINANCING_OR_FORWARD_POINTS",
+    "CURRENCY_EXCESS_RETURNS"
   ],
   "prohibited_fields": [
     "account_id",

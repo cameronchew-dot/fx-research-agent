@@ -1,0 +1,47 @@
+{
+  "schema": "FX_G10_LITERATURE_PANEL_CONTRACT_V1",
+  "payload_schema": "FX_G10_MONTHLY_EXCESS_RETURN_PANEL_V1",
+  "one_payload_per_instrument": true,
+  "instruments": [
+    "EUR_USD",
+    "GBP_USD",
+    "USD_JPY",
+    "USD_CHF",
+    "USD_CAD",
+    "AUD_USD",
+    "NZD_USD",
+    "USD_SEK",
+    "USD_NOK"
+  ],
+  "required_data_classes": [
+    "COMPLETED_DAILY_BID_ASK_CANDLES",
+    "MONTHLY_FINANCING_OR_FORWARD_POINTS",
+    "CURRENCY_EXCESS_RETURNS"
+  ],
+  "required_row_fields": [
+    "month_end_utc",
+    "instrument",
+    "normalized_currency",
+    "normalized_spot_return",
+    "financing_return",
+    "financing_source_type",
+    "gross_excess_return",
+    "round_trip_cost_return",
+    "transaction_cost_source",
+    "net_excess_return"
+  ],
+  "allowed_financing_source_types": [
+    "OBSERVED_ONE_MONTH_FORWARD_POINTS",
+    "OBSERVED_HISTORICAL_FINANCING_RETURN"
+  ],
+  "transaction_cost_source": "HISTORICAL_BID_ASK",
+  "quote_normalization": "USD_VALUE_OF_ONE_UNIT_FOREIGN_CURRENCY",
+  "spot_only_allowed": false,
+  "inferred_or_zero_filled_financing_allowed": false,
+  "minimum_common_months": 192,
+  "authority": {
+    "account_data_allowed": false,
+    "credentials_allowed": false,
+    "order_authority": false
+  }
+}
