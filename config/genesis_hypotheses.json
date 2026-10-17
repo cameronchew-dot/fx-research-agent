@@ -148,7 +148,7 @@
       "hypothesis_id": "HYP_G10_REAL_POLICY_STANCE_SHIFT_V1",
       "proposed_at_utc": "2026-10-17T17:00:00Z",
       "proposed_by": "OPERATOR_AND_CODEX_LITERATURE_REVIEW",
-      "state": "PROPOSED",
+      "state": "REJECTED",
       "hypothesis_type": "LITERATURE_INSPIRED_REPLICATION",
       "classification": "STRATEGY",
       "priority": 10,
@@ -157,7 +157,8 @@
       "dependencies": ["COMPLETE_G10_POLICY_RATE_PANEL", "FIXED_TWO_MONTH_CPI_INFORMATION_LAG"],
       "expected_frequency": "CONDITIONAL_MONTHLY",
       "overlap_notes": "Monetary-policy divergence is economically distinct from price-only momentum, value, and EUR failed-auction campaigns.",
-      "next_action": "RUN_ONLY_AFTER_SPECIFICATION_HASH_IS_COMMITTED"
+      "evidence_ids": ["CAMPAIGN_G10_REAL_POLICY_STANCE_SHIFT_V1_PRIMARY", "CAMPAIGN_G10_REAL_POLICY_STANCE_SHIFT_V1_STRESS"],
+      "next_action": "CLOSED_NEGATIVE_IN_DEVELOPMENT_OOS_AND_DATED_CONFIRMATION_DO_NOT_FLIP_SIGN_ON_USED_HOLDOUT"
     }
   ]
 }

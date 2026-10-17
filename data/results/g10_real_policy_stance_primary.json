@@ -1,0 +1,2494 @@
+{
+  "active_month_count": 176,
+  "complete_shift_month_count": 205,
+  "controls_dated_confirmation": {
+    "opposite": {
+      "active_month_count": 36,
+      "annualized_volatility": 0.07420559052376356,
+      "average_active_currency_count": 3.5555555555555554,
+      "average_monthly_net_return": 0.0036691605099103903,
+      "maximum_log_drawdown": -0.0529017491782255,
+      "median_monthly_net_return": 0.0014766175486514033,
+      "positive_month_rate": 0.5277777777777778
+    },
+    "permutation": {
+      "active_month_count": 36,
+      "annualized_volatility": 0.07107491135660439,
+      "average_active_currency_count": 3.638888888888889,
+      "average_monthly_net_return": -0.006452613813680299,
+      "maximum_log_drawdown": -0.23847452009017578,
+      "median_monthly_net_return": -0.004432013026539424,
+      "positive_month_rate": 0.4166666666666667
+    },
+    "stale": {
+      "active_month_count": 36,
+      "annualized_volatility": 0.08041261918841695,
+      "average_active_currency_count": 3.388888888888889,
+      "average_monthly_net_return": -0.003369096113316804,
+      "maximum_log_drawdown": -0.23333106556467315,
+      "median_monthly_net_return": -0.0006252876303875794,
+      "positive_month_rate": 0.3333333333333333
+    }
+  },
+  "cost_model": {
+    "round_trip_cost_bps_per_active_month": 10.0
+  },
+  "dated_control_edge": {
+    "opposite": -0.00933832101982078,
+    "permutation": 0.0007834533037699085,
+    "stale": -0.002300064396593586
+  },
+  "partitions": {
+    "chronological_oos": {
+      "active_month_count": 35,
+      "annualized_volatility": 0.08420709830876276,
+      "average_active_currency_count": 3.914285714285714,
+      "average_monthly_net_return": -0.0029377301641195113,
+      "maximum_log_drawdown": -0.1665325537337819,
+      "median_monthly_net_return": -0.0048472849335280364,
+      "positive_month_rate": 0.42857142857142855
+    },
+    "dated_confirmation": {
+      "active_month_count": 36,
+      "annualized_volatility": 0.07420559052376356,
+      "average_active_currency_count": 3.5555555555555554,
+      "average_monthly_net_return": -0.00566916050991039,
+      "maximum_log_drawdown": -0.21716502401739168,
+      "median_monthly_net_return": -0.0034766175486514034,
+      "positive_month_rate": 0.4166666666666667
+    },
+    "development": {
+      "active_month_count": 105,
+      "annualized_volatility": 0.0832521461169255,
+      "average_active_currency_count": 3.5904761904761906,
+      "average_monthly_net_return": -0.0015020547899502943,
+      "maximum_log_drawdown": -0.3525264949030748,
+      "median_monthly_net_return": -0.000772317487314815,
+      "positive_month_rate": 0.47619047619047616
+    }
+  },
+  "provenance": {
+    "campaign_spec": "config/campaigns/g10_real_policy_stance_shift_v1.json",
+    "campaign_spec_sha256": "016a86515a06daea9feb7048395c32e48a3ee1425ce385ee28c849f64c8136ec",
+    "cpi_sha256": "dd09a3f3341286ede56f39e4d25a3ec446a214c3cc817474eece5b73f165c669",
+    "policy_sha256": "2a575e5f6044099a573b6ca035226586dba341b2b73efda5648bf4e943151004",
+    "spot_sha256": "e7777489aef7941bd42229a5229b537e1394bc0a71a27995310e813ef6c3ea36"
+  },
+  "review_gate_assessment": {
+    "dated_confirmation_all_control_edges_positive": false,
+    "dated_confirmation_average_net_spot_return_positive": false,
+    "eligible_for_human_review": false,
+    "minimum_chronological_oos_active_months": true,
+    "minimum_dated_confirmation_active_months": true,
+    "minimum_development_active_months": true,
+    "oos_average_net_spot_return_positive": false
+  },
+  "rows": [
+    {
+      "active_currency_count": 5,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "GBP": -1,
+        "NOK": -1,
+        "NZD": -1,
+        "SEK": -1
+      },
+      "gross_return": -0.05820179458601188,
+      "month": "2000-11",
+      "net_return": -0.05920179458601188,
+      "next_month": "2000-12"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "CHF": 1
+      },
+      "gross_return": -0.0058759116990098935,
+      "month": "2000-12",
+      "net_return": -0.0068759116990098935,
+      "next_month": "2001-01"
+    },
+    {
+      "active_currency_count": 5,
+      "cost_return": 0.001,
+      "directions": {
+        "CHF": 1,
+        "EUR": 1,
+        "GBP": 1,
+        "NOK": 1,
+        "SEK": 1
+      },
+      "gross_return": -0.012815619841142024,
+      "month": "2001-01",
+      "net_return": -0.013815619841142025,
+      "next_month": "2001-02"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "NZD": -1
+      },
+      "gross_return": -0.011744005698556905,
+      "month": "2006-06",
+      "net_return": -0.012744005698556906,
+      "next_month": "2006-07"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "CHF": 1,
+        "NOK": 1
+      },
+      "gross_return": -0.008325989836987607,
+      "month": "2006-07",
+      "net_return": -0.009325989836987608,
+      "next_month": "2006-08"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "GBP": 1
+      },
+      "gross_return": -0.020299623607462663,
+      "month": "2006-08",
+      "net_return": -0.021299623607462664,
+      "next_month": "2006-09"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "GBP": 1
+      },
+      "gross_return": 0.016507383346532848,
+      "month": "2006-09",
+      "net_return": 0.015507383346532847,
+      "next_month": "2006-10"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "JPY": -1
+      },
+      "gross_return": -0.01449651444293014,
+      "month": "2006-10",
+      "net_return": -0.01549651444293014,
+      "next_month": "2006-11"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": -1
+      },
+      "gross_return": 0.01730844872368214,
+      "month": "2006-11",
+      "net_return": 0.016308448723682138,
+      "next_month": "2006-12"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": -1,
+        "JPY": -1
+      },
+      "gross_return": 0.019056322646792558,
+      "month": "2006-12",
+      "net_return": 0.018056322646792557,
+      "next_month": "2007-01"
+    },
+    {
+      "active_currency_count": 3,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": -1,
+        "CHF": -1,
+        "JPY": -1
+      },
+      "gross_return": -0.020957042765465367,
+      "month": "2007-01",
+      "net_return": -0.021957042765465368,
+      "next_month": "2007-02"
+    },
+    {
+      "active_currency_count": 6,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CAD": -1,
+        "EUR": 1,
+        "GBP": 1,
+        "NOK": 1,
+        "NZD": 1
+      },
+      "gross_return": 0.008095532619079988,
+      "month": "2007-02",
+      "net_return": 0.007095532619079988,
+      "next_month": "2007-03"
+    },
+    {
+      "active_currency_count": 7,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CAD": 1,
+        "CHF": 1,
+        "EUR": 1,
+        "JPY": 1,
+        "NOK": 1,
+        "NZD": 1
+      },
+      "gross_return": 0.018541558526573933,
+      "month": "2007-03",
+      "net_return": 0.017541558526573933,
+      "next_month": "2007-04"
+    },
+    {
+      "active_currency_count": 8,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CHF": 1,
+        "EUR": 1,
+        "GBP": 1,
+        "JPY": 1,
+        "NOK": 1,
+        "NZD": 1,
+        "SEK": 1
+      },
+      "gross_return": -0.011519927161626049,
+      "month": "2007-04",
+      "net_return": -0.01251992716162605,
+      "next_month": "2007-05"
+    },
+    {
+      "active_currency_count": 5,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "EUR": 1,
+        "GBP": 1,
+        "NOK": 1,
+        "NZD": 1
+      },
+      "gross_return": 0.023125235330973326,
+      "month": "2007-05",
+      "net_return": 0.022125235330973325,
+      "next_month": "2007-06"
+    },
+    {
+      "active_currency_count": 6,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "EUR": 1,
+        "GBP": 1,
+        "NOK": 1,
+        "NZD": 1,
+        "SEK": 1
+      },
+      "gross_return": 0.013211756524305437,
+      "month": "2007-06",
+      "net_return": 0.012211756524305437,
+      "next_month": "2007-07"
+    },
+    {
+      "active_currency_count": 7,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CAD": 1,
+        "EUR": 1,
+        "GBP": 1,
+        "NOK": 1,
+        "NZD": 1,
+        "SEK": 1
+      },
+      "gross_return": -0.0212829311844588,
+      "month": "2007-07",
+      "net_return": -0.0222829311844588,
+      "next_month": "2007-08"
+    },
+    {
+      "active_currency_count": 3,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": 1,
+        "GBP": 1,
+        "NOK": 1
+      },
+      "gross_return": 0.042019543604274116,
+      "month": "2007-08",
+      "net_return": 0.041019543604274115,
+      "next_month": "2007-09"
+    },
+    {
+      "active_currency_count": 8,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CAD": 1,
+        "CHF": 1,
+        "EUR": 1,
+        "GBP": 1,
+        "JPY": 1,
+        "NOK": 1,
+        "SEK": 1
+      },
+      "gross_return": 0.02041634837532668,
+      "month": "2007-09",
+      "net_return": 0.01941634837532668,
+      "next_month": "2007-10"
+    },
+    {
+      "active_currency_count": 7,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CAD": 1,
+        "CHF": 1,
+        "GBP": 1,
+        "JPY": 1,
+        "NOK": 1,
+        "SEK": 1
+      },
+      "gross_return": -0.003612431696827652,
+      "month": "2007-10",
+      "net_return": -0.004612431696827652,
+      "next_month": "2007-11"
+    },
+    {
+      "active_currency_count": 9,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CAD": 1,
+        "CHF": 1,
+        "EUR": 1,
+        "GBP": 1,
+        "JPY": 1,
+        "NOK": 1,
+        "NZD": 1,
+        "SEK": 1
+      },
+      "gross_return": -0.0037349589287648836,
+      "month": "2007-11",
+      "net_return": -0.004734958928764884,
+      "next_month": "2007-12"
+    },
+    {
+      "active_currency_count": 7,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": 1,
+        "CHF": 1,
+        "EUR": 1,
+        "JPY": 1,
+        "NOK": 1,
+        "NZD": 1,
+        "SEK": 1
+      },
+      "gross_return": 0.01465230141145716,
+      "month": "2007-12",
+      "net_return": 0.013652301411457159,
+      "next_month": "2008-01"
+    },
+    {
+      "active_currency_count": 5,
+      "cost_return": 0.001,
+      "directions": {
+        "CHF": 1,
+        "EUR": 1,
+        "JPY": 1,
+        "NZD": 1,
+        "SEK": 1
+      },
+      "gross_return": 0.024497334677829788,
+      "month": "2008-01",
+      "net_return": 0.023497334677829787,
+      "next_month": "2008-02"
+    },
+    {
+      "active_currency_count": 7,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CAD": 1,
+        "CHF": 1,
+        "EUR": 1,
+        "JPY": 1,
+        "NZD": 1,
+        "SEK": 1
+      },
+      "gross_return": 0.012883528486143886,
+      "month": "2008-02",
+      "net_return": 0.011883528486143886,
+      "next_month": "2008-03"
+    },
+    {
+      "active_currency_count": 6,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CHF": 1,
+        "EUR": 1,
+        "JPY": 1,
+        "NZD": 1,
+        "SEK": 1
+      },
+      "gross_return": -0.018600766360393758,
+      "month": "2008-03",
+      "net_return": -0.01960076636039376,
+      "next_month": "2008-04"
+    },
+    {
+      "active_currency_count": 4,
+      "cost_return": 0.001,
+      "directions": {
+        "EUR": 1,
+        "JPY": 1,
+        "NZD": -1,
+        "SEK": 1
+      },
+      "gross_return": -0.004217905268291476,
+      "month": "2008-04",
+      "net_return": -0.005217905268291476,
+      "next_month": "2008-05"
+    },
+    {
+      "active_currency_count": 3,
+      "cost_return": 0.001,
+      "directions": {
+        "EUR": 1,
+        "NOK": 1,
+        "SEK": 1
+      },
+      "gross_return": 0.007095519676117948,
+      "month": "2008-05",
+      "net_return": 0.006095519676117948,
+      "next_month": "2008-06"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "NOK": 1,
+        "NZD": -1
+      },
+      "gross_return": 0.015120421377787656,
+      "month": "2008-06",
+      "net_return": 0.014120421377787656,
+      "next_month": "2008-07"
+    },
+    {
+      "active_currency_count": 4,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": -1,
+        "CHF": -1,
+        "NZD": -1,
+        "SEK": -1
+      },
+      "gross_return": 0.042000838912210806,
+      "month": "2008-07",
+      "net_return": 0.041000838912210805,
+      "next_month": "2008-08"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": -1
+      },
+      "gross_return": -0.0062823040893179765,
+      "month": "2008-08",
+      "net_return": -0.0072823040893179765,
+      "next_month": "2008-09"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "JPY": 1
+      },
+      "gross_return": 0.026134297585756628,
+      "month": "2008-10",
+      "net_return": 0.025134297585756627,
+      "next_month": "2008-11"
+    },
+    {
+      "active_currency_count": 6,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "CHF": -1,
+        "GBP": -1,
+        "JPY": 1,
+        "NOK": -1,
+        "NZD": -1
+      },
+      "gross_return": -0.021663320668165606,
+      "month": "2008-11",
+      "net_return": -0.022663320668165607,
+      "next_month": "2008-12"
+    },
+    {
+      "active_currency_count": 7,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "CAD": -1,
+        "EUR": -1,
+        "GBP": -1,
+        "NOK": -1,
+        "NZD": -1,
+        "SEK": -1
+      },
+      "gross_return": 0.0527854993419412,
+      "month": "2008-12",
+      "net_return": 0.051785499341941196,
+      "next_month": "2009-01"
+    },
+    {
+      "active_currency_count": 7,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "CAD": -1,
+        "CHF": -1,
+        "GBP": -1,
+        "NOK": -1,
+        "NZD": -1,
+        "SEK": -1
+      },
+      "gross_return": 0.02261562878409634,
+      "month": "2009-01",
+      "net_return": 0.021615628784096338,
+      "next_month": "2009-02"
+    },
+    {
+      "active_currency_count": 8,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "CAD": -1,
+        "EUR": -1,
+        "GBP": -1,
+        "JPY": -1,
+        "NOK": -1,
+        "NZD": -1,
+        "SEK": -1
+      },
+      "gross_return": -0.05306734845294663,
+      "month": "2009-02",
+      "net_return": -0.05406734845294663,
+      "next_month": "2009-03"
+    },
+    {
+      "active_currency_count": 7,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": -1,
+        "CHF": -1,
+        "EUR": -1,
+        "GBP": -1,
+        "JPY": -1,
+        "NZD": -1,
+        "SEK": -1
+      },
+      "gross_return": -0.015747328679441532,
+      "month": "2009-03",
+      "net_return": -0.016747328679441533,
+      "next_month": "2009-04"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "CHF": 1
+      },
+      "gross_return": 0.05604337818857358,
+      "month": "2009-04",
+      "net_return": 0.05504337818857358,
+      "next_month": "2009-05"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CHF": 1
+      },
+      "gross_return": 0.006949446401515201,
+      "month": "2009-05",
+      "net_return": 0.005949446401515201,
+      "next_month": "2009-06"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "JPY": 1
+      },
+      "gross_return": 0.04103202460494661,
+      "month": "2009-08",
+      "net_return": 0.040032024604946606,
+      "next_month": "2009-09"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "GBP": -1,
+        "JPY": 1
+      },
+      "gross_return": -0.022135128058694685,
+      "month": "2009-09",
+      "net_return": -0.023135128058694686,
+      "next_month": "2009-10"
+    },
+    {
+      "active_currency_count": 5,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "GBP": 1,
+        "JPY": 1,
+        "NOK": 1,
+        "NZD": 1
+      },
+      "gross_return": 0.006861494460392603,
+      "month": "2009-10",
+      "net_return": 0.005861494460392603,
+      "next_month": "2009-11"
+    },
+    {
+      "active_currency_count": 8,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CAD": 1,
+        "EUR": 1,
+        "GBP": 1,
+        "JPY": 1,
+        "NOK": 1,
+        "NZD": 1,
+        "SEK": 1
+      },
+      "gross_return": -0.019363699986939313,
+      "month": "2009-11",
+      "net_return": -0.020363699986939314,
+      "next_month": "2009-12"
+    },
+    {
+      "active_currency_count": 5,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CAD": 1,
+        "GBP": 1,
+        "NOK": 1,
+        "NZD": 1
+      },
+      "gross_return": -0.016271183991575934,
+      "month": "2009-12",
+      "net_return": -0.017271183991575935,
+      "next_month": "2010-01"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": 1,
+        "JPY": 1
+      },
+      "gross_return": 0.011877615142282458,
+      "month": "2010-01",
+      "net_return": 0.010877615142282457,
+      "next_month": "2010-02"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CAD": 1
+      },
+      "gross_return": 0.014604271605163387,
+      "month": "2010-03",
+      "net_return": 0.013604271605163386,
+      "next_month": "2010-04"
+    },
+    {
+      "active_currency_count": 4,
+      "cost_return": 0.001,
+      "directions": {
+        "CHF": -1,
+        "GBP": -1,
+        "JPY": -1,
+        "NOK": -1
+      },
+      "gross_return": 0.04578217552314147,
+      "month": "2010-04",
+      "net_return": 0.04478217552314147,
+      "next_month": "2010-05"
+    },
+    {
+      "active_currency_count": 8,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "CHF": -1,
+        "EUR": -1,
+        "GBP": -1,
+        "JPY": -1,
+        "NOK": -1,
+        "NZD": -1,
+        "SEK": -1
+      },
+      "gross_return": -0.019418542465240718,
+      "month": "2010-05",
+      "net_return": -0.02041854246524072,
+      "next_month": "2010-06"
+    },
+    {
+      "active_currency_count": 6,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "CHF": -1,
+        "EUR": -1,
+        "GBP": -1,
+        "NOK": -1,
+        "SEK": -1
+      },
+      "gross_return": -0.05470657843530271,
+      "month": "2010-06",
+      "net_return": -0.05570657843530271,
+      "next_month": "2010-07"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "EUR": -1
+      },
+      "gross_return": 0.021443970404070874,
+      "month": "2010-07",
+      "net_return": 0.020443970404070873,
+      "next_month": "2010-08"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": -1,
+        "NOK": 1
+      },
+      "gross_return": 0.024724765221297098,
+      "month": "2010-08",
+      "net_return": 0.023724765221297097,
+      "next_month": "2010-09"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "NOK": 1
+      },
+      "gross_return": -0.012527108426236043,
+      "month": "2010-09",
+      "net_return": -0.013527108426236042,
+      "next_month": "2010-10"
+    },
+    {
+      "active_currency_count": 4,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CHF": 1,
+        "JPY": 1,
+        "NZD": 1
+      },
+      "gross_return": 0.05167865882015659,
+      "month": "2010-11",
+      "net_return": 0.05067865882015659,
+      "next_month": "2010-12"
+    },
+    {
+      "active_currency_count": 3,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "EUR": -1,
+        "GBP": -1
+      },
+      "gross_return": -0.023617577763629646,
+      "month": "2010-12",
+      "net_return": -0.024617577763629647,
+      "next_month": "2011-01"
+    },
+    {
+      "active_currency_count": 3,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "EUR": -1,
+        "JPY": -1
+      },
+      "gross_return": 0.002782204815629668,
+      "month": "2011-01",
+      "net_return": 0.0017822048156296679,
+      "next_month": "2011-02"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1
+      },
+      "gross_return": 0.01672856091656155,
+      "month": "2011-02",
+      "net_return": 0.015728560916561548,
+      "next_month": "2011-03"
+    },
+    {
+      "active_currency_count": 5,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CAD": 1,
+        "CHF": 1,
+        "NOK": 1,
+        "NZD": -1
+      },
+      "gross_return": 0.026446193130790475,
+      "month": "2011-03",
+      "net_return": 0.025446193130790475,
+      "next_month": "2011-04"
+    },
+    {
+      "active_currency_count": 7,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CAD": 1,
+        "CHF": 1,
+        "EUR": 1,
+        "JPY": 1,
+        "NOK": 1,
+        "SEK": 1
+      },
+      "gross_return": -0.01907622564656379,
+      "month": "2011-04",
+      "net_return": -0.02007622564656379,
+      "next_month": "2011-05"
+    },
+    {
+      "active_currency_count": 8,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CAD": 1,
+        "CHF": 1,
+        "EUR": 1,
+        "GBP": 1,
+        "JPY": 1,
+        "NOK": 1,
+        "SEK": 1
+      },
+      "gross_return": -0.00030998858606291714,
+      "month": "2011-05",
+      "net_return": -0.0013099885860629172,
+      "next_month": "2011-06"
+    },
+    {
+      "active_currency_count": 7,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CAD": 1,
+        "CHF": 1,
+        "EUR": 1,
+        "JPY": 1,
+        "NOK": 1,
+        "NZD": 1
+      },
+      "gross_return": 0.01957107474585931,
+      "month": "2011-06",
+      "net_return": 0.018571074745859308,
+      "next_month": "2011-07"
+    },
+    {
+      "active_currency_count": 3,
+      "cost_return": 0.001,
+      "directions": {
+        "CHF": 1,
+        "JPY": 1,
+        "NZD": 1
+      },
+      "gross_return": -0.0026577725244922657,
+      "month": "2011-07",
+      "net_return": -0.0036577725244922657,
+      "next_month": "2011-08"
+    },
+    {
+      "active_currency_count": 5,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CHF": 1,
+        "EUR": 1,
+        "JPY": 1,
+        "NOK": 1
+      },
+      "gross_return": -0.0723905146486291,
+      "month": "2011-08",
+      "net_return": -0.0733905146486291,
+      "next_month": "2011-09"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "NZD": -1
+      },
+      "gross_return": -0.06127408128760253,
+      "month": "2011-09",
+      "net_return": -0.062274081287602534,
+      "next_month": "2011-10"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "JPY": -1,
+        "NZD": -1
+      },
+      "gross_return": 0.022582392631095155,
+      "month": "2011-10",
+      "net_return": 0.021582392631095154,
+      "next_month": "2011-11"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "GBP": -1
+      },
+      "gross_return": 0.012105794854913837,
+      "month": "2011-11",
+      "net_return": 0.011105794854913836,
+      "next_month": "2011-12"
+    },
+    {
+      "active_currency_count": 4,
+      "cost_return": 0.001,
+      "directions": {
+        "EUR": -1,
+        "GBP": -1,
+        "NOK": -1,
+        "NZD": 1
+      },
+      "gross_return": 0.000227682512685185,
+      "month": "2011-12",
+      "net_return": -0.000772317487314815,
+      "next_month": "2012-01"
+    },
+    {
+      "active_currency_count": 5,
+      "cost_return": 0.001,
+      "directions": {
+        "EUR": -1,
+        "GBP": -1,
+        "JPY": 1,
+        "NOK": -1,
+        "NZD": 1
+      },
+      "gross_return": -0.02141271136898487,
+      "month": "2012-01",
+      "net_return": -0.022412711368984872,
+      "next_month": "2012-02"
+    },
+    {
+      "active_currency_count": 3,
+      "cost_return": 0.001,
+      "directions": {
+        "CHF": 1,
+        "JPY": -1,
+        "NZD": 1
+      },
+      "gross_return": -0.004268964040464285,
+      "month": "2012-02",
+      "net_return": -0.005268964040464285,
+      "next_month": "2012-03"
+    },
+    {
+      "active_currency_count": 3,
+      "cost_return": 0.001,
+      "directions": {
+        "GBP": 1,
+        "JPY": -1,
+        "NZD": 1
+      },
+      "gross_return": -0.004073997366276562,
+      "month": "2012-03",
+      "net_return": -0.005073997366276562,
+      "next_month": "2012-04"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "GBP": 1,
+        "JPY": -1
+      },
+      "gross_return": -0.032174086949518614,
+      "month": "2012-04",
+      "net_return": -0.033174086949518615,
+      "next_month": "2012-05"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "NOK": -1
+      },
+      "gross_return": -0.013702545111398966,
+      "month": "2012-05",
+      "net_return": -0.014702545111398967,
+      "next_month": "2012-06"
+    },
+    {
+      "active_currency_count": 4,
+      "cost_return": 0.001,
+      "directions": {
+        "CHF": -1,
+        "EUR": -1,
+        "NOK": -1,
+        "NZD": -1
+      },
+      "gross_return": 0.011161968323584789,
+      "month": "2012-06",
+      "net_return": 0.010161968323584788,
+      "next_month": "2012-07"
+    },
+    {
+      "active_currency_count": 6,
+      "cost_return": 0.001,
+      "directions": {
+        "CHF": -1,
+        "EUR": -1,
+        "GBP": -1,
+        "NOK": -1,
+        "NZD": -1,
+        "SEK": -1
+      },
+      "gross_return": -0.021481312043221693,
+      "month": "2012-07",
+      "net_return": -0.022481312043221693,
+      "next_month": "2012-08"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "NZD": 1
+      },
+      "gross_return": -0.004011473043038535,
+      "month": "2012-10",
+      "net_return": -0.005011473043038535,
+      "next_month": "2012-11"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "GBP": 1,
+        "NZD": 1
+      },
+      "gross_return": 0.006991590633777479,
+      "month": "2012-11",
+      "net_return": 0.005991590633777479,
+      "next_month": "2012-12"
+    },
+    {
+      "active_currency_count": 3,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "EUR": 1,
+        "SEK": 1
+      },
+      "gross_return": 0.014617605973332306,
+      "month": "2012-12",
+      "net_return": 0.013617605973332305,
+      "next_month": "2013-01"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "EUR": 1,
+        "SEK": 1
+      },
+      "gross_return": -0.020731727066532337,
+      "month": "2013-01",
+      "net_return": -0.021731727066532338,
+      "next_month": "2013-02"
+    },
+    {
+      "active_currency_count": 4,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "GBP": -1,
+        "JPY": -1,
+        "NOK": -1
+      },
+      "gross_return": 0.01034141634192904,
+      "month": "2013-02",
+      "net_return": 0.009341416341929039,
+      "next_month": "2013-03"
+    },
+    {
+      "active_currency_count": 4,
+      "cost_return": 0.001,
+      "directions": {
+        "CHF": -1,
+        "GBP": -1,
+        "JPY": -1,
+        "NOK": -1
+      },
+      "gross_return": -0.003927245139559466,
+      "month": "2013-03",
+      "net_return": -0.004927245139559466,
+      "next_month": "2013-04"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": 1,
+        "JPY": -1
+      },
+      "gross_return": -0.010349937851584619,
+      "month": "2017-01",
+      "net_return": -0.01134993785158462,
+      "next_month": "2017-02"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "EUR": -1,
+        "NOK": 1
+      },
+      "gross_return": -0.016577949598156005,
+      "month": "2017-02",
+      "net_return": -0.017577949598156006,
+      "next_month": "2017-03"
+    },
+    {
+      "active_currency_count": 3,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "NOK": 1,
+        "SEK": 1
+      },
+      "gross_return": -0.002058090266200894,
+      "month": "2017-03",
+      "net_return": -0.003058090266200894,
+      "next_month": "2017-04"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "JPY": 1
+      },
+      "gross_return": 0.004825437732737383,
+      "month": "2017-04",
+      "net_return": 0.003825437732737383,
+      "next_month": "2017-05"
+    },
+    {
+      "active_currency_count": 3,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "NZD": -1,
+        "SEK": 1
+      },
+      "gross_return": -0.011163292000198078,
+      "month": "2017-05",
+      "net_return": -0.012163292000198077,
+      "next_month": "2017-06"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "JPY": -1
+      },
+      "gross_return": -0.012079581098754844,
+      "month": "2017-06",
+      "net_return": -0.013079581098754844,
+      "next_month": "2017-07"
+    },
+    {
+      "active_currency_count": 3,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": 1,
+        "CHF": -1,
+        "JPY": -1
+      },
+      "gross_return": 0.0003611287348054275,
+      "month": "2017-09",
+      "net_return": -0.0006388712651945725,
+      "next_month": "2017-10"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "SEK": -1
+      },
+      "gross_return": 0.00027067844493259587,
+      "month": "2017-10",
+      "net_return": -0.0007293215550674042,
+      "next_month": "2017-11"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "EUR": 1,
+        "GBP": 1
+      },
+      "gross_return": 0.007902896932018726,
+      "month": "2017-11",
+      "net_return": 0.006902896932018726,
+      "next_month": "2017-12"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "CHF": -1
+      },
+      "gross_return": -0.04404543863258128,
+      "month": "2017-12",
+      "net_return": -0.04504543863258128,
+      "next_month": "2018-01"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "SEK": 1
+      },
+      "gross_return": -0.05271922849492441,
+      "month": "2018-01",
+      "net_return": -0.05371922849492441,
+      "next_month": "2018-02"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "CAD": -1
+      },
+      "gross_return": 0.007889580070240076,
+      "month": "2018-03",
+      "net_return": 0.006889580070240076,
+      "next_month": "2018-04"
+    },
+    {
+      "active_currency_count": 4,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "CAD": -1,
+        "JPY": -1,
+        "NOK": -1
+      },
+      "gross_return": 0.0017180987346444641,
+      "month": "2018-04",
+      "net_return": 0.0007180987346444641,
+      "next_month": "2018-05"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": -1,
+        "NOK": -1
+      },
+      "gross_return": 0.01540121449382845,
+      "month": "2018-05",
+      "net_return": 0.01440121449382845,
+      "next_month": "2018-06"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": -1,
+        "NOK": -1
+      },
+      "gross_return": -0.010181858005892865,
+      "month": "2018-06",
+      "net_return": -0.011181858005892865,
+      "next_month": "2018-07"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "EUR": -1
+      },
+      "gross_return": 0.007268617700327342,
+      "month": "2018-07",
+      "net_return": 0.006268617700327342,
+      "next_month": "2018-08"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "EUR": -1
+      },
+      "gross_return": 0.006458225008862506,
+      "month": "2018-08",
+      "net_return": 0.005458225008862506,
+      "next_month": "2018-09"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "EUR": -1
+      },
+      "gross_return": 0.02253953141151257,
+      "month": "2018-09",
+      "net_return": 0.021539531411512568,
+      "next_month": "2018-10"
+    },
+    {
+      "active_currency_count": 8,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "CAD": -1,
+        "CHF": -1,
+        "EUR": -1,
+        "JPY": -1,
+        "NOK": -1,
+        "NZD": -1,
+        "SEK": -1
+      },
+      "gross_return": -0.008722795543958451,
+      "month": "2018-10",
+      "net_return": -0.00972279554395845,
+      "next_month": "2018-11"
+    },
+    {
+      "active_currency_count": 6,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": -1,
+        "CHF": -1,
+        "EUR": -1,
+        "GBP": -1,
+        "JPY": -1,
+        "NOK": -1
+      },
+      "gross_return": -0.003581529884085973,
+      "month": "2018-11",
+      "net_return": -0.004581529884085973,
+      "next_month": "2018-12"
+    },
+    {
+      "active_currency_count": 6,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "CHF": -1,
+        "EUR": -1,
+        "GBP": -1,
+        "NOK": -1,
+        "SEK": -1
+      },
+      "gross_return": -0.01224725973588269,
+      "month": "2018-12",
+      "net_return": -0.013247259735882689,
+      "next_month": "2019-01"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "NZD": -1
+      },
+      "gross_return": 0.005157042893455594,
+      "month": "2019-02",
+      "net_return": 0.004157042893455594,
+      "next_month": "2019-03"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "CHF": -1,
+        "SEK": -1
+      },
+      "gross_return": 0.024101367459728927,
+      "month": "2019-03",
+      "net_return": 0.023101367459728926,
+      "next_month": "2019-04"
+    },
+    {
+      "active_currency_count": 6,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "CAD": -1,
+        "CHF": -1,
+        "GBP": -1,
+        "NZD": -1,
+        "SEK": -1
+      },
+      "gross_return": 0.013443865296008106,
+      "month": "2019-04",
+      "net_return": 0.012443865296008105,
+      "next_month": "2019-05"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "CHF": 1,
+        "NOK": 1
+      },
+      "gross_return": -0.02175200246620352,
+      "month": "2019-06",
+      "net_return": -0.02275200246620352,
+      "next_month": "2019-07"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "NZD": -1
+      },
+      "gross_return": 0.0017480891788155795,
+      "month": "2019-08",
+      "net_return": 0.0007480891788155795,
+      "next_month": "2019-09"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "NZD": -1
+      },
+      "gross_return": -0.024966159743090247,
+      "month": "2019-09",
+      "net_return": -0.025966159743090248,
+      "next_month": "2019-10"
+    },
+    {
+      "active_currency_count": 4,
+      "cost_return": 0.001,
+      "directions": {
+        "CHF": 1,
+        "EUR": 1,
+        "GBP": 1,
+        "JPY": 1
+      },
+      "gross_return": -0.012064968661637442,
+      "month": "2019-10",
+      "net_return": -0.013064968661637442,
+      "next_month": "2019-11"
+    },
+    {
+      "active_currency_count": 3,
+      "cost_return": 0.001,
+      "directions": {
+        "GBP": 1,
+        "NZD": 1,
+        "SEK": 1
+      },
+      "gross_return": 0.033566714393942675,
+      "month": "2019-11",
+      "net_return": 0.032566714393942674,
+      "next_month": "2019-12"
+    },
+    {
+      "active_currency_count": 6,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": 1,
+        "CHF": 1,
+        "EUR": 1,
+        "GBP": 1,
+        "NOK": 1,
+        "NZD": 1
+      },
+      "gross_return": -0.022066906533500838,
+      "month": "2019-12",
+      "net_return": -0.02306690653350084,
+      "next_month": "2020-01"
+    },
+    {
+      "active_currency_count": 3,
+      "cost_return": 0.001,
+      "directions": {
+        "CHF": 1,
+        "GBP": 1,
+        "NZD": 1
+      },
+      "gross_return": -0.018880038182216796,
+      "month": "2020-01",
+      "net_return": -0.019880038182216796,
+      "next_month": "2020-02"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "CHF": 1
+      },
+      "gross_return": 0.0008214920944051545,
+      "month": "2020-02",
+      "net_return": -0.00017850790559484548,
+      "next_month": "2020-03"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "CHF": 1,
+        "JPY": 1
+      },
+      "gross_return": 0.006855275030143992,
+      "month": "2020-03",
+      "net_return": 0.005855275030143992,
+      "next_month": "2020-04"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "JPY": 1
+      },
+      "gross_return": -0.005464053926618189,
+      "month": "2020-04",
+      "net_return": -0.006464053926618189,
+      "next_month": "2020-05"
+    },
+    {
+      "active_currency_count": 4,
+      "cost_return": 0.001,
+      "directions": {
+        "CHF": 1,
+        "EUR": 1,
+        "JPY": 1,
+        "SEK": 1
+      },
+      "gross_return": 0.004125853170789724,
+      "month": "2020-05",
+      "net_return": 0.003125853170789724,
+      "next_month": "2020-06"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": 1,
+        "GBP": -1
+      },
+      "gross_return": -0.024950469829971955,
+      "month": "2020-06",
+      "net_return": -0.025950469829971956,
+      "next_month": "2020-07"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": 1
+      },
+      "gross_return": 0.026593765050485167,
+      "month": "2020-07",
+      "net_return": 0.025593765050485166,
+      "next_month": "2020-08"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1
+      },
+      "gross_return": -0.03334254082657015,
+      "month": "2020-08",
+      "net_return": -0.03434254082657015,
+      "next_month": "2020-09"
+    },
+    {
+      "active_currency_count": 7,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CAD": 1,
+        "CHF": 1,
+        "EUR": 1,
+        "GBP": 1,
+        "JPY": 1,
+        "NZD": 1
+      },
+      "gross_return": 0.005702906912235347,
+      "month": "2020-09",
+      "net_return": 0.004702906912235347,
+      "next_month": "2020-10"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": 1,
+        "JPY": 1
+      },
+      "gross_return": 0.015275497265063873,
+      "month": "2020-10",
+      "net_return": 0.014275497265063872,
+      "next_month": "2020-11"
+    },
+    {
+      "active_currency_count": 6,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": 1,
+        "EUR": 1,
+        "GBP": 1,
+        "JPY": 1,
+        "NZD": 1,
+        "SEK": 1
+      },
+      "gross_return": 0.02317345049320425,
+      "month": "2020-11",
+      "net_return": 0.02217345049320425,
+      "next_month": "2020-12"
+    },
+    {
+      "active_currency_count": 4,
+      "cost_return": 0.001,
+      "directions": {
+        "EUR": 1,
+        "GBP": 1,
+        "JPY": 1,
+        "SEK": 1
+      },
+      "gross_return": -0.009807522014533148,
+      "month": "2020-12",
+      "net_return": -0.010807522014533149,
+      "next_month": "2021-01"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "NOK": 1,
+        "SEK": 1
+      },
+      "gross_return": -0.0054151960875940975,
+      "month": "2021-01",
+      "net_return": -0.0064151960875940975,
+      "next_month": "2021-02"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "EUR": -1,
+        "SEK": -1
+      },
+      "gross_return": -0.03363468992969022,
+      "month": "2021-03",
+      "net_return": -0.034634689929690224,
+      "next_month": "2021-04"
+    },
+    {
+      "active_currency_count": 6,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CAD": 1,
+        "EUR": -1,
+        "GBP": 1,
+        "NZD": 1,
+        "SEK": -1
+      },
+      "gross_return": 0.00273735485399829,
+      "month": "2021-04",
+      "net_return": 0.00173735485399829,
+      "next_month": "2021-05"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "CHF": 1,
+        "GBP": 1
+      },
+      "gross_return": -0.02502293316744906,
+      "month": "2021-05",
+      "net_return": -0.02602293316744906,
+      "next_month": "2021-06"
+    },
+    {
+      "active_currency_count": 6,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": 1,
+        "CHF": 1,
+        "EUR": 1,
+        "GBP": 1,
+        "JPY": 1,
+        "SEK": 1
+      },
+      "gross_return": 0.0043884394669178465,
+      "month": "2021-06",
+      "net_return": 0.0033884394669178464,
+      "next_month": "2021-07"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "CHF": 1,
+        "GBP": 1
+      },
+      "gross_return": -0.010400605646413036,
+      "month": "2021-07",
+      "net_return": -0.011400605646413035,
+      "next_month": "2021-08"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "NZD": -1
+      },
+      "gross_return": -0.04418426064986976,
+      "month": "2021-09",
+      "net_return": -0.04518426064986976,
+      "next_month": "2021-10"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "EUR": -1,
+        "GBP": -1
+      },
+      "gross_return": 0.02853978456812619,
+      "month": "2021-10",
+      "net_return": 0.02753978456812619,
+      "next_month": "2021-11"
+    },
+    {
+      "active_currency_count": 7,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": -1,
+        "CHF": -1,
+        "EUR": -1,
+        "GBP": -1,
+        "NOK": -1,
+        "NZD": -1,
+        "SEK": -1
+      },
+      "gross_return": -0.006423450604378985,
+      "month": "2021-11",
+      "net_return": -0.007423450604378985,
+      "next_month": "2021-12"
+    },
+    {
+      "active_currency_count": 4,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CHF": 1,
+        "EUR": -1,
+        "SEK": -1
+      },
+      "gross_return": 0.0007341795519992217,
+      "month": "2021-12",
+      "net_return": -0.00026582044800077835,
+      "next_month": "2022-01"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "EUR": -1
+      },
+      "gross_return": -0.0038472849335280364,
+      "month": "2022-01",
+      "net_return": -0.0048472849335280364,
+      "next_month": "2022-02"
+    },
+    {
+      "active_currency_count": 3,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CAD": 1,
+        "NOK": 1
+      },
+      "gross_return": 0.022834016441684153,
+      "month": "2022-02",
+      "net_return": 0.021834016441684152,
+      "next_month": "2022-03"
+    },
+    {
+      "active_currency_count": 3,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CAD": 1,
+        "NOK": 1
+      },
+      "gross_return": -0.038874616300500806,
+      "month": "2022-03",
+      "net_return": -0.039874616300500806,
+      "next_month": "2022-04"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CAD": 1
+      },
+      "gross_return": 0.002938777446683997,
+      "month": "2022-04",
+      "net_return": 0.0019387774466839971,
+      "next_month": "2022-05"
+    },
+    {
+      "active_currency_count": 3,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "EUR": -1,
+        "SEK": -1
+      },
+      "gross_return": 0.04164263446661568,
+      "month": "2022-05",
+      "net_return": 0.04064263446661568,
+      "next_month": "2022-06"
+    },
+    {
+      "active_currency_count": 9,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "CAD": -1,
+        "CHF": -1,
+        "EUR": -1,
+        "GBP": -1,
+        "JPY": -1,
+        "NOK": -1,
+        "NZD": -1,
+        "SEK": -1
+      },
+      "gross_return": -0.008294435677491331,
+      "month": "2022-06",
+      "net_return": -0.00929443567749133,
+      "next_month": "2022-07"
+    },
+    {
+      "active_currency_count": 8,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "CAD": -1,
+        "EUR": -1,
+        "GBP": -1,
+        "JPY": -1,
+        "NOK": -1,
+        "NZD": -1,
+        "SEK": -1
+      },
+      "gross_return": 0.028870138684577863,
+      "month": "2022-07",
+      "net_return": 0.027870138684577862,
+      "next_month": "2022-08"
+    },
+    {
+      "active_currency_count": 9,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "CAD": -1,
+        "CHF": -1,
+        "EUR": -1,
+        "GBP": -1,
+        "JPY": -1,
+        "NOK": -1,
+        "NZD": -1,
+        "SEK": -1
+      },
+      "gross_return": 0.04852615865605242,
+      "month": "2022-08",
+      "net_return": 0.04752615865605242,
+      "next_month": "2022-09"
+    },
+    {
+      "active_currency_count": 9,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "CAD": -1,
+        "CHF": -1,
+        "EUR": -1,
+        "GBP": -1,
+        "JPY": -1,
+        "NOK": -1,
+        "NZD": -1,
+        "SEK": -1
+      },
+      "gross_return": -0.009529396671118923,
+      "month": "2022-09",
+      "net_return": -0.010529396671118924,
+      "next_month": "2022-10"
+    },
+    {
+      "active_currency_count": 8,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "CHF": -1,
+        "EUR": -1,
+        "GBP": -1,
+        "JPY": -1,
+        "NOK": -1,
+        "NZD": -1,
+        "SEK": -1
+      },
+      "gross_return": -0.05294362464802596,
+      "month": "2022-10",
+      "net_return": -0.05394362464802596,
+      "next_month": "2022-11"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "JPY": -1
+      },
+      "gross_return": -0.03165818949056474,
+      "month": "2022-11",
+      "net_return": -0.03265818949056474,
+      "next_month": "2022-12"
+    },
+    {
+      "active_currency_count": 3,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": -1,
+        "NOK": -1,
+        "NZD": -1
+      },
+      "gross_return": -0.0003737284441214585,
+      "month": "2023-02",
+      "net_return": -0.0013737284441214586,
+      "next_month": "2023-03"
+    },
+    {
+      "active_currency_count": 6,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "CAD": -1,
+        "EUR": 1,
+        "JPY": -1,
+        "NOK": -1,
+        "NZD": -1
+      },
+      "gross_return": 0.015571924723745124,
+      "month": "2023-03",
+      "net_return": 0.014571924723745123,
+      "next_month": "2023-04"
+    },
+    {
+      "active_currency_count": 5,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "EUR": 1,
+        "JPY": -1,
+        "NOK": -1,
+        "NZD": -1
+      },
+      "gross_return": 0.01699087062548188,
+      "month": "2023-04",
+      "net_return": 0.01599087062548188,
+      "next_month": "2023-05"
+    },
+    {
+      "active_currency_count": 5,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "EUR": 1,
+        "JPY": -1,
+        "NOK": -1,
+        "NZD": -1
+      },
+      "gross_return": -0.00524639318143037,
+      "month": "2023-05",
+      "net_return": -0.00624639318143037,
+      "next_month": "2023-06"
+    },
+    {
+      "active_currency_count": 4,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "JPY": -1,
+        "NOK": -1,
+        "NZD": -1
+      },
+      "gross_return": -0.02708430442926692,
+      "month": "2023-06",
+      "net_return": -0.02808430442926692,
+      "next_month": "2023-07"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "EUR": 1,
+        "JPY": -1
+      },
+      "gross_return": 0.00558370609593128,
+      "month": "2023-07",
+      "net_return": 0.00458370609593128,
+      "next_month": "2023-08"
+    },
+    {
+      "active_currency_count": 4,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "JPY": -1,
+        "NZD": -1,
+        "SEK": -1
+      },
+      "gross_return": 0.001999199365232401,
+      "month": "2023-08",
+      "net_return": 0.0009991993652324008,
+      "next_month": "2023-09"
+    },
+    {
+      "active_currency_count": 7,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": -1,
+        "CAD": -1,
+        "CHF": -1,
+        "GBP": -1,
+        "JPY": -1,
+        "NZD": -1,
+        "SEK": -1
+      },
+      "gross_return": 0.01722336541090818,
+      "month": "2023-09",
+      "net_return": 0.01622336541090818,
+      "next_month": "2023-10"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": -1,
+        "JPY": -1
+      },
+      "gross_return": -0.020848477904607796,
+      "month": "2023-10",
+      "net_return": -0.021848477904607796,
+      "next_month": "2023-11"
+    },
+    {
+      "active_currency_count": 5,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CHF": 1,
+        "EUR": 1,
+        "NZD": 1,
+        "SEK": 1
+      },
+      "gross_return": 0.02952004846012571,
+      "month": "2023-11",
+      "net_return": 0.028520048460125708,
+      "next_month": "2023-12"
+    },
+    {
+      "active_currency_count": 6,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "EUR": 1,
+        "GBP": 1,
+        "NOK": 1,
+        "NZD": 1,
+        "SEK": 1
+      },
+      "gross_return": -0.024808836668437445,
+      "month": "2023-12",
+      "net_return": -0.025808836668437446,
+      "next_month": "2024-01"
+    },
+    {
+      "active_currency_count": 5,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CAD": 1,
+        "EUR": 1,
+        "GBP": 1,
+        "SEK": 1
+      },
+      "gross_return": -0.005389076742058075,
+      "month": "2024-01",
+      "net_return": -0.006389076742058075,
+      "next_month": "2024-02"
+    },
+    {
+      "active_currency_count": 3,
+      "cost_return": 0.001,
+      "directions": {
+        "CHF": -1,
+        "JPY": -1,
+        "SEK": 1
+      },
+      "gross_return": 0.0012688941006420958,
+      "month": "2024-02",
+      "net_return": 0.0002688941006420958,
+      "next_month": "2024-03"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "NOK": -1
+      },
+      "gross_return": 0.01850608490491617,
+      "month": "2024-03",
+      "net_return": 0.017506084904916168,
+      "next_month": "2024-04"
+    },
+    {
+      "active_currency_count": 5,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "EUR": 1,
+        "GBP": 1,
+        "NOK": 1,
+        "NZD": 1
+      },
+      "gross_return": -0.008174230572177123,
+      "month": "2024-05",
+      "net_return": -0.009174230572177124,
+      "next_month": "2024-06"
+    },
+    {
+      "active_currency_count": 5,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "GBP": 1,
+        "NOK": 1,
+        "NZD": 1,
+        "SEK": 1
+      },
+      "gross_return": -0.014093401492251658,
+      "month": "2024-06",
+      "net_return": -0.015093401492251659,
+      "next_month": "2024-07"
+    },
+    {
+      "active_currency_count": 4,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": -1,
+        "GBP": 1,
+        "NOK": 1,
+        "SEK": 1
+      },
+      "gross_return": 0.021336120899458664,
+      "month": "2024-07",
+      "net_return": 0.020336120899458663,
+      "next_month": "2024-08"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "SEK": 1
+      },
+      "gross_return": 0.012919984026134845,
+      "month": "2024-08",
+      "net_return": 0.011919984026134846,
+      "next_month": "2024-09"
+    },
+    {
+      "active_currency_count": 4,
+      "cost_return": 0.001,
+      "directions": {
+        "JPY": 1,
+        "NOK": 1,
+        "NZD": 1,
+        "SEK": 1
+      },
+      "gross_return": -0.05769496939327852,
+      "month": "2024-09",
+      "net_return": -0.05869496939327852,
+      "next_month": "2024-10"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "SEK": 1
+      },
+      "gross_return": -0.020101689023647645,
+      "month": "2024-10",
+      "net_return": -0.021101689023647646,
+      "next_month": "2024-11"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": -1
+      },
+      "gross_return": 0.005418181550891076,
+      "month": "2024-12",
+      "net_return": 0.004418181550891076,
+      "next_month": "2025-01"
+    },
+    {
+      "active_currency_count": 4,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": -1,
+        "EUR": -1,
+        "GBP": -1,
+        "SEK": 1
+      },
+      "gross_return": -0.00013771219006454734,
+      "month": "2025-02",
+      "net_return": -0.0011377121900645474,
+      "next_month": "2025-03"
+    },
+    {
+      "active_currency_count": 5,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CHF": 1,
+        "JPY": 1,
+        "NOK": 1,
+        "SEK": 1
+      },
+      "gross_return": 0.03744266411195559,
+      "month": "2025-03",
+      "net_return": 0.03644266411195559,
+      "next_month": "2025-04"
+    },
+    {
+      "active_currency_count": 3,
+      "cost_return": 0.001,
+      "directions": {
+        "GBP": -1,
+        "JPY": -1,
+        "NZD": -1
+      },
+      "gross_return": -0.009814302855263815,
+      "month": "2025-07",
+      "net_return": -0.010814302855263816,
+      "next_month": "2025-08"
+    },
+    {
+      "active_currency_count": 4,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CAD": 1,
+        "CHF": 1,
+        "GBP": -1
+      },
+      "gross_return": 0.0020523680495340957,
+      "month": "2025-08",
+      "net_return": 0.0010523680495340957,
+      "next_month": "2025-09"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "EUR": 1
+      },
+      "gross_return": -0.013571836299827608,
+      "month": "2025-09",
+      "net_return": -0.014571836299827608,
+      "next_month": "2025-10"
+    },
+    {
+      "active_currency_count": 4,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "CHF": 1,
+        "EUR": 1,
+        "NOK": 1
+      },
+      "gross_return": -0.0029643441996296373,
+      "month": "2025-10",
+      "net_return": -0.003964344199629637,
+      "next_month": "2025-11"
+    },
+    {
+      "active_currency_count": 1,
+      "cost_return": 0.001,
+      "directions": {
+        "NZD": -1
+      },
+      "gross_return": -0.009236141099284488,
+      "month": "2025-11",
+      "net_return": -0.010236141099284488,
+      "next_month": "2025-12"
+    },
+    {
+      "active_currency_count": 5,
+      "cost_return": 0.001,
+      "directions": {
+        "CHF": 1,
+        "EUR": 1,
+        "GBP": 1,
+        "NZD": -1,
+        "SEK": 1
+      },
+      "gross_return": 0.011888722206439306,
+      "month": "2025-12",
+      "net_return": 0.010888722206439307,
+      "next_month": "2026-01"
+    },
+    {
+      "active_currency_count": 4,
+      "cost_return": 0.001,
+      "directions": {
+        "GBP": 1,
+        "JPY": 1,
+        "NOK": 1,
+        "SEK": 1
+      },
+      "gross_return": -0.012654218535635173,
+      "month": "2026-01",
+      "net_return": -0.013654218535635174,
+      "next_month": "2026-02"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "NOK": 1,
+        "SEK": 1
+      },
+      "gross_return": -0.0394275399323677,
+      "month": "2026-02",
+      "net_return": -0.0404275399323677,
+      "next_month": "2026-03"
+    },
+    {
+      "active_currency_count": 5,
+      "cost_return": 0.001,
+      "directions": {
+        "CAD": -1,
+        "CHF": -1,
+        "EUR": -1,
+        "JPY": -1,
+        "NZD": -1
+      },
+      "gross_return": -0.019259165327618635,
+      "month": "2026-03",
+      "net_return": -0.020259165327618636,
+      "next_month": "2026-04"
+    },
+    {
+      "active_currency_count": 4,
+      "cost_return": 0.001,
+      "directions": {
+        "CHF": -1,
+        "JPY": -1,
+        "NZD": -1,
+        "SEK": -1
+      },
+      "gross_return": -0.0019888908976731694,
+      "month": "2026-04",
+      "net_return": -0.0029888908976731694,
+      "next_month": "2026-05"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "AUD": 1,
+        "NOK": 1
+      },
+      "gross_return": -0.05535970986958155,
+      "month": "2026-05",
+      "net_return": -0.056359709869581553,
+      "next_month": "2026-06"
+    },
+    {
+      "active_currency_count": 2,
+      "cost_return": 0.001,
+      "directions": {
+        "GBP": 1,
+        "NZD": -1
+      },
+      "gross_return": 0.014075245660617611,
+      "month": "2026-08",
+      "net_return": 0.013075245660617612,
+      "next_month": "2026-09"
+    }
+  ],
+  "schema": "FX_G10_REAL_POLICY_STANCE_RESULT_V1",
+  "strategy": "REAL_POLICY_STANCE_SHIFT_3M_SPOT_CONFIRMED",
+  "window_end": "2026-09",
+  "window_start": "2000-11"
+}
