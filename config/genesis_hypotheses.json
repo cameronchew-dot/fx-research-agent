@@ -175,6 +175,21 @@
       "overlap_notes": "Economic-activity momentum is distinct from price momentum, real-exchange-rate value, policy stance, and EUR failed-auction campaigns.",
       "evidence_ids": ["CAMPAIGN_G10_INDUSTRIAL_PRODUCTION_MOMENTUM_V1_PRIMARY", "CAMPAIGN_G10_INDUSTRIAL_PRODUCTION_MOMENTUM_V1_STRESS"],
       "next_action": "CLOSED_FAILED_CHRONOLOGICAL_OOS_AND_STALE_CONTROL_DO_NOT_RETUNE"
+    },
+    {
+      "hypothesis_id": "HYP_G10_RECURSIVE_OUTPUT_GAP_V1",
+      "proposed_at_utc": "2026-10-17T20:00:00Z",
+      "proposed_by": "OPERATOR_AND_CODEX_LITERATURE_REVIEW",
+      "state": "PROPOSED",
+      "hypothesis_type": "LITERATURE_INSPIRED_REPLICATION",
+      "classification": "STRATEGY",
+      "priority": 12,
+      "statement": "Currencies of economies with stronger recursively estimated output gaps may appreciate against currencies of weaker economies over the next month.",
+      "data_requirements": ["BIS_MONTHLY_END_OF_PERIOD_SPOT", "OECD_MONTHLY_INDUSTRIAL_PRODUCTION_WITH_FIXED_INFORMATION_LAG"],
+      "dependencies": ["COMPLETE_SEVEN_ECONOMY_COMMON_PANEL", "FIXED_TWO_MONTH_INFORMATION_LAG", "RECURSIVE_FILTER_ENDPOINT"],
+      "expected_frequency": "MONTHLY_REBALANCE",
+      "overlap_notes": "Cyclical output residuals are distinct from five-year economic momentum, value, policy stance, and EUR failed-auction campaigns.",
+      "next_action": "RUN_ONLY_LOCKED_PRIMARY_AND_STRESS_SPECIFICATION"
     }
   ]
 }

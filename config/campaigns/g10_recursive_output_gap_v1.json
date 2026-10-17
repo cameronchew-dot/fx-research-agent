@@ -1,0 +1,67 @@
+{
+  "schema": "FX_RESEARCH_CAMPAIGN_V1",
+  "campaign_id": "CAMPAIGN_G10_RECURSIVE_OUTPUT_GAP_V1",
+  "hypothesis_id": "HYP_G10_RECURSIVE_OUTPUT_GAP_V1",
+  "created_at_utc": "2026-10-17T20:00:00Z",
+  "state": "DRAFT",
+  "title": "G10-subset recursive output-gap currency sort",
+  "instrument": "G10_USD_CROSS_SECTION_SUBSET",
+  "instruments": ["EUR_USD", "GBP_USD", "USD_JPY", "USD_CAD", "USD_SEK", "USD_NOK"],
+  "mechanism_class": "BUSINESS_CYCLE_OUTPUT_GAP",
+  "research_question": "Do currencies of economies with stronger recursively estimated output gaps appreciate against currencies of weaker economies over the next month?",
+  "null_hypothesis": "The locked recursive output-gap portfolio has non-positive net next-month spot return or fails to beat its controls.",
+  "required_data_classes": ["BIS_MONTHLY_END_OF_PERIOD_SPOT", "OECD_MONTHLY_INDUSTRIAL_PRODUCTION_WITH_FIXED_INFORMATION_LAG"],
+  "population": {
+    "source": "BIS_WS_XRU_AND_OECD_DF_INDSERV",
+    "currencies": ["EUR", "GBP", "JPY", "CAD", "SEK", "NOK"],
+    "output_gap_benchmark_currency": "USD",
+    "base_currency": "USD",
+    "sample_calendar": "COMMON_COMPLETED_MONTH_ENDS_ONLY",
+    "quote_normalization": "USD_VALUE_OF_ONE_UNIT_FOREIGN_CURRENCY",
+    "incomplete_inputs_are_excluded": true
+  },
+  "independence_unit": {"unit": "ONE_COMMON_MONTH_END_DECISION", "overlapping_months_count_once": true},
+  "exact_specification": {
+    "confirmatory_strategy": "RECURSIVE_HAMILTON_OUTPUT_GAP_TOP2_BOTTOM2",
+    "industrial_production_series": "OECD_DF_INDSERV_PRVM_IX_BTE_Y",
+    "output_gap_regression": "LOG_IP_T_ON_INTERCEPT_AND_LOG_IP_T_MINUS_24_THROUGH_T_MINUS_35",
+    "estimation": "RECURSIVE_OLS_USING_ONLY_TIMESTAMP_VALID_OBSERVATIONS_THROUGH_LATEST_AVAILABLE_MONTH",
+    "minimum_regression_observations": 60,
+    "information_lag_months": 2,
+    "signal": "COUNTRY_HAMILTON_RESIDUAL_MINUS_US_HAMILTON_RESIDUAL",
+    "portfolio_construction": "LONG_TOP_TWO_SHORT_BOTTOM_TWO_EQUAL_ABSOLUTE_WEIGHT_GROSS_ONE",
+    "holding_period": "ONE_CALENDAR_MONTH",
+    "return_definition": "NEXT_MONTH_LOG_SPOT_RETURN_EXCLUDING_FINANCING",
+    "primary_cost_model": "FIVE_BPS_PER_UNIT_TURNOVER",
+    "stress_cost_model": "TEN_BPS_PER_UNIT_TURNOVER",
+    "sample_partition": {"development": "FIRST_60_PERCENT", "chronological_oos": "NEXT_20_PERCENT", "dated_confirmation": "FINAL_20_PERCENT_UNTOUCHED_UNTIL_LOCK"},
+    "vintage_policy": "CURRENT_OFFICIAL_VINTAGE_WITH_FIXED_TWO_MONTH_INFORMATION_LAG_AND_RECURSIVE_ENDPOINT",
+    "parameter_sweeps_allowed": false
+  },
+  "controls": [
+    {"control_id": "OPPOSITE_RANK_CONTROL", "definition": "Reverse the long and short output-gap rank legs with identical timing and costs"},
+    {"control_id": "ONE_MONTH_STALE_SIGNAL_CONTROL", "definition": "Use output-gap ranks known one additional completed month earlier"},
+    {"control_id": "FIXED_HASH_CURRENCY_PERMUTATION_NULL", "definition": "Permute relative output gaps across currencies each month with SHA-256 seed 20261017 before ranking"}
+  ],
+  "metrics": {"primary": "DATED_CONFIRMATION_AVERAGE_MONTHLY_NET_SPOT_RETURN", "secondary": ["OOS_AVERAGE_MONTHLY_NET_SPOT_RETURN", "MEDIAN_MONTHLY_NET_SPOT_RETURN", "POSITIVE_MONTH_RATE", "ANNUALIZED_VOLATILITY", "MAXIMUM_DRAWDOWN", "CONTROL_EDGE", "TURNOVER"]},
+  "review_gates": {
+    "minimum_development_months": 120,
+    "minimum_chronological_oos_months": 36,
+    "minimum_dated_confirmation_months": 36,
+    "oos_average_net_spot_return_must_be_positive": true,
+    "dated_confirmation_average_net_spot_return_must_be_positive": true,
+    "dated_confirmation_control_edge_must_be_positive": true,
+    "all_three_controls_must_be_defeated": true,
+    "primary_and_stress_cost_cases_must_pass": true,
+    "current_vintage_survivor_requires_real_time_vintage_follow_up": true,
+    "review_is_not_promotion": true
+  },
+  "multiple_comparisons_policy": {"confirmatory_strategy_count": 1, "parameter_sweeps_allowed": false, "batch_familywise_policy": "BATCH_FX_LITERATURE_V1_HOLM_BONFERRONI"},
+  "stopping_rules": {"no_early_success_declaration": true, "no_post_result_filter_changes": true, "no_post_result_portfolio_width_changes": true, "no_post_result_universe_changes": true, "no_early_holdout_inspection": true, "failed_gate_closes_exact_specification": true},
+  "research_basis": {
+    "primary_source": "Cenedese, Payne, Sarno and Valente, Business Cycles and Currency Returns, Journal of Financial Economics 2020",
+    "source_url": "https://doi.org/10.1016/j.jfineco.2020.04.003",
+    "translation_note": "This campaign follows the paper's recursive Hamilton monthly output-gap construction but uses a six-currency current-vintage spot-return subset. It does not claim to reproduce the paper's larger real-time-vintage excess-return portfolio."
+  },
+  "authority": {"automatic_approval": false, "automatic_execution": false, "downstream_activation": false, "order_authority": false}
+}
