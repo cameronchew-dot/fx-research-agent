@@ -59,7 +59,10 @@
 - Campaign 8 is one locked recursive Hamilton output-gap test using the same
   official industrial-production source but a distinct cyclical-residual
   mechanism. Its filter, lag, portfolio, costs, controls, and real-time-vintage
-  caveat are documented in `G10_OUTPUT_GAP_CAMPAIGN.md`.
+  caveat are documented in `G10_OUTPUT_GAP_CAMPAIGN.md`. Its locked run failed
+  chronological OOS, cost stress, and the stale-signal control; see
+  `CAMPAIGN_8_RESULT.md`. It is closed and does not consume an active
+  literature-batch slot.
 - Evaluate approved campaigns only on post-approval evidence, deduplicated by
   independent episode and separated by outcome source.
 - Persist immutable run and finding records; sample completion permits human

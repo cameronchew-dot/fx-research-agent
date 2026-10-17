@@ -49,10 +49,11 @@ class G10OutputGapTests(unittest.TestCase):
         self.assertEqual(first, second)
         self.assertGreater(first["portfolio_month_count"], 100)
 
-    def test_registry_starts_campaign_proposed(self):
+    def test_registry_closes_failed_campaign_without_rewriting_prior_campaign(self):
         registry = json.loads(Path("config/genesis_hypotheses.json").read_text(encoding="utf-8"))
         states = {row["hypothesis_id"]: row["state"] for row in registry["hypotheses"]}
-        self.assertEqual(states["HYP_G10_RECURSIVE_OUTPUT_GAP_V1"], "PROPOSED")
+        self.assertEqual(states["HYP_G10_RECURSIVE_OUTPUT_GAP_V1"], "REJECTED")
+        self.assertEqual(states["HYP_G10_INDUSTRIAL_PRODUCTION_MOMENTUM_V1"], "REJECTED")
 
 
 if __name__ == "__main__":

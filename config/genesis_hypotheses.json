@@ -180,7 +180,7 @@
       "hypothesis_id": "HYP_G10_RECURSIVE_OUTPUT_GAP_V1",
       "proposed_at_utc": "2026-10-17T20:00:00Z",
       "proposed_by": "OPERATOR_AND_CODEX_LITERATURE_REVIEW",
-      "state": "PROPOSED",
+      "state": "REJECTED",
       "hypothesis_type": "LITERATURE_INSPIRED_REPLICATION",
       "classification": "STRATEGY",
       "priority": 12,
@@ -189,7 +189,8 @@
       "dependencies": ["COMPLETE_SEVEN_ECONOMY_COMMON_PANEL", "FIXED_TWO_MONTH_INFORMATION_LAG", "RECURSIVE_FILTER_ENDPOINT"],
       "expected_frequency": "MONTHLY_REBALANCE",
       "overlap_notes": "Cyclical output residuals are distinct from five-year economic momentum, value, policy stance, and EUR failed-auction campaigns.",
-      "next_action": "RUN_ONLY_LOCKED_PRIMARY_AND_STRESS_SPECIFICATION"
+      "evidence_ids": ["CAMPAIGN_G10_RECURSIVE_OUTPUT_GAP_V1_PRIMARY", "CAMPAIGN_G10_RECURSIVE_OUTPUT_GAP_V1_STRESS"],
+      "next_action": "CLOSED_FAILED_CHRONOLOGICAL_OOS_COST_STRESS_AND_STALE_CONTROL_DO_NOT_RETUNE"
     }
   ]
 }
