@@ -43,6 +43,9 @@
   financing-inclusive currency excess returns. Its locked run failed the
   chronological OOS gate; see `CAMPAIGN_6_RESULT.md`. It is closed and does not
   consume an active literature-batch slot.
+- Campaign 9 is one locked inflation-adjusted central-bank stance-shift test,
+  documented in `G10_POLICY_STANCE_CAMPAIGN.md`. Its specification and code
+  must be committed before any historical result is inspected.
 - Evaluate approved campaigns only on post-approval evidence, deduplicated by
   independent episode and separated by outcome source.
 - Persist immutable run and finding records; sample completion permits human

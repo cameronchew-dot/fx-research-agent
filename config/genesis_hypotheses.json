@@ -143,6 +143,21 @@
       "overlap_notes": "Real-exchange-rate mean reversion is distinct from price momentum and the EUR failed-auction campaigns.",
       "evidence_ids": ["CAMPAIGN_G10_REAL_EXCHANGE_RATE_VALUE_V1_PRIMARY", "CAMPAIGN_G10_REAL_EXCHANGE_RATE_VALUE_V1_STRESS"],
       "next_action": "CLOSED_FAILED_CHRONOLOGICAL_OOS_DO_NOT_RETUNE"
+    },
+    {
+      "hypothesis_id": "HYP_G10_REAL_POLICY_STANCE_SHIFT_V1",
+      "proposed_at_utc": "2026-10-17T17:00:00Z",
+      "proposed_by": "OPERATOR_AND_CODEX_LITERATURE_REVIEW",
+      "state": "PROPOSED",
+      "hypothesis_type": "LITERATURE_INSPIRED_REPLICATION",
+      "classification": "STRATEGY",
+      "priority": 10,
+      "statement": "Material three-month changes in inflation-adjusted foreign-versus-US policy stance may continue in next-month spot when contemporaneous currency movement confirms the shift.",
+      "data_requirements": ["BIS_MONTHLY_END_OF_PERIOD_SPOT", "BIS_MONTHLY_CENTRAL_BANK_POLICY_RATES", "OFFICIAL_CPI_INDEX_WITH_FIXED_INFORMATION_LAG"],
+      "dependencies": ["COMPLETE_G10_POLICY_RATE_PANEL", "FIXED_TWO_MONTH_CPI_INFORMATION_LAG"],
+      "expected_frequency": "CONDITIONAL_MONTHLY",
+      "overlap_notes": "Monetary-policy divergence is economically distinct from price-only momentum, value, and EUR failed-auction campaigns.",
+      "next_action": "RUN_ONLY_AFTER_SPECIFICATION_HASH_IS_COMMITTED"
     }
   ]
 }

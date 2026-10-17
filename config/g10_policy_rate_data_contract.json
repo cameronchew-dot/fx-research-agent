@@ -1,0 +1,10 @@
+{
+  "schema": "FX_G10_POLICY_RATE_DATA_CONTRACT_V1",
+  "source": "BIS_WS_CBPOL_1_0",
+  "frequency": "MONTHLY",
+  "collection": "END_OF_PERIOD",
+  "unit": "PER_CENT_PER_YEAR",
+  "area_by_currency": {"EUR": "XM", "GBP": "GB", "JPY": "JP", "CHF": "CH", "CAD": "CA", "AUD": "AU", "NZD": "NZ", "SEK": "SE", "NOK": "NO", "USD": "US"},
+  "missing_value_policy": "EXCLUDE_MONTH",
+  "authority": {"credentials_allowed": false, "account_data_allowed": false, "order_authority": false}
+}
