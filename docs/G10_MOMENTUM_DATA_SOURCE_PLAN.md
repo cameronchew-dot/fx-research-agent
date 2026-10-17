@@ -42,6 +42,18 @@ OANDA financing metadata.
 5. Run `literature-panel-status`. Campaign evaluation remains blocked until it
    reports `READY`.
 
+The official BIS spot archive can be downloaded and reduced without extracting
+its full CSV:
+
+```bash
+python3 ops/bis_xru_extract.py data/external/bis/WS_XRU_csv_flat.zip \
+  --output data/external/bis/g10_monthly_spot.csv.gz \
+  --summary data/external/bis/g10_monthly_spot_summary.json
+```
+
+This output is deliberately labeled `SPOT_ONLY_NOT_EXCESS_RETURN` and cannot be
+registered as a complete Campaign 4 panel.
+
 ## Fallback decision
 
 If an observed historical financing/forward source cannot be obtained, do not
