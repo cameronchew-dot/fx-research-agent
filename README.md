@@ -91,23 +91,32 @@ eligible baseline outcome per independent episode, and records immutable runs
 and findings. Reaching a sample gate produces a human-review state only; it
 cannot promote a hypothesis or affect a trading system.
 
-The governed EUR/USD batch now contains three explicitly approved campaigns,
+The governed EUR/USD batch retains its original three-slot boundary and contains three explicitly approved campaigns,
 each accruing only evidence observed after its own approval timestamp:
 
 - trend alignment, objective location, and reward room;
 - decision spread relative to the prior 96 completed M15 bars; and
 - first-touch versus repeat-touch objective-level history.
 
-The exact specifications live under `config/campaigns/`. The batch is capped at
-three and uses its locked Holm-Bonferroni familywise-error policy. None of the
-campaigns can promote itself or affect a downstream system.
+The exact specifications live under `config/campaigns/`. A separate seven-slot
+literature-replication batch expands total governed capacity to ten without
+rewriting the original batch. Its first predeclared campaign is the published
+G10 MOM(1,1) cross-sectional currency momentum strategy. It remains data-blocked
+until every currency has a common completed month-end panel, financing or forward
+points, implementable bid/ask costs, and computed excess returns. MOM(6,1) and
+MOM(12,1) are descriptive only and cannot qualify. Each batch uses its own locked
+Holm-Bonferroni familywise-error budget. No campaign can promote itself or affect
+a downstream system.
 
 ## Governed autonomy
 
-The automation policy permits at most three concurrent campaigns. Evidence
+The automation policy permits at most ten concurrent campaigns across the
+immutable three-slot EUR batch and separate seven-slot literature batch. Evidence
 ingestion checks whether a predeclared sample gate has just been crossed, and a
 daily local job refreshes all approved evaluations at 17:00. Repeated ingests
-with no new immutable evidence manifest skip evaluation work.
+with no new immutable evidence manifest skip evaluation work. Approved campaigns
+whose data is incomplete are explicitly skipped as `BLOCKED_DATA_READINESS`, so
+one unavailable literature dataset cannot disrupt the existing forward campaigns.
 
 Once per week while the FX market is closed, a bounded Anthropic Sonnet call
 may draft at most three hypotheses. It receives the registry, available data

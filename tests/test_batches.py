@@ -51,13 +51,33 @@ class BatchTests(unittest.TestCase):
         self.assertFalse(second["inserted"])
         self.assertEqual(first["available_slot_count"], 2)
 
-    def test_more_than_three_campaigns_is_rejected(self):
+    def test_more_than_batch_cap_is_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "batch.json"
             payload = self._payload()
             payload["campaign_ids"] = ["C1", "C2", "C3", "C4"]
             path.write_text(json.dumps(payload), encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "exceeds"):
+                load_batch(path)
+
+    def test_seven_slot_literature_batch_is_valid(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "batch.json"
+            payload = self._payload()
+            payload["maximum_active_campaigns"] = 7
+            payload["multiplicity_policy"]["hypothesis_budget"] = 7
+            path.write_text(json.dumps(payload), encoding="utf-8")
+            loaded = load_batch(path)
+        self.assertEqual(loaded["maximum_active_campaigns"], 7)
+
+    def test_more_than_ten_slots_is_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "batch.json"
+            payload = self._payload()
+            payload["maximum_active_campaigns"] = 11
+            payload["multiplicity_policy"]["hypothesis_budget"] = 11
+            path.write_text(json.dumps(payload), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "between one and ten"):
                 load_batch(path)
 
     def test_named_human_can_fill_remaining_slots_without_rewriting_batch(self):

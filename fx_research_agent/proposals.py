@@ -230,12 +230,12 @@ def build_blind_input(connection) -> dict[str, Any]:
         })
     return {
         "schema": "FX_RESEARCH_PROPOSER_INPUT_V1",
-        "objective": "Find independent, falsifiable EUR/USD research questions; do not infer success.",
+        "objective": "Find independent, falsifiable FX research questions; do not infer success.",
         "available_data_classes": _available_data_classes(connection),
         "existing_hypotheses": hypotheses,
         "campaign_specifications_without_results": campaigns,
         "occupied_campaign_slots": active_slot_count(connection),
-        "campaign_slot_limit": 3,
+        "campaign_slot_limit": int(current_policy(connection)["campaign_slot_limit"]),
         "constraints": {
             "one_exact_specification": True,
             "parameter_sweeps_allowed": False,

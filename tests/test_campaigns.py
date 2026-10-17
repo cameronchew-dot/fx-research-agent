@@ -135,6 +135,62 @@ class CampaignTests(unittest.TestCase):
         self.assertEqual(readiness["readiness_status"], "READY")
         self.assertEqual(readiness["missing_data_classes"], [])
 
+    def test_multi_instrument_readiness_requires_every_instrument(self):
+        payload = campaign_payload()
+        payload["instrument"] = "G10_PANEL"
+        payload["instruments"] = ["EUR_USD", "USD_JPY"]
+        payload["required_data_classes"] = ["COMPLETED_CANDLES"]
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "campaign.json"
+            path.write_text(json.dumps(payload), encoding="utf-8")
+            registered = register_campaign(self.connection, path)
+        self.connection.execute(
+            "INSERT INTO market_data_manifests VALUES (?,?,?,?,?)",
+            (
+                "M_EUR",
+                "hash-eur",
+                json.dumps({
+                    "instrument": "EUR_USD",
+                    "data_classes": ["COMPLETED_CANDLES"],
+                    "window_start_utc": "2026-01-01T00:00:00Z",
+                    "window_end_utc": "2026-10-01T00:00:00Z",
+                }),
+                "2026-10-13T00:00:00Z",
+                1,
+            ),
+        )
+        self.connection.commit()
+        approve_campaign(
+            self.connection,
+            "CAMPAIGN_1",
+            expected_payload_hash=registered["campaign_payload_hash"],
+            approved_by="CAMERON",
+            reason="Exact specification reviewed",
+            approved_at_utc="2026-10-13T01:00:00Z",
+        )
+        blocked = campaign_data_readiness(self.connection, "CAMPAIGN_1")
+        self.assertEqual(blocked["readiness_status"], "BLOCKED")
+        self.assertEqual(blocked["missing_instruments"], ["USD_JPY"])
+        self.connection.execute(
+            "INSERT INTO market_data_manifests VALUES (?,?,?,?,?)",
+            (
+                "M_JPY",
+                "hash-jpy",
+                json.dumps({
+                    "instrument": "USD_JPY",
+                    "data_classes": ["COMPLETED_CANDLES"],
+                    "window_start_utc": "2026-01-01T00:00:00Z",
+                    "window_end_utc": "2026-10-01T00:00:00Z",
+                }),
+                "2026-10-13T00:00:00Z",
+                1,
+            ),
+        )
+        self.connection.commit()
+        ready = campaign_data_readiness(self.connection, "CAMPAIGN_1")
+        self.assertEqual(ready["readiness_status"], "READY")
+        self.assertEqual(ready["missing_instruments"], [])
+
 
 if __name__ == "__main__":
     unittest.main()

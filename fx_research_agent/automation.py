@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from .campaigns import campaign_state
+from .campaigns import campaign_data_readiness, campaign_instruments, campaign_state
 from .experiments import build_evaluation, run_campaign
 from .storage import insert_immutable, payload_hash
 
@@ -21,8 +21,8 @@ def load_policy(path: Path) -> dict[str, Any]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     if payload.get("schema") != POLICY_SCHEMA:
         raise ValueError("unsupported research autonomy policy schema")
-    if int(payload.get("campaign_slot_limit", 0)) != 3:
-        raise ValueError("research autonomy policy must retain the three-slot cap")
+    if not 1 <= int(payload.get("campaign_slot_limit", 0)) <= 10:
+        raise ValueError("research autonomy policy campaign cap must be between one and ten")
     if int(payload.get("maximum_proposals_per_cycle", 0)) > 3:
         raise ValueError("proposal cycle cannot create more than three candidates")
     if int(payload.get("maximum_pending_machine_proposals", 0)) != 3:
@@ -90,14 +90,14 @@ def _latest_progress(connection, campaign_id: str) -> dict[str, Any] | None:
     return json.loads(row["payload_json"]) if row else None
 
 
-def _current_evidence_manifest_ids(connection, instrument: str) -> list[str]:
+def _current_evidence_manifest_ids(connection, instruments: list[str]) -> list[str]:
     rows = connection.execute(
         "SELECT manifest_id, payload_json FROM evidence_manifests WHERE usable_for_testing=1 ORDER BY manifest_id"
     ).fetchall()
     return [
         str(row["manifest_id"])
         for row in rows
-        if json.loads(row["payload_json"]).get("instrument") == instrument
+        if json.loads(row["payload_json"]).get("instrument") in instruments
     ]
 
 
@@ -121,8 +121,27 @@ def refresh_approved_campaigns(
             "SELECT payload_json FROM research_campaigns WHERE campaign_id=?", (campaign_id,)
         ).fetchone()
         campaign = json.loads(campaign_row["payload_json"])
+        readiness = campaign_data_readiness(connection, campaign_id)
+        if readiness["readiness_status"] != "READY":
+            campaigns.append(
+                {
+                    "campaign_id": campaign_id,
+                    "progress_snapshot_inserted": False,
+                    "independent_episode_count": 0,
+                    "sample_gate_reached": False,
+                    "sample_gate_crossed_now": False,
+                    "evaluation_refreshed": False,
+                    "run_id": None,
+                    "review_status": "BLOCKED_DATA_READINESS",
+                    "skip_reason": "CAMPAIGN_DATA_NOT_READY",
+                    "readiness_blocks": readiness["blocks"],
+                    "missing_data_classes": readiness["missing_data_classes"],
+                    "missing_instruments": readiness["missing_instruments"],
+                }
+            )
+            continue
         previous = _latest_progress(connection, campaign_id)
-        current_manifest_ids = _current_evidence_manifest_ids(connection, campaign["instrument"])
+        current_manifest_ids = _current_evidence_manifest_ids(connection, campaign_instruments(campaign))
         if (
             trigger == "EVIDENCE_SYNC_THRESHOLD_CHECK"
             and previous is not None

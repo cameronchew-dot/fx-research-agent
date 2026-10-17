@@ -1,0 +1,137 @@
+{
+  "schema": "FX_RESEARCH_CAMPAIGN_V1",
+  "campaign_id": "CAMPAIGN_G10_CROSS_SECTIONAL_MOMENTUM_V1",
+  "hypothesis_id": "HYP_G10_CROSS_SECTIONAL_MOMENTUM_V1",
+  "created_at_utc": "2026-10-16T18:00:00Z",
+  "state": "DRAFT",
+  "title": "G10 cross-sectional one-month currency momentum replication",
+  "instrument": "G10_USD_CROSS_SECTION",
+  "instruments": [
+    "EUR_USD",
+    "GBP_USD",
+    "USD_JPY",
+    "USD_CHF",
+    "USD_CAD",
+    "AUD_USD",
+    "NZD_USD",
+    "USD_SEK",
+    "USD_NOK"
+  ],
+  "mechanism_class": "CROSS_SECTIONAL_CURRENCY_MOMENTUM",
+  "research_question": "Does the literature-specified MOM(1,1) G10 currency excess-return portfolio retain positive net performance after implementable costs in chronological OOS and untouched dated confirmation windows?",
+  "null_hypothesis": "The predeclared MOM(1,1) portfolio has non-positive net excess return or no positive edge over its locked controls after costs.",
+  "required_data_classes": [
+    "COMPLETED_DAILY_BID_ASK_CANDLES",
+    "MONTHLY_FINANCING_OR_FORWARD_POINTS",
+    "CURRENCY_EXCESS_RETURNS"
+  ],
+  "population": {
+    "source": "SANITIZED_MARKET_ONLY_G10_PANEL",
+    "currencies": ["EUR", "GBP", "JPY", "CHF", "CAD", "AUD", "NZD", "SEK", "NOK"],
+    "base_currency": "USD",
+    "sample_calendar": "COMMON_COMPLETED_MONTH_ENDS_ONLY",
+    "quote_normalization": "USD_VALUE_OF_ONE_UNIT_FOREIGN_CURRENCY",
+    "usd_base_pairs_are_inverted": true,
+    "incomplete_cross_sections_are_excluded": true,
+    "spot_only_substitution_allowed": false
+  },
+  "independence_unit": {
+    "unit": "ONE_COMMON_MONTH_END_REBALANCE",
+    "overlapping_months_count_once": true,
+    "same_currency_rankings_within_month_count_once": true
+  },
+  "exact_specification": {
+    "confirmatory_strategy": "MOM_1_1",
+    "formation_window": "IMMEDIATELY_PRIOR_COMPLETED_CALENDAR_MONTH_EXCESS_RETURN",
+    "ranking_time": "LAST_AVAILABLE_IMPLEMENTABLE_QUOTE_AT_COMMON_MONTH_END",
+    "portfolio_construction": {
+      "long_leg": "TOP_THREE_CURRENCIES_BY_PRIOR_MONTH_EXCESS_RETURN",
+      "short_leg": "BOTTOM_THREE_CURRENCIES_BY_PRIOR_MONTH_EXCESS_RETURN",
+      "middle_three": "EXCLUDED",
+      "weighting": "EQUAL_WEIGHT_WITHIN_EACH_LEG",
+      "gross_long_weight": 0.5,
+      "gross_short_weight": 0.5,
+      "net_currency_exposure": 0.0
+    },
+    "holding_period": "ONE_CALENDAR_MONTH_TO_NEXT_COMMON_MONTH_END",
+    "entry_timing": "FIRST_IMPLEMENTABLE_QUOTE_AFTER_RANKING_IS_KNOWN",
+    "return_definition": "CURRENCY_EXCESS_RETURN_INCLUDING_FINANCING",
+    "cost_model": "PAIR_AND_MONTH_SPECIFIC_HISTORICAL_BID_ASK_ROUND_TRIP",
+    "missing_cost_policy": "EXCLUDE_MONTH_AND_FAIL_COVERAGE_GATE",
+    "sample_partition": {
+      "development": "FIRST_60_PERCENT_OF_COMMON_COMPLETE_MONTHS",
+      "chronological_oos": "NEXT_20_PERCENT_OF_COMMON_COMPLETE_MONTHS",
+      "dated_confirmation": "FINAL_20_PERCENT_OF_COMMON_COMPLETE_MONTHS_UNTOUCHED_UNTIL_LOCK",
+      "partition_rounding": "FLOOR_BOUNDARIES_WITH_REMAINDER_ASSIGNED_TO_DATED_CONFIRMATION"
+    },
+    "descriptive_only_variants": ["MOM_6_1", "MOM_12_1"],
+    "descriptive_variants_can_qualify": false
+  },
+  "controls": [
+    {
+      "control_id": "OPPOSITE_RANK_CONTROL",
+      "definition": "Apply the same implementation and costs while buying the bottom three and selling the top three",
+      "post_selection_mutation_allowed": false
+    },
+    {
+      "control_id": "ONE_MONTH_STALE_RANK_CONTROL",
+      "definition": "Apply the same portfolio rules using ranks known one additional completed month earlier",
+      "post_selection_mutation_allowed": false
+    },
+    {
+      "control_id": "FIXED_SEED_CROSS_SECTION_PERMUTATION_NULL",
+      "definition": "Within each month permute currency labels using seed 20261016 before ranking; no future observations enter the permutation",
+      "post_selection_mutation_allowed": false
+    }
+  ],
+  "metrics": {
+    "primary": "DATED_CONFIRMATION_AVERAGE_MONTHLY_NET_EXCESS_RETURN",
+    "secondary": [
+      "CHRONOLOGICAL_OOS_AVERAGE_MONTHLY_NET_EXCESS_RETURN",
+      "DATED_CONFIRMATION_MEDIAN_MONTHLY_NET_EXCESS_RETURN",
+      "DATED_CONFIRMATION_POSITIVE_MONTH_RATE",
+      "ANNUALIZED_VOLATILITY",
+      "MAXIMUM_DRAWDOWN",
+      "CONTROL_EDGE",
+      "COST_COVERAGE_RATE",
+      "MONTH_COUNTS"
+    ],
+    "outcome_types_pooled": false
+  },
+  "review_gates": {
+    "minimum_development_months": 120,
+    "minimum_chronological_oos_months": 36,
+    "minimum_dated_confirmation_months": 36,
+    "minimum_cost_coverage_rate": 0.95,
+    "oos_average_net_excess_return_must_be_positive": true,
+    "dated_confirmation_average_net_excess_return_must_be_positive": true,
+    "dated_confirmation_control_edge_must_be_positive": true,
+    "all_three_controls_must_be_defeated": true,
+    "review_is_not_promotion": true
+  },
+  "multiple_comparisons_policy": {
+    "confirmatory_strategy_count": 1,
+    "only_confirmatory_strategy": "MOM_1_1",
+    "mom_6_1_and_mom_12_1": "DESCRIPTIVE_ONLY",
+    "parameter_sweeps_allowed": false,
+    "batch_familywise_policy": "BATCH_FX_LITERATURE_V1_HOLM_BONFERRONI"
+  },
+  "stopping_rules": {
+    "no_early_success_declaration": true,
+    "no_post_result_universe_changes": true,
+    "no_post_result_lookback_changes": true,
+    "no_early_holdout_inspection": true,
+    "review_only_after_declared_sample_gates": true
+  },
+  "research_basis": {
+    "primary_source": "Menkhoff, Sarno, Schmeling, and Schrimpf, Currency Momentum Strategies, BIS Working Paper 366",
+    "source_url": "https://www.bis.org/publ/work366.pdf",
+    "translation_note": "MOM(1,1) is the sole confirmatory lookback/holding specification; terciles are predeclared because the implementable G10 panel contains nine non-USD currencies."
+  },
+  "authority": {
+    "automatic_approval": false,
+    "automatic_execution": false,
+    "downstream_activation": false,
+    "order_authority": false
+  }
+}

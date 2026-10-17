@@ -108,6 +108,25 @@
       "expected_frequency": "NOT_A_TRIGGER",
       "overlap_notes": "Cannot alter gates or policy automatically.",
       "next_action": "WAIT_FOR_150_EPISODE_PROTOCOL"
+    },
+    {
+      "hypothesis_id": "HYP_G10_CROSS_SECTIONAL_MOMENTUM_V1",
+      "proposed_at_utc": "2026-10-16T18:00:00Z",
+      "proposed_by": "OPERATOR_AND_CODEX_LITERATURE_REVIEW",
+      "state": "PROPOSED",
+      "hypothesis_type": "LITERATURE_REPLICATION",
+      "classification": "STRATEGY",
+      "priority": 8,
+      "statement": "A predeclared monthly G10 cross-sectional currency excess-return momentum portfolio may retain positive net returns after pair-specific transaction costs in chronological out-of-sample and untouched dated confirmation windows.",
+      "data_requirements": [
+        "G10_COMPLETED_DAILY_BID_ASK_CANDLES",
+        "G10_MONTHLY_FINANCING_OR_FORWARD_POINTS",
+        "G10_CURRENCY_EXCESS_RETURNS"
+      ],
+      "dependencies": ["COMPLETE_COMMON_MONTH_END_PANEL", "NO_SPOT_ONLY_SUBSTITUTION"],
+      "expected_frequency": "MONTHLY_REBALANCE",
+      "overlap_notes": "Cross-sectional multi-currency ranking is structurally distinct from the existing EUR/USD failed-auction context campaigns.",
+      "next_action": "ACQUIRE_AND_VALIDATE_COMPLETE_G10_EXCESS_RETURN_PANEL"
     }
   ]
 }

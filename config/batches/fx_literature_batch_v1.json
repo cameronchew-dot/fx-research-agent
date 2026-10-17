@@ -1,0 +1,32 @@
+{
+  "schema": "FX_RESEARCH_BATCH_V1",
+  "batch_id": "BATCH_FX_LITERATURE_V1",
+  "created_at_utc": "2026-10-16T18:00:00Z",
+  "title": "Predeclared FX literature replication batch",
+  "instrument": "MULTI_FX",
+  "maximum_active_campaigns": 7,
+  "campaign_ids": [
+    "CAMPAIGN_G10_CROSS_SECTIONAL_MOMENTUM_V1"
+  ],
+  "reserved_slot_policy": {
+    "slot_5": "G10_CARRY",
+    "slot_6": "CURRENCY_VALUE",
+    "slot_7": "ECONOMIC_MOMENTUM",
+    "slot_8": "OUTPUT_GAP_DIFFERENTIAL",
+    "slot_9": "CENTRAL_BANK_RESTRICTIVENESS",
+    "slot_10": "USD_JPY_INTERVENTION_REGIME"
+  },
+  "multiplicity_policy": {
+    "method": "HOLM_BONFERRONI",
+    "familywise_alpha": 0.05,
+    "hypothesis_budget": 7,
+    "post_hoc_campaign_substitution_allowed": false,
+    "descriptive_results_do_not_consume_confirmation_alpha": true
+  },
+  "authority": {
+    "automatic_campaign_addition": false,
+    "automatic_approval": false,
+    "automatic_promotion": false,
+    "downstream_authority": false
+  }
+}

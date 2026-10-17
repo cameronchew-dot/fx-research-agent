@@ -41,6 +41,12 @@ recent window; complete historical backfills are separate, predeclared research
 campaigns so scheduled ingestion does not duplicate large datasets or silently
 change an experiment's sample.
 
+Multi-instrument literature replications use a stricter completeness boundary:
+every declared instrument must supply every required data class over the common
+testing window. A partial panel remains `BLOCKED_DATA_READINESS`; the runner may
+not substitute spot returns for excess returns, infer missing financing, or
+silently shrink the currency universe after results are visible.
+
 ## Tape and CVD language
 
 EUR/USD is decentralized. OANDA provides one venue's prices and liquidity

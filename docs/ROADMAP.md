@@ -28,6 +28,13 @@
 - Maintain the three exact-hash-approved EUR/USD campaigns as one fixed
   confirmatory batch: trend/location/room, spread/liquidity degradation, and
   first-touch versus repeat-touch degradation.
+- Maintain a separate seven-slot literature-replication batch. Campaign 4 is a
+  fixed G10 MOM(1,1) cross-sectional excess-return replication; Campaigns 5-10
+  are reserved for carry, value, economic momentum, output-gap differential,
+  central-bank restrictiveness, and USD/JPY intervention regime research.
+- Require every multi-instrument campaign to have complete per-instrument data
+  classes before evaluation. Data-blocked campaigns are skipped without
+  interrupting ready forward campaigns.
 - Evaluate approved campaigns only on post-approval evidence, deduplicated by
   independent episode and separated by outcome source.
 - Persist immutable run and finding records; sample completion permits human
@@ -38,8 +45,9 @@
 - Use deterministic screening to find data gaps, near-misses, and unanswered questions.
 - Run approved deterministic evaluations daily and immediately when a sealed
   sample threshold is first crossed.
-- Cap the active confirmatory batch at three campaigns and apply its locked
-  Holm-Bonferroni familywise-error policy.
+- Preserve the original three-campaign batch and permit a separate seven-slot
+  batch, for ten governed campaign slots total. Apply each batch's locked
+  Holm-Bonferroni familywise-error policy independently.
 - Permit one bounded weekly Anthropic proposal cycle to draft no more than
   three proposals, only into `PROPOSED` state.
 - Keep proposal context blind to findings, net R, and hidden holdouts; reject

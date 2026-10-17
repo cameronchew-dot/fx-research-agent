@@ -10,6 +10,7 @@ from .storage import insert_immutable
 
 
 SCHEMA = "FX_RESEARCH_BATCH_V1"
+MAXIMUM_GOVERNED_BATCH_SLOTS = 10
 
 
 def utc_now() -> str:
@@ -20,8 +21,8 @@ def load_batch(path: Path) -> dict[str, Any]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     if payload.get("schema") != SCHEMA:
         raise ValueError("unsupported research batch schema")
-    if not 1 <= int(payload.get("maximum_active_campaigns", 0)) <= 3:
-        raise ValueError("research batch active campaign cap must be between one and three")
+    if not 1 <= int(payload.get("maximum_active_campaigns", 0)) <= MAXIMUM_GOVERNED_BATCH_SLOTS:
+        raise ValueError("research batch active campaign cap must be between one and ten")
     campaigns = payload.get("campaign_ids")
     if not isinstance(campaigns, list) or len(campaigns) > int(payload["maximum_active_campaigns"]):
         raise ValueError("research batch campaign membership exceeds its locked cap")

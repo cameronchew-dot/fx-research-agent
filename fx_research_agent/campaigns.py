@@ -53,6 +53,12 @@ def validate_campaign(payload: dict[str, Any]) -> None:
         raise ValueError("new campaign specifications must begin in DRAFT")
     if not isinstance(payload.get("required_data_classes"), list) or not payload["required_data_classes"]:
         raise ValueError("campaign requires explicit data classes")
+    instruments = payload.get("instruments")
+    if instruments is not None:
+        if not isinstance(instruments, list) or not instruments:
+            raise ValueError("campaign instruments must be a non-empty list")
+        if len(set(instruments)) != len(instruments) or not all(isinstance(value, str) and value for value in instruments):
+            raise ValueError("campaign instruments must contain unique non-empty identifiers")
     if not isinstance(payload.get("controls"), list) or not payload["controls"]:
         raise ValueError("campaign requires at least one locked control")
     if not isinstance(payload.get("metrics"), dict) or not payload["metrics"].get("primary"):
@@ -158,6 +164,7 @@ def approve_campaign(
         "campaign_id": campaign_id,
         "hypothesis_id": campaign["hypothesis_id"],
         "instrument": campaign["instrument"],
+        "instruments": campaign_instruments(campaign),
         "required_data_classes": campaign["required_data_classes"],
         "population": campaign["population"],
         "independence_unit": campaign["independence_unit"],
@@ -227,6 +234,11 @@ def approve_campaign(
     }
 
 
+def campaign_instruments(campaign: dict[str, Any]) -> list[str]:
+    configured = campaign.get("instruments")
+    return [str(value) for value in configured] if isinstance(configured, list) else [str(campaign["instrument"])]
+
+
 def campaign_data_readiness(connection, campaign_id: str) -> dict[str, Any]:
     row = connection.execute(
         "SELECT payload_json FROM research_campaigns WHERE campaign_id=?", (campaign_id,)
@@ -235,31 +247,46 @@ def campaign_data_readiness(connection, campaign_id: str) -> dict[str, Any]:
         raise ValueError("unknown campaign")
     campaign = json.loads(row["payload_json"])
     required = {str(value) for value in campaign["required_data_classes"]}
-    available: set[str] = set()
+    instruments = campaign_instruments(campaign)
+    available_by_instrument: dict[str, set[str]] = {instrument: set() for instrument in instruments}
     windows: list[tuple[str, str]] = []
     for table in ("market_data_manifests", "evidence_manifests"):
         for manifest_row in connection.execute(
             f"SELECT payload_json FROM {table} WHERE usable_for_testing=1"
         ).fetchall():
             manifest = json.loads(manifest_row["payload_json"])
-            if manifest.get("instrument") != campaign["instrument"]:
+            instrument = str(manifest.get("instrument") or "")
+            if instrument not in available_by_instrument:
                 continue
-            available.update(str(value) for value in manifest.get("data_classes", []))
+            available_by_instrument[instrument].update(str(value) for value in manifest.get("data_classes", []))
             windows.append(
                 (
                     str(manifest.get("window_start_utc") or ""),
                     str(manifest.get("window_end_utc") or ""),
                 )
             )
-    missing = sorted(required - available)
+    missing_by_instrument = {
+        instrument: sorted(required - available)
+        for instrument, available in available_by_instrument.items()
+        if required - available
+    }
+    missing = sorted({value for values in missing_by_instrument.values() for value in values})
+    missing_instruments = sorted(missing_by_instrument)
+    available = set.intersection(*available_by_instrument.values()) if available_by_instrument else set()
     state = campaign_state(connection, campaign_id)
     return {
         "campaign_id": campaign_id,
         "campaign_state": state,
         "readiness_status": "READY" if not missing and state == "APPROVED" else "BLOCKED",
         "required_data_classes": sorted(required),
+        "instruments": instruments,
         "available_data_classes": sorted(available),
+        "available_data_classes_by_instrument": {
+            instrument: sorted(values) for instrument, values in available_by_instrument.items()
+        },
         "missing_data_classes": missing,
+        "missing_data_classes_by_instrument": missing_by_instrument,
+        "missing_instruments": missing_instruments,
         "usable_manifest_count": len(windows),
         "available_window_start_utc": min((value[0] for value in windows), default=None),
         "available_window_end_utc": max((value[1] for value in windows), default=None),

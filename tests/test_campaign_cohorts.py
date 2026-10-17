@@ -25,6 +25,10 @@ class CampaignCohortTests(unittest.TestCase):
             / "config"
             / "campaigns"
             / "eur_level_touch_degradation_forward_v1.json",
+            ROOT
+            / "config"
+            / "campaigns"
+            / "g10_cross_sectional_momentum_v1.json",
         ]
         for path in paths:
             campaign = load_campaign(path)
@@ -33,6 +37,16 @@ class CampaignCohortTests(unittest.TestCase):
             self.assertFalse(campaign["authority"]["automatic_execution"])
             self.assertFalse(campaign["authority"]["downstream_activation"])
             self.assertFalse(campaign["authority"]["order_authority"])
+
+    def test_g10_momentum_has_one_confirmatory_strategy(self):
+        campaign = load_campaign(
+            ROOT / "config" / "campaigns" / "g10_cross_sectional_momentum_v1.json"
+        )
+        specification = campaign["exact_specification"]
+        self.assertEqual(specification["confirmatory_strategy"], "MOM_1_1")
+        self.assertEqual(specification["descriptive_only_variants"], ["MOM_6_1", "MOM_12_1"])
+        self.assertFalse(specification["descriptive_variants_can_qualify"])
+        self.assertFalse(campaign["population"]["spot_only_substitution_allowed"])
 
     def test_confluent_new_york_level_signature_uses_allowed_level_set(self):
         candidate = {
