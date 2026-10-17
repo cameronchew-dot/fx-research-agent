@@ -1,5 +1,6 @@
 import csv
 import gzip
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -15,6 +16,12 @@ class G10EconomicMomentumTests(unittest.TestCase):
         self.assertEqual(campaign["exact_specification"]["formation_months"], 60)
         self.assertFalse(campaign["exact_specification"]["parameter_sweeps_allowed"])
         self.assertFalse(campaign["authority"]["order_authority"])
+
+    def test_closed_campaign_registry_state_does_not_rewrite_other_hypotheses(self):
+        registry = json.loads(Path("config/genesis_hypotheses.json").read_text(encoding="utf-8"))
+        states = {row["hypothesis_id"]: row["state"] for row in registry["hypotheses"]}
+        self.assertEqual(states["HYP_G10_INDUSTRIAL_PRODUCTION_MOMENTUM_V1"], "REJECTED")
+        self.assertEqual(states["HYP_LEVEL_TOUCH_DEGRADATION_V1_PROPOSED"], "PROPOSED")
 
     def test_pipeline_is_deterministic_and_lagged(self):
         with tempfile.TemporaryDirectory() as directory:

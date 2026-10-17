@@ -52,8 +52,10 @@
 - Campaign 7 is one locked 60-month industrial-production momentum test on the
   six-currency subset with complete OECD monthly history. Its exact universe,
   two-month information lag, top-two/bottom-two construction, costs, and
-  controls are documented in `G10_ECONOMIC_MOMENTUM_CAMPAIGN.md`. Current-vintage
-  data can support rejection, but any survivor requires vintage-aware follow-up.
+  controls are documented in `G10_ECONOMIC_MOMENTUM_CAMPAIGN.md`. Its locked
+  run failed chronological OOS and the stale-signal control; see
+  `CAMPAIGN_7_RESULT.md`. It is closed and does not consume an active
+  literature-batch slot.
 - Evaluate approved campaigns only on post-approval evidence, deduplicated by
   independent episode and separated by outcome source.
 - Persist immutable run and finding records; sample completion permits human

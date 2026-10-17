@@ -164,7 +164,7 @@
       "hypothesis_id": "HYP_G10_INDUSTRIAL_PRODUCTION_MOMENTUM_V1",
       "proposed_at_utc": "2026-10-17T19:00:00Z",
       "proposed_by": "OPERATOR_AND_CODEX_LITERATURE_REVIEW",
-      "state": "PROPOSED",
+      "state": "REJECTED",
       "hypothesis_type": "LITERATURE_INSPIRED_REPLICATION",
       "classification": "STRATEGY",
       "priority": 11,
@@ -173,7 +173,8 @@
       "dependencies": ["COMPLETE_SIX_CURRENCY_COMMON_PANEL", "FIXED_TWO_MONTH_INFORMATION_LAG"],
       "expected_frequency": "MONTHLY_REBALANCE",
       "overlap_notes": "Economic-activity momentum is distinct from price momentum, real-exchange-rate value, policy stance, and EUR failed-auction campaigns.",
-      "next_action": "RUN_ONLY_LOCKED_PRIMARY_AND_STRESS_SPECIFICATION"
+      "evidence_ids": ["CAMPAIGN_G10_INDUSTRIAL_PRODUCTION_MOMENTUM_V1_PRIMARY", "CAMPAIGN_G10_INDUSTRIAL_PRODUCTION_MOMENTUM_V1_STRESS"],
+      "next_action": "CLOSED_FAILED_CHRONOLOGICAL_OOS_AND_STALE_CONTROL_DO_NOT_RETUNE"
     }
   ]
 }
