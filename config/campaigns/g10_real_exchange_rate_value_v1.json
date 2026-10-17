@@ -1,0 +1,87 @@
+{
+  "schema": "FX_RESEARCH_CAMPAIGN_V1",
+  "campaign_id": "CAMPAIGN_G10_REAL_EXCHANGE_RATE_VALUE_V1",
+  "hypothesis_id": "HYP_G10_REAL_EXCHANGE_RATE_VALUE_V1",
+  "created_at_utc": "2026-10-17T16:00:00Z",
+  "state": "DRAFT",
+  "title": "G10 five-year real exchange-rate value replication",
+  "instrument": "G10_USD_CROSS_SECTION",
+  "instruments": ["EUR_USD", "GBP_USD", "USD_JPY", "USD_CHF", "USD_CAD", "AUD_USD", "NZD_USD", "USD_SEK", "USD_NOK"],
+  "mechanism_class": "CROSS_SECTIONAL_CURRENCY_VALUE",
+  "research_question": "Does a predeclared five-year real bilateral exchange-rate reversal signal predict positive next-month G10 spot returns after locked turnover-cost stress in chronological OOS and dated confirmation windows?",
+  "null_hypothesis": "The locked value portfolio has non-positive net spot return or no positive edge over its controls after costs.",
+  "required_data_classes": ["BIS_MONTHLY_END_OF_PERIOD_SPOT", "OFFICIAL_CPI_INDEX_WITH_FIXED_INFORMATION_LAG"],
+  "population": {
+    "source": "BIS_WS_XRU_AND_OECD_DF_PRICES_ALL",
+    "currencies": ["EUR", "GBP", "JPY", "CHF", "CAD", "AUD", "NZD", "SEK", "NOK"],
+    "base_currency": "USD",
+    "sample_calendar": "COMMON_COMPLETED_MONTH_ENDS_ONLY",
+    "quote_normalization": "USD_VALUE_OF_ONE_UNIT_FOREIGN_CURRENCY",
+    "incomplete_cross_sections_are_excluded": true
+  },
+  "independence_unit": {"unit": "ONE_COMMON_MONTH_END_REBALANCE", "overlapping_months_count_once": true},
+  "exact_specification": {
+    "confirmatory_strategy": "REAL_VALUE_60M",
+    "real_exchange_rate": "LOG_USD_PER_FOREIGN_PLUS_LOG_FOREIGN_CPI_MINUS_LOG_US_CPI",
+    "value_signal": "NEGATIVE_60_MONTH_CHANGE_IN_REAL_EXCHANGE_RATE",
+    "cpi_information_lag_months": 2,
+    "cpi_vintage_policy": "CURRENT_OFFICIAL_VINTAGE_WITH_FIXED_TWO_MONTH_INFORMATION_LAG",
+    "australia_and_new_zealand_cpi_frequency": "QUARTERLY_AS_OF_JOIN_WITH_SAME_TWO_MONTH_LAG",
+    "portfolio_construction": {
+      "long_leg": "TOP_THREE_MOST_UNDERVALUED_CURRENCIES",
+      "short_leg": "BOTTOM_THREE_MOST_OVERVALUED_CURRENCIES",
+      "middle_three": "EXCLUDED",
+      "weighting": "EQUAL_WEIGHT_WITHIN_EACH_LEG",
+      "gross_long_weight": 0.5,
+      "gross_short_weight": 0.5
+    },
+    "holding_period": "ONE_CALENDAR_MONTH",
+    "return_definition": "NEXT_MONTH_LOG_SPOT_RETURN_EXCLUDING_FINANCING",
+    "primary_cost_model": "FIVE_BPS_PER_UNIT_PORTFOLIO_TURNOVER",
+    "stress_cost_model": "TEN_BPS_PER_UNIT_PORTFOLIO_TURNOVER",
+    "interpretation_limit": "SPOT_PREDICTABILITY_ONLY_NOT_CURRENCY_EXCESS_RETURN",
+    "sample_partition": {
+      "development": "FIRST_60_PERCENT",
+      "chronological_oos": "NEXT_20_PERCENT",
+      "dated_confirmation": "FINAL_20_PERCENT_UNTOUCHED_UNTIL_LOCK"
+    },
+    "parameter_sweeps_allowed": false
+  },
+  "controls": [
+    {"control_id": "OPPOSITE_RANK_CONTROL", "definition": "Buy the most overvalued and sell the most undervalued currencies"},
+    {"control_id": "ONE_MONTH_STALE_SIGNAL_CONTROL", "definition": "Use the value ranks known one additional completed month earlier"},
+    {"control_id": "FIXED_HASH_PERMUTATION_NULL", "definition": "Permute monthly currency labels with SHA-256 seed 20261017 before ranking"}
+  ],
+  "metrics": {
+    "primary": "DATED_CONFIRMATION_AVERAGE_MONTHLY_NET_SPOT_RETURN",
+    "secondary": ["OOS_AVERAGE_MONTHLY_NET_SPOT_RETURN", "MEDIAN_MONTHLY_NET_SPOT_RETURN", "POSITIVE_MONTH_RATE", "ANNUALIZED_VOLATILITY", "MAXIMUM_DRAWDOWN", "CONTROL_EDGE", "MONTH_COUNTS"]
+  },
+  "review_gates": {
+    "minimum_development_months": 120,
+    "minimum_chronological_oos_months": 36,
+    "minimum_dated_confirmation_months": 36,
+    "oos_average_net_spot_return_must_be_positive": true,
+    "dated_confirmation_average_net_spot_return_must_be_positive": true,
+    "dated_confirmation_control_edge_must_be_positive": true,
+    "all_three_controls_must_be_defeated": true,
+    "review_is_not_promotion": true
+  },
+  "multiple_comparisons_policy": {
+    "confirmatory_strategy_count": 1,
+    "parameter_sweeps_allowed": false,
+    "batch_familywise_policy": "BATCH_FX_LITERATURE_V1_HOLM_BONFERRONI"
+  },
+  "stopping_rules": {
+    "no_early_success_declaration": true,
+    "no_post_result_universe_changes": true,
+    "no_post_result_lookback_changes": true,
+    "no_early_holdout_inspection": true,
+    "failed_oos_gate_closes_exact_specification": true
+  },
+  "research_basis": {
+    "primary_source": "ECB Working Paper 2731, Boosting carry with equilibrium exchange rate estimates",
+    "source_url": "https://www.ecb.europa.eu/pub/pdf/scpwps/ecb.wp2731~4db9534c80.en.pdf",
+    "translation_note": "The paper's benchmark value signal is the negative five-year change in the real bilateral exchange rate. This replication tests next-month spot predictability because a complete historical forward-return panel is not available."
+  },
+  "authority": {"automatic_approval": false, "automatic_execution": false, "downstream_activation": false, "order_authority": false}
+}

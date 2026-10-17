@@ -1,0 +1,13 @@
+{
+  "schema": "FX_G10_VALUE_DATA_CONTRACT_V1",
+  "spot_source": "BIS_WS_XRU_1_0",
+  "cpi_source": "OECD.SDD.TPS:DSD_PRICES@DF_PRICES_ALL(1.0)",
+  "cpi_dimensions": {"methodology": "N", "measure": "CPI", "unit_measure": "IX", "expenditure": "_T", "adjustment": "N", "transformation": "_Z"},
+  "area_by_currency": {"EUR": "EA20", "GBP": "GBR", "JPY": "JPN", "CHF": "CHE", "CAD": "CAN", "AUD": "AUS", "NZD": "NZL", "SEK": "SWE", "NOK": "NOR", "USD": "USA"},
+  "frequency_by_area": {"AUS": "Q", "NZL": "Q", "default": "M"},
+  "information_lag_months": 2,
+  "quarterly_policy": "AUSTRALIA_AND_NEW_ZEALAND_AS_OF_JOIN_NO_INTERPOLATION",
+  "revision_policy": "CURRENT_OFFICIAL_VINTAGE_FIXED_INFORMATION_LAG",
+  "missing_value_policy": "EXCLUDE_MONTH",
+  "authority": {"credentials_allowed": false, "account_data_allowed": false, "order_authority": false}
+}

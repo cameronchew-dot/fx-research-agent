@@ -37,6 +37,12 @@
   interrupting ready forward campaigns.
 - Follow `G10_MOMENTUM_DATA_SOURCE_PLAN.md` for Campaign 4. Do not reinterpret
   public spot histories as the missing historical financing/forward leg.
+- Campaign 6 is the single locked five-year real-exchange-rate value
+  replication in `G10_VALUE_CAMPAIGN.md`. It uses BIS spot and official OECD
+  CPI with a fixed two-month information lag and never claims to measure
+  financing-inclusive currency excess returns. Its locked run failed the
+  chronological OOS gate; see `CAMPAIGN_6_RESULT.md`. It is closed and does not
+  consume an active literature-batch slot.
 - Evaluate approved campaigns only on post-approval evidence, deduplicated by
   independent episode and separated by outcome source.
 - Persist immutable run and finding records; sample completion permits human

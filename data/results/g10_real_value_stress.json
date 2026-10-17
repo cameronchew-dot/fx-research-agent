@@ -1,0 +1,6889 @@
+{
+  "controls_dated_confirmation": {
+    "opposite": {
+      "annualized_volatility": 0.024598606676837984,
+      "average_monthly_net_return": -0.000640743174043049,
+      "maximum_log_drawdown": -0.07359058539200146,
+      "median_monthly_net_return": -0.0010344668603679199,
+      "month_count": 76,
+      "positive_month_rate": 0.42105263157894735
+    },
+    "permutation": {
+      "annualized_volatility": 0.01877564703965802,
+      "average_monthly_net_return": -0.00073084538582684,
+      "maximum_log_drawdown": -0.06123955417522965,
+      "median_monthly_net_return": 0.0004197659700989905,
+      "month_count": 76,
+      "positive_month_rate": 0.5131578947368421
+    },
+    "stale": {
+      "annualized_volatility": 0.02195251006364085,
+      "average_monthly_net_return": -0.0007038709165811996,
+      "maximum_log_drawdown": -0.09476920351690174,
+      "median_monthly_net_return": -0.00021027780176336903,
+      "month_count": 76,
+      "positive_month_rate": 0.4868421052631579
+    }
+  },
+  "cost_model": {
+    "one_way_cost_bps_per_unit_turnover": 10.0
+  },
+  "dated_control_edge": {
+    "opposite": 0.000649907400717677,
+    "permutation": 0.000740009612501468,
+    "stale": 0.0007130351432558275
+  },
+  "partitions": {
+    "chronological_oos": {
+      "annualized_volatility": 0.02793637377166743,
+      "average_monthly_net_return": -0.0007750593610440574,
+      "maximum_log_drawdown": -0.0836638530414976,
+      "median_monthly_net_return": -0.00024095248511367344,
+      "month_count": 76,
+      "positive_month_rate": 0.5
+    },
+    "dated_confirmation": {
+      "annualized_volatility": 0.024278232418380934,
+      "average_monthly_net_return": 9.164226674627918e-06,
+      "maximum_log_drawdown": -0.07456887046917132,
+      "median_monthly_net_return": 0.00043610121886637505,
+      "month_count": 76,
+      "positive_month_rate": 0.5263157894736842
+    },
+    "development": {
+      "annualized_volatility": 0.03699120547792391,
+      "average_monthly_net_return": 0.0020709122774394176,
+      "maximum_log_drawdown": -0.06317786779004755,
+      "median_monthly_net_return": 0.0023132203541540676,
+      "month_count": 226,
+      "positive_month_rate": 0.5663716814159292
+    }
+  },
+  "portfolio_month_count": 378,
+  "provenance": {
+    "campaign_spec": "config/campaigns/g10_real_exchange_rate_value_v1.json",
+    "campaign_spec_sha256": "a57c1bd1309e1d4d3d0039ea0dae6763aa17964a5907b75a4805aba036602880",
+    "cpi_sha256": "dd09a3f3341286ede56f39e4d25a3ec446a214c3cc817474eece5b73f165c669",
+    "spot_sha256": "e7777489aef7941bd42229a5229b537e1394bc0a71a27995310e813ef6c3ea36"
+  },
+  "review_gate_assessment": {
+    "dated_confirmation_all_control_edges_positive": true,
+    "dated_confirmation_average_net_spot_return_positive": true,
+    "eligible_for_human_review": false,
+    "minimum_chronological_oos_months": true,
+    "minimum_dated_confirmation_months": true,
+    "minimum_development_months": true,
+    "oos_average_net_spot_return_positive": false
+  },
+  "rows": [
+    {
+      "cost_return": 0.001,
+      "gross_return": 0.0030075791782545654,
+      "longs": [
+        "AUD",
+        "CAD",
+        "SEK"
+      ],
+      "month": "1995-03",
+      "net_return": 0.0020075791782545654,
+      "next_month": "1995-04",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "JPY"
+      ],
+      "turnover": 1.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.004562315354842254,
+      "longs": [
+        "AUD",
+        "CAD",
+        "SEK"
+      ],
+      "month": "1995-04",
+      "net_return": -0.004895648688175587,
+      "next_month": "1995-05",
+      "shorts": [
+        "CHF",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.003117347256197316,
+      "longs": [
+        "AUD",
+        "CAD",
+        "SEK"
+      ],
+      "month": "1995-05",
+      "net_return": 0.0027840139228639824,
+      "next_month": "1995-06",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.01562770028512529,
+      "longs": [
+        "AUD",
+        "CAD",
+        "SEK"
+      ],
+      "month": "1995-06",
+      "net_return": 0.01562770028512529,
+      "next_month": "1995-07",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.022746313139111712,
+      "longs": [
+        "CAD",
+        "GBP",
+        "SEK"
+      ],
+      "month": "1995-07",
+      "net_return": 0.022079646472445046,
+      "next_month": "1995-08",
+      "shorts": [
+        "CHF",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.0034563583314813585,
+      "longs": [
+        "CAD",
+        "GBP",
+        "SEK"
+      ],
+      "month": "1995-08",
+      "net_return": 0.0034563583314813585,
+      "next_month": "1995-09",
+      "shorts": [
+        "CHF",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.011576443117234742,
+      "longs": [
+        "CAD",
+        "GBP",
+        "SEK"
+      ],
+      "month": "1995-09",
+      "net_return": 0.011243109783901408,
+      "next_month": "1995-10",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 5.6985983879593314e-05,
+      "longs": [
+        "CAD",
+        "GBP",
+        "SEK"
+      ],
+      "month": "1995-10",
+      "net_return": -0.00027634734945374,
+      "next_month": "1995-11",
+      "shorts": [
+        "CHF",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.0026068157173369075,
+      "longs": [
+        "CAD",
+        "GBP",
+        "NOK"
+      ],
+      "month": "1995-11",
+      "net_return": 0.002273482384003574,
+      "next_month": "1995-12",
+      "shorts": [
+        "CHF",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.004625451006181486,
+      "longs": [
+        "CAD",
+        "GBP",
+        "SEK"
+      ],
+      "month": "1995-12",
+      "net_return": -0.004958784339514819,
+      "next_month": "1996-01",
+      "shorts": [
+        "CHF",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.002946428479616805,
+      "longs": [
+        "CAD",
+        "GBP",
+        "SEK"
+      ],
+      "month": "1996-01",
+      "net_return": 0.002946428479616805,
+      "next_month": "1996-02",
+      "shorts": [
+        "CHF",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.0011021439366413145,
+      "longs": [
+        "CAD",
+        "GBP",
+        "SEK"
+      ],
+      "month": "1996-02",
+      "net_return": 0.0011021439366413145,
+      "next_month": "1996-03",
+      "shorts": [
+        "CHF",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.002080961737211281,
+      "longs": [
+        "CAD",
+        "GBP",
+        "SEK"
+      ],
+      "month": "1996-03",
+      "net_return": -0.002080961737211281,
+      "next_month": "1996-04",
+      "shorts": [
+        "CHF",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.013383769735091554,
+      "longs": [
+        "CAD",
+        "GBP",
+        "SEK"
+      ],
+      "month": "1996-04",
+      "net_return": 0.013383769735091554,
+      "next_month": "1996-05",
+      "shorts": [
+        "CHF",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.004449631224962166,
+      "longs": [
+        "CAD",
+        "GBP",
+        "SEK"
+      ],
+      "month": "1996-05",
+      "net_return": 0.004449631224962166,
+      "next_month": "1996-06",
+      "shorts": [
+        "CHF",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.01325822603750068,
+      "longs": [
+        "CAD",
+        "GBP",
+        "SEK"
+      ],
+      "month": "1996-06",
+      "net_return": -0.01325822603750068,
+      "next_month": "1996-07",
+      "shorts": [
+        "CHF",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.004646308063043884,
+      "longs": [
+        "CAD",
+        "GBP",
+        "SEK"
+      ],
+      "month": "1996-07",
+      "net_return": 0.004646308063043884,
+      "next_month": "1996-08",
+      "shorts": [
+        "CHF",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.010671402501485875,
+      "longs": [
+        "CAD",
+        "GBP",
+        "SEK"
+      ],
+      "month": "1996-08",
+      "net_return": 0.010671402501485875,
+      "next_month": "1996-09",
+      "shorts": [
+        "CHF",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.012760456943181401,
+      "longs": [
+        "CAD",
+        "GBP",
+        "SEK"
+      ],
+      "month": "1996-09",
+      "net_return": 0.012760456943181401,
+      "next_month": "1996-10",
+      "shorts": [
+        "CHF",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.007291346175609913,
+      "longs": [
+        "CAD",
+        "GBP",
+        "SEK"
+      ],
+      "month": "1996-10",
+      "net_return": 0.00695801284227658,
+      "next_month": "1996-11",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.005100188856887922,
+      "longs": [
+        "CAD",
+        "GBP",
+        "SEK"
+      ],
+      "month": "1996-11",
+      "net_return": 0.004766855523554589,
+      "next_month": "1996-12",
+      "shorts": [
+        "CHF",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.013996670137538839,
+      "longs": [
+        "CAD",
+        "NOK",
+        "SEK"
+      ],
+      "month": "1996-12",
+      "net_return": 0.013330003470872173,
+      "next_month": "1997-01",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.0031482075796732036,
+      "longs": [
+        "CAD",
+        "GBP",
+        "SEK"
+      ],
+      "month": "1997-01",
+      "net_return": -0.003481540913006537,
+      "next_month": "1997-02",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.001764318242269778,
+      "longs": [
+        "CAD",
+        "NOK",
+        "SEK"
+      ],
+      "month": "1997-02",
+      "net_return": 0.0010976515756031115,
+      "next_month": "1997-03",
+      "shorts": [
+        "AUD",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": -0.005807621034366698,
+      "longs": [
+        "CAD",
+        "GBP",
+        "SEK"
+      ],
+      "month": "1997-03",
+      "net_return": -0.006474287701033365,
+      "next_month": "1997-04",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.0031034888857425637,
+      "longs": [
+        "CAD",
+        "NOK",
+        "SEK"
+      ],
+      "month": "1997-04",
+      "net_return": 0.00277015555240923,
+      "next_month": "1997-05",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.001923667398705392,
+      "longs": [
+        "CAD",
+        "NOK",
+        "SEK"
+      ],
+      "month": "1997-05",
+      "net_return": -0.0022570007320387255,
+      "next_month": "1997-06",
+      "shorts": [
+        "AUD",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.0026442416111498324,
+      "longs": [
+        "CAD",
+        "NOK",
+        "SEK"
+      ],
+      "month": "1997-06",
+      "net_return": 0.0026442416111498324,
+      "next_month": "1997-07",
+      "shorts": [
+        "AUD",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.014416923960117177,
+      "longs": [
+        "EUR",
+        "NOK",
+        "SEK"
+      ],
+      "month": "1997-07",
+      "net_return": 0.014083590626783844,
+      "next_month": "1997-08",
+      "shorts": [
+        "AUD",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.020922972465791917,
+      "longs": [
+        "EUR",
+        "NOK",
+        "SEK"
+      ],
+      "month": "1997-08",
+      "net_return": 0.020922972465791917,
+      "next_month": "1997-09",
+      "shorts": [
+        "AUD",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.01710299978890815,
+      "longs": [
+        "EUR",
+        "NOK",
+        "SEK"
+      ],
+      "month": "1997-09",
+      "net_return": 0.01710299978890815,
+      "next_month": "1997-10",
+      "shorts": [
+        "AUD",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": -0.006307510037467328,
+      "longs": [
+        "CAD",
+        "NOK",
+        "SEK"
+      ],
+      "month": "1997-10",
+      "net_return": -0.006974176704133995,
+      "next_month": "1997-11",
+      "shorts": [
+        "AUD",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.01033507021611196,
+      "longs": [
+        "CAD",
+        "NOK",
+        "SEK"
+      ],
+      "month": "1997-11",
+      "net_return": 0.01033507021611196,
+      "next_month": "1997-12",
+      "shorts": [
+        "AUD",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.0005927523809549744,
+      "longs": [
+        "CAD",
+        "JPY",
+        "SEK"
+      ],
+      "month": "1997-12",
+      "net_return": -7.391428571169227e-05,
+      "next_month": "1998-01",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.00419388289779036,
+      "longs": [
+        "CAD",
+        "NOK",
+        "SEK"
+      ],
+      "month": "1998-01",
+      "net_return": 0.0035272162311236932,
+      "next_month": "1998-02",
+      "shorts": [
+        "AUD",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.0018856166886433857,
+      "longs": [
+        "CAD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "1998-02",
+      "net_return": 0.001218950021976719,
+      "next_month": "1998-03",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.0074277916897346535,
+      "longs": [
+        "CAD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "1998-03",
+      "net_return": 0.0070944583564013204,
+      "next_month": "1998-04",
+      "shorts": [
+        "AUD",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.0048300019578431915,
+      "longs": [
+        "CAD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "1998-04",
+      "net_return": 0.0048300019578431915,
+      "next_month": "1998-05",
+      "shorts": [
+        "AUD",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": -0.001954748093002165,
+      "longs": [
+        "CAD",
+        "JPY",
+        "SEK"
+      ],
+      "month": "1998-05",
+      "net_return": -0.0026214147596688316,
+      "next_month": "1998-06",
+      "shorts": [
+        "EUR",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.006670610174637698,
+      "longs": [
+        "CAD",
+        "JPY",
+        "SEK"
+      ],
+      "month": "1998-06",
+      "net_return": -0.006670610174637698,
+      "next_month": "1998-07",
+      "shorts": [
+        "EUR",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": -0.014738793341082706,
+      "longs": [
+        "AUD",
+        "CAD",
+        "JPY"
+      ],
+      "month": "1998-07",
+      "net_return": -0.015405460007749372,
+      "next_month": "1998-08",
+      "shorts": [
+        "EUR",
+        "GBP",
+        "SEK"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.0025185170826789284,
+      "longs": [
+        "AUD",
+        "CAD",
+        "JPY"
+      ],
+      "month": "1998-08",
+      "net_return": 0.0025185170826789284,
+      "next_month": "1998-09",
+      "shorts": [
+        "EUR",
+        "GBP",
+        "SEK"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.030652623982441528,
+      "longs": [
+        "CAD",
+        "JPY",
+        "NZD"
+      ],
+      "month": "1998-09",
+      "net_return": 0.030319290649108193,
+      "next_month": "1998-10",
+      "shorts": [
+        "EUR",
+        "GBP",
+        "SEK"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.008774443363515273,
+      "longs": [
+        "AUD",
+        "CAD",
+        "JPY"
+      ],
+      "month": "1998-10",
+      "net_return": 0.008107776696848607,
+      "next_month": "1998-11",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.001192350689103207,
+      "longs": [
+        "AUD",
+        "CAD",
+        "JPY"
+      ],
+      "month": "1998-11",
+      "net_return": 0.001192350689103207,
+      "next_month": "1998-12",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.01360913243158486,
+      "longs": [
+        "AUD",
+        "CAD",
+        "JPY"
+      ],
+      "month": "1998-12",
+      "net_return": 0.01360913243158486,
+      "next_month": "1999-01",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.010501379919658013,
+      "longs": [
+        "AUD",
+        "CAD",
+        "JPY"
+      ],
+      "month": "1999-01",
+      "net_return": 0.01016804658632468,
+      "next_month": "1999-02",
+      "shorts": [
+        "EUR",
+        "GBP",
+        "NOK"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.004578073740990278,
+      "longs": [
+        "AUD",
+        "CAD",
+        "JPY"
+      ],
+      "month": "1999-02",
+      "net_return": 0.004578073740990278,
+      "next_month": "1999-03",
+      "shorts": [
+        "EUR",
+        "GBP",
+        "NOK"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": -0.008049928158096194,
+      "longs": [
+        "CAD",
+        "CHF",
+        "JPY"
+      ],
+      "month": "1999-03",
+      "net_return": -0.00871659482476286,
+      "next_month": "1999-04",
+      "shorts": [
+        "GBP",
+        "NOK",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.0037206830950363553,
+      "longs": [
+        "CHF",
+        "JPY",
+        "SEK"
+      ],
+      "month": "1999-04",
+      "net_return": 0.003387349761703022,
+      "next_month": "1999-05",
+      "shorts": [
+        "GBP",
+        "NOK",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.0029928559759988226,
+      "longs": [
+        "CHF",
+        "JPY",
+        "SEK"
+      ],
+      "month": "1999-05",
+      "net_return": 0.002659522642665489,
+      "next_month": "1999-06",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "NOK"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.020987061474565565,
+      "longs": [
+        "CHF",
+        "EUR",
+        "JPY"
+      ],
+      "month": "1999-06",
+      "net_return": 0.0203203948078989,
+      "next_month": "1999-07",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "GBP"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.003202841061807002,
+      "longs": [
+        "CHF",
+        "JPY",
+        "NZD"
+      ],
+      "month": "1999-07",
+      "net_return": 0.0025361743951403354,
+      "next_month": "1999-08",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "NOK"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.0010624107666511882,
+      "longs": [
+        "CHF",
+        "JPY",
+        "NZD"
+      ],
+      "month": "1999-08",
+      "net_return": -0.0010624107666511882,
+      "next_month": "1999-09",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "NOK"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.005500913537239093,
+      "longs": [
+        "CHF",
+        "EUR",
+        "NZD"
+      ],
+      "month": "1999-09",
+      "net_return": -0.005834246870572426,
+      "next_month": "1999-10",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "NOK"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.011231702011597261,
+      "longs": [
+        "CHF",
+        "EUR",
+        "NZD"
+      ],
+      "month": "1999-10",
+      "net_return": -0.011565035344930594,
+      "next_month": "1999-11",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.0031344035029989034,
+      "longs": [
+        "CHF",
+        "EUR",
+        "NZD"
+      ],
+      "month": "1999-11",
+      "net_return": -0.0031344035029989034,
+      "next_month": "1999-12",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.010951939062497165,
+      "longs": [
+        "CHF",
+        "EUR",
+        "NZD"
+      ],
+      "month": "1999-12",
+      "net_return": -0.010951939062497165,
+      "next_month": "2000-01",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.003772879048413447,
+      "longs": [
+        "CHF",
+        "EUR",
+        "NZD"
+      ],
+      "month": "2000-01",
+      "net_return": 0.003772879048413447,
+      "next_month": "2000-02",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.0007203429201399276,
+      "longs": [
+        "CHF",
+        "EUR",
+        "NZD"
+      ],
+      "month": "2000-02",
+      "net_return": 0.00038700958680659426,
+      "next_month": "2000-03",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.00601599876710123,
+      "longs": [
+        "CHF",
+        "EUR",
+        "NZD"
+      ],
+      "month": "2000-03",
+      "net_return": -0.00601599876710123,
+      "next_month": "2000-04",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.012242330464122188,
+      "longs": [
+        "CHF",
+        "EUR",
+        "NZD"
+      ],
+      "month": "2000-04",
+      "net_return": 0.012242330464122188,
+      "next_month": "2000-05",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.0023529583243045615,
+      "longs": [
+        "CHF",
+        "EUR",
+        "NZD"
+      ],
+      "month": "2000-05",
+      "net_return": 0.0023529583243045615,
+      "next_month": "2000-06",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.007882091208884405,
+      "longs": [
+        "CHF",
+        "EUR",
+        "NZD"
+      ],
+      "month": "2000-06",
+      "net_return": -0.007882091208884405,
+      "next_month": "2000-07",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.016465691683961683,
+      "longs": [
+        "CHF",
+        "EUR",
+        "NZD"
+      ],
+      "month": "2000-07",
+      "net_return": -0.016465691683961683,
+      "next_month": "2000-08",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.006314266011235397,
+      "longs": [
+        "CHF",
+        "EUR",
+        "NZD"
+      ],
+      "month": "2000-08",
+      "net_return": -0.00664759934456873,
+      "next_month": "2000-09",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.012373628661527962,
+      "longs": [
+        "CHF",
+        "EUR",
+        "NZD"
+      ],
+      "month": "2000-09",
+      "net_return": -0.012373628661527962,
+      "next_month": "2000-10",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.01972172820176963,
+      "longs": [
+        "CHF",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2000-10",
+      "net_return": 0.019388394868436295,
+      "next_month": "2000-11",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.025811683531047225,
+      "longs": [
+        "CHF",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2000-11",
+      "net_return": 0.025811683531047225,
+      "next_month": "2000-12",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.003810422382219508,
+      "longs": [
+        "CHF",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2000-12",
+      "net_return": 0.003810422382219508,
+      "next_month": "2001-01",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.00393539081336094,
+      "longs": [
+        "CHF",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2001-01",
+      "net_return": -0.00393539081336094,
+      "next_month": "2001-02",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.009045538250515048,
+      "longs": [
+        "CHF",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2001-02",
+      "net_return": -0.009045538250515048,
+      "next_month": "2001-03",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.005658075898602467,
+      "longs": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2001-03",
+      "net_return": 0.005324742565269134,
+      "next_month": "2001-04",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.011638195136060483,
+      "longs": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2001-04",
+      "net_return": -0.011638195136060483,
+      "next_month": "2001-05",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.0008644392561532848,
+      "longs": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2001-05",
+      "net_return": 0.0008644392561532848,
+      "next_month": "2001-06",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.006433444436618382,
+      "longs": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2001-06",
+      "net_return": 0.006433444436618382,
+      "next_month": "2001-07",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.010906460091842932,
+      "longs": [
+        "CHF",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2001-07",
+      "net_return": 0.0105731267585096,
+      "next_month": "2001-08",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.024296689838897538,
+      "longs": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2001-08",
+      "net_return": -0.024630023172230873,
+      "next_month": "2001-09",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.010985933398938542,
+      "longs": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2001-09",
+      "net_return": 0.010985933398938542,
+      "next_month": "2001-10",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.011747188395329154,
+      "longs": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2001-10",
+      "net_return": 0.011747188395329154,
+      "next_month": "2001-11",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.006215189634077346,
+      "longs": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2001-11",
+      "net_return": 0.006215189634077346,
+      "next_month": "2001-12",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.00423667692791976,
+      "longs": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2001-12",
+      "net_return": 0.00423667692791976,
+      "next_month": "2002-01",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.00978950134139146,
+      "longs": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2002-01",
+      "net_return": 0.00978950134139146,
+      "next_month": "2002-02",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.010539344330691994,
+      "longs": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2002-02",
+      "net_return": 0.01020601099735866,
+      "next_month": "2002-03",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.0066170136852727445,
+      "longs": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2002-03",
+      "net_return": -0.0069503470186060776,
+      "next_month": "2002-04",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.021116553401641043,
+      "longs": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2002-04",
+      "net_return": 0.021116553401641043,
+      "next_month": "2002-05",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.011069794038452995,
+      "longs": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2002-05",
+      "net_return": -0.011403127371786328,
+      "next_month": "2002-06",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "NOK"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.004947645092024902,
+      "longs": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2002-06",
+      "net_return": -0.005280978425358235,
+      "next_month": "2002-07",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "NOK"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.003701299384496491,
+      "longs": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2002-07",
+      "net_return": 0.0033679660511631575,
+      "next_month": "2002-08",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NOK"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.005485337082566602,
+      "longs": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2002-08",
+      "net_return": -0.005485337082566602,
+      "next_month": "2002-09",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NOK"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.009682632614711958,
+      "longs": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2002-09",
+      "net_return": 0.009682632614711958,
+      "next_month": "2002-10",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NOK"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.006180513143099339,
+      "longs": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2002-10",
+      "net_return": 0.005847179809766006,
+      "next_month": "2002-11",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "NOK"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.004492886085564911,
+      "longs": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2002-11",
+      "net_return": 0.004159552752231578,
+      "next_month": "2002-12",
+      "shorts": [
+        "CAD",
+        "JPY",
+        "NOK"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.013395064345615102,
+      "longs": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2002-12",
+      "net_return": 0.01306173101228177,
+      "next_month": "2003-01",
+      "shorts": [
+        "CHF",
+        "JPY",
+        "NOK"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.01659809482656072,
+      "longs": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2003-01",
+      "net_return": 0.016264761493227385,
+      "next_month": "2003-02",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "NOK"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.0005537189451818694,
+      "longs": [
+        "AUD",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2003-02",
+      "net_return": -0.0008870522785152028,
+      "next_month": "2003-03",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "NOK"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.005968633982161971,
+      "longs": [
+        "AUD",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2003-03",
+      "net_return": 0.005968633982161971,
+      "next_month": "2003-04",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "NOK"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": -0.010575624522731988,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2003-04",
+      "net_return": -0.011242291189398654,
+      "next_month": "2003-05",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "NOK"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.009825643416307001,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2003-05",
+      "net_return": 0.009492310082973668,
+      "next_month": "2003-06",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "NOK"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.007668802105251543,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2003-06",
+      "net_return": 0.007002135438584876,
+      "next_month": "2003-07",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.013658384745270195,
+      "longs": [
+        "EUR",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2003-07",
+      "net_return": -0.013991718078603528,
+      "next_month": "2003-08",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.013732327248600806,
+      "longs": [
+        "EUR",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2003-08",
+      "net_return": 0.013732327248600806,
+      "next_month": "2003-09",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.013343252837746601,
+      "longs": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "month": "2003-09",
+      "net_return": -0.013676586171079934,
+      "next_month": "2003-10",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": -0.00443387011549354,
+      "longs": [
+        "CHF",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2003-10",
+      "net_return": -0.005100536782160207,
+      "next_month": "2003-11",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.00633887381471135,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2003-11",
+      "net_return": 0.006005540481378017,
+      "next_month": "2003-12",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.002766750742772052,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2003-12",
+      "net_return": 0.002766750742772052,
+      "next_month": "2004-01",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.012284631576306524,
+      "longs": [
+        "CHF",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2004-01",
+      "net_return": -0.012617964909639857,
+      "next_month": "2004-02",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.005286772538342935,
+      "longs": [
+        "CHF",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2004-02",
+      "net_return": 0.005286772538342935,
+      "next_month": "2004-03",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.013094345925289363,
+      "longs": [
+        "CHF",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2004-03",
+      "net_return": 0.013094345925289363,
+      "next_month": "2004-04",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.001,
+      "gross_return": 0.005657379642477733,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2004-04",
+      "net_return": 0.004657379642477733,
+      "next_month": "2004-05",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NOK"
+      ],
+      "turnover": 1.0
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.0065971606712423615,
+      "longs": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2004-05",
+      "net_return": 0.0059304940045756946,
+      "next_month": "2004-06",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": -0.0025223823216324113,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2004-06",
+      "net_return": -0.003189048988299078,
+      "next_month": "2004-07",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": -0.0009973895672983582,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2004-07",
+      "net_return": -0.001664056233965025,
+      "next_month": "2004-08",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.009080298205417316,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2004-08",
+      "net_return": -0.009413631538750649,
+      "next_month": "2004-09",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.0005366814084823432,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2004-09",
+      "net_return": -0.0008700147418156765,
+      "next_month": "2004-10",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.0008323736893217012,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2004-10",
+      "net_return": -0.0011657070226550345,
+      "next_month": "2004-11",
+      "shorts": [
+        "AUD",
+        "NOK",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.0020645988835011537,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2004-11",
+      "net_return": -0.002397932216834487,
+      "next_month": "2004-12",
+      "shorts": [
+        "EUR",
+        "NOK",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.0069103682169419514,
+      "longs": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2004-12",
+      "net_return": 0.0062437015502752845,
+      "next_month": "2005-01",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.007183400029840204,
+      "longs": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2005-01",
+      "net_return": -0.007183400029840204,
+      "next_month": "2005-02",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.0069555148299661595,
+      "longs": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2005-02",
+      "net_return": 0.006622181496632826,
+      "next_month": "2005-03",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.00258169931862129,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2005-03",
+      "net_return": -0.0029150326519546237,
+      "next_month": "2005-04",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.00582165378220598,
+      "longs": [
+        "CAD",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2005-04",
+      "net_return": 0.005488320448872647,
+      "next_month": "2005-05",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": -0.010163094020724206,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2005-05",
+      "net_return": -0.010829760687390872,
+      "next_month": "2005-06",
+      "shorts": [
+        "AUD",
+        "NOK",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.003195512113316811,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2005-06",
+      "net_return": -0.003195512113316811,
+      "next_month": "2005-07",
+      "shorts": [
+        "AUD",
+        "NOK",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.007057160018632153,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2005-07",
+      "net_return": 0.007057160018632153,
+      "next_month": "2005-08",
+      "shorts": [
+        "AUD",
+        "NOK",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.007993849086109946,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2005-08",
+      "net_return": -0.007993849086109946,
+      "next_month": "2005-09",
+      "shorts": [
+        "AUD",
+        "NOK",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.007262792531602596,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2005-09",
+      "net_return": -0.007596125864935929,
+      "next_month": "2005-10",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.007396259258344316,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2005-10",
+      "net_return": -0.007396259258344316,
+      "next_month": "2005-11",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.01108040957435186,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2005-11",
+      "net_return": 0.01108040957435186,
+      "next_month": "2005-12",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.004264221293928821,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2005-12",
+      "net_return": 0.003930887960595488,
+      "next_month": "2006-01",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.0007970669946319455,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2006-01",
+      "net_return": 0.0007970669946319455,
+      "next_month": "2006-02",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.0213485002269018,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2006-02",
+      "net_return": 0.021015166893568464,
+      "next_month": "2006-03",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.0031355237503483844,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2006-03",
+      "net_return": -0.003468857083681718,
+      "next_month": "2006-04",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.009477354777105441,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2006-04",
+      "net_return": 0.009144021443772108,
+      "next_month": "2006-05",
+      "shorts": [
+        "AUD",
+        "NOK",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.003572134155350521,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2006-05",
+      "net_return": 0.0032388008220171874,
+      "next_month": "2006-06",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.004267563078734516,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2006-06",
+      "net_return": -0.004267563078734516,
+      "next_month": "2006-07",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.010004999351130046,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2006-07",
+      "net_return": -0.010004999351130046,
+      "next_month": "2006-08",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.0016017814079199576,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2006-08",
+      "net_return": -0.0016017814079199576,
+      "next_month": "2006-09",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.00366034747518627,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2006-09",
+      "net_return": -0.003993680808519603,
+      "next_month": "2006-10",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.007073437238870543,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2006-10",
+      "net_return": 0.007073437238870543,
+      "next_month": "2006-11",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.01074272658074492,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2006-11",
+      "net_return": -0.011076059914078253,
+      "next_month": "2006-12",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.0033588498331355477,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2006-12",
+      "net_return": 0.0033588498331355477,
+      "next_month": "2007-01",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.0005173727826850343,
+      "longs": [
+        "CAD",
+        "CHF",
+        "JPY"
+      ],
+      "month": "2007-01",
+      "net_return": -0.0008507061160183676,
+      "next_month": "2007-02",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.008367205600671742,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2007-02",
+      "net_return": -0.008700538934005075,
+      "next_month": "2007-03",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.01142347840544005,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2007-03",
+      "net_return": -0.01142347840544005,
+      "next_month": "2007-04",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.002646447538390325,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2007-04",
+      "net_return": -0.002646447538390325,
+      "next_month": "2007-05",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": -0.014007013462543894,
+      "longs": [
+        "CHF",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2007-05",
+      "net_return": -0.01467368012921056,
+      "next_month": "2007-06",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.010135738710587917,
+      "longs": [
+        "CHF",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2007-06",
+      "net_return": 0.010135738710587917,
+      "next_month": "2007-07",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.02633945067970734,
+      "longs": [
+        "CHF",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2007-07",
+      "net_return": 0.02633945067970734,
+      "next_month": "2007-08",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.01657224381253637,
+      "longs": [
+        "CHF",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2007-08",
+      "net_return": -0.01657224381253637,
+      "next_month": "2007-09",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.012171434042005153,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2007-09",
+      "net_return": -0.012504767375338486,
+      "next_month": "2007-10",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.02438342960106095,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2007-10",
+      "net_return": 0.02438342960106095,
+      "next_month": "2007-11",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.000731566221702518,
+      "longs": [
+        "CHF",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2007-11",
+      "net_return": -0.0010648995550358513,
+      "next_month": "2007-12",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.012278875310619178,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2007-12",
+      "net_return": 0.011945541977285845,
+      "next_month": "2008-01",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.007233108061489121,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2008-01",
+      "net_return": -0.007233108061489121,
+      "next_month": "2008-02",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.03147731988674017,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2008-02",
+      "net_return": 0.03147731988674017,
+      "next_month": "2008-03",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.016352022684152447,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2008-03",
+      "net_return": -0.016685356017485782,
+      "next_month": "2008-04",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.007182449243752388,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2008-04",
+      "net_return": -0.007182449243752388,
+      "next_month": "2008-05",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.01256812247461729,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2008-05",
+      "net_return": 0.012234789141283956,
+      "next_month": "2008-06",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": -0.0029319007682095926,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2008-06",
+      "net_return": -0.003598567434876259,
+      "next_month": "2008-07",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NOK"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.007798899316447895,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2008-07",
+      "net_return": 0.007465565983114562,
+      "next_month": "2008-08",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "EUR"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.03203066271813131,
+      "longs": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2008-08",
+      "net_return": 0.03169732938479798,
+      "next_month": "2008-09",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NOK"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.051208730261646435,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2008-09",
+      "net_return": 0.050542063594979765,
+      "next_month": "2008-10",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "EUR"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": -0.00841587909995891,
+      "longs": [
+        "AUD",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2008-10",
+      "net_return": -0.009082545766625576,
+      "next_month": "2008-11",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "EUR"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": -0.019988229357223927,
+      "longs": [
+        "GBP",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2008-11",
+      "net_return": -0.020654896023890593,
+      "next_month": "2008-12",
+      "shorts": [
+        "CAD",
+        "EUR",
+        "JPY"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.008564724762537685,
+      "longs": [
+        "GBP",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2008-12",
+      "net_return": -0.008898058095871018,
+      "next_month": "2009-01",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.0005785005816252751,
+      "longs": [
+        "GBP",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2009-01",
+      "net_return": 0.00024516724829194177,
+      "next_month": "2009-02",
+      "shorts": [
+        "CAD",
+        "EUR",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.024983952923119546,
+      "longs": [
+        "GBP",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2009-02",
+      "net_return": 0.02465061958978621,
+      "next_month": "2009-03",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "EUR"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.0001488433544305865,
+      "longs": [
+        "GBP",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2009-03",
+      "net_return": -0.0001488433544305865,
+      "next_month": "2009-04",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "EUR"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.010983202324806242,
+      "longs": [
+        "GBP",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2009-04",
+      "net_return": 0.010983202324806242,
+      "next_month": "2009-05",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "EUR"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.006568992411755174,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2009-05",
+      "net_return": 0.005902325745088507,
+      "next_month": "2009-06",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "EUR"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.006859165962817713,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2009-06",
+      "net_return": -0.006859165962817713,
+      "next_month": "2009-07",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "EUR"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.005989446916828621,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2009-07",
+      "net_return": 0.005989446916828621,
+      "next_month": "2009-08",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "EUR"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.008600293724904975,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2009-08",
+      "net_return": -0.008600293724904975,
+      "next_month": "2009-09",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "EUR"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.0048013096893951245,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2009-09",
+      "net_return": -0.0048013096893951245,
+      "next_month": "2009-10",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "EUR"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.00597649960148548,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2009-10",
+      "net_return": 0.005643166268152147,
+      "next_month": "2009-11",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NOK"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.004850517052338973,
+      "longs": [
+        "GBP",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2009-11",
+      "net_return": 0.004183850385672306,
+      "next_month": "2009-12",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "EUR"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.006902809807324377,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2009-12",
+      "net_return": 0.00623614314065771,
+      "next_month": "2010-01",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.0035873435306212425,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2010-01",
+      "net_return": -0.003920676863954576,
+      "next_month": "2010-02",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NOK"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.008808159759014807,
+      "longs": [
+        "GBP",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2010-02",
+      "net_return": -0.00914149309234814,
+      "next_month": "2010-03",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NOK"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.00706657981720926,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2010-03",
+      "net_return": -0.007399913150542593,
+      "next_month": "2010-04",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NOK"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.021759872436501813,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2010-04",
+      "net_return": 0.021759872436501813,
+      "next_month": "2010-05",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NOK"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.00012093348836324377,
+      "longs": [
+        "EUR",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2010-05",
+      "net_return": -0.0005457331783034229,
+      "next_month": "2010-06",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "JPY"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.011739410220185318,
+      "longs": [
+        "EUR",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2010-06",
+      "net_return": 0.011739410220185318,
+      "next_month": "2010-07",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.006262073863954425,
+      "longs": [
+        "EUR",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2010-07",
+      "net_return": -0.006595407197287758,
+      "next_month": "2010-08",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "CHF"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.010373432414718185,
+      "longs": [
+        "GBP",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2010-08",
+      "net_return": 0.00970676574805152,
+      "next_month": "2010-09",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.0030830933903660544,
+      "longs": [
+        "CAD",
+        "GBP",
+        "NZD"
+      ],
+      "month": "2010-09",
+      "net_return": 0.002416426723699388,
+      "next_month": "2010-10",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.005901803998578497,
+      "longs": [
+        "GBP",
+        "NOK",
+        "NZD"
+      ],
+      "month": "2010-10",
+      "net_return": -0.0062351373319118305,
+      "next_month": "2010-11",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.0076210763545961095,
+      "longs": [
+        "GBP",
+        "NOK",
+        "NZD"
+      ],
+      "month": "2010-11",
+      "net_return": -0.0076210763545961095,
+      "next_month": "2010-12",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.014203962825355552,
+      "longs": [
+        "CAD",
+        "EUR",
+        "GBP"
+      ],
+      "month": "2010-12",
+      "net_return": 0.013537296158688886,
+      "next_month": "2011-01",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.0018418056252046872,
+      "longs": [
+        "CAD",
+        "EUR",
+        "GBP"
+      ],
+      "month": "2011-01",
+      "net_return": 0.0018418056252046872,
+      "next_month": "2011-02",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.0010734784843125804,
+      "longs": [
+        "CAD",
+        "EUR",
+        "GBP"
+      ],
+      "month": "2011-02",
+      "net_return": 0.0010734784843125804,
+      "next_month": "2011-03",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.010875867022308661,
+      "longs": [
+        "CAD",
+        "EUR",
+        "GBP"
+      ],
+      "month": "2011-03",
+      "net_return": -0.011209200355641994,
+      "next_month": "2011-04",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.012027654426543015,
+      "longs": [
+        "CAD",
+        "EUR",
+        "GBP"
+      ],
+      "month": "2011-04",
+      "net_return": -0.012027654426543015,
+      "next_month": "2011-05",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.008551745322685397,
+      "longs": [
+        "CAD",
+        "EUR",
+        "GBP"
+      ],
+      "month": "2011-05",
+      "net_return": -0.008551745322685397,
+      "next_month": "2011-06",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.017212797391704948,
+      "longs": [
+        "EUR",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2011-06",
+      "net_return": -0.017546130725038283,
+      "next_month": "2011-07",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.010240719954533413,
+      "longs": [
+        "EUR",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2011-07",
+      "net_return": 0.010240719954533413,
+      "next_month": "2011-08",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.02226474547565275,
+      "longs": [
+        "CAD",
+        "EUR",
+        "GBP"
+      ],
+      "month": "2011-08",
+      "net_return": 0.021931412142319414,
+      "next_month": "2011-09",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.006190938984642257,
+      "longs": [
+        "CAD",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2011-09",
+      "net_return": 0.00552427231797559,
+      "next_month": "2011-10",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.007091369204063521,
+      "longs": [
+        "EUR",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2011-10",
+      "net_return": -0.0074247025373968545,
+      "next_month": "2011-11",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.005022837487716675,
+      "longs": [
+        "EUR",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2011-11",
+      "net_return": -0.005022837487716675,
+      "next_month": "2011-12",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.0051906676691062924,
+      "longs": [
+        "EUR",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2011-12",
+      "net_return": -0.0051906676691062924,
+      "next_month": "2012-01",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.01225152738550572,
+      "longs": [
+        "EUR",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2012-01",
+      "net_return": 0.01225152738550572,
+      "next_month": "2012-02",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.009295949301304103,
+      "longs": [
+        "EUR",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2012-02",
+      "net_return": 0.009295949301304103,
+      "next_month": "2012-03",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.005230105279734248,
+      "longs": [
+        "EUR",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2012-03",
+      "net_return": -0.005230105279734248,
+      "next_month": "2012-04",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.011210248814867561,
+      "longs": [
+        "EUR",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2012-04",
+      "net_return": -0.011210248814867561,
+      "next_month": "2012-05",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.001532625738754781,
+      "longs": [
+        "EUR",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2012-05",
+      "net_return": 0.001532625738754781,
+      "next_month": "2012-06",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.0035680183281501443,
+      "longs": [
+        "EUR",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2012-06",
+      "net_return": -0.0035680183281501443,
+      "next_month": "2012-07",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.0128218839427281,
+      "longs": [
+        "EUR",
+        "GBP",
+        "NOK"
+      ],
+      "month": "2012-07",
+      "net_return": 0.012488550609394767,
+      "next_month": "2012-08",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.000829340621728023,
+      "longs": [
+        "EUR",
+        "GBP",
+        "NOK"
+      ],
+      "month": "2012-08",
+      "net_return": 0.0004960072883946898,
+      "next_month": "2012-09",
+      "shorts": [
+        "AUD",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.004909994203084615,
+      "longs": [
+        "EUR",
+        "GBP",
+        "NOK"
+      ],
+      "month": "2012-09",
+      "net_return": 0.004576660869751282,
+      "next_month": "2012-10",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.0050466366799438,
+      "longs": [
+        "CAD",
+        "EUR",
+        "GBP"
+      ],
+      "month": "2012-10",
+      "net_return": 0.004713303346610467,
+      "next_month": "2012-11",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.01328394749280204,
+      "longs": [
+        "EUR",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2012-11",
+      "net_return": 0.012950614159468707,
+      "next_month": "2012-12",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.012076583647401164,
+      "longs": [
+        "EUR",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2012-12",
+      "net_return": 0.012076583647401164,
+      "next_month": "2013-01",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.005631220087462496,
+      "longs": [
+        "EUR",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2013-01",
+      "net_return": -0.005964553420795829,
+      "next_month": "2013-02",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.00937959272709051,
+      "longs": [
+        "EUR",
+        "GBP",
+        "NOK"
+      ],
+      "month": "2013-02",
+      "net_return": -0.009712926060423843,
+      "next_month": "2013-03",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.004753021430001743,
+      "longs": [
+        "EUR",
+        "GBP",
+        "NOK"
+      ],
+      "month": "2013-03",
+      "net_return": 0.00441968809666841,
+      "next_month": "2013-04",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.022138279451652438,
+      "longs": [
+        "EUR",
+        "GBP",
+        "NOK"
+      ],
+      "month": "2013-04",
+      "net_return": 0.021804946118319103,
+      "next_month": "2013-05",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.005479976916125254,
+      "longs": [
+        "EUR",
+        "GBP",
+        "NOK"
+      ],
+      "month": "2013-05",
+      "net_return": 0.005479976916125254,
+      "next_month": "2013-06",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.0019347923606500646,
+      "longs": [
+        "EUR",
+        "GBP",
+        "NOK"
+      ],
+      "month": "2013-06",
+      "net_return": 0.0019347923606500646,
+      "next_month": "2013-07",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.0039378559943537995,
+      "longs": [
+        "EUR",
+        "GBP",
+        "NOK"
+      ],
+      "month": "2013-07",
+      "net_return": 0.0039378559943537995,
+      "next_month": "2013-08",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.009357172002413294,
+      "longs": [
+        "EUR",
+        "GBP",
+        "NOK"
+      ],
+      "month": "2013-08",
+      "net_return": -0.009357172002413294,
+      "next_month": "2013-09",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.004072737610586994,
+      "longs": [
+        "EUR",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2013-09",
+      "net_return": -0.004406070943920327,
+      "next_month": "2013-10",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.005720450918853788,
+      "longs": [
+        "EUR",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2013-10",
+      "net_return": 0.005720450918853788,
+      "next_month": "2013-11",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.0009508238645487758,
+      "longs": [
+        "EUR",
+        "GBP",
+        "JPY"
+      ],
+      "month": "2013-11",
+      "net_return": -0.0009508238645487758,
+      "next_month": "2013-12",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.006246875720595339,
+      "longs": [
+        "CHF",
+        "EUR",
+        "JPY"
+      ],
+      "month": "2013-12",
+      "net_return": 0.005580209053928672,
+      "next_month": "2014-01",
+      "shorts": [
+        "AUD",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": -0.009371309099240959,
+      "longs": [
+        "CAD",
+        "EUR",
+        "JPY"
+      ],
+      "month": "2014-01",
+      "net_return": -0.010037975765907625,
+      "next_month": "2014-02",
+      "shorts": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.008685798281074159,
+      "longs": [
+        "CAD",
+        "EUR",
+        "JPY"
+      ],
+      "month": "2014-02",
+      "net_return": -0.008685798281074159,
+      "next_month": "2014-03",
+      "shorts": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.0015217656599347202,
+      "longs": [
+        "EUR",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2014-03",
+      "net_return": 0.0008550989932680535,
+      "next_month": "2014-04",
+      "shorts": [
+        "AUD",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.004700582774687732,
+      "longs": [
+        "CAD",
+        "EUR",
+        "JPY"
+      ],
+      "month": "2014-04",
+      "net_return": 0.004033916108021065,
+      "next_month": "2014-05",
+      "shorts": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.004634961727614923,
+      "longs": [
+        "CAD",
+        "EUR",
+        "JPY"
+      ],
+      "month": "2014-05",
+      "net_return": -0.004968295060948256,
+      "next_month": "2014-06",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.0008995197299951718,
+      "longs": [
+        "EUR",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2014-06",
+      "net_return": 0.0005661863966618386,
+      "next_month": "2014-07",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.0011017224063963869,
+      "longs": [
+        "EUR",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2014-07",
+      "net_return": 0.0011017224063963869,
+      "next_month": "2014-08",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.007869148182359963,
+      "longs": [
+        "EUR",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2014-08",
+      "net_return": 0.007869148182359963,
+      "next_month": "2014-09",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.012380003620901008,
+      "longs": [
+        "EUR",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2014-09",
+      "net_return": -0.012713336954234341,
+      "next_month": "2014-10",
+      "shorts": [
+        "AUD",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.007532479644269679,
+      "longs": [
+        "EUR",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2014-10",
+      "net_return": -0.007532479644269679,
+      "next_month": "2014-11",
+      "shorts": [
+        "AUD",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.00884681045602002,
+      "longs": [
+        "EUR",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2014-11",
+      "net_return": -0.00884681045602002,
+      "next_month": "2014-12",
+      "shorts": [
+        "AUD",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.010243682524580586,
+      "longs": [
+        "EUR",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2014-12",
+      "net_return": -0.010577015857913919,
+      "next_month": "2015-01",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.006720423514472522,
+      "longs": [
+        "EUR",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2015-01",
+      "net_return": -0.006720423514472522,
+      "next_month": "2015-02",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.0041377195816366345,
+      "longs": [
+        "EUR",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2015-02",
+      "net_return": -0.0041377195816366345,
+      "next_month": "2015-03",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.004853502717590222,
+      "longs": [
+        "EUR",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2015-03",
+      "net_return": 0.004853502717590222,
+      "next_month": "2015-04",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.002929572168361693,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2015-04",
+      "net_return": -0.0032629055016950266,
+      "next_month": "2015-05",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.0028218841018611465,
+      "longs": [
+        "CAD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2015-05",
+      "net_return": 0.002488550768527813,
+      "next_month": "2015-06",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.005797350708044607,
+      "longs": [
+        "CAD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2015-06",
+      "net_return": -0.005797350708044607,
+      "next_month": "2015-07",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.004490397229954415,
+      "longs": [
+        "CAD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2015-07",
+      "net_return": 0.004490397229954415,
+      "next_month": "2015-08",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.001039974630180976,
+      "longs": [
+        "CAD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2015-08",
+      "net_return": 0.001039974630180976,
+      "next_month": "2015-09",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.007901661626418335,
+      "longs": [
+        "AUD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2015-09",
+      "net_return": -0.008234994959751668,
+      "next_month": "2015-10",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.010933986397069514,
+      "longs": [
+        "AUD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2015-10",
+      "net_return": 0.010933986397069514,
+      "next_month": "2015-11",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.015774180512917912,
+      "longs": [
+        "CAD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2015-11",
+      "net_return": -0.016107513846251247,
+      "next_month": "2015-12",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.018087051113198582,
+      "longs": [
+        "CAD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2015-12",
+      "net_return": 0.018087051113198582,
+      "next_month": "2016-01",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.01702451561073187,
+      "longs": [
+        "CAD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2016-01",
+      "net_return": 0.01702451561073187,
+      "next_month": "2016-02",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.003004465713011538,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2016-02",
+      "net_return": -0.0033377990463448713,
+      "next_month": "2016-03",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.009859602343204961,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2016-03",
+      "net_return": 0.009859602343204961,
+      "next_month": "2016-04",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.010146905685393469,
+      "longs": [
+        "AUD",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2016-04",
+      "net_return": -0.010480239018726802,
+      "next_month": "2016-05",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.0043229532709262025,
+      "longs": [
+        "AUD",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2016-05",
+      "net_return": 0.0043229532709262025,
+      "next_month": "2016-06",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.0017503811620965073,
+      "longs": [
+        "AUD",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2016-06",
+      "net_return": -0.0017503811620965073,
+      "next_month": "2016-07",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.0027362509657224534,
+      "longs": [
+        "AUD",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2016-07",
+      "net_return": 0.00240291763238912,
+      "next_month": "2016-08",
+      "shorts": [
+        "EUR",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.008971851700190693,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2016-08",
+      "net_return": 0.00863851836685736,
+      "next_month": "2016-09",
+      "shorts": [
+        "EUR",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.0018084662796844504,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2016-09",
+      "net_return": -0.002141799613017784,
+      "next_month": "2016-10",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.010322563402054947,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2016-10",
+      "net_return": -0.01065589673538828,
+      "next_month": "2016-11",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.0007112918098334856,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2016-11",
+      "net_return": 0.0003779584765001523,
+      "next_month": "2016-12",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.0032087815672457018,
+      "longs": [
+        "AUD",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2016-12",
+      "net_return": 0.0028754482339123683,
+      "next_month": "2017-01",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.005018331558012668,
+      "longs": [
+        "AUD",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2017-01",
+      "net_return": 0.005018331558012668,
+      "next_month": "2017-02",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.0020029150453631894,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2017-02",
+      "net_return": 0.0016695817120298561,
+      "next_month": "2017-03",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.0013427014445174424,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2017-03",
+      "net_return": -0.0013427014445174424,
+      "next_month": "2017-04",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": -0.007902154635809424,
+      "longs": [
+        "CAD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2017-04",
+      "net_return": -0.00856882130247609,
+      "next_month": "2017-05",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.005130176501403166,
+      "longs": [
+        "CAD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2017-05",
+      "net_return": -0.005130176501403166,
+      "next_month": "2017-06",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.011409926545962406,
+      "longs": [
+        "AUD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2017-06",
+      "net_return": 0.011076593212629073,
+      "next_month": "2017-07",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.006216711288874171,
+      "longs": [
+        "AUD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2017-07",
+      "net_return": 0.006216711288874171,
+      "next_month": "2017-08",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.0037780565509622616,
+      "longs": [
+        "CAD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2017-08",
+      "net_return": -0.004111389884295595,
+      "next_month": "2017-09",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.006371671589990717,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2017-09",
+      "net_return": 0.006038338256657384,
+      "next_month": "2017-10",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": -0.0102962434374543,
+      "longs": [
+        "AUD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2017-10",
+      "net_return": -0.010962910104120966,
+      "next_month": "2017-11",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.002391875710633128,
+      "longs": [
+        "AUD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2017-11",
+      "net_return": 0.002391875710633128,
+      "next_month": "2017-12",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.003922880280852215,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2017-12",
+      "net_return": 0.0032562136141855483,
+      "next_month": "2018-01",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": -0.01008460874742946,
+      "longs": [
+        "AUD",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2018-01",
+      "net_return": -0.010751275414096127,
+      "next_month": "2018-02",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.006453893124755859,
+      "longs": [
+        "AUD",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2018-02",
+      "net_return": -0.006453893124755859,
+      "next_month": "2018-03",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.0005955392361236302,
+      "longs": [
+        "AUD",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2018-03",
+      "net_return": 0.0005955392361236302,
+      "next_month": "2018-04",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.0055373864545307586,
+      "longs": [
+        "AUD",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2018-04",
+      "net_return": 0.0052040531211974255,
+      "next_month": "2018-05",
+      "shorts": [
+        "EUR",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.0019081460708494737,
+      "longs": [
+        "AUD",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2018-05",
+      "net_return": -0.0022414794041828072,
+      "next_month": "2018-06",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.00811852277136584,
+      "longs": [
+        "CAD",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2018-06",
+      "net_return": 0.0077851894380325075,
+      "next_month": "2018-07",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.011343989359207775,
+      "longs": [
+        "CAD",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2018-07",
+      "net_return": -0.011677322692541108,
+      "next_month": "2018-08",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.013995145917267323,
+      "longs": [
+        "CAD",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2018-08",
+      "net_return": 0.01366181258393399,
+      "next_month": "2018-09",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.003990120297847546,
+      "longs": [
+        "NOK",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2018-09",
+      "net_return": -0.004323453631180879,
+      "next_month": "2018-10",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.0026106167894502,
+      "longs": [
+        "AUD",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2018-10",
+      "net_return": 0.0022772834561168667,
+      "next_month": "2018-11",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": -0.003392726269469939,
+      "longs": [
+        "GBP",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2018-11",
+      "net_return": -0.004059392936136606,
+      "next_month": "2018-12",
+      "shorts": [
+        "CHF",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.007157235232194772,
+      "longs": [
+        "GBP",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2018-12",
+      "net_return": 0.006823901898861439,
+      "next_month": "2019-01",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.003991719951562758,
+      "longs": [
+        "GBP",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2019-01",
+      "net_return": 0.003325053284896091,
+      "next_month": "2019-02",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "JPY"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.0028353163526254827,
+      "longs": [
+        "GBP",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2019-02",
+      "net_return": -0.003168649685958816,
+      "next_month": "2019-03",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.0017148925574399728,
+      "longs": [
+        "NOK",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2019-03",
+      "net_return": -0.002048225890773306,
+      "next_month": "2019-04",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.013208702947243089,
+      "longs": [
+        "NOK",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2019-04",
+      "net_return": -0.013208702947243089,
+      "next_month": "2019-05",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.0005265301133941659,
+      "longs": [
+        "AUD",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2019-05",
+      "net_return": -0.0008598634467274992,
+      "next_month": "2019-06",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.010201400444137908,
+      "longs": [
+        "AUD",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2019-06",
+      "net_return": -0.010534733777471241,
+      "next_month": "2019-07",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.010368412162164074,
+      "longs": [
+        "AUD",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2019-07",
+      "net_return": -0.010368412162164074,
+      "next_month": "2019-08",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.004229307245824935,
+      "longs": [
+        "AUD",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2019-08",
+      "net_return": 0.0038959739124916014,
+      "next_month": "2019-09",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.007576359946152016,
+      "longs": [
+        "GBP",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2019-09",
+      "net_return": 0.007243026612818683,
+      "next_month": "2019-10",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.004853766988560685,
+      "longs": [
+        "AUD",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2019-10",
+      "net_return": 0.004187100321894018,
+      "next_month": "2019-11",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "JPY"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.006964703767078667,
+      "longs": [
+        "AUD",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2019-11",
+      "net_return": 0.006631370433745334,
+      "next_month": "2019-12",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.001,
+      "gross_return": -0.010758617540597721,
+      "longs": [
+        "GBP",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2019-12",
+      "net_return": -0.011758617540597722,
+      "next_month": "2020-01",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "JPY"
+      ],
+      "turnover": 1.0
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": -0.008706099739446173,
+      "longs": [
+        "AUD",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2020-01",
+      "net_return": -0.009372766406112839,
+      "next_month": "2020-02",
+      "shorts": [
+        "CAD",
+        "EUR",
+        "JPY"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.015518394234499373,
+      "longs": [
+        "AUD",
+        "GBP",
+        "NZD"
+      ],
+      "month": "2020-02",
+      "net_return": -0.015851727567832707,
+      "next_month": "2020-03",
+      "shorts": [
+        "CAD",
+        "EUR",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.019840954590398814,
+      "longs": [
+        "AUD",
+        "NOK",
+        "NZD"
+      ],
+      "month": "2020-03",
+      "net_return": 0.019174287923732148,
+      "next_month": "2020-04",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "JPY"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.005918387011750431,
+      "longs": [
+        "GBP",
+        "NOK",
+        "NZD"
+      ],
+      "month": "2020-04",
+      "net_return": 0.005585053678417098,
+      "next_month": "2020-05",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.00041132813834457275,
+      "longs": [
+        "GBP",
+        "NOK",
+        "NZD"
+      ],
+      "month": "2020-05",
+      "net_return": 0.00041132813834457275,
+      "next_month": "2020-06",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "JPY"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.01606404203953046,
+      "longs": [
+        "GBP",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2020-06",
+      "net_return": 0.015397375372863793,
+      "next_month": "2020-07",
+      "shorts": [
+        "EUR",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.010804498486090488,
+      "longs": [
+        "CAD",
+        "GBP",
+        "NOK"
+      ],
+      "month": "2020-07",
+      "net_return": 0.010471165152757155,
+      "next_month": "2020-08",
+      "shorts": [
+        "EUR",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.020452472199667518,
+      "longs": [
+        "GBP",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2020-08",
+      "net_return": -0.020785805533000853,
+      "next_month": "2020-09",
+      "shorts": [
+        "EUR",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.00117190267022566,
+      "longs": [
+        "GBP",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2020-09",
+      "net_return": 0.00117190267022566,
+      "next_month": "2020-10",
+      "shorts": [
+        "EUR",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.01737566857025065,
+      "longs": [
+        "GBP",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2020-10",
+      "net_return": 0.017042335236917314,
+      "next_month": "2020-11",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "JPY"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.007722562601811325,
+      "longs": [
+        "AUD",
+        "GBP",
+        "SEK"
+      ],
+      "month": "2020-11",
+      "net_return": 0.007055895935144658,
+      "next_month": "2020-12",
+      "shorts": [
+        "EUR",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.0022916713606780663,
+      "longs": [
+        "GBP",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2020-12",
+      "net_return": 0.0016250046940113998,
+      "next_month": "2021-01",
+      "shorts": [
+        "CAD",
+        "EUR",
+        "JPY"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": -0.0009881593216471824,
+      "longs": [
+        "GBP",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2021-01",
+      "net_return": -0.0016548259883138491,
+      "next_month": "2021-02",
+      "shorts": [
+        "CAD",
+        "JPY",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.001,
+      "gross_return": -5.7314183832428596e-05,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2021-02",
+      "net_return": -0.0010573141838324286,
+      "next_month": "2021-03",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 1.0
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.0003989519023069074,
+      "longs": [
+        "CHF",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2021-03",
+      "net_return": -0.00026771476435975925,
+      "next_month": "2021-04",
+      "shorts": [
+        "CAD",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.0009802760833425585,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2021-04",
+      "net_return": -0.0013136094166758918,
+      "next_month": "2021-05",
+      "shorts": [
+        "CAD",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.0057151352238357786,
+      "longs": [
+        "GBP",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2021-05",
+      "net_return": 0.0057151352238357786,
+      "next_month": "2021-06",
+      "shorts": [
+        "CAD",
+        "EUR",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.001,
+      "gross_return": 0.004362500683642704,
+      "longs": [
+        "CHF",
+        "JPY",
+        "NZD"
+      ],
+      "month": "2021-06",
+      "net_return": 0.003362500683642704,
+      "next_month": "2021-07",
+      "shorts": [
+        "CAD",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 1.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.005209080173749303,
+      "longs": [
+        "AUD",
+        "JPY",
+        "NZD"
+      ],
+      "month": "2021-07",
+      "net_return": 0.00487574684041597,
+      "next_month": "2021-08",
+      "shorts": [
+        "CAD",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.0012439911162667973,
+      "longs": [
+        "AUD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2021-08",
+      "net_return": 0.000910657782933464,
+      "next_month": "2021-09",
+      "shorts": [
+        "CAD",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.0027146960602376295,
+      "longs": [
+        "AUD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2021-09",
+      "net_return": 0.0027146960602376295,
+      "next_month": "2021-10",
+      "shorts": [
+        "CAD",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.005653282156813896,
+      "longs": [
+        "AUD",
+        "JPY",
+        "NZD"
+      ],
+      "month": "2021-10",
+      "net_return": 0.004986615490147229,
+      "next_month": "2021-11",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "SEK"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.00126764034130375,
+      "longs": [
+        "AUD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2021-11",
+      "net_return": 0.0006009736746370834,
+      "next_month": "2021-12",
+      "shorts": [
+        "CAD",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.005727705805035037,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2021-12",
+      "net_return": -0.00606103913836837,
+      "next_month": "2022-01",
+      "shorts": [
+        "CAD",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.007325509290979943,
+      "longs": [
+        "AUD",
+        "JPY",
+        "NZD"
+      ],
+      "month": "2022-01",
+      "net_return": 0.006658842624313276,
+      "next_month": "2022-02",
+      "shorts": [
+        "CAD",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.002064052169458259,
+      "longs": [
+        "AUD",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2022-02",
+      "net_return": 0.0017307188361249256,
+      "next_month": "2022-03",
+      "shorts": [
+        "CAD",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.00721379890164776,
+      "longs": [
+        "AUD",
+        "JPY",
+        "SEK"
+      ],
+      "month": "2022-03",
+      "net_return": -0.00721379890164776,
+      "next_month": "2022-04",
+      "shorts": [
+        "CAD",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": -0.001870430451711602,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2022-04",
+      "net_return": -0.0025370971183782684,
+      "next_month": "2022-05",
+      "shorts": [
+        "CAD",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.011257627955474686,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2022-05",
+      "net_return": -0.01159096128880802,
+      "next_month": "2022-06",
+      "shorts": [
+        "AUD",
+        "CAD",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.004480707247133355,
+      "longs": [
+        "JPY",
+        "NZD",
+        "SEK"
+      ],
+      "month": "2022-06",
+      "net_return": 0.0038140405804666885,
+      "next_month": "2022-07",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.0033942091946698814,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2022-07",
+      "net_return": -0.003727542528003215,
+      "next_month": "2022-08",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.012684480163682654,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2022-08",
+      "net_return": -0.012684480163682654,
+      "next_month": "2022-09",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.0010033151517622658,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2022-09",
+      "net_return": 0.0010033151517622658,
+      "next_month": "2022-10",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.008851920223555649,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2022-10",
+      "net_return": 0.008851920223555649,
+      "next_month": "2022-11",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.0038340416572277794,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2022-11",
+      "net_return": 0.003500708323894446,
+      "next_month": "2022-12",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "NZD"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.00678947876221365,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2022-12",
+      "net_return": -0.007122812095546983,
+      "next_month": "2023-01",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.005506359808197747,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2023-01",
+      "net_return": -0.005506359808197747,
+      "next_month": "2023-02",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.004364695446713818,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2023-02",
+      "net_return": -0.004364695446713818,
+      "next_month": "2023-03",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.011063739866742018,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2023-03",
+      "net_return": -0.011063739866742018,
+      "next_month": "2023-04",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.01066860819047321,
+      "longs": [
+        "AUD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2023-04",
+      "net_return": -0.011001941523806543,
+      "next_month": "2023-05",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.008986628805472468,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2023-05",
+      "net_return": -0.009319962138805801,
+      "next_month": "2023-06",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.009872560999652811,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2023-06",
+      "net_return": 0.009872560999652811,
+      "next_month": "2023-07",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.010253588644074867,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2023-07",
+      "net_return": -0.010253588644074867,
+      "next_month": "2023-08",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.006820560105471432,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2023-08",
+      "net_return": 0.006820560105471432,
+      "next_month": "2023-09",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.009194985753955777,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2023-09",
+      "net_return": -0.009194985753955777,
+      "next_month": "2023-10",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.006014966114207132,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2023-10",
+      "net_return": 0.006014966114207132,
+      "next_month": "2023-11",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.010128185528399752,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2023-11",
+      "net_return": 0.010128185528399752,
+      "next_month": "2023-12",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.010488225681439488,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2023-12",
+      "net_return": -0.010488225681439488,
+      "next_month": "2024-01",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.0011010092460287742,
+      "longs": [
+        "AUD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2024-01",
+      "net_return": -0.0014343425793621075,
+      "next_month": "2024-02",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 4.6520479592692486e-05,
+      "longs": [
+        "AUD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2024-02",
+      "net_return": 4.6520479592692486e-05,
+      "next_month": "2024-03",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.0056666194613359516,
+      "longs": [
+        "JPY",
+        "NOK",
+        "NZD"
+      ],
+      "month": "2024-03",
+      "net_return": -0.005999952794669285,
+      "next_month": "2024-04",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.010569528949534794,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2024-04",
+      "net_return": 0.010236195616201461,
+      "next_month": "2024-05",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.006773930296328127,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2024-05",
+      "net_return": -0.006773930296328127,
+      "next_month": "2024-06",
+      "shorts": [
+        "CAD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.002828303713687963,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2024-06",
+      "net_return": 0.0024949703803546293,
+      "next_month": "2024-07",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.00662148019772964,
+      "longs": [
+        "JPY",
+        "NOK",
+        "NZD"
+      ],
+      "month": "2024-07",
+      "net_return": 0.005954813531062973,
+      "next_month": "2024-08",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": -0.0037820181851307005,
+      "longs": [
+        "CAD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2024-08",
+      "net_return": -0.0044486848517973675,
+      "next_month": "2024-09",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.003522404986769384,
+      "longs": [
+        "CAD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2024-09",
+      "net_return": -0.003522404986769384,
+      "next_month": "2024-10",
+      "shorts": [
+        "CHF",
+        "GBP",
+        "NZD"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.01019662350501345,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2024-10",
+      "net_return": 0.009529956838346784,
+      "next_month": "2024-11",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.001229070206306176,
+      "longs": [
+        "JPY",
+        "NOK",
+        "SEK"
+      ],
+      "month": "2024-11",
+      "net_return": 0.0008957368729728427,
+      "next_month": "2024-12",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.006254752891095253,
+      "longs": [
+        "JPY",
+        "NOK",
+        "NZD"
+      ],
+      "month": "2024-12",
+      "net_return": 0.005588086224428586,
+      "next_month": "2025-01",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": -0.0002666018627339633,
+      "longs": [
+        "JPY",
+        "NOK",
+        "NZD"
+      ],
+      "month": "2025-01",
+      "net_return": -0.0002666018627339633,
+      "next_month": "2025-02",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.0015334831591731028,
+      "longs": [
+        "CAD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2025-02",
+      "net_return": 0.0008668164925064362,
+      "next_month": "2025-03",
+      "shorts": [
+        "AUD",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": 0.008988456195135892,
+      "longs": [
+        "CAD",
+        "CHF",
+        "JPY"
+      ],
+      "month": "2025-03",
+      "net_return": 0.008321789528469226,
+      "next_month": "2025-04",
+      "shorts": [
+        "AUD",
+        "GBP",
+        "SEK"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.001,
+      "gross_return": -0.0006880213067247203,
+      "longs": [
+        "AUD",
+        "JPY",
+        "NZD"
+      ],
+      "month": "2025-04",
+      "net_return": -0.0016880213067247203,
+      "next_month": "2025-05",
+      "shorts": [
+        "EUR",
+        "GBP",
+        "SEK"
+      ],
+      "turnover": 1.0
+    },
+    {
+      "cost_return": 0.0006666666666666666,
+      "gross_return": -0.010323806255676814,
+      "longs": [
+        "AUD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2025-05",
+      "net_return": -0.01099047292234348,
+      "next_month": "2025-06",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.6666666666666666
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 1.1284127895456238e-05,
+      "longs": [
+        "AUD",
+        "JPY",
+        "NZD"
+      ],
+      "month": "2025-06",
+      "net_return": -0.0003220492054378771,
+      "next_month": "2025-07",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.0007942076327215107,
+      "longs": [
+        "AUD",
+        "JPY",
+        "NOK"
+      ],
+      "month": "2025-07",
+      "net_return": 0.0004608742993881774,
+      "next_month": "2025-08",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.004130639681830642,
+      "longs": [
+        "JPY",
+        "NOK",
+        "NZD"
+      ],
+      "month": "2025-08",
+      "net_return": -0.004463973015163975,
+      "next_month": "2025-09",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.0027692115072394117,
+      "longs": [
+        "AUD",
+        "JPY",
+        "NZD"
+      ],
+      "month": "2025-09",
+      "net_return": -0.003102544840572745,
+      "next_month": "2025-10",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.003236288958265273,
+      "longs": [
+        "CAD",
+        "JPY",
+        "NZD"
+      ],
+      "month": "2025-10",
+      "net_return": -0.0035696222915986065,
+      "next_month": "2025-11",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.005984762513267381,
+      "longs": [
+        "JPY",
+        "NOK",
+        "NZD"
+      ],
+      "month": "2025-11",
+      "net_return": -0.006318095846600714,
+      "next_month": "2025-12",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.008909972474827454,
+      "longs": [
+        "JPY",
+        "NOK",
+        "NZD"
+      ],
+      "month": "2025-12",
+      "net_return": 0.008909972474827454,
+      "next_month": "2026-01",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.002529755637102224,
+      "longs": [
+        "JPY",
+        "NOK",
+        "NZD"
+      ],
+      "month": "2026-01",
+      "net_return": 0.002529755637102224,
+      "next_month": "2026-02",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.0007642309213831077,
+      "longs": [
+        "CAD",
+        "JPY",
+        "NZD"
+      ],
+      "month": "2026-02",
+      "net_return": -0.001097564254716441,
+      "next_month": "2026-03",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": 0.005080987329959022,
+      "longs": [
+        "JPY",
+        "NOK",
+        "NZD"
+      ],
+      "month": "2026-03",
+      "net_return": 0.004747653996625689,
+      "next_month": "2026-04",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.0027954126899227853,
+      "longs": [
+        "JPY",
+        "NOK",
+        "NZD"
+      ],
+      "month": "2026-04",
+      "net_return": 0.0027954126899227853,
+      "next_month": "2026-05",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.005596553289920529,
+      "longs": [
+        "CAD",
+        "JPY",
+        "NZD"
+      ],
+      "month": "2026-05",
+      "net_return": -0.005929886623253862,
+      "next_month": "2026-06",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.006772275169044202,
+      "longs": [
+        "CAD",
+        "JPY",
+        "NZD"
+      ],
+      "month": "2026-06",
+      "net_return": 0.006772275169044202,
+      "next_month": "2026-07",
+      "shorts": [
+        "CHF",
+        "EUR",
+        "GBP"
+      ],
+      "turnover": 0.0
+    },
+    {
+      "cost_return": 0.0003333333333333333,
+      "gross_return": -0.001261712993517499,
+      "longs": [
+        "CAD",
+        "JPY",
+        "NZD"
+      ],
+      "month": "2026-07",
+      "net_return": -0.0015950463268508323,
+      "next_month": "2026-08",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.3333333333333333
+    },
+    {
+      "cost_return": 0.0,
+      "gross_return": 0.0045421935417403695,
+      "longs": [
+        "CAD",
+        "JPY",
+        "NZD"
+      ],
+      "month": "2026-08",
+      "net_return": 0.0045421935417403695,
+      "next_month": "2026-09",
+      "shorts": [
+        "AUD",
+        "CHF",
+        "GBP"
+      ],
+      "turnover": 0.0
+    }
+  ],
+  "schema": "FX_G10_REAL_VALUE_RESULT_V1",
+  "signal_month_count": 379,
+  "strategy": "REAL_VALUE_60M",
+  "window_end": "2026-09",
+  "window_start": "1995-03"
+}

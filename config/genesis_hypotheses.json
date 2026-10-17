@@ -127,6 +127,22 @@
       "expected_frequency": "MONTHLY_REBALANCE",
       "overlap_notes": "Cross-sectional multi-currency ranking is structurally distinct from the existing EUR/USD failed-auction context campaigns.",
       "next_action": "ACQUIRE_AND_VALIDATE_COMPLETE_G10_EXCESS_RETURN_PANEL"
+    },
+    {
+      "hypothesis_id": "HYP_G10_REAL_EXCHANGE_RATE_VALUE_V1",
+      "proposed_at_utc": "2026-10-17T16:00:00Z",
+      "proposed_by": "OPERATOR_AND_CODEX_LITERATURE_REVIEW",
+      "state": "REJECTED",
+      "hypothesis_type": "LITERATURE_REPLICATION",
+      "classification": "STRATEGY",
+      "priority": 9,
+      "statement": "Currencies with the largest five-year real bilateral depreciation may outperform the most appreciated G10 currencies over the next month after locked turnover costs.",
+      "data_requirements": ["BIS_MONTHLY_END_OF_PERIOD_SPOT", "OFFICIAL_CPI_INDEX_WITH_FIXED_INFORMATION_LAG"],
+      "dependencies": ["COMPLETE_G10_CPI_PANEL", "FIXED_TWO_MONTH_INFORMATION_LAG"],
+      "expected_frequency": "MONTHLY_REBALANCE",
+      "overlap_notes": "Real-exchange-rate mean reversion is distinct from price momentum and the EUR failed-auction campaigns.",
+      "evidence_ids": ["CAMPAIGN_G10_REAL_EXCHANGE_RATE_VALUE_V1_PRIMARY", "CAMPAIGN_G10_REAL_EXCHANGE_RATE_VALUE_V1_STRESS"],
+      "next_action": "CLOSED_FAILED_CHRONOLOGICAL_OOS_DO_NOT_RETUNE"
     }
   ]
 }
