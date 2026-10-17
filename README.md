@@ -116,6 +116,10 @@ and historical bid/ask transaction costs. The importer independently recomputes
 gross and net excess returns. Spot-only panels, inferred or zero-filled
 financing, incomplete currency coverage, and fewer than 192 common months remain
 blocked. Use `literature-panel-status` to see the exact coverage shortfall.
+Use `financing-source-status` to inspect the upstream source-acquisition gate.
+Its committed catalog distinguishes spot-only, current-only, benchmark-only,
+unacquired licensed, and complete acquired sources. Discovering a paper or a
+replication workbook does not unlock the campaign by itself.
 
 ## Governed autonomy
 

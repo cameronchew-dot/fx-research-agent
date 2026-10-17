@@ -48,6 +48,7 @@ from fx_research_agent.notifications import (  # noqa: E402
     notify_proposals_for_review,
 )
 from fx_research_agent.literature_panels import panel_status  # noqa: E402
+from fx_research_agent.financing_sources import audit_paths  # noqa: E402
 
 
 DEFAULT_DB = ROOT / "data" / "fx_research_agent.sqlite3"
@@ -66,6 +67,8 @@ DEFAULT_AUTONOMY_POLICY = ROOT / "config" / "autonomy_policy.json"
 DEFAULT_BATCH = ROOT / "config" / "batches" / "eur_forward_batch_v1.json"
 DEFAULT_AUTOMATION_STATUS = ROOT / "data" / "automation_status.json"
 DEFAULT_PROPOSAL_STATUS = ROOT / "data" / "proposal_status.json"
+DEFAULT_FINANCING_SOURCE_CATALOG = ROOT / "config" / "g10_financing_source_catalog.json"
+DEFAULT_LITERATURE_PANEL_CONTRACT = ROOT / "config" / "g10_literature_panel_contract.json"
 SOURCE_REPO = "https://github.com/cameronchew-dot/eur-usd-agent.git"
 SOURCE_COMMIT = "e168603"
 SOURCE_PATH = "config/research_hypothesis_registry.json"
@@ -100,6 +103,7 @@ def main() -> int:
     sync.add_argument("--inbox-dir", type=Path, default=DEFAULT_MARKET_INBOX)
     commands.add_parser("market-data-status")
     commands.add_parser("literature-panel-status")
+    commands.add_parser("financing-source-status")
     evidence = commands.add_parser("register-research-evidence")
     evidence.add_argument("manifest", type=Path)
     evidence_sync = commands.add_parser("sync-research-evidence")
@@ -183,6 +187,8 @@ def main() -> int:
             print_json(result)
         elif args.command == "literature-panel-status":
             print_json(panel_status(connection, DEFAULT_MARKET_INBOX))
+        elif args.command == "financing-source-status":
+            print_json(audit_paths(DEFAULT_FINANCING_SOURCE_CATALOG, DEFAULT_LITERATURE_PANEL_CONTRACT))
         elif args.command == "register-research-evidence":
             print_json(register_evidence_manifest(connection, args.manifest))
         elif args.command == "sync-research-evidence":

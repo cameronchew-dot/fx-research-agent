@@ -28,6 +28,28 @@ OANDA financing metadata.
 - The published currency-momentum literature commonly relies on institutional
   forward-rate datasets. A trustworthy observed-forward source may therefore
   require a licensed vendor or a separately documented historical dataset.
+- The Journal of Financial Economics archive lists the authors' workbook
+  `Menkoff_Sarno_Schmeling_Schrimpf.xlsx`, but the migrated archive page does
+  not currently expose a working file URL. The authors describe the package as
+  replication data that includes portfolio benchmarks and Datastream mnemonics.
+  Until the workbook is recovered and inspected, it is `BENCHMARK_ONLY`, not
+  evidence that raw nine-instrument forward quotes are available.
+- The paper states that its end-of-month spot and one-month forward rates came
+  from Barclays Bank International and Reuters via Datastream. This verifies a
+  suitable data *type*, not present access, exact common-month coverage, or an
+  acquired immutable artifact.
+
+Run the committed source audit at any time:
+
+```bash
+python3 ops/research_supervisor.py financing-source-status
+```
+
+The audit is intentionally stricter than source discovery. Only an acquired,
+checksummed complete panel with raw currency-level rows, all nine instruments,
+at least 192 common months, an allowed observed financing source, historical
+bid/ask costs, and immutable lineage can report `READY`. The catalog records
+why each discovered source does or does not qualify.
 
 ## Acquisition sequence
 
@@ -60,3 +82,8 @@ If an observed historical financing/forward source cannot be obtained, do not
 weaken Campaign 4. A spot-momentum study would be a distinct hypothesis,
 campaign ID, exact specification, and multiplicity slot. It must be
 predeclared before its results are inspected.
+
+Campaign 5 carry remains deliberately unpredeclared while this audit is
+blocked. Carry depends on the same historical financing/forward leg, so writing
+its exact specification before that input is supportable would create a sealed
+campaign that cannot run.

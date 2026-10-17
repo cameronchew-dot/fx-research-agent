@@ -1,0 +1,82 @@
+{
+  "schema": "FX_G10_FINANCING_SOURCE_CATALOG_V1",
+  "campaign_id": "CAMPAIGN_G10_CROSS_SECTIONAL_MOMENTUM_V1",
+  "reviewed_at_utc": "2026-10-17T00:00:00Z",
+  "sources": [
+    {
+      "source_id": "BIS_WS_XRU_SPOT",
+      "name": "BIS bilateral exchange-rate archive",
+      "official_url": "https://data.bis.org/topics/XRU",
+      "campaign_role": "SPOT_INPUT_ONLY",
+      "access_status": "PUBLIC_AVAILABLE",
+      "raw_currency_level_rows": true,
+      "financing_source_type": null,
+      "transaction_cost_source": null,
+      "instruments": ["EUR_USD", "GBP_USD", "USD_JPY", "USD_CHF", "USD_CAD", "AUD_USD", "NZD_USD", "USD_SEK", "USD_NOK"],
+      "common_month_count": null,
+      "artifact_sha256": null,
+      "immutable_lineage": false,
+      "finding": "Official long-history spot input only; it does not provide the required observed one-month forward or financing leg."
+    },
+    {
+      "source_id": "IMF_EXCHANGE_RATES_SPOT",
+      "name": "IMF Exchange Rates dataset",
+      "official_url": "https://data.imf.org/datasets/IMF.STA:ER",
+      "campaign_role": "SPOT_INPUT_ONLY",
+      "access_status": "PUBLIC_AVAILABLE",
+      "raw_currency_level_rows": true,
+      "financing_source_type": null,
+      "transaction_cost_source": null,
+      "instruments": [],
+      "common_month_count": null,
+      "artifact_sha256": null,
+      "immutable_lineage": false,
+      "finding": "Official historical spot rates; no complete G10 observed-forward panel."
+    },
+    {
+      "source_id": "OANDA_CURRENT_FINANCING_METADATA",
+      "name": "OANDA current instrument financing metadata",
+      "official_url": "https://developer.oanda.com/rest-live-v20/primitives-df/",
+      "campaign_role": "CURRENT_METADATA_ONLY",
+      "access_status": "AVAILABLE_TO_MARKET_COLLECTOR",
+      "raw_currency_level_rows": false,
+      "financing_source_type": null,
+      "transaction_cost_source": null,
+      "instruments": ["EUR_USD", "GBP_USD", "USD_JPY", "USD_CHF", "USD_CAD", "AUD_USD", "NZD_USD", "USD_SEK", "USD_NOK"],
+      "common_month_count": 0,
+      "artifact_sha256": null,
+      "immutable_lineage": false,
+      "finding": "Current financing metadata is not an observed historical monthly financing-return series."
+    },
+    {
+      "source_id": "JFE_MENKHOFF_REPLICATION_WORKBOOK",
+      "name": "Currency Momentum Strategies JFE replication workbook",
+      "official_url": "https://journal-of-financial-economics.squarespace.com/data-and-code",
+      "campaign_role": "BENCHMARK_ONLY",
+      "access_status": "LISTED_DOWNLOAD_LINK_UNRESOLVED",
+      "raw_currency_level_rows": null,
+      "financing_source_type": null,
+      "transaction_cost_source": null,
+      "instruments": [],
+      "common_month_count": null,
+      "artifact_sha256": null,
+      "immutable_lineage": false,
+      "finding": "The official archive lists the workbook but the migrated page exposes no working file URL. Author documentation describes replication data and Datastream mnemonics; raw nine-instrument quotes and costs are not verified. Treat as a benchmark until inspected."
+    },
+    {
+      "source_id": "BBI_REUTERS_DATASTREAM_ORIGINAL_STUDY",
+      "name": "BBI and Reuters spot and one-month forward quotes via Datastream",
+      "official_url": "https://www.bis.org/publ/work366.pdf",
+      "campaign_role": "FINANCING_INPUT_CANDIDATE",
+      "access_status": "LICENSED_SOURCE_NOT_ACQUIRED",
+      "raw_currency_level_rows": true,
+      "financing_source_type": "OBSERVED_ONE_MONTH_FORWARD_POINTS",
+      "transaction_cost_source": "HISTORICAL_BID_ASK",
+      "instruments": ["EUR_USD", "GBP_USD", "USD_JPY", "USD_CHF", "USD_CAD", "AUD_USD", "NZD_USD", "USD_SEK", "USD_NOK"],
+      "common_month_count": null,
+      "artifact_sha256": null,
+      "immutable_lineage": false,
+      "finding": "The paper verifies the required data type, but the licensed raw data have not been acquired and exact nine-instrument common-month coverage has not been established."
+    }
+  ]
+}
