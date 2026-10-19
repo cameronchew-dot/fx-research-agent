@@ -1,0 +1,13 @@
+{
+  "schema":"FX_RESEARCH_CAMPAIGN_V1","campaign_id":"CAMPAIGN_EUR_SESSION_VWAP_RECLAIM_V1","hypothesis_id":"HYP_EUR_SESSION_VWAP_RECLAIM_REVERSION_V1","created_at_utc":"2026-10-18T00:10:02Z","state":"DRAFT","title":"EUR/USD session VWAP reclaim","instrument":"EUR_USD","mechanism_class":"VWAP_RECLAIM_MEAN_REVERSION","research_question":"Does the locked session VWAP cross-and-hold reclaim have positive forward net R after spread?","null_hypothesis":"The setup has non-positive average forward net R after spread.",
+  "required_data_classes":["FORWARD_STRATEGY_SHADOW_EVENTS","FORWARD_STRATEGY_SHADOW_OUTCOMES"],
+  "population":{"source":"EUR_AGENT_STRATEGY_SHADOW_FORWARD_ONLY","mechanism_id":"VWAP_RECLAIM_MEAN_REVERSION","setup_id":"SESSION_VWAP_RECLAIM_V1","timeframe":"M15","entry_model":"NEXT_M15_OPEN_WITH_DECISION_SPREAD","outcome_horizon_m15_bars":16,"same_bar_tie_policy":"STOP_FIRST_CONSERVATIVE"},
+  "independence_unit":{"unit":"FIRST_EVENT_PER_SETUP_DIRECTION_LEVEL_TRADING_DAY","repeated_events_count_once":true},
+  "exact_specification":{"contract":"EUR_AGENT_STRATEGY_EXPANSION_SHADOW_V1","vwap_volume":"OANDA_TICK_COUNT_PROXY","minimum_session_bars":4,"parameters_locked_before_forward_collection":true},
+  "controls":[{"control_id":"ZERO_NET_R_NULL","definition":"Average forward net R must exceed zero; VWAP stretch events are not pooled."}],
+  "metrics":{"primary":"AVERAGE_FORWARD_NET_R","secondary":["MEDIAN_NET_R","POSITIVE_NET_R_RATE","MFE_R","MAE_R","SAMPLE_COUNT"]},
+  "review_gates":{"minimum_resolved_independent_treatment_episodes":30,"minimum_resolved_independent_comparator_episodes":0,"treatment_average_net_r_must_be_positive":true,"review_is_not_promotion":true},
+  "multiple_comparisons_policy":{"batch_id":"BATCH_EUR_STRATEGY_EXPANSION_V1","parameter_sweeps_allowed":false},
+  "stopping_rules":{"no_early_success_declaration":true,"no_early_parameter_retuning":true},
+  "authority":{"automatic_approval":false,"automatic_execution":false,"downstream_activation":false,"order_authority":false}
+}

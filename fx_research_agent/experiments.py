@@ -32,6 +32,8 @@ def _load_evidence(connection, inbox_dir: Path, instrument: str) -> dict[str, An
     candidates: dict[str, dict[str, Any]] = {}
     contexts: dict[str, dict[str, Any]] = {}
     outcomes: dict[str, dict[str, Any]] = {}
+    strategy_events: dict[str, dict[str, Any]] = {}
+    strategy_outcomes: dict[str, dict[str, Any]] = {}
     manifest_ids: list[str] = []
     snapshot_end_utc: str | None = None
     for row in connection.execute(
@@ -54,13 +56,64 @@ def _load_evidence(connection, inbox_dir: Path, instrument: str) -> dict[str, An
         _merge_immutable(candidates, payload.get("candidate_episode_facts", []), "candidate_id", "candidate")
         _merge_immutable(contexts, payload.get("trend_location_range_context_facts", []), "candidate_id", "context")
         _merge_immutable(outcomes, payload.get("rule_baseline_outcome_facts", []), "outcome_id", "outcome")
+        _merge_immutable(strategy_events, payload.get("strategy_shadow_event_facts", []), "event_id", "strategy event")
+        _merge_immutable(strategy_outcomes, payload.get("strategy_shadow_outcome_facts", []), "outcome_id", "strategy outcome")
     return {
         "manifest_ids": sorted(manifest_ids),
         "snapshot_end_utc": snapshot_end_utc,
         "candidates": candidates,
         "contexts": contexts,
         "outcomes": outcomes,
+        "strategy_events": strategy_events,
+        "strategy_outcomes": strategy_outcomes,
     }
+
+
+def _strategy_shadow_eligible_rows(
+    evidence: dict[str, Any],
+    campaign: dict[str, Any],
+    approval_time: str,
+    evaluated_at: str,
+) -> list[dict[str, Any]]:
+    population = campaign["population"]
+    mechanism_id = str(population["mechanism_id"])
+    setup_id = str(population["setup_id"])
+    outcome_by_event = {
+        str(value.get("event_id")): value
+        for value in evidence["strategy_outcomes"].values()
+    }
+    rows = []
+    for event in evidence["strategy_events"].values():
+        if event.get("instrument") != campaign["instrument"]:
+            continue
+        if event.get("mechanism_id") != mechanism_id or event.get("setup_id") != setup_id:
+            continue
+        if event.get("base_timeframe") != population["timeframe"]:
+            continue
+        decision_time = str(event.get("decision_time_utc") or "")
+        if decision_time <= approval_time or decision_time > evaluated_at:
+            continue
+        outcome = outcome_by_event.get(str(event.get("event_id")))
+        if not outcome or str(outcome.get("observed_at_utc") or "") > evaluated_at:
+            continue
+        if outcome.get("entry_model") != population["entry_model"]:
+            continue
+        if outcome.get("horizon_bars") != population["outcome_horizon_m15_bars"]:
+            continue
+        if outcome.get("same_bar_tie_policy") != population["same_bar_tie_policy"]:
+            continue
+        rows.append({
+            "episode_id": event["event_id"],
+            "candidate_id": event["event_id"],
+            "decision_time_utc": decision_time,
+            "outcome_id": outcome["outcome_id"],
+            "observed_at_utc": outcome["observed_at_utc"],
+            "outcome_source": "FORWARD_STRATEGY_SHADOW",
+            "realized_net_r": outcome.get("realized_net_r"),
+            "cohort": "TREATMENT",
+            "cohort_label": setup_id,
+        })
+    return rows
 
 
 def _read_json_payload(path: Path) -> dict[str, Any]:
@@ -387,28 +440,33 @@ def build_evaluation(
     evidence_cutoff = min(requested_evaluation_time, snapshot_end)
     evaluated_at = max(approval_time, evidence_cutoff)
 
-    outcome_by_candidate: dict[str, list[dict[str, Any]]] = {}
-    for outcome in evidence["outcomes"].values():
-        outcome_by_candidate.setdefault(str(outcome.get("candidate_id")), []).append(outcome)
     eligible: list[dict[str, Any]] = []
-    for candidate_id, candidate in evidence["candidates"].items():
-        context = evidence["contexts"].get(candidate_id)
-        for outcome in sorted(
-            outcome_by_candidate.get(candidate_id, []),
-            key=lambda value: (str(value.get("observed_at_utc") or ""), str(value.get("outcome_id") or "")),
-        ):
-            built = _eligible_row(
-                candidate,
-                context,
-                outcome,
-                campaign,
-                approval_time,
-                evidence_cutoff,
-                market["bar_medians"],
-            )
-            if built is not None:
-                eligible.append(built)
-                break
+    if campaign["population"].get("source") == "EUR_AGENT_STRATEGY_SHADOW_FORWARD_ONLY":
+        eligible = _strategy_shadow_eligible_rows(
+            evidence, campaign, approval_time, evidence_cutoff
+        )
+    else:
+        outcome_by_candidate: dict[str, list[dict[str, Any]]] = {}
+        for outcome in evidence["outcomes"].values():
+            outcome_by_candidate.setdefault(str(outcome.get("candidate_id")), []).append(outcome)
+        for candidate_id, candidate in evidence["candidates"].items():
+            context = evidence["contexts"].get(candidate_id)
+            for outcome in sorted(
+                outcome_by_candidate.get(candidate_id, []),
+                key=lambda value: (str(value.get("observed_at_utc") or ""), str(value.get("outcome_id") or "")),
+            ):
+                built = _eligible_row(
+                    candidate,
+                    context,
+                    outcome,
+                    campaign,
+                    approval_time,
+                    evidence_cutoff,
+                    market["bar_medians"],
+                )
+                if built is not None:
+                    eligible.append(built)
+                    break
 
     first_per_episode: dict[str, dict[str, Any]] = {}
     for record in sorted(
@@ -430,9 +488,22 @@ def build_evaluation(
         lift = None
         if treatment_metrics["average_net_r"] is not None and comparator_metrics["average_net_r"] is not None:
             lift = round(treatment_metrics["average_net_r"] - comparator_metrics["average_net_r"], 6)
+        average_gate = (
+            not bool(campaign["review_gates"].get("treatment_average_net_r_must_be_positive"))
+            or (
+                treatment_metrics["average_net_r"] is not None
+                and treatment_metrics["average_net_r"] > 0
+            )
+        )
+        lift_gate = (
+            not bool(campaign["review_gates"].get("primary_lift_must_be_positive"))
+            or (lift is not None and lift > 0)
+        )
         gates_met = (
             treatment_metrics["priced_episode_count"] >= minimum_treatment
             and comparator_metrics["priced_episode_count"] >= minimum_comparator
+            and average_gate
+            and lift_gate
         )
         source_reports.append(
             {
@@ -440,6 +511,8 @@ def build_evaluation(
                 "treatment": treatment_metrics,
                 "comparator": comparator_metrics,
                 "average_net_r_lift": lift,
+                "treatment_average_positive_gate": average_gate,
+                "primary_lift_positive_gate": lift_gate,
                 "sample_gates_met": gates_met,
                 "result_interpretation": "READY_FOR_HUMAN_REVIEW" if gates_met else "ACCRUING_NO_CONCLUSION",
             }

@@ -1,0 +1,28 @@
+{
+  "schema": "FX_RESEARCH_BATCH_V1",
+  "batch_id": "BATCH_EUR_STRATEGY_EXPANSION_V1",
+  "created_at_utc": "2026-10-18T00:05:00Z",
+  "title": "EUR/USD predeclared forward strategy expansion",
+  "instrument": "EUR_USD",
+  "maximum_active_campaigns": 5,
+  "campaign_ids": [
+    "CAMPAIGN_EUR_OBJECTIVE_ACCEPTED_BREAKOUT_RETEST_V1",
+    "CAMPAIGN_EUR_ORB_REVERSAL_V1",
+    "CAMPAIGN_EUR_SESSION_VWAP_RECLAIM_V1",
+    "CAMPAIGN_EUR_SESSION_VWAP_STRETCH_REVERSION_V1",
+    "CAMPAIGN_EUR_HTF_TREND_PULLBACK_CONTINUATION_V1"
+  ],
+  "multiplicity_policy": {
+    "method": "HOLM_BONFERRONI",
+    "familywise_alpha": 0.05,
+    "hypothesis_budget": 5,
+    "vwap_setups_count_as_separate_hypotheses": true,
+    "post_hoc_campaign_substitution_allowed": false
+  },
+  "authority": {
+    "automatic_campaign_addition": false,
+    "automatic_approval": false,
+    "automatic_promotion": false,
+    "downstream_authority": false
+  }
+}

@@ -73,7 +73,10 @@ and `data/market_ingest_status.json` plus `data/market_data_status.json` here.
 
 Forward agent evidence follows a separate one-way boundary. `eur_agent`
 exports only objective-level episode facts, locked trend/location/range context,
-and `RULE_BASELINE` outcomes. LLM prompts, rationales, memory, provider data,
+`RULE_BASELINE` outcomes, and deterministic strategy-expansion shadow
+events/outcomes. The expansion batch separately evaluates accepted
+breakout/retests, ORB reversals, VWAP reclaim, VWAP stretch reversion, and
+HTF-aligned trend pullbacks. LLM prompts, rationales, memory, provider data,
 credentials, account state, and order state are rejected. Outcome sources remain
 separate. The exporter and importer run as short one-shot launch agents every
 15 minutes; `state = not running` with exit code 0 is normal between runs.
