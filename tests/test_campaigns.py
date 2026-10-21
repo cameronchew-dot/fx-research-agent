@@ -7,6 +7,7 @@ from pathlib import Path
 from fx_research_agent.campaigns import (
     approve_campaign,
     campaign_data_readiness,
+    park_campaign,
     register_campaign,
 )
 from fx_research_agent.storage import initialize
@@ -98,6 +99,49 @@ class CampaignTests(unittest.TestCase):
         self.assertEqual(readiness["readiness_status"], "BLOCKED")
         self.assertIn("campaign_not_human_approved", readiness["blocks"])
         self.assertIn("FORWARD_OUTCOMES", readiness["missing_data_classes"])
+
+    def test_named_human_can_park_approved_campaign_without_rewriting_it(self):
+        with tempfile.TemporaryDirectory() as directory:
+            registered = register_campaign(self.connection, self._path(Path(directory)))
+        approve_campaign(
+            self.connection,
+            "CAMPAIGN_1",
+            expected_payload_hash=registered["campaign_payload_hash"],
+            approved_by="CAMERON",
+            reason="Exact specification reviewed",
+            approved_at_utc="2026-10-13T01:00:00Z",
+        )
+        with self.assertRaisesRegex(ValueError, "named human"):
+            park_campaign(
+                self.connection,
+                "CAMPAIGN_1",
+                expected_payload_hash=registered["campaign_payload_hash"],
+                parked_by="AGENT",
+                reason="blocked source",
+            )
+        result = park_campaign(
+            self.connection,
+            "CAMPAIGN_1",
+            expected_payload_hash=registered["campaign_payload_hash"],
+            parked_by="CAMERON",
+            reason="Required source unavailable",
+            parked_at_utc="2026-10-13T02:00:00Z",
+        )
+        self.assertEqual(result["state"], "PARKED")
+        self.assertTrue(result["historical_specification_preserved"])
+        readiness = campaign_data_readiness(self.connection, "CAMPAIGN_1")
+        self.assertIn("campaign_not_active", readiness["blocks"])
+        self.assertNotIn("campaign_not_human_approved", readiness["blocks"])
+        self.assertEqual(
+            self.connection.execute(
+                "SELECT COUNT(*) FROM research_campaigns"
+            ).fetchone()[0],
+            1,
+        )
+        self.assertEqual(
+            self.connection.execute("SELECT COUNT(*) FROM experiment_specs").fetchone()[0],
+            1,
+        )
 
     def test_readiness_combines_market_and_forward_evidence_manifests(self):
         with tempfile.TemporaryDirectory() as directory:

@@ -234,6 +234,67 @@ def approve_campaign(
     }
 
 
+def park_campaign(
+    connection,
+    campaign_id: str,
+    *,
+    expected_payload_hash: str,
+    parked_by: str,
+    reason: str,
+    parked_at_utc: str | None = None,
+) -> dict[str, Any]:
+    """Append a human-reviewed terminal park event without rewriting evidence."""
+
+    row = connection.execute(
+        "SELECT payload_hash FROM research_campaigns WHERE campaign_id=?",
+        (campaign_id,),
+    ).fetchone()
+    if row is None:
+        raise ValueError("unknown campaign")
+    if row["payload_hash"] != expected_payload_hash:
+        raise ValueError("campaign payload hash does not match explicit park request")
+    if not parked_by.strip() or parked_by.upper() in {"SYSTEM", "AGENT", "AUTOMATION"}:
+        raise ValueError("parking requires a named human operator")
+    if not reason.strip():
+        raise ValueError("parking requires a reason")
+    current = campaign_state(connection, campaign_id)
+    if current != "APPROVED":
+        raise ValueError(f"campaign parking requires APPROVED state, found {current}")
+    occurred_at = parked_at_utc or utc_now()
+    event = {
+        "event_type": "CAMPAIGN_PARKED",
+        "campaign_id": campaign_id,
+        "state": "PARKED",
+        "campaign_payload_hash": expected_payload_hash,
+        "parked_by": parked_by,
+        "reason": reason,
+        "automatic_replacement": False,
+    }
+    event_id = f"{campaign_id}:PARKED:{payload_hash(event)[:12]}"
+    insert_immutable(
+        connection,
+        "campaign_events",
+        "event_id",
+        event_id,
+        event,
+        {
+            "campaign_id": campaign_id,
+            "state": "PARKED",
+            "occurred_at_utc": occurred_at,
+            "actor": parked_by,
+            "reason": reason,
+        },
+    )
+    return {
+        "campaign_id": campaign_id,
+        "state": campaign_state(connection, campaign_id),
+        "parked_by": parked_by,
+        "reason": reason,
+        "historical_specification_preserved": True,
+        "automatic_replacement": False,
+    }
+
+
 def campaign_instruments(campaign: dict[str, Any]) -> list[str]:
     configured = campaign.get("instruments")
     return [str(value) for value in configured] if isinstance(configured, list) else [str(campaign["instrument"])]
@@ -291,7 +352,8 @@ def campaign_data_readiness(connection, campaign_id: str) -> dict[str, Any]:
         "available_window_start_utc": min((value[0] for value in windows), default=None),
         "available_window_end_utc": max((value[1] for value in windows), default=None),
         "blocks": [
-            *( ["campaign_not_human_approved"] if state != "APPROVED" else [] ),
+            *( ["campaign_not_human_approved"] if state == "DRAFT" else [] ),
+            *( ["campaign_not_active"] if state not in {"DRAFT", "APPROVED"} else [] ),
             *( ["required_data_classes_missing"] if missing else [] ),
         ],
         "automatic_run_allowed": False,

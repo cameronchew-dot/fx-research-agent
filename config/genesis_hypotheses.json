@@ -282,6 +282,51 @@
       "expected_frequency": "SEVERAL_PER_MONTH",
       "overlap_notes": "Supersedes the fixed-UTC V1 ORB specification before it collected evidence.",
       "next_action": "ACCRUE_30_FORWARD_INDEPENDENT_RESOLVED_EVENTS"
+    },
+    {
+      "hypothesis_id": "HYP_AUDUSD_ASIA_OPENING_RANGE_FAILED_AUCTION_V1",
+      "proposed_at_utc": "2026-10-20T23:43:44Z",
+      "proposed_by": "OPERATOR_AND_CODEX",
+      "state": "PROPOSED",
+      "hypothesis_type": "PAIR_NATIVE_FORWARD_STRATEGY_MECHANISM",
+      "classification": "STRATEGY",
+      "priority": 19,
+      "statement": "An AUD/USD sweep outside the daylight-saving-aware Sydney 08:00-08:30 opening range followed by a completed M15 close back inside may have positive net expectancy after observed spread.",
+      "data_requirements": ["COMPLETED_CANDLES", "SPREAD_SAMPLES", "FORWARD_AUDUSD_ASIA_OPENING_RANGE_EPISODES", "FORWARD_RULE_BASELINE_OUTCOMES"],
+      "dependencies": ["AUSTRALIA_SYDNEY_TIMEZONE", "NEXT_M15_OPEN_ENTRY", "INDEPENDENT_RANGE_DAY_DEDUPLICATION", "OBSERVED_SPREAD_COSTS"],
+      "expected_frequency": "SEVERAL_PER_MONTH",
+      "overlap_notes": "AUD/USD Asia-Pacific time-anchored reversal mechanism; researched independently from EUR/USD and not authorized for trading-agent or bot adoption.",
+      "next_action": "INGEST_AUDUSD_MARKET_ONLY_DATA_AND_ACCRUE_30_FORWARD_INDEPENDENT_RESOLVED_EPISODES"
+    },
+    {
+      "hypothesis_id": "HYP_AUDUSD_USDCNH_ASIA_LEAD_LAG_V1",
+      "proposed_at_utc": "2026-10-20T23:57:40Z",
+      "proposed_by": "OPERATOR_AND_CODEX",
+      "state": "PROPOSED",
+      "hypothesis_type": "PAIR_NATIVE_INTERMARKET_STRATEGY_MECHANISM",
+      "classification": "STRATEGY",
+      "priority": 20,
+      "statement": "A large completed USD/CNH impulse during the Shanghai trading window may lead a lagging but subsequently confirming inverse AUD/USD move with positive net expectancy after observed costs.",
+      "data_requirements": ["COMPLETED_M15_CANDLES", "HISTORICAL_BID_ASK_OR_LOCKED_COST_STRESS", "AUDUSD_USDCNH_LEAD_LAG_LOCKED_RESULT"],
+      "dependencies": ["USD_CNH_OANDA_METADATA_READY", "ASIA_SHANGHAI_TIMEZONE", "NEXT_M15_OPEN_ENTRY", "PAST_ONLY_INTERMARKET_ALIGNMENT", "SEVENTH_AUDUSD_HYPOTHESIS_MULTIPLICITY_DISCLOSURE"],
+      "expected_frequency": "MULTIPLE_PER_MONTH",
+      "overlap_notes": "China-proxy intermarket information-flow mechanism, distinct from the six completed AUD/USD session-range, commodity-risk, rate-shock, cross-breadth, and RBA-event hypotheses.",
+      "next_action": "HUMAN_APPROVED_LOCKED_CAMPAIGN_AND_DETERMINISTIC_RESEARCH_ONLY_EVALUATION"
+    },
+    {
+      "hypothesis_id": "HYP_EUR_PRIOR_WEEK_MONTH_FAILED_AUCTION_V1",
+      "proposed_at_utc": "2026-10-21T04:59:21Z",
+      "proposed_by": "OPERATOR_AND_CODEX",
+      "state": "PROPOSED",
+      "hypothesis_type": "FORWARD_STRATEGY_MECHANISM",
+      "classification": "STRATEGY",
+      "priority": 21,
+      "statement": "A sweep beyond a completed prior-week or prior-month high or low followed by a completed M15 directional close back through the level may have positive forward net expectancy after observed spread.",
+      "data_requirements": ["FORWARD_STRATEGY_SHADOW_EVENTS", "FORWARD_STRATEGY_SHADOW_OUTCOMES"],
+      "dependencies": ["COMPLETED_PRIOR_WEEK_MONTH_LEVELS_ONLY", "NEXT_M15_OPEN_ENTRY", "INDEPENDENT_LEVEL_DAY_DEDUPLICATION"],
+      "expected_frequency": "SEVERAL_PER_MONTH",
+      "overlap_notes": "Higher-timeframe objective-level failed auctions are evaluated separately from session-level failed auctions and opening-range reversals.",
+      "next_action": "ACCRUE_30_POST_APPROVAL_FORWARD_INDEPENDENT_RESOLVED_EVENTS"
     }
   ]
 }

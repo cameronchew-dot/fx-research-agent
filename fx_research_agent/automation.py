@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from .campaigns import campaign_data_readiness, campaign_instruments, campaign_state
+from .batches import active_slot_count
 from .experiments import build_evaluation, run_campaign
 from .storage import insert_immutable, payload_hash
 
@@ -240,11 +241,16 @@ def refresh_approved_campaigns(
 
 def automation_status(connection) -> dict[str, Any]:
     policy = current_policy(connection)
+    active_campaigns = active_slot_count(connection)
     return {
         "policy_id": policy["policy_id"],
         "provider": policy["provider"],
         "model": policy["model"],
         "campaign_slot_limit": policy["campaign_slot_limit"],
+        "active_campaign_count": active_campaigns,
+        "available_campaign_slot_count": max(
+            0, int(policy["campaign_slot_limit"]) - active_campaigns
+        ),
         "proposal_cadence": policy["proposal_cadence"],
         "maximum_pending_machine_proposals": policy["maximum_pending_machine_proposals"],
         "daily_evaluation_local_time": f"{int(policy['daily_evaluation_local_hour']):02d}:{int(policy['daily_evaluation_local_minute']):02d}",

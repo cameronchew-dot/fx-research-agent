@@ -1,0 +1,23 @@
+{
+  "schema": "FX_RESEARCH_BATCH_V1",
+  "batch_id": "BATCH_AUDUSD_CHINA_PROXY_V1",
+  "created_at_utc": "2026-10-20T23:57:40Z",
+  "title": "AUD/USD China-proxy sequential confirmatory campaign",
+  "instrument": "AUD_USD_WITH_USD_CNH_CONTEXT",
+  "maximum_active_campaigns": 1,
+  "campaign_ids": ["CAMPAIGN_AUDUSD_USDCNH_ASIA_LEAD_LAG_V1"],
+  "multiplicity_policy": {
+    "method": "HOLM_BONFERRONI",
+    "familywise_alpha": 0.00714286,
+    "hypothesis_budget": 1,
+    "prior_completed_audusd_hypothesis_count": 6,
+    "sequential_audusd_hypothesis_number": 7,
+    "post_hoc_campaign_substitution_allowed": false
+  },
+  "authority": {
+    "automatic_campaign_addition": false,
+    "automatic_approval": false,
+    "automatic_promotion": false,
+    "downstream_authority": false
+  }
+}

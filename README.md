@@ -32,6 +32,7 @@ python3 ops/research_supervisor.py literature-panel-status
 python3 ops/research_supervisor.py sync-research-evidence
 python3 ops/research_supervisor.py research-evidence-status
 python3 ops/research_supervisor.py register-campaign
+python3 ops/research_supervisor.py park-campaign CAMPAIGN_ID --expected-payload-hash HASH --parked-by NAME --reason "Reason"
 python3 ops/research_supervisor.py campaign-readiness CAMPAIGN_EUR_TREND_LOCATION_RANGE_FORWARD_V1
 python3 ops/research_supervisor.py campaign-status
 python3 ops/research_supervisor.py run-campaign CAMPAIGN_EUR_TREND_LOCATION_RANGE_FORWARD_V1
@@ -76,7 +77,9 @@ exports only objective-level episode facts, locked trend/location/range context,
 `RULE_BASELINE` outcomes, and deterministic strategy-expansion shadow
 events/outcomes. The expansion batch separately evaluates accepted
 breakout/retests, ORB reversals, VWAP reclaim, VWAP stretch reversion, and
-HTF-aligned trend pullbacks. LLM prompts, rationales, memory, provider data,
+HTF-aligned trend pullbacks. A separate one-slot confirmatory batch evaluates
+prior-week/month failed auctions under the locked V2 shadow specification.
+LLM prompts, rationales, memory, provider data,
 credentials, account state, and order state are rejected. Outcome sources remain
 separate. The exporter and importer run as short one-shot launch agents every
 15 minutes; `state = not running` with exit code 0 is normal between runs.
@@ -102,15 +105,42 @@ each accruing only evidence observed after its own approval timestamp:
 - decision spread relative to the prior 96 completed M15 bars; and
 - first-touch versus repeat-touch objective-level history.
 
-The exact specifications live under `config/campaigns/`. A separate seven-slot
-literature-replication batch expands total governed capacity to ten without
-rewriting the original batch. Its first predeclared campaign is the published
-G10 MOM(1,1) cross-sectional currency momentum strategy. It remains data-blocked
-until every currency has a common completed month-end panel, financing or forward
-points, implementable bid/ask costs, and computed excess returns. MOM(6,1) and
-MOM(12,1) are descriptive only and cannot qualify. Each batch uses its own locked
-Holm-Bonferroni familywise-error budget. No campaign can promote itself or affect
-a downstream system.
+The exact specifications live under `config/campaigns/`. The original
+literature-replication batch contains the published G10 MOM(1,1)
+cross-sectional currency momentum specification. That campaign is parked,
+without deleting its immutable history, because a complete historical
+financing or forward-point panel is unavailable. MOM(6,1) and MOM(12,1) remain
+descriptive only and cannot qualify.
+
+The one-campaign AUD/USD pair-native batch in
+`config/batches/audusd_pair_native_v1.json` preserves a proposed
+daylight-saving-aware Sydney opening-range failed-auction specification. A
+cross-repository audit performed before any evidence was ingested found that
+the EUR bot had already rejected the same underlying AUD/USD Asia-range
+failed-break mechanism on deep history. The research-agent campaign is
+therefore parked without evaluation or parameter adjustment. It does not
+consume active global capacity and has no downstream or order authority.
+
+The separate China-proxy campaign in
+`config/batches/audusd_china_proxy_v1.json` predeclared one exact AUD/USD-
+USD/CNH Asia lead-lag rule before historical outcomes were inspected. The
+locked evaluation produced 1,329 independent development events with
+`-0.242634R` average net return and 337 dated-confirmation events with
+`-0.241608R` average net return. It was parked without retuning. The immutable
+campaign event preserves the exact payload hash and result summary; it consumes
+no active campaign capacity and has no downstream or order authority.
+
+Each batch uses its own locked Holm-Bonferroni familywise-error budget. No
+campaign can promote itself or affect a downstream system.
+
+The tenth active campaign is
+`CAMPAIGN_EUR_PRIOR_WEEK_MONTH_FAILED_AUCTION_V1`. It counts only completed
+M15 events observed strictly after human approval, enters at the next M15 open
+with observed spread, uses a signal-extreme-plus-buffer stop, a `1.5R` target,
+and a 16-bar horizon. Prior-week and prior-month levels remain separately
+reported, but their descriptive splits cannot be promoted independently. The
+campaign requires 30 resolved independent events and positive average net R
+before human review; it cannot retune itself or activate downstream behavior.
 
 Campaign 4's market input follows `config/g10_literature_panel_contract.json`.
 Each currency is imported as an immutable monthly panel using normalized USD
@@ -126,8 +156,9 @@ replication workbook does not unlock the campaign by itself.
 
 ## Governed autonomy
 
-The automation policy permits at most ten concurrent campaigns across the
-immutable three-slot EUR batch and separate seven-slot literature batch. Evidence
+The automation policy permits at most ten distinct approved campaigns across
+all immutable batches. Parked campaigns and duplicate immutable memberships do
+not consume active capacity. Evidence
 ingestion checks whether a predeclared sample gate has just been crossed, and a
 daily local job refreshes all approved evaluations at 17:00. Repeated ingests
 with no new immutable evidence manifest skip evaluation work. Approved campaigns

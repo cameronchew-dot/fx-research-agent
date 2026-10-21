@@ -1,0 +1,112 @@
+{
+  "schema": "FX_RESEARCH_CAMPAIGN_V1",
+  "campaign_id": "CAMPAIGN_AUDUSD_USDCNH_ASIA_LEAD_LAG_V1",
+  "hypothesis_id": "HYP_AUDUSD_USDCNH_ASIA_LEAD_LAG_V1",
+  "created_at_utc": "2026-10-20T23:57:40Z",
+  "state": "DRAFT",
+  "title": "AUD/USD and USD/CNH Asia lead-lag continuation",
+  "instrument": "AUD_USD",
+  "mechanism_class": "CHINA_PROXY_INTERMARKET_LEAD_LAG",
+  "research_question": "Does a large completed USD/CNH impulse during the Shanghai window lead a lagging but subsequently confirming inverse AUD/USD move with positive net expectancy after costs?",
+  "null_hypothesis": "The single predeclared USD/CNH lead-lag rule has non-positive AUD/USD net expectancy or no positive edge over both locked controls.",
+  "required_data_classes": ["AUDUSD_USDCNH_LEAD_LAG_LOCKED_RESULT"],
+  "population": {
+    "source": "EUR_BOT_SANITIZED_LOCKED_PAIR_RESEARCH_RESULT",
+    "target_instrument": "AUD_USD",
+    "context_instrument": "USD_CNH",
+    "timeframe": "M15",
+    "decision_timezone": "Asia/Shanghai",
+    "decision_window_local": "09:30-15:00",
+    "development_decision_end_utc_inclusive": "2023-12-31T23:59:59Z",
+    "dated_confirmation_decision_after_utc_exclusive": "2023-12-31T23:59:59Z",
+    "entry_model": "NEXT_M15_OPEN",
+    "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE"
+  },
+  "independence_unit": {
+    "unit": "FIRST_QUALIFIED_EVENT_PER_DIRECTION_PER_SHANGHAI_TRADING_DATE",
+    "overlapping_modeled_holding_windows_allowed": false,
+    "duplicate_events_allowed": false
+  },
+  "exact_specification": {
+    "context_impulse": {
+      "instrument": "USD_CNH",
+      "lookback_completed_m15_bars": 4,
+      "atr_period_completed_m15_bars": 14,
+      "minimum_absolute_impulse_atr_multiple": 0.75,
+      "maximum_latest_context_age_minutes": 15,
+      "maximum_interbar_gap_minutes": 22.5
+    },
+    "expected_audusd_direction": {
+      "USD_CNH_UP": "AUD_USD_SHORT",
+      "USD_CNH_DOWN": "AUD_USD_LONG"
+    },
+    "audusd_lag": {
+      "lookback_completed_m15_bars": 4,
+      "atr_period_completed_m15_bars": 14,
+      "maximum_already_completed_expected_direction_atr_multiple": 0.35
+    },
+    "audusd_confirmation": {
+      "long": "COMPLETED_M15_CLOSE_ABOVE_PREVIOUS_COMPLETED_M15_HIGH",
+      "short": "COMPLETED_M15_CLOSE_BELOW_PREVIOUS_COMPLETED_M15_LOW"
+    },
+    "entry": "NEXT_CONTIGUOUS_M15_OPEN",
+    "stop": "SIGNAL_CANDLE_EXTREME_PLUS_0_5_PIP_BUFFER_WITH_8_PIP_MINIMUM",
+    "target_r": 1.5,
+    "maximum_horizon_m15_bars": 8,
+    "horizon_exit": "FINAL_BAR_CLOSE",
+    "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE",
+    "costs": {
+      "baseline_round_trip_pips": 2.0,
+      "stress_round_trip_pips": [2.5, 3.5],
+      "observed_bid_ask_recheck_required_before_runtime_discussion": true
+    }
+  },
+  "controls": [
+    {
+      "control_id": "OPPOSITE_DIRECTION_SAME_EVENT",
+      "definition": "Reverse only the AUD/USD direction while preserving event time and geometry",
+      "post_selection_mutation_allowed": false
+    },
+    {
+      "control_id": "NEXT_COMPLETED_M15_SHIFT_SAME_DIRECTION",
+      "definition": "Move the signal index one completed M15 bar later while preserving direction and geometry",
+      "post_selection_mutation_allowed": false
+    }
+  ],
+  "metrics": {
+    "primary": "DEVELOPMENT_AND_DATED_CONFIRMATION_AVERAGE_NET_R_AFTER_COSTS",
+    "secondary": ["CHRONOLOGICAL_OOS_AVERAGE_NET_R", "CONTROL_EDGE_R", "POSITIVE_MONTH_RATE", "WORST_MONTH_AVERAGE_NET_R", "TRIMMED_AVERAGE_NET_R", "COST_STRESS", "SAMPLE_COUNTS"],
+    "outcome_types_pooled": false
+  },
+  "review_gates": {
+    "minimum_development_independent_events": 30,
+    "minimum_dated_confirmation_independent_events": 15,
+    "minimum_average_net_r": 0.05,
+    "minimum_edge_over_best_control_r": 0.05,
+    "minimum_chronological_oos_average_net_r": 0.05,
+    "minimum_worst_cost_average_net_r": 0.05,
+    "minimum_positive_month_rate": 0.55,
+    "maximum_top_winner_positive_r_fraction": 0.35,
+    "review_is_not_promotion": true
+  },
+  "multiple_comparisons_policy": {
+    "confirmatory_setup_count": 1,
+    "parameter_sweeps_allowed": false,
+    "prior_completed_audusd_hypothesis_count": 6,
+    "this_is_sequential_audusd_hypothesis_number": 7,
+    "familywise_alpha_ceiling": 0.00714286,
+    "post_result_geometry_changes_require_new_campaign": true
+  },
+  "stopping_rules": {
+    "no_early_success_declaration": true,
+    "no_early_parameter_retuning": true,
+    "failure_closes_this_exact_hypothesis": true,
+    "review_only_after_declared_sample_gates": true
+  },
+  "authority": {
+    "automatic_approval": false,
+    "automatic_execution": false,
+    "downstream_activation": false,
+    "order_authority": false
+  }
+}

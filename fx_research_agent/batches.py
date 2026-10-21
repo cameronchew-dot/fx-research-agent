@@ -191,5 +191,10 @@ def add_campaign_to_batch(
 
 
 def active_slot_count(connection) -> int:
-    row = connection.execute("SELECT COUNT(*) AS n FROM batch_campaigns").fetchone()
-    return int(row["n"] if row else 0)
+    rows = connection.execute(
+        "SELECT DISTINCT campaign_id FROM batch_campaigns"
+    ).fetchall()
+    return sum(
+        campaign_state(connection, str(row["campaign_id"])) == "APPROVED"
+        for row in rows
+    )

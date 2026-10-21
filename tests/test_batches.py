@@ -4,7 +4,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from fx_research_agent.batches import add_campaign_to_batch, load_batch, register_batch
+from fx_research_agent.batches import (
+    active_slot_count,
+    add_campaign_to_batch,
+    load_batch,
+    register_batch,
+)
 from fx_research_agent.storage import initialize
 
 
@@ -109,6 +114,33 @@ class BatchTests(unittest.TestCase):
         self.assertTrue(result["inserted"])
         self.assertEqual(result["occupied_slot_count"], 2)
         self.assertEqual(result["available_slot_count"], 1)
+
+    def test_active_slot_count_deduplicates_batches_and_excludes_parked(self):
+        connection = sqlite3.connect(":memory:")
+        connection.row_factory = sqlite3.Row
+        initialize(connection)
+        connection.execute(
+            "INSERT INTO research_campaigns VALUES (?,?,?,?)",
+            ("C1", "hash", "{}", "2026-10-13T00:00:00Z"),
+        )
+        connection.execute(
+            "INSERT INTO campaign_events VALUES (?,?,?,?,?,?,?,?)",
+            ("C1:APPROVED", "C1", "APPROVED", "2026-10-13T01:00:00Z", "CAMERON", "reviewed", "hash", "{}"),
+        )
+        for batch_id in ("B1", "B2"):
+            connection.execute(
+                "INSERT INTO batch_campaigns VALUES (?,?,?,?,?,?)",
+                (f"{batch_id}:C1", batch_id, "C1", "hash", "{}", "2026-10-13T01:00:00Z"),
+            )
+        connection.commit()
+        self.assertEqual(active_slot_count(connection), 1)
+        connection.execute(
+            "INSERT INTO campaign_events VALUES (?,?,?,?,?,?,?,?)",
+            ("C1:PARKED", "C1", "PARKED", "2026-10-13T02:00:00Z", "CAMERON", "source unavailable", "hash2", "{}"),
+        )
+        connection.commit()
+        self.assertEqual(active_slot_count(connection), 0)
+        connection.close()
 
 
 if __name__ == "__main__":

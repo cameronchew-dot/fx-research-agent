@@ -25,6 +25,7 @@ from fx_research_agent.campaigns import (  # noqa: E402
     approve_campaign,
     campaign_data_readiness,
     campaign_report,
+    park_campaign,
     register_campaign,
 )
 from fx_research_agent.experiments import experiment_report, run_campaign  # noqa: E402
@@ -117,6 +118,11 @@ def main() -> int:
     campaign_approve.add_argument("--expected-payload-hash", required=True)
     campaign_approve.add_argument("--approved-by", required=True)
     campaign_approve.add_argument("--reason", required=True)
+    campaign_park = commands.add_parser("park-campaign")
+    campaign_park.add_argument("campaign_id")
+    campaign_park.add_argument("--expected-payload-hash", required=True)
+    campaign_park.add_argument("--parked-by", required=True)
+    campaign_park.add_argument("--reason", required=True)
     campaign_ready = commands.add_parser("campaign-readiness")
     campaign_ready.add_argument("campaign_id")
     commands.add_parser("campaign-status")
@@ -220,6 +226,16 @@ def main() -> int:
                     args.campaign_id,
                     expected_payload_hash=args.expected_payload_hash,
                     approved_by=args.approved_by,
+                    reason=args.reason,
+                )
+            )
+        elif args.command == "park-campaign":
+            print_json(
+                park_campaign(
+                    connection,
+                    args.campaign_id,
+                    expected_payload_hash=args.expected_payload_hash,
+                    parked_by=args.parked_by,
                     reason=args.reason,
                 )
             )

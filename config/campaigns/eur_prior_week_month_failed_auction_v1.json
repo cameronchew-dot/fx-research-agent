@@ -1,0 +1,96 @@
+{
+  "schema": "FX_RESEARCH_CAMPAIGN_V1",
+  "campaign_id": "CAMPAIGN_EUR_PRIOR_WEEK_MONTH_FAILED_AUCTION_V1",
+  "hypothesis_id": "HYP_EUR_PRIOR_WEEK_MONTH_FAILED_AUCTION_V1",
+  "created_at_utc": "2026-10-21T04:59:21Z",
+  "state": "DRAFT",
+  "title": "EUR/USD prior-week and prior-month failed-auction reversal",
+  "instrument": "EUR_USD",
+  "mechanism_class": "HTF_OBJECTIVE_LEVEL_FAILED_AUCTION",
+  "research_question": "Does the locked prior-week/month failed-auction setup have positive forward net R after observed spread?",
+  "null_hypothesis": "The locked setup has non-positive average forward net R after observed spread.",
+  "required_data_classes": [
+    "FORWARD_STRATEGY_SHADOW_EVENTS",
+    "FORWARD_STRATEGY_SHADOW_OUTCOMES"
+  ],
+  "population": {
+    "source": "EUR_AGENT_STRATEGY_SHADOW_FORWARD_ONLY",
+    "mechanism_id": "PRIOR_WEEK_MONTH_FAILED_AUCTION",
+    "setup_id": "PRIOR_WEEK_MONTH_SWEEP_CLOSE_BACK_V1",
+    "allowed_level_types": [
+      "PRIOR_WEEK_HIGH",
+      "PRIOR_WEEK_LOW",
+      "PRIOR_MONTH_HIGH",
+      "PRIOR_MONTH_LOW"
+    ],
+    "timeframe": "M15",
+    "entry_model": "NEXT_M15_OPEN_WITH_DECISION_SPREAD",
+    "stop_model": "SIGNAL_EXTREME_PLUS_BUFFER",
+    "target_r": 1.5,
+    "outcome_horizon_m15_bars": 16,
+    "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE"
+  },
+  "independence_unit": {
+    "unit": "FIRST_EVENT_PER_SETUP_DIRECTION_LEVEL_TRADING_DAY",
+    "weekly_and_monthly_levels_remain_distinct": true,
+    "repeated_same_level_day_events_count_once": true
+  },
+  "exact_specification": {
+    "contract": "EUR_AGENT_STRATEGY_EXPANSION_SHADOW_V2",
+    "sweep_buffer": {
+      "minimum_pips": 2.0,
+      "spread_multiplier": 1.0,
+      "atr_fraction": 0.05
+    },
+    "confirmation": "SWEEP_LEVEL_AND_COMPLETED_M15_DIRECTIONAL_CLOSE_BACK_THROUGH",
+    "parameters_locked_before_forward_collection": true,
+    "weekly_monthly_results_reported_separately_but_not_separately_promotable": true
+  },
+  "controls": [
+    {
+      "control_id": "ZERO_NET_R_NULL",
+      "definition": "Average forward net R must exceed zero after observed spread; no generated control is pooled with treatment.",
+      "post_selection_mutation_allowed": false
+    }
+  ],
+  "metrics": {
+    "primary": "AVERAGE_FORWARD_NET_R",
+    "expected_direction": "POSITIVE",
+    "secondary": [
+      "MEDIAN_NET_R",
+      "POSITIVE_NET_R_RATE",
+      "MFE_R",
+      "MAE_R",
+      "SAMPLE_COUNT",
+      "LEVEL_TYPE_DESCRIPTIVE_BREAKDOWN",
+      "SESSION_DESCRIPTIVE_BREAKDOWN",
+      "TOUCH_INDEX_DESCRIPTIVE_BREAKDOWN"
+    ],
+    "outcome_types_pooled": false
+  },
+  "review_gates": {
+    "minimum_resolved_independent_treatment_episodes": 30,
+    "minimum_resolved_independent_comparator_episodes": 0,
+    "treatment_average_net_r_must_be_positive": true,
+    "review_is_not_promotion": true
+  },
+  "multiple_comparisons_policy": {
+    "batch_id": "BATCH_EUR_PRIOR_WEEK_MONTH_FAILED_AUCTION_V1",
+    "confirmatory_hypothesis_count": 1,
+    "all_level_session_touch_breakdowns": "DESCRIPTIVE_ONLY",
+    "parameter_sweeps_allowed": false,
+    "post_hoc_substitution_allowed": false
+  },
+  "stopping_rules": {
+    "no_early_success_declaration": true,
+    "no_early_parameter_retuning": true,
+    "review_only_after_declared_sample_gate": true,
+    "failed_specification_requires_new_campaign_version": true
+  },
+  "authority": {
+    "automatic_approval": false,
+    "automatic_execution": false,
+    "downstream_activation": false,
+    "order_authority": false
+  }
+}

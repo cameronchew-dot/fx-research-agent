@@ -1,0 +1,24 @@
+{
+  "schema": "FX_RESEARCH_BATCH_V1",
+  "batch_id": "BATCH_AUDUSD_PAIR_NATIVE_V1",
+  "created_at_utc": "2026-10-20T23:43:44Z",
+  "title": "AUD/USD pair-native confirmatory research batch",
+  "instrument": "AUD_USD",
+  "maximum_active_campaigns": 1,
+  "campaign_ids": [
+    "CAMPAIGN_AUDUSD_ASIA_OPENING_RANGE_FAILED_AUCTION_V1"
+  ],
+  "multiplicity_policy": {
+    "method": "HOLM_BONFERRONI",
+    "familywise_alpha": 0.05,
+    "hypothesis_budget": 1,
+    "post_hoc_campaign_substitution_allowed": false,
+    "post_result_geometry_changes_require_new_batch_version": true
+  },
+  "authority": {
+    "automatic_campaign_addition": false,
+    "automatic_approval": false,
+    "automatic_promotion": false,
+    "downstream_authority": false
+  }
+}

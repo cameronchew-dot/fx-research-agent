@@ -1,0 +1,130 @@
+{
+  "schema": "FX_RESEARCH_CAMPAIGN_V1",
+  "campaign_id": "CAMPAIGN_AUDUSD_ASIA_OPENING_RANGE_FAILED_AUCTION_V1",
+  "hypothesis_id": "HYP_AUDUSD_ASIA_OPENING_RANGE_FAILED_AUCTION_V1",
+  "created_at_utc": "2026-10-20T23:43:44Z",
+  "state": "DRAFT",
+  "title": "AUD/USD Asia-Pacific opening-range failed-auction reversal",
+  "instrument": "AUD_USD",
+  "mechanism_class": "TIME_ANCHORED_OPENING_RANGE_FAILED_AUCTION_REVERSAL",
+  "research_question": "Does a sweep outside the daylight-saving-aware Sydney 08:00-08:30 opening range followed by a completed M15 close back inside have positive net expectancy after observed spread?",
+  "null_hypothesis": "The predeclared AUD/USD opening-range failed-auction reversal has non-positive average net R and no positive lift over its locked controls after observed spread.",
+  "required_data_classes": [
+    "COMPLETED_CANDLES",
+    "SPREAD_SAMPLES",
+    "FORWARD_AUDUSD_ASIA_OPENING_RANGE_EPISODES",
+    "FORWARD_RULE_BASELINE_OUTCOMES"
+  ],
+  "population": {
+    "source": "AUDUSD_MARKET_ONLY_IMMUTABLE_EXPORTS",
+    "candidate_family": "AUDUSD_ASIA_OPENING_RANGE_FAILED_AUCTION_REVERSAL",
+    "instrument": "AUD_USD",
+    "decision_timeframe": "M15",
+    "context_timeframes": ["M1", "M15", "H1", "H4"],
+    "session_timezone": "Australia/Sydney",
+    "opening_range_local_time": "08:00-08:30",
+    "observation_window_local_time": "08:30-12:00",
+    "outcome_horizon_m15_bars": 16,
+    "entry_model": "NEXT_M15_OPEN_WITH_OBSERVED_SPREAD",
+    "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE"
+  },
+  "independence_unit": {
+    "unit": "FIRST_QUALIFIED_EVENT_PER_DIRECTION_PER_OPENING_RANGE_TRADING_DAY",
+    "multiple_arms_count_once": true,
+    "repeated_same_range_direction_touches_count_once": true,
+    "later_touches": "DIAGNOSTIC_CONTEXT_ONLY"
+  },
+  "exact_specification": {
+    "range_definition": {
+      "timezone": "Australia/Sydney",
+      "local_start": "08:00:00",
+      "local_end": "08:30:00",
+      "dst_handling": "IANA_TIMEZONE_DATABASE",
+      "source": "COMPLETED_M15_CANDLES_ONLY"
+    },
+    "decision_window": {
+      "local_start": "08:30:00",
+      "local_end": "12:00:00",
+      "decision_on_completed_m15_close_only": true
+    },
+    "sweep_pad": {
+      "formula": "MAX_1_5_PIPS_OR_OBSERVED_SPREAD_X_1_25_OR_M15_ATR14_X_0_05",
+      "atr_source": "COMPLETED_M15_CANDLES_AVAILABLE_AT_DECISION"
+    },
+    "long_trigger": "COMPLETED_M15_LOW_BELOW_RANGE_LOW_MINUS_SWEEP_PAD_AND_CLOSE_BACK_INSIDE_RANGE",
+    "short_trigger": "COMPLETED_M15_HIGH_ABOVE_RANGE_HIGH_PLUS_SWEEP_PAD_AND_CLOSE_BACK_INSIDE_RANGE",
+    "direction_lock": "OPPOSITE_THE_QUALIFYING_SWEEP",
+    "entry": "NEXT_COMPLETED_INTERVAL_M15_OPEN_PLUS_OBSERVED_SPREAD_COST",
+    "stop": {
+      "anchor": "QUALIFYING_SWEEP_CANDLE_EXTREME",
+      "buffer_formula": "MAX_0_5_PIPS_OR_OBSERVED_SPREAD_X_0_5_OR_M15_ATR14_X_0_03"
+    },
+    "target_r": 1.5,
+    "maximum_horizon_m15_bars": 16,
+    "horizon_exit": "CLOSE_AT_FINAL_HORIZON_BAR_AFTER_COSTS",
+    "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE",
+    "fine_context": {
+      "m1_price_action": "DIAGNOSTIC_ONLY",
+      "tick_rate_and_quote_pressure": "DIAGNOSTIC_VENUE_PROXY_ONLY",
+      "markov_hmm_garch": "DIAGNOSTIC_ONLY",
+      "may_change_trigger_or_outcome": false
+    }
+  },
+  "controls": [
+    {
+      "control_id": "OPPOSITE_DIRECTION_CONTROL",
+      "definition": "Use the identical event and geometry but reverse the locked trade direction",
+      "post_selection_mutation_allowed": false
+    },
+    {
+      "control_id": "ONE_COMPLETED_M15_CANDLE_SHIFT_CONTROL",
+      "definition": "Apply the identical direction and geometry one completed M15 candle after the qualifying decision",
+      "post_selection_mutation_allowed": false
+    }
+  ],
+  "metrics": {
+    "primary": "AVERAGE_NET_R_AFTER_OBSERVED_SPREAD",
+    "secondary": [
+      "MEDIAN_NET_R",
+      "POSITIVE_NET_R_RATE",
+      "AVERAGE_NET_R_LIFT_OVER_EACH_CONTROL",
+      "WORST_CALENDAR_MONTH_NET_R",
+      "MAXIMUM_DRAWDOWN_R",
+      "MFE_R",
+      "MAE_R",
+      "SAMPLE_COUNTS_BY_DIRECTION_AND_MONTH"
+    ],
+    "outcome_types_pooled": false
+  },
+  "review_gates": {
+    "minimum_historical_independent_events": 60,
+    "minimum_chronological_oos_independent_events": 20,
+    "minimum_untouched_dated_confirmation_events": 15,
+    "minimum_forward_independent_resolved_events": 30,
+    "average_net_r_must_be_positive": true,
+    "median_net_r_must_be_nonnegative": true,
+    "net_r_lift_over_each_control_must_be_positive": true,
+    "session_conditioned_cost_stress_must_pass": true,
+    "review_is_not_promotion": true
+  },
+  "multiple_comparisons_policy": {
+    "confirmatory_setup_count": 1,
+    "confirmatory_setup": "SYDNEY_08_00_TO_08_30_FAILED_AUCTION_REVERSAL",
+    "direction_is_pooled_only_for_PRIMARY_UNLESS_PREDECLARED_DIRECTIONAL_CONTROL_REPORTING": true,
+    "all_context_breakdowns": "DESCRIPTIVE_ONLY",
+    "parameter_sweeps_allowed": false,
+    "post_result_geometry_changes_require_new_campaign_version": true
+  },
+  "stopping_rules": {
+    "no_early_success_declaration": true,
+    "no_early_parameter_retuning": true,
+    "no_geometry_change_after_first_result_is_visible": true,
+    "review_only_after_declared_sample_gates": true
+  },
+  "authority": {
+    "automatic_approval": false,
+    "automatic_execution": false,
+    "downstream_activation": false,
+    "order_authority": false
+  }
+}
