@@ -98,3 +98,17 @@
 - Let each receiving bot or agent apply its own validation and lifecycle gates.
 - Never grant this repository shadow, paper, promo, live, or order authority.
 
+## Phase 5: raw FX motif discovery
+
+- Seal historical EUR/USD M15/H1/H4/D candles through the existing one-way,
+  market-only export boundary.
+- Build a versioned point-in-time feature matrix with no strategy labels or
+  future outcomes.
+- Fit deterministic development-only clusters and assign stable machine IDs.
+- Record the full cluster x direction x horizon hypothesis budget before any
+  outcome evaluation and require Holm-Bonferroni correction later.
+- Keep validation and the 2025+ holdout untouched until a human chooses and
+  predeclares an exact cluster expression.
+- Add runtime matching, forward snapshots, decay retirement, and dormant
+  reactivation only after a motif survives the full confirmation pipeline.
+

@@ -50,6 +50,11 @@ from fx_research_agent.notifications import (  # noqa: E402
 )
 from fx_research_agent.literature_panels import panel_status  # noqa: E402
 from fx_research_agent.financing_sources import audit_paths  # noqa: E402
+from fx_research_agent.motif_discovery import (  # noqa: E402
+    build_feature_matrix,
+    motif_status,
+    run_discovery,
+)
 
 
 DEFAULT_DB = ROOT / "data" / "fx_research_agent.sqlite3"
@@ -70,6 +75,8 @@ DEFAULT_AUTOMATION_STATUS = ROOT / "data" / "automation_status.json"
 DEFAULT_PROPOSAL_STATUS = ROOT / "data" / "proposal_status.json"
 DEFAULT_FINANCING_SOURCE_CATALOG = ROOT / "config" / "g10_financing_source_catalog.json"
 DEFAULT_LITERATURE_PANEL_CONTRACT = ROOT / "config" / "g10_literature_panel_contract.json"
+DEFAULT_MOTIF_CONTRACT = ROOT / "config" / "fx_motif_discovery_v1.json"
+DEFAULT_MOTIF_DIR = ROOT / "data" / "motif_discovery"
 SOURCE_REPO = "https://github.com/cameronchew-dot/eur-usd-agent.git"
 SOURCE_COMMIT = "e168603"
 SOURCE_PATH = "config/research_hypothesis_registry.json"
@@ -159,6 +166,15 @@ def main() -> int:
     )
     review.add_argument("--reviewed-by", required=True)
     review.add_argument("--reason", required=True)
+    motif_matrix = commands.add_parser("motif-build-matrix")
+    motif_matrix.add_argument("--contract", type=Path, default=DEFAULT_MOTIF_CONTRACT)
+    motif_matrix.add_argument("--inbox-dir", type=Path, default=DEFAULT_MARKET_INBOX)
+    motif_matrix.add_argument("--output-dir", type=Path, default=DEFAULT_MOTIF_DIR)
+    motif_discover = commands.add_parser("motif-discover")
+    motif_discover.add_argument("--contract", type=Path, default=DEFAULT_MOTIF_CONTRACT)
+    motif_discover.add_argument("--matrix-metadata", type=Path, required=True)
+    motif_discover.add_argument("--output", type=Path, default=DEFAULT_MOTIF_DIR / "latest_discovery.json")
+    commands.add_parser("motif-status")
     args = parser.parse_args()
 
     with connect(args.db) as connection:
@@ -305,6 +321,26 @@ def main() -> int:
                     reason=args.reason,
                 )
             )
+        elif args.command == "motif-build-matrix":
+            print_json(
+                build_feature_matrix(
+                    connection,
+                    contract_path=args.contract,
+                    inbox_dir=args.inbox_dir,
+                    output_dir=args.output_dir,
+                )
+            )
+        elif args.command == "motif-discover":
+            print_json(
+                run_discovery(
+                    connection,
+                    contract_path=args.contract,
+                    matrix_metadata_path=args.matrix_metadata,
+                    output_path=args.output,
+                )
+            )
+        elif args.command == "motif-status":
+            print_json(motif_status(connection))
     return 0
 
 

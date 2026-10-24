@@ -46,7 +46,27 @@ python3 ops/research_supervisor.py refresh-approved-campaigns --trigger MANUAL
 python3 ops/research_supervisor.py proposal-cycle
 python3 ops/research_supervisor.py proposal-status
 python3 ops/research_supervisor.py review-hypothesis HYPOTHESIS_ID --decision REJECT --reviewed-by CAMERON --reason "Reviewed"
+python3 ops/research_supervisor.py motif-build-matrix
+python3 ops/research_supervisor.py motif-discover --matrix-metadata data/motif_discovery/MATRIX_ID.json
+python3 ops/research_supervisor.py motif-status
 ```
+
+## FX motif discovery
+
+`FX_MOTIF_DISCOVERY_V1` adds a research-only discovery lane modeled on the
+useful parts of the BTC bot's raw-context discovery process while retaining the
+FX system's stricter evidence boundary. A credentialed collector first seals a
+market-only historical candle export. The research agent then builds
+point-in-time M15 features with completed H1/H4/D context, fits deterministic
+clusters on the declared development period only, assigns stable machine IDs,
+and records the complete planned hypothesis count before any outcomes are
+examined.
+
+The initial discovery report is descriptive. It reads zero validation or
+holdout outcomes, makes no profitability claim, cannot create a campaign, and
+has no downstream or execution authority. Any cluster selected for evaluation
+must become a separately reviewed, predeclared experiment using the existing
+controls, cost, OOS, dated-confirmation, and false-discovery gates.
 
 ## Low-noise research alerts
 
