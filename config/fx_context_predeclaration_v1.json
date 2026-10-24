@@ -1,0 +1,112 @@
+{
+  "schema": "FX_CONTEXT_PREDECLARATION_V1",
+  "predeclaration_id": "EUR_USD_CONTEXT_CONFIRMATION_V1",
+  "predeclared_at_utc": "2026-10-24T23:46:26Z",
+  "source_discovery_run_id": "CONTEXT_DISCOVERY_cd51825d06845eb400ba",
+  "source_matrix_artifact_id": "CONTEXT_MATRIX_EUR_USD_CONTEXT_DISCOVERY_V1_66b3c310e0de3f97",
+  "source_discovery_report_sha256": "939e4a5a103ee1ffa3e6e745aff3531dba9c98852888d36a31ae28fb7594c14d",
+  "selection_basis": "OUTCOME_BLIND_CENTROID_DESCRIPTORS_ONLY",
+  "selected_contexts": [
+    {
+      "machine_cluster_id": "EURUSD_CONTEXT_V1_d61e57ef03f0",
+      "mechanism_label": "ACUTE_EQUITY_RISK_OFF_USD_DEMAND",
+      "direction": "SHORT",
+      "blind_rationale": "Acute synchronized SPX and NASDAQ downside shock with US bond-price strength, consistent with defensive USD demand."
+    },
+    {
+      "machine_cluster_id": "EURUSD_CONTEXT_V1_428107858e20",
+      "mechanism_label": "ACUTE_EQUITY_RISK_ON_USD_RELEASE",
+      "direction": "LONG",
+      "blind_rationale": "Acute synchronized SPX and NASDAQ upside shock with EUR/JPY strength, consistent with defensive USD demand unwinding."
+    },
+    {
+      "machine_cluster_id": "EURUSD_CONTEXT_V1_e24aaebd5b32",
+      "mechanism_label": "SYNCHRONIZED_EUR_CROSS_WEAKNESS",
+      "direction": "SHORT",
+      "blind_rationale": "EUR is simultaneously weak against GBP and JPY, providing an EUR-specific confirmation axis."
+    },
+    {
+      "machine_cluster_id": "EURUSD_CONTEXT_V1_821eadf9f637",
+      "mechanism_label": "EUR_CROSS_STRENGTH_OVERLAP",
+      "direction": "LONG",
+      "blind_rationale": "EUR/GBP and EUR/JPY strength is concentrated in the liquid London/New York overlap."
+    },
+    {
+      "machine_cluster_id": "EURUSD_CONTEXT_V1_eeeacb996004",
+      "mechanism_label": "POSITIVE_BOND_PRICE_SPREAD_SHOCK",
+      "direction": "SHORT",
+      "blind_rationale": "German bond-price strength exceeds US bond-price strength, a yield-differential proxy state predeclared as USD supportive."
+    },
+    {
+      "machine_cluster_id": "EURUSD_CONTEXT_V1_8ab54690c14b",
+      "mechanism_label": "NEGATIVE_BOND_PRICE_SPREAD_SHOCK",
+      "direction": "LONG",
+      "blind_rationale": "German bond-price weakness exceeds US bond-price weakness, the inverse yield-differential proxy state predeclared as EUR supportive."
+    }
+  ],
+  "event_definition": {
+    "decision_time": "COMPLETED_M15_CANDLE_END",
+    "event_start": "FIRST_M15_ROW_ENTERING_SELECTED_CLUSTER",
+    "contiguous_cluster_rows": "ONE_EPISODE",
+    "independence_rule": "PER_CONTEXT_KEEP_FIRST_EVENT_THEN_SKIP_NEXT_16_COMPLETED_M15_BARS",
+    "cross_context_overlap": "RETAIN_AND_REPORT_FOR_LATER_PORTFOLIO_COOCCURRENCE_REVIEW",
+    "rearm_rule": "SELECTED_CLUSTER_MUST_BE_EXITED_BEFORE_A_NEW_EPISODE_CAN_BEGIN"
+  },
+  "execution_geometry": {
+    "entry": "NEXT_COMPLETED_M15_CANDLE_OPEN",
+    "stop": "MAX_8_PIPS_OR_1_0_SIGNAL_ATR14_FROM_ENTRY",
+    "target_r": 1.5,
+    "horizon_bars": [4, 8, 16],
+    "horizon_exit": "CLOSE_OF_FINAL_HORIZON_M15_CANDLE",
+    "same_bar_stop_and_target": "STOP_FIRST_CONSERVATIVE",
+    "adverse_gap_through_stop": "FILL_AT_NEXT_AVAILABLE_OPEN",
+    "favorable_gap_through_target": "FILL_AT_TARGET_CONSERVATIVE"
+  },
+  "cost_model": {
+    "price_basis": "MIDPOINT_CANDLES",
+    "spread_pips_round_trip": 1.5,
+    "entry_slippage_pips": 0.2,
+    "exit_slippage_pips": 0.2,
+    "fixed_round_trip_cost_pips": 1.9,
+    "net_r_formula": "GROSS_R_MINUS_FIXED_ROUND_TRIP_COST_PIPS_DIVIDED_BY_INITIAL_STOP_DISTANCE_PIPS"
+  },
+  "controls": {
+    "required": [
+      "SAME_EVENT_OPPOSITE_DIRECTION_SAME_GEOMETRY",
+      "EVENT_TIMESTAMP_SHIFTED_FORWARD_480_OBSERVED_M15_BARS_SAME_DIRECTION_GEOMETRY"
+    ],
+    "control_results_can_qualify": false
+  },
+  "objective_gates": {
+    "minimum_independent_events_per_primary_hypothesis": 30,
+    "minimum_calendar_months_with_events": 24,
+    "minimum_average_net_r": 0.1,
+    "minimum_median_net_r_exclusive": 0.0,
+    "minimum_positive_net_r_rate": 0.45,
+    "minimum_positive_month_rate": 0.55,
+    "minimum_worst_month_average_net_r": -0.5,
+    "maximum_top_five_percent_positive_r_contribution_fraction": 0.5,
+    "minimum_average_net_r_edge_over_each_control": 0.1,
+    "corrected_significance_required": true
+  },
+  "planned_confirmation_budget": {
+    "selected_context_count": 6,
+    "direction_count_per_context": 1,
+    "horizon_bars": [4, 8, 16],
+    "planned_primary_hypothesis_count": 18,
+    "familywise_alpha": 0.05,
+    "correction": "HOLM_BONFERRONI_REQUIRED",
+    "original_blind_discovery_cluster_count": 20
+  },
+  "split_access": {
+    "development": "PERMITTED_AFTER_REGISTRATION",
+    "validation_2023_2024": "SEALED_UNTIL_DEVELOPMENT_SURVIVOR_EXISTS_AND_HUMAN_REVIEW",
+    "holdout_2025_PLUS": "SEALED_UNTOUCHED_UNTIL_PREDECLARED_CONFIRMATION"
+  },
+  "authority": {
+    "research_only": true,
+    "automatic_campaign_creation": false,
+    "automatic_downstream_export": false,
+    "paper_or_live_authority": false
+  }
+}
