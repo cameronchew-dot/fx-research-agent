@@ -53,6 +53,7 @@ from fx_research_agent.financing_sources import audit_paths  # noqa: E402
 from fx_research_agent.motif_discovery import (  # noqa: E402
     build_feature_matrix,
     motif_status,
+    register_predeclaration,
     run_discovery,
 )
 
@@ -76,6 +77,7 @@ DEFAULT_PROPOSAL_STATUS = ROOT / "data" / "proposal_status.json"
 DEFAULT_FINANCING_SOURCE_CATALOG = ROOT / "config" / "g10_financing_source_catalog.json"
 DEFAULT_LITERATURE_PANEL_CONTRACT = ROOT / "config" / "g10_literature_panel_contract.json"
 DEFAULT_MOTIF_CONTRACT = ROOT / "config" / "fx_motif_discovery_v1.json"
+DEFAULT_MOTIF_PREDECLARATION = ROOT / "config" / "fx_motif_predeclaration_v1.json"
 DEFAULT_MOTIF_DIR = ROOT / "data" / "motif_discovery"
 SOURCE_REPO = "https://github.com/cameronchew-dot/eur-usd-agent.git"
 SOURCE_COMMIT = "e168603"
@@ -175,6 +177,9 @@ def main() -> int:
     motif_discover.add_argument("--matrix-metadata", type=Path, required=True)
     motif_discover.add_argument("--output", type=Path, default=DEFAULT_MOTIF_DIR / "latest_discovery.json")
     commands.add_parser("motif-status")
+    motif_predeclare = commands.add_parser("motif-predeclare")
+    motif_predeclare.add_argument("--selection", type=Path, default=DEFAULT_MOTIF_PREDECLARATION)
+    motif_predeclare.add_argument("--discovery", type=Path, default=DEFAULT_MOTIF_DIR / "latest_discovery.json")
     args = parser.parse_args()
 
     with connect(args.db) as connection:
@@ -341,6 +346,14 @@ def main() -> int:
             )
         elif args.command == "motif-status":
             print_json(motif_status(connection))
+        elif args.command == "motif-predeclare":
+            print_json(
+                register_predeclaration(
+                    connection,
+                    selection_path=args.selection,
+                    discovery_path=args.discovery,
+                )
+            )
     return 0
 
 

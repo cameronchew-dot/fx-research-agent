@@ -25,6 +25,8 @@
 - Lock exact hypotheses, geometry, controls, holdouts, and stopping rules before testing.
 - Import completed-candle and market-proxy exports from the credentialed collector.
 - Track every run, failure, control, and finding without overwriting history.
+- Register the outcome-blind `EUR_USD_MOTIF_CONFIRMATION_V1` selection before
+  implementing its development-only evaluator; keep 2023+ data sealed.
 - Maintain the three exact-hash-approved EUR/USD campaigns as one fixed
   confirmatory batch: trend/location/room, spread/liquidity degradation, and
   first-touch versus repeat-touch degradation.

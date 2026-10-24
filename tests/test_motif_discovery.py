@@ -14,6 +14,8 @@ from fx_research_agent.motif_discovery import (
     build_feature_arrays,
     build_feature_matrix,
     load_contract,
+    motif_status,
+    register_predeclaration,
     run_discovery,
 )
 from fx_research_agent.storage import connect
@@ -73,6 +75,96 @@ def candle_groups() -> dict[str, list[dict]]:
 
 
 class MotifDiscoveryTests(unittest.TestCase):
+    def _predeclaration_fixture(self, root: Path) -> tuple[Path, Path]:
+        discovery = {
+            "schema": "FX_MOTIF_DISCOVERY_REPORT_V1",
+            "run_id": "RUN_1",
+            "matrix_artifact_id": "MATRIX_1",
+            "future_outcomes_inspected": 0,
+            "profitability_claimed": False,
+            "clusters": [
+                {"machine_cluster_id": "MOTIF_A"},
+                {"machine_cluster_id": "MOTIF_B"},
+            ],
+        }
+        discovery_path = root / "discovery.json"
+        discovery_path.write_text(json.dumps(discovery, sort_keys=True), encoding="utf-8")
+        selection = {
+            "schema": "FX_MOTIF_PREDECLARATION_V1",
+            "predeclaration_id": "PRE_1",
+            "predeclared_at_utc": "2026-10-24T00:00:00Z",
+            "source_discovery_run_id": "RUN_1",
+            "source_matrix_artifact_id": "MATRIX_1",
+            "source_discovery_report_sha256": hashlib.sha256(discovery_path.read_bytes()).hexdigest(),
+            "selected_motifs": [
+                {"machine_cluster_id": "MOTIF_A", "direction": "LONG"},
+                {"machine_cluster_id": "MOTIF_B", "direction": "SHORT"},
+            ],
+            "execution_geometry": {"horizon_bars": [4, 8, 16]},
+            "planned_confirmation_budget": {
+                "selected_motif_count": 2,
+                "horizon_bars": [4, 8, 16],
+                "planned_primary_hypothesis_count": 6,
+                "correction": "HOLM_BONFERRONI_REQUIRED",
+            },
+            "authority": {"research_only": True, "paper_or_live_authority": False},
+        }
+        selection_path = root / "selection.json"
+        selection_path.write_text(json.dumps(selection), encoding="utf-8")
+        return selection_path, discovery_path
+
+    def test_predeclaration_registers_without_opening_sealed_splits(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            selection_path, discovery_path = self._predeclaration_fixture(root)
+            connection = connect(root / "research.sqlite3")
+            result = register_predeclaration(
+                connection,
+                selection_path=selection_path,
+                discovery_path=discovery_path,
+            )
+            repeated = register_predeclaration(
+                connection,
+                selection_path=selection_path,
+                discovery_path=discovery_path,
+            )
+            status = motif_status(connection)
+            connection.close()
+        self.assertEqual(result, repeated)
+        self.assertEqual(result["selected_motif_count"], 2)
+        self.assertEqual(result["future_outcomes_inspected"], 0)
+        self.assertEqual(status["motif_discovery_status"], "PREDECLARED_RESEARCH_ONLY")
+        self.assertFalse(status["paper_or_live_authority"])
+
+    def test_predeclaration_rejects_unknown_motif_and_conflicting_rewrite(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            selection_path, discovery_path = self._predeclaration_fixture(root)
+            connection = connect(root / "research.sqlite3")
+            register_predeclaration(
+                connection,
+                selection_path=selection_path,
+                discovery_path=discovery_path,
+            )
+            changed = json.loads(selection_path.read_text(encoding="utf-8"))
+            changed["selected_motifs"][0]["direction"] = "SHORT"
+            selection_path.write_text(json.dumps(changed), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "conflicting immutable rewrite"):
+                register_predeclaration(
+                    connection,
+                    selection_path=selection_path,
+                    discovery_path=discovery_path,
+                )
+            changed["predeclaration_id"] = "PRE_2"
+            changed["selected_motifs"][0]["machine_cluster_id"] = "UNKNOWN"
+            selection_path.write_text(json.dumps(changed), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "unknown motif"):
+                register_predeclaration(
+                    connection,
+                    selection_path=selection_path,
+                    discovery_path=discovery_path,
+                )
+            connection.close()
     def test_future_candle_changes_do_not_change_prior_features(self):
         with tempfile.TemporaryDirectory() as directory:
             contract_path = Path(directory) / "contract.json"

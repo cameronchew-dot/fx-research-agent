@@ -18,6 +18,7 @@ from .storage import canonical_json, insert_immutable, payload_hash
 CONTRACT_SCHEMA = "FX_MOTIF_DISCOVERY_CONTRACT_V1"
 MATRIX_SCHEMA = "FX_MOTIF_FEATURE_MATRIX_V1"
 REPORT_SCHEMA = "FX_MOTIF_DISCOVERY_REPORT_V1"
+PREDECLARATION_SCHEMA = "FX_MOTIF_PREDECLARATION_V1"
 MATRIX_BUILDER_VERSION = "1.0.2"
 DISCOVERY_RUNNER_VERSION = "1.0.1"
 FORBIDDEN_FEATURE_TOKENS = (
@@ -496,9 +497,77 @@ def motif_status(connection) -> dict[str, Any]:
     run = connection.execute(
         "SELECT payload_json FROM motif_discovery_runs ORDER BY rowid DESC LIMIT 1"
     ).fetchone()
+    predeclaration = connection.execute(
+        "SELECT payload_json FROM motif_predeclarations ORDER BY rowid DESC LIMIT 1"
+    ).fetchone()
     return {
-        "motif_discovery_status": "DESCRIBED_RESEARCH_ONLY" if run else ("MATRIX_READY" if matrix else "NOT_STARTED"),
+        "motif_discovery_status": (
+            "PREDECLARED_RESEARCH_ONLY" if predeclaration else
+            ("DESCRIBED_RESEARCH_ONLY" if run else ("MATRIX_READY" if matrix else "NOT_STARTED"))
+        ),
         "latest_matrix": json.loads(matrix["payload_json"]) if matrix else None,
         "latest_run": json.loads(run["payload_json"]) if run else None,
+        "latest_predeclaration": json.loads(predeclaration["payload_json"]) if predeclaration else None,
+        "paper_or_live_authority": False,
+    }
+
+
+def register_predeclaration(
+    connection,
+    *,
+    selection_path: Path,
+    discovery_path: Path,
+) -> dict[str, Any]:
+    selection = json.loads(selection_path.read_text(encoding="utf-8"))
+    discovery = json.loads(discovery_path.read_text(encoding="utf-8"))
+    if selection.get("schema") != PREDECLARATION_SCHEMA:
+        raise ValueError("unsupported motif predeclaration schema")
+    if discovery.get("schema") != REPORT_SCHEMA:
+        raise ValueError("unsupported motif discovery report")
+    if selection.get("source_discovery_run_id") != discovery.get("run_id"):
+        raise ValueError("predeclaration does not match the pinned discovery run")
+    if selection.get("source_matrix_artifact_id") != discovery.get("matrix_artifact_id"):
+        raise ValueError("predeclaration does not match the pinned feature matrix")
+    if selection.get("source_discovery_report_sha256") != sha256_file(discovery_path):
+        raise ValueError("predeclaration does not match the pinned discovery report checksum")
+    if discovery.get("future_outcomes_inspected") != 0 or discovery.get("profitability_claimed") is not False:
+        raise ValueError("predeclaration requires an outcome-blind discovery report")
+    available = {row["machine_cluster_id"] for row in discovery.get("clusters") or []}
+    motifs = selection.get("selected_motifs")
+    if not isinstance(motifs, list) or not motifs:
+        raise ValueError("predeclaration requires selected motifs")
+    selected = [str(row.get("machine_cluster_id")) for row in motifs]
+    if len(selected) != len(set(selected)) or not set(selected).issubset(available):
+        raise ValueError("predeclaration contains duplicate or unknown motif IDs")
+    planned = selection.get("planned_confirmation_budget") or {}
+    expected = len(motifs) * len(planned.get("horizon_bars") or [])
+    if planned.get("selected_motif_count") != len(motifs):
+        raise ValueError("predeclaration selected motif count does not match")
+    if (selection.get("execution_geometry") or {}).get("horizon_bars") != planned.get("horizon_bars"):
+        raise ValueError("execution and hypothesis-budget horizons do not match")
+    if planned.get("planned_primary_hypothesis_count") != expected:
+        raise ValueError("predeclaration hypothesis budget does not match motifs x horizons")
+    if planned.get("correction") != "HOLM_BONFERRONI_REQUIRED":
+        raise ValueError("predeclaration must retain Holm-Bonferroni correction")
+    authority = selection.get("authority") or {}
+    if authority.get("research_only") is not True or authority.get("paper_or_live_authority") is not False:
+        raise ValueError("motif predeclaration must remain research-only")
+    record_id = str(selection["predeclaration_id"])
+    insert_immutable(
+        connection,
+        "motif_predeclarations",
+        "predeclaration_id",
+        record_id,
+        selection,
+        {"created_at_utc": selection["predeclared_at_utc"]},
+    )
+    return {
+        "predeclaration_status": "REGISTERED_RESEARCH_ONLY",
+        "predeclaration_id": record_id,
+        "selected_motif_count": len(motifs),
+        "planned_primary_hypothesis_count": expected,
+        "validation_rows_inspected": 0,
+        "holdout_rows_inspected": 0,
+        "future_outcomes_inspected": 0,
         "paper_or_live_authority": False,
     }

@@ -47,3 +47,25 @@ predeclare a bounded candidate-selection rule. Only that frozen subset may be
 evaluated on development outcomes and controls. Validation and holdout access
 remain separate later gates. Downstream adoption would still require a sealed
 export and the EUR bot's independent lifecycle checks.
+
+## Outcome-blind predeclaration
+
+`EUR_USD_MOTIF_CONFIRMATION_V1` was frozen before any outcome was examined.
+The selection uses centroid descriptions only and covers five distinct states:
+
+- high-participation upside impulse continuation;
+- high-participation downside impulse continuation;
+- high-volatility lower-wick rejection;
+- high-volatility upper-wick rejection; and
+- multi-timeframe downside continuation.
+
+The contract in `config/fx_motif_predeclaration_v1.json` pins the source run and
+matrix, one direction per motif, next-M15-open entries, ATR-aware stops, a
+1.5R target, 4/8/16-bar horizons, 1.9 pips of fixed round-trip friction,
+non-overlapping event rules, opposite-direction and time-shift controls, and
+objective evidence gates. This leaves 15 primary development hypotheses under
+one Holm-Bonferroni family while disclosing the original 144-hypothesis blind
+discovery universe.
+
+Registration does not inspect development outcomes and does not open either
+sealed split. A development evaluator is the next implementation stage.
