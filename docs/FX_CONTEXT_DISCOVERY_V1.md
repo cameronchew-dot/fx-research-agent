@@ -34,8 +34,8 @@ bond-price shocks and must be signed/interpreted accordingly.
 
 ## Coverage audit
 
-- Audit ID: `FX_CONTEXT_COVERAGE_6fb932866587851adc98`
-- Contract SHA-256: `c6d02252a5fcacc6ba5d9aac12069da8e881292957f24c62f5eb9e327fb583f6`
+- Audit ID: `FX_CONTEXT_COVERAGE_fcea005de04b8d593761`
+- Contract file SHA-256: `dad3596d2d4d8b55acf2a4cbf8a80739c6dea8aec4259acd40e680fd0668668f`
 - Result: `READY_FOR_OUTCOME_BLIND_CONTEXT_DISCOVERY`
 - Blocked sources: none
 - Future outcomes read: no
@@ -58,7 +58,35 @@ hypothesis budget. They cannot be added to V1 after outcomes are inspected.
 
 ## Next gate
 
-Build the fixed outcome-blind context matrix from the committed feature list,
-fit the declared 20-cluster deterministic model on development only, and review
-descriptive clusters before predeclaring any direction, horizon, geometry, or
-outcome test. Validation (`2023-2024`) and the `2025+` holdout remain sealed.
+The fixed matrix and descriptive cluster run are complete:
+
+- Matrix: `CONTEXT_MATRIX_EUR_USD_CONTEXT_DISCOVERY_V1_66b3c310e0de3f97`
+- Matrix rows: 106,426
+- Features: 26
+- Training rows: 100,000
+- Discovery run: `CONTEXT_DISCOVERY_cd51825d06845eb400ba`
+- Clusters: 20
+- Convergence: yes, after 128 iterations
+- Outcome comparisons: zero
+
+Notable outcome-blind states include:
+
+| Cluster | Rows | Development fraction | Descriptive context |
+|---|---:|---:|---|
+| `d61e57ef03f0` | 299 | 0.28% | acute equity risk-off shock with bond-price strength |
+| `428107858e20` | 828 | 0.78% | acute equity risk-on shock with EUR/JPY strength |
+| `7f5a341de88d` | 1,160 | 1.09% | broader four-hour equity risk-on state |
+| `e24aaebd5b32` | 1,322 | 1.24% | synchronized EUR weakness in EUR/GBP and EUR/JPY |
+| `eeeacb996004` | 1,428 | 1.34% | joint US/German bond-price rally with positive proxy spread shock |
+| `3731a8b37269` | 1,642 | 1.54% | sharp gold decline, concentrated around overlap |
+| `8ab54690c14b` | 1,808 | 1.70% | joint US/German bond-price selloff with negative proxy spread shock |
+| `a49161ce537a` | 2,348 | 2.21% | moderate equity risk-off state with bond-price strength |
+| `821eadf9f637` | 5,076 | 4.77% | EUR-cross strength during London/NY overlap |
+
+The remaining broad clusters are predominantly session and weekday partitions.
+That is a useful caution: frequency alone is not a reason to test them.
+
+The next gate is a blind human review selecting a small, economically coherent
+subset before any direction, horizon, entry, stop, target, cost model, control,
+or outcome test is declared. Validation (`2023-2024`) and the `2025+` holdout
+remain sealed.

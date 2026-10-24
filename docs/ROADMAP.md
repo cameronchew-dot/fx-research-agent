@@ -129,4 +129,8 @@
   any outcome; keep 2023-2024 validation and 2025+ holdout sealed.
 - Permit no campaign, downstream export, paper, or live authority from coverage
   readiness alone.
+- Coverage, the 106,426-row matrix, and the frozen 20-cluster descriptive run
+  are complete. No direction, geometry, or outcome comparison has been assigned.
+- Next require a small blind human selection and a separate immutable
+  predeclaration before implementing any development outcome evaluator.
 

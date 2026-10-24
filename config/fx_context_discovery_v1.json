@@ -33,14 +33,26 @@
     "spx500_return_1", "spx500_return_4", "nas100_return_1", "nas100_return_4",
     "risk_regime_score", "usb10y_return_1", "usb10y_return_4",
     "de10yb_return_1", "de10yb_return_4", "bond_proxy_spread_shock",
-    "session_bucket", "utc_hour_sin", "utc_hour_cos", "weekday_sin", "weekday_cos"
+    "session_asia", "session_london", "session_london_ny_overlap",
+    "session_ny_afternoon", "session_rollover_late",
+    "utc_hour_sin", "utc_hour_cos", "weekday_sin", "weekday_cos"
   ],
+  "feature_definitions": {
+    "single_bar_return": "NATURAL_LOG_OF_CURRENT_CLOSE_DIVIDED_BY_PRIOR_COMPLETED_CLOSE",
+    "four_bar_return": "NATURAL_LOG_OF_CURRENT_CLOSE_DIVIDED_BY_CLOSE_FOUR_COMPLETED_BARS_EARLIER",
+    "eur_cross_confirmation_score": "MEAN_OF_EURGBP_RETURN_4_AND_EURJPY_RETURN_4",
+    "risk_regime_score": "MEAN_OF_SPX500_RETURN_4_AND_NAS100_RETURN_4",
+    "bond_proxy_spread_shock": "DE10YB_BOND_PRICE_RETURN_4_MINUS_USB10Y_BOND_PRICE_RETURN_4",
+    "session_encoding": "FIXED_ONE_HOT_UTC_BUCKETS_ASIA_00_07_LONDON_07_12_OVERLAP_12_16_NY_AFTERNOON_16_21_ROLLOVER_21_24",
+    "asof_join": "LATEST_CONTEXT_CANDLE_WITH_END_TIME_LESS_THAN_OR_EQUAL_TO_PRIMARY_DECISION_TIME"
+  },
   "future_outcomes_allowed_in_features": false,
   "clustering": {
     "algorithm": "DETERMINISTIC_NUMPY_KMEANS_V1",
     "cluster_count": 20,
     "seed": 20261024,
     "maximum_iterations": 300,
+    "tolerance": 0.0001,
     "maximum_training_rows": 100000
   },
   "excluded_sources": [

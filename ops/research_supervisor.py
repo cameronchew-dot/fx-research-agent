@@ -60,7 +60,12 @@ from fx_research_agent.motif_evaluation import (  # noqa: E402
     evaluate_development,
     register_evaluation_protocol,
 )
-from fx_research_agent.context_discovery import audit_context_coverage  # noqa: E402
+from fx_research_agent.context_discovery import (  # noqa: E402
+    audit_context_coverage,
+    build_context_feature_matrix,
+    context_discovery_status,
+    run_context_discovery,
+)
 
 
 DEFAULT_DB = ROOT / "data" / "fx_research_agent.sqlite3"
@@ -87,6 +92,7 @@ DEFAULT_MOTIF_EVALUATION_PROTOCOL = ROOT / "config" / "fx_motif_evaluation_proto
 DEFAULT_MOTIF_DIR = ROOT / "data" / "motif_discovery"
 DEFAULT_CONTEXT_CONTRACT = ROOT / "config" / "fx_context_discovery_v1.json"
 DEFAULT_CONTEXT_COVERAGE_STATUS = ROOT / "data" / "context_coverage_status.json"
+DEFAULT_CONTEXT_DIR = ROOT / "data" / "context_discovery"
 SOURCE_REPO = "https://github.com/cameronchew-dot/eur-usd-agent.git"
 SOURCE_COMMIT = "e168603"
 SOURCE_PATH = "config/research_hypothesis_registry.json"
@@ -202,6 +208,15 @@ def main() -> int:
     context_audit = commands.add_parser("context-coverage-audit")
     context_audit.add_argument("--contract", type=Path, default=DEFAULT_CONTEXT_CONTRACT)
     context_audit.add_argument("--inbox-dir", type=Path, default=DEFAULT_MARKET_INBOX)
+    context_matrix = commands.add_parser("context-build-matrix")
+    context_matrix.add_argument("--contract", type=Path, default=DEFAULT_CONTEXT_CONTRACT)
+    context_matrix.add_argument("--inbox-dir", type=Path, default=DEFAULT_MARKET_INBOX)
+    context_matrix.add_argument("--output-dir", type=Path, default=DEFAULT_CONTEXT_DIR)
+    context_discover = commands.add_parser("context-discover")
+    context_discover.add_argument("--contract", type=Path, default=DEFAULT_CONTEXT_CONTRACT)
+    context_discover.add_argument("--matrix-metadata", type=Path, required=True)
+    context_discover.add_argument("--output", type=Path, default=DEFAULT_CONTEXT_DIR / "latest_discovery.json")
+    commands.add_parser("context-discovery-status")
     args = parser.parse_args()
 
     with connect(args.db) as connection:
@@ -405,6 +420,26 @@ def main() -> int:
             )
             write_json_atomic(DEFAULT_CONTEXT_COVERAGE_STATUS, result)
             print_json(result)
+        elif args.command == "context-build-matrix":
+            print_json(
+                build_context_feature_matrix(
+                    connection,
+                    contract_path=args.contract,
+                    inbox_dir=args.inbox_dir,
+                    output_dir=args.output_dir,
+                )
+            )
+        elif args.command == "context-discover":
+            print_json(
+                run_context_discovery(
+                    connection,
+                    contract_path=args.contract,
+                    matrix_metadata_path=args.matrix_metadata,
+                    output_path=args.output,
+                )
+            )
+        elif args.command == "context-discovery-status":
+            print_json(context_discovery_status(connection))
     return 0
 
 

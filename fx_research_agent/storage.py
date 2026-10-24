@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Any
 
 
-SCHEMA_VERSION = "FX_RESEARCH_AGENT_DB_V8"
+SCHEMA_VERSION = "FX_RESEARCH_AGENT_DB_V9"
 
 
 def canonical_json(value: Any) -> str:
@@ -239,6 +239,20 @@ def initialize(connection: sqlite3.Connection) -> None:
 
         CREATE TABLE IF NOT EXISTS context_coverage_audits (
             audit_id TEXT PRIMARY KEY,
+            payload_hash TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            created_at_utc TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS context_feature_artifacts (
+            artifact_id TEXT PRIMARY KEY,
+            payload_hash TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            created_at_utc TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS context_discovery_runs (
+            run_id TEXT PRIMARY KEY,
             payload_hash TEXT NOT NULL,
             payload_json TEXT NOT NULL,
             created_at_utc TEXT NOT NULL

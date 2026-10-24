@@ -53,6 +53,9 @@ python3 ops/research_supervisor.py motif-register-evaluation
 python3 ops/research_supervisor.py motif-evaluate-development --matrix-metadata data/motif_discovery/MATRIX_ID.json
 python3 ops/research_supervisor.py motif-status
 python3 ops/research_supervisor.py context-coverage-audit
+python3 ops/research_supervisor.py context-build-matrix
+python3 ops/research_supervisor.py context-discover --matrix-metadata data/context_discovery/MATRIX_ID.json
+python3 ops/research_supervisor.py context-discovery-status
 ```
 
 ## FX motif discovery
@@ -98,6 +101,17 @@ source hashes. It cannot evaluate returns, create campaigns, export downstream,
 or change paper/live state. Markov and HMM snapshots, partial GARCH history,
 and macro artifacts without complete release-lagged point-in-time history are
 explicitly excluded from V1 rather than treated as historical context.
+
+Once coverage passes, `context-build-matrix` creates a development-only,
+point-in-time feature matrix. `context-discover` fits the frozen deterministic
+20-cluster model and reports descriptive centroids only. It assigns no trade
+direction, entry, stop, target, or horizon and reads no outcome.
+
+The completed V1 matrix contains 106,426 development decisions and 26 context
+features. The frozen 20-cluster run converged without reading outcomes. Its
+descriptive review and immutable IDs are recorded in
+`docs/FX_CONTEXT_DISCOVERY_V1.md`; the next gate is a small blind human
+selection, not automatic outcome evaluation.
 
 ## Low-noise research alerts
 
