@@ -52,6 +52,7 @@ python3 ops/research_supervisor.py motif-predeclare
 python3 ops/research_supervisor.py motif-register-evaluation
 python3 ops/research_supervisor.py motif-evaluate-development --matrix-metadata data/motif_discovery/MATRIX_ID.json
 python3 ops/research_supervisor.py motif-status
+python3 ops/research_supervisor.py context-coverage-audit
 ```
 
 ## FX motif discovery
@@ -81,6 +82,22 @@ their controls. None produced positive average net R after the declared
 1.9-pip friction, so no hypothesis received validation access. The exact
 result is archived in `docs/FX_MOTIF_DEVELOPMENT_RESULT.md`; there was no
 retuning.
+
+## FX context discovery
+
+`EUR_USD_CONTEXT_DISCOVERY_V1` is the next outcome-blind discovery lane. It
+uses sealed, market-only historical candles for EUR/USD, EUR/GBP, EUR/JPY,
+gold, two equity-index proxies, and US/German ten-year bond CFDs. Every context
+candle must have completed by the EUR/USD M15 decision time. The committed
+contract fixes the source roles, development window, feature names, clustering
+budget, and exclusions before any profitability outcome is examined.
+
+Run `context-coverage-audit` after syncing the dedicated historical exports.
+The audit counts only the declared development interval and records immutable
+source hashes. It cannot evaluate returns, create campaigns, export downstream,
+or change paper/live state. Markov and HMM snapshots, partial GARCH history,
+and macro artifacts without complete release-lagged point-in-time history are
+explicitly excluded from V1 rather than treated as historical context.
 
 ## Low-noise research alerts
 

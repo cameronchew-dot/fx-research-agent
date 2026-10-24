@@ -116,3 +116,17 @@
 - Archive the completed V1 motif evaluation as `NO_DEVELOPMENT_SURVIVORS`; do
   not retune these five states or open validation in response to rejection.
 
+## Phase 6: cross-market FX context discovery
+
+- Audit sealed historical coverage before building a feature matrix.
+- Use EUR/GBP and EUR/JPY for EUR-specific confirmation, gold for broad-dollar
+  context, SPX500/NAS100 for risk regime, and US/German ten-year bond CFDs for
+  yield-shock proxies.
+- Require completed-bar, point-in-time joins at every EUR/USD M15 decision.
+- Keep Markov/HMM snapshots, partial GARCH history, and incomplete release-
+  lagged macro histories outside V1.
+- Freeze the exact development feature set and cluster budget before reading
+  any outcome; keep 2023-2024 validation and 2025+ holdout sealed.
+- Permit no campaign, downstream export, paper, or live authority from coverage
+  readiness alone.
+

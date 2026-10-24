@@ -60,6 +60,7 @@ from fx_research_agent.motif_evaluation import (  # noqa: E402
     evaluate_development,
     register_evaluation_protocol,
 )
+from fx_research_agent.context_discovery import audit_context_coverage  # noqa: E402
 
 
 DEFAULT_DB = ROOT / "data" / "fx_research_agent.sqlite3"
@@ -84,6 +85,8 @@ DEFAULT_MOTIF_CONTRACT = ROOT / "config" / "fx_motif_discovery_v1.json"
 DEFAULT_MOTIF_PREDECLARATION = ROOT / "config" / "fx_motif_predeclaration_v1.json"
 DEFAULT_MOTIF_EVALUATION_PROTOCOL = ROOT / "config" / "fx_motif_evaluation_protocol_v1.json"
 DEFAULT_MOTIF_DIR = ROOT / "data" / "motif_discovery"
+DEFAULT_CONTEXT_CONTRACT = ROOT / "config" / "fx_context_discovery_v1.json"
+DEFAULT_CONTEXT_COVERAGE_STATUS = ROOT / "data" / "context_coverage_status.json"
 SOURCE_REPO = "https://github.com/cameronchew-dot/eur-usd-agent.git"
 SOURCE_COMMIT = "e168603"
 SOURCE_PATH = "config/research_hypothesis_registry.json"
@@ -196,6 +199,9 @@ def main() -> int:
     motif_evaluate.add_argument("--matrix-metadata", type=Path, required=True)
     motif_evaluate.add_argument("--inbox-dir", type=Path, default=DEFAULT_MARKET_INBOX)
     motif_evaluate.add_argument("--output-dir", type=Path, default=DEFAULT_MOTIF_DIR)
+    context_audit = commands.add_parser("context-coverage-audit")
+    context_audit.add_argument("--contract", type=Path, default=DEFAULT_CONTEXT_CONTRACT)
+    context_audit.add_argument("--inbox-dir", type=Path, default=DEFAULT_MARKET_INBOX)
     args = parser.parse_args()
 
     with connect(args.db) as connection:
@@ -391,6 +397,14 @@ def main() -> int:
                     output_dir=args.output_dir,
                 )
             )
+        elif args.command == "context-coverage-audit":
+            result = audit_context_coverage(
+                connection,
+                contract_path=args.contract,
+                inbox_dir=args.inbox_dir,
+            )
+            write_json_atomic(DEFAULT_CONTEXT_COVERAGE_STATUS, result)
+            print_json(result)
     return 0
 
 

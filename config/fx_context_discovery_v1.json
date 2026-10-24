@@ -1,0 +1,59 @@
+{
+  "schema": "FX_CONTEXT_DISCOVERY_CONTRACT_V1",
+  "contract_id": "EUR_USD_CONTEXT_DISCOVERY_V1",
+  "primary_instrument": "EUR_USD",
+  "decision_granularity": "M15",
+  "decision_time_semantics": "ALL_CONTEXT_CANDLES_MUST_HAVE_END_TIME_UTC_LESS_THAN_OR_EQUAL_TO_DECISION_TIME_UTC",
+  "development": {
+    "start_utc": "2018-09-20T00:00:00Z",
+    "end_utc_exclusive": "2023-01-01T00:00:00Z"
+  },
+  "validation": {
+    "start_utc": "2023-01-01T00:00:00Z",
+    "end_utc_exclusive": "2025-01-01T00:00:00Z",
+    "access_policy": "SEALED_NOT_USED_BY_CONTEXT_DISCOVERY_V1"
+  },
+  "holdout": {
+    "start_utc": "2025-01-01T00:00:00Z",
+    "access_policy": "SEALED_UNTOUCHED_UNTIL_PREDECLARED_CONFIRMATION"
+  },
+  "required_sources": [
+    {"source_id": "EURUSD_M15", "role": "PRIMARY_PRICE", "instrument": "EUR_USD", "granularity": "M15", "minimum_development_rows": 70000, "minimum_distinct_days": 1000},
+    {"source_id": "EURGBP_M15", "role": "EUR_CROSS_CONFIRMATION", "instrument": "EUR_GBP", "granularity": "M15", "minimum_development_rows": 70000, "minimum_distinct_days": 1000},
+    {"source_id": "EURJPY_M15", "role": "EUR_CROSS_CONFIRMATION", "instrument": "EUR_JPY", "granularity": "M15", "minimum_development_rows": 70000, "minimum_distinct_days": 1000},
+    {"source_id": "XAUUSD_M15", "role": "BROAD_DOLLAR_PROXY", "instrument": "XAU_USD", "granularity": "M15", "minimum_development_rows": 70000, "minimum_distinct_days": 1000},
+    {"source_id": "SPX500_H1", "role": "RISK_REGIME", "instrument": "SPX500_USD", "granularity": "H1", "minimum_development_rows": 18000, "minimum_distinct_days": 1000},
+    {"source_id": "NAS100_H1", "role": "RISK_REGIME", "instrument": "NAS100_USD", "granularity": "H1", "minimum_development_rows": 18000, "minimum_distinct_days": 1000},
+    {"source_id": "USB10Y_H1", "role": "US_YIELD_SHOCK_PROXY", "instrument": "USB10Y_USD", "granularity": "H1", "minimum_development_rows": 18000, "minimum_distinct_days": 1000},
+    {"source_id": "DE10YB_H1", "role": "GERMAN_YIELD_SHOCK_PROXY", "instrument": "DE10YB_EUR", "granularity": "H1", "minimum_development_rows": 18000, "minimum_distinct_days": 1000}
+  ],
+  "feature_names": [
+    "eurgbp_return_1", "eurgbp_return_4", "eurjpy_return_1", "eurjpy_return_4",
+    "eur_cross_confirmation_score", "xauusd_return_1", "xauusd_return_4",
+    "spx500_return_1", "spx500_return_4", "nas100_return_1", "nas100_return_4",
+    "risk_regime_score", "usb10y_return_1", "usb10y_return_4",
+    "de10yb_return_1", "de10yb_return_4", "bond_proxy_spread_shock",
+    "session_bucket", "utc_hour_sin", "utc_hour_cos", "weekday_sin", "weekday_cos"
+  ],
+  "future_outcomes_allowed_in_features": false,
+  "clustering": {
+    "algorithm": "DETERMINISTIC_NUMPY_KMEANS_V1",
+    "cluster_count": 20,
+    "seed": 20261024,
+    "maximum_iterations": 300,
+    "maximum_training_rows": 100000
+  },
+  "excluded_sources": [
+    {"source": "MARKOV", "reason": "CURRENT_ARTIFACT_IS_A_SNAPSHOT_NOT_A_COMPLETE_POINT_IN_TIME_HISTORICAL_SERIES"},
+    {"source": "HMM", "reason": "CURRENT_ARTIFACT_IS_A_SNAPSHOT_AND_MODEL_STATE_WAS_FIT_WITH_LATER_DATA"},
+    {"source": "GARCH", "reason": "WALK_FORWARD_FORECASTS_BEGIN_IN_2022_AND_DO_NOT_COVER_THE_FULL_DECLARED_DEVELOPMENT_WINDOW"},
+    {"source": "FRED_MACRO_AND_COT", "reason": "CURRENT_ARTIFACT_DOES_NOT_EXPORT_COMPLETE_RELEASE_LAGGED_POINT_IN_TIME_HISTORY"},
+    {"source": "OPTIONS_SKEW_AND_ECONOMIC_SURPRISE", "reason": "COMPLETE LICENSED_OR_OFFICIAL POINT_IN_TIME_HISTORY_IS_NOT_AVAILABLE"}
+  ],
+  "authority": {
+    "research_only": true,
+    "automatic_campaign_creation": false,
+    "automatic_downstream_export": false,
+    "paper_or_live_authority": false
+  }
+}
