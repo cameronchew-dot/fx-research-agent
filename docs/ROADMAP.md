@@ -113,4 +113,6 @@
   predeclares an exact cluster expression.
 - Add runtime matching, forward snapshots, decay retirement, and dormant
   reactivation only after a motif survives the full confirmation pipeline.
+- Archive the completed V1 motif evaluation as `NO_DEVELOPMENT_SURVIVORS`; do
+  not retune these five states or open validation in response to rejection.
 

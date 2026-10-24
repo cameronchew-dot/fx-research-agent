@@ -69,3 +69,13 @@ discovery universe.
 
 Registration does not inspect development outcomes and does not open either
 sealed split. A development evaluator is the next implementation stage.
+
+## Development result
+
+The separately frozen evaluation protocol used a one-sided paired sign-flip
+test with 20,000 draws and Holm-Bonferroni correction across all 15 primary
+hypotheses. All five motifs were evaluated at 4, 8, and 16 M15 bars using the
+locked geometry and controls. No hypothesis survived because every primary had
+negative average net R after costs. Validation and holdout remained sealed.
+
+See `FX_MOTIF_DEVELOPMENT_RESULT.md` for the immutable run summary.

@@ -49,6 +49,8 @@ python3 ops/research_supervisor.py review-hypothesis HYPOTHESIS_ID --decision RE
 python3 ops/research_supervisor.py motif-build-matrix
 python3 ops/research_supervisor.py motif-discover --matrix-metadata data/motif_discovery/MATRIX_ID.json
 python3 ops/research_supervisor.py motif-predeclare
+python3 ops/research_supervisor.py motif-register-evaluation
+python3 ops/research_supervisor.py motif-evaluate-development --matrix-metadata data/motif_discovery/MATRIX_ID.json
 python3 ops/research_supervisor.py motif-status
 ```
 
@@ -73,6 +75,12 @@ The first blind review is frozen in `fx_motif_predeclaration_v1.json`. Its five
 descriptive states, exact execution geometry, costs, controls, independence
 rules, objective gates, and 15-test Holm family cannot change after outcomes
 are seen. Registration itself reads no outcomes and keeps 2023+ sealed.
+
+The frozen development evaluation subsequently tested all 15 primaries and
+their controls. None produced positive average net R after the declared
+1.9-pip friction, so no hypothesis received validation access. The exact
+result is archived in `docs/FX_MOTIF_DEVELOPMENT_RESULT.md`; there was no
+retuning.
 
 ## Low-noise research alerts
 

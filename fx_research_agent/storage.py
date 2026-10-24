@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Any
 
 
-SCHEMA_VERSION = "FX_RESEARCH_AGENT_DB_V6"
+SCHEMA_VERSION = "FX_RESEARCH_AGENT_DB_V7"
 
 
 def canonical_json(value: Any) -> str:
@@ -218,6 +218,20 @@ def initialize(connection: sqlite3.Connection) -> None:
 
         CREATE TABLE IF NOT EXISTS motif_predeclarations (
             predeclaration_id TEXT PRIMARY KEY,
+            payload_hash TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            created_at_utc TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS motif_evaluation_protocols (
+            protocol_id TEXT PRIMARY KEY,
+            payload_hash TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            created_at_utc TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS motif_evaluation_runs (
+            evaluation_run_id TEXT PRIMARY KEY,
             payload_hash TEXT NOT NULL,
             payload_json TEXT NOT NULL,
             created_at_utc TEXT NOT NULL

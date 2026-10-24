@@ -500,14 +500,25 @@ def motif_status(connection) -> dict[str, Any]:
     predeclaration = connection.execute(
         "SELECT payload_json FROM motif_predeclarations ORDER BY rowid DESC LIMIT 1"
     ).fetchone()
+    protocol = connection.execute(
+        "SELECT payload_json FROM motif_evaluation_protocols ORDER BY rowid DESC LIMIT 1"
+    ).fetchone()
+    evaluation = connection.execute(
+        "SELECT payload_json FROM motif_evaluation_runs ORDER BY rowid DESC LIMIT 1"
+    ).fetchone()
     return {
         "motif_discovery_status": (
-            "PREDECLARED_RESEARCH_ONLY" if predeclaration else
+            "DEVELOPMENT_EVALUATED_RESEARCH_ONLY" if evaluation else
+            ("EVALUATION_PROTOCOL_REGISTERED" if protocol else
+            ("PREDECLARED_RESEARCH_ONLY" if predeclaration else
             ("DESCRIBED_RESEARCH_ONLY" if run else ("MATRIX_READY" if matrix else "NOT_STARTED"))
+            ))
         ),
         "latest_matrix": json.loads(matrix["payload_json"]) if matrix else None,
         "latest_run": json.loads(run["payload_json"]) if run else None,
         "latest_predeclaration": json.loads(predeclaration["payload_json"]) if predeclaration else None,
+        "latest_evaluation_protocol": json.loads(protocol["payload_json"]) if protocol else None,
+        "latest_evaluation": json.loads(evaluation["payload_json"]) if evaluation else None,
         "paper_or_live_authority": False,
     }
 

@@ -56,6 +56,10 @@ from fx_research_agent.motif_discovery import (  # noqa: E402
     register_predeclaration,
     run_discovery,
 )
+from fx_research_agent.motif_evaluation import (  # noqa: E402
+    evaluate_development,
+    register_evaluation_protocol,
+)
 
 
 DEFAULT_DB = ROOT / "data" / "fx_research_agent.sqlite3"
@@ -78,6 +82,7 @@ DEFAULT_FINANCING_SOURCE_CATALOG = ROOT / "config" / "g10_financing_source_catal
 DEFAULT_LITERATURE_PANEL_CONTRACT = ROOT / "config" / "g10_literature_panel_contract.json"
 DEFAULT_MOTIF_CONTRACT = ROOT / "config" / "fx_motif_discovery_v1.json"
 DEFAULT_MOTIF_PREDECLARATION = ROOT / "config" / "fx_motif_predeclaration_v1.json"
+DEFAULT_MOTIF_EVALUATION_PROTOCOL = ROOT / "config" / "fx_motif_evaluation_protocol_v1.json"
 DEFAULT_MOTIF_DIR = ROOT / "data" / "motif_discovery"
 SOURCE_REPO = "https://github.com/cameronchew-dot/eur-usd-agent.git"
 SOURCE_COMMIT = "e168603"
@@ -180,6 +185,17 @@ def main() -> int:
     motif_predeclare = commands.add_parser("motif-predeclare")
     motif_predeclare.add_argument("--selection", type=Path, default=DEFAULT_MOTIF_PREDECLARATION)
     motif_predeclare.add_argument("--discovery", type=Path, default=DEFAULT_MOTIF_DIR / "latest_discovery.json")
+    motif_protocol = commands.add_parser("motif-register-evaluation")
+    motif_protocol.add_argument("--protocol", type=Path, default=DEFAULT_MOTIF_EVALUATION_PROTOCOL)
+    motif_protocol.add_argument("--predeclaration", type=Path, default=DEFAULT_MOTIF_PREDECLARATION)
+    motif_evaluate = commands.add_parser("motif-evaluate-development")
+    motif_evaluate.add_argument("--contract", type=Path, default=DEFAULT_MOTIF_CONTRACT)
+    motif_evaluate.add_argument("--predeclaration", type=Path, default=DEFAULT_MOTIF_PREDECLARATION)
+    motif_evaluate.add_argument("--protocol", type=Path, default=DEFAULT_MOTIF_EVALUATION_PROTOCOL)
+    motif_evaluate.add_argument("--discovery", type=Path, default=DEFAULT_MOTIF_DIR / "latest_discovery.json")
+    motif_evaluate.add_argument("--matrix-metadata", type=Path, required=True)
+    motif_evaluate.add_argument("--inbox-dir", type=Path, default=DEFAULT_MARKET_INBOX)
+    motif_evaluate.add_argument("--output-dir", type=Path, default=DEFAULT_MOTIF_DIR)
     args = parser.parse_args()
 
     with connect(args.db) as connection:
@@ -352,6 +368,27 @@ def main() -> int:
                     connection,
                     selection_path=args.selection,
                     discovery_path=args.discovery,
+                )
+            )
+        elif args.command == "motif-register-evaluation":
+            print_json(
+                register_evaluation_protocol(
+                    connection,
+                    protocol_path=args.protocol,
+                    predeclaration_path=args.predeclaration,
+                )
+            )
+        elif args.command == "motif-evaluate-development":
+            print_json(
+                evaluate_development(
+                    connection,
+                    contract_path=args.contract,
+                    predeclaration_path=args.predeclaration,
+                    protocol_path=args.protocol,
+                    discovery_path=args.discovery,
+                    matrix_metadata_path=args.matrix_metadata,
+                    inbox_dir=args.inbox_dir,
+                    output_dir=args.output_dir,
                 )
             )
     return 0
