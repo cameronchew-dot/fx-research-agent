@@ -555,13 +555,33 @@ def context_discovery_status(connection) -> dict[str, Any]:
     discovery = connection.execute(
         "SELECT payload_json FROM context_discovery_runs ORDER BY rowid DESC LIMIT 1"
     ).fetchone()
+    predeclaration = connection.execute(
+        "SELECT payload_json FROM context_predeclarations ORDER BY rowid DESC LIMIT 1"
+    ).fetchone()
+    protocol = connection.execute(
+        "SELECT payload_json FROM context_evaluation_protocols ORDER BY rowid DESC LIMIT 1"
+    ).fetchone()
+    evaluation = connection.execute(
+        "SELECT payload_json FROM context_evaluation_runs ORDER BY rowid DESC LIMIT 1"
+    ).fetchone()
+    status = "NOT_STARTED"
+    for present, label in (
+        (coverage, "COVERAGE_READY"),
+        (matrix, "MATRIX_READY"),
+        (discovery, "DESCRIBED_RESEARCH_ONLY"),
+        (predeclaration, "PREDECLARED_RESEARCH_ONLY"),
+        (protocol, "EVALUATION_PROTOCOL_REGISTERED"),
+        (evaluation, "DEVELOPMENT_EVALUATED_RESEARCH_ONLY"),
+    ):
+        if present:
+            status = label
     return {
-        "context_discovery_status": (
-            "DESCRIBED_RESEARCH_ONLY" if discovery else
-            ("MATRIX_READY" if matrix else ("COVERAGE_READY" if coverage else "NOT_STARTED"))
-        ),
+        "context_discovery_status": status,
         "latest_coverage": json.loads(coverage["payload_json"]) if coverage else None,
         "latest_matrix": json.loads(matrix["payload_json"]) if matrix else None,
         "latest_discovery": json.loads(discovery["payload_json"]) if discovery else None,
+        "latest_predeclaration": json.loads(predeclaration["payload_json"]) if predeclaration else None,
+        "latest_evaluation_protocol": json.loads(protocol["payload_json"]) if protocol else None,
+        "latest_evaluation": json.loads(evaluation["payload_json"]) if evaluation else None,
         "paper_or_live_authority": False,
     }

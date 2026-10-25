@@ -1,5 +1,8 @@
 # FX Context Discovery V1
 
+> Development confirmation is complete. None of the 18 predeclared context
+> hypotheses survived. See [FX_CONTEXT_DEVELOPMENT_RESULT.md](FX_CONTEXT_DEVELOPMENT_RESULT.md).
+
 ## Purpose
 
 `EUR_USD_CONTEXT_DISCOVERY_V1` is an outcome-blind search for recurring

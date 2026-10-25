@@ -66,6 +66,11 @@ from fx_research_agent.context_discovery import (  # noqa: E402
     context_discovery_status,
     run_context_discovery,
 )
+from fx_research_agent.context_evaluation import (  # noqa: E402
+    evaluate_development as evaluate_context_development,
+    register_evaluation_protocol as register_context_evaluation_protocol,
+    register_predeclaration as register_context_predeclaration,
+)
 
 
 DEFAULT_DB = ROOT / "data" / "fx_research_agent.sqlite3"
@@ -93,6 +98,8 @@ DEFAULT_MOTIF_DIR = ROOT / "data" / "motif_discovery"
 DEFAULT_CONTEXT_CONTRACT = ROOT / "config" / "fx_context_discovery_v1.json"
 DEFAULT_CONTEXT_COVERAGE_STATUS = ROOT / "data" / "context_coverage_status.json"
 DEFAULT_CONTEXT_DIR = ROOT / "data" / "context_discovery"
+DEFAULT_CONTEXT_PREDECLARATION = ROOT / "config" / "fx_context_predeclaration_v1.json"
+DEFAULT_CONTEXT_EVALUATION_PROTOCOL = ROOT / "config" / "fx_context_evaluation_protocol_v1.json"
 SOURCE_REPO = "https://github.com/cameronchew-dot/eur-usd-agent.git"
 SOURCE_COMMIT = "e168603"
 SOURCE_PATH = "config/research_hypothesis_registry.json"
@@ -217,6 +224,20 @@ def main() -> int:
     context_discover.add_argument("--matrix-metadata", type=Path, required=True)
     context_discover.add_argument("--output", type=Path, default=DEFAULT_CONTEXT_DIR / "latest_discovery.json")
     commands.add_parser("context-discovery-status")
+    context_predeclare = commands.add_parser("context-predeclare")
+    context_predeclare.add_argument("--selection", type=Path, default=DEFAULT_CONTEXT_PREDECLARATION)
+    context_predeclare.add_argument("--discovery", type=Path, default=DEFAULT_CONTEXT_DIR / "latest_discovery.json")
+    context_protocol = commands.add_parser("context-register-evaluation")
+    context_protocol.add_argument("--protocol", type=Path, default=DEFAULT_CONTEXT_EVALUATION_PROTOCOL)
+    context_protocol.add_argument("--predeclaration", type=Path, default=DEFAULT_CONTEXT_PREDECLARATION)
+    context_evaluate = commands.add_parser("context-evaluate-development")
+    context_evaluate.add_argument("--contract", type=Path, default=DEFAULT_CONTEXT_CONTRACT)
+    context_evaluate.add_argument("--predeclaration", type=Path, default=DEFAULT_CONTEXT_PREDECLARATION)
+    context_evaluate.add_argument("--protocol", type=Path, default=DEFAULT_CONTEXT_EVALUATION_PROTOCOL)
+    context_evaluate.add_argument("--discovery", type=Path, default=DEFAULT_CONTEXT_DIR / "latest_discovery.json")
+    context_evaluate.add_argument("--matrix-metadata", type=Path, required=True)
+    context_evaluate.add_argument("--inbox-dir", type=Path, default=DEFAULT_MARKET_INBOX)
+    context_evaluate.add_argument("--output-dir", type=Path, default=DEFAULT_CONTEXT_DIR)
     args = parser.parse_args()
 
     with connect(args.db) as connection:
@@ -440,6 +461,35 @@ def main() -> int:
             )
         elif args.command == "context-discovery-status":
             print_json(context_discovery_status(connection))
+        elif args.command == "context-predeclare":
+            print_json(
+                register_context_predeclaration(
+                    connection,
+                    selection_path=args.selection,
+                    discovery_path=args.discovery,
+                )
+            )
+        elif args.command == "context-register-evaluation":
+            print_json(
+                register_context_evaluation_protocol(
+                    connection,
+                    protocol_path=args.protocol,
+                    predeclaration_path=args.predeclaration,
+                )
+            )
+        elif args.command == "context-evaluate-development":
+            print_json(
+                evaluate_context_development(
+                    connection,
+                    contract_path=args.contract,
+                    predeclaration_path=args.predeclaration,
+                    protocol_path=args.protocol,
+                    discovery_path=args.discovery,
+                    matrix_metadata_path=args.matrix_metadata,
+                    inbox_dir=args.inbox_dir,
+                    output_dir=args.output_dir,
+                )
+            )
     return 0
 
 
