@@ -3,11 +3,13 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 import numpy as np
 
 from fx_research_agent.context_evaluation import (
     _trade_outcome,
+    export_context_labels,
     load_protocol,
     register_evaluation_protocol,
     register_predeclaration,
@@ -139,6 +141,63 @@ class ContextEvaluationTests(unittest.TestCase):
         self.assertEqual(outcome["exit_reason"], "STOP")
         self.assertEqual(outcome["gross_r"], -1.0)
         self.assertLess(outcome["net_r"], -1.0)
+
+    def test_context_label_export_is_outcome_free_and_immutable(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            contract_path = root / "contract.json"
+            discovery_path = root / "discovery.json"
+            matrix_path = root / "matrix.json"
+            output_path = root / "labels.json"
+            contract_path.write_text("{}", encoding="utf-8")
+            discovery_path.write_text(
+                json.dumps(
+                    {
+                        "schema": "FX_CONTEXT_DISCOVERY_REPORT_V1",
+                        "run_id": "RUN_1",
+                        "matrix_artifact_id": "MATRIX_1",
+                        "future_outcomes_inspected": 0,
+                    }
+                ),
+                encoding="utf-8",
+            )
+            matrix_path.write_text("{}", encoding="utf-8")
+            metadata = {
+                "artifact_id": "MATRIX_1",
+                "matrix_sha256": "matrix-sha",
+                "contract_sha256": "contract-hash",
+            }
+            arrays = {
+                "values": np.asarray([[1.0], [2.0]]),
+                "times": np.asarray(["2020-01-01T00:00:00Z", "2020-01-01T00:15:00Z"]),
+            }
+            with (
+                patch("fx_research_agent.context_evaluation.load_contract", return_value={"contract_id": "C1"}),
+                patch("fx_research_agent.context_evaluation.payload_hash", return_value="contract-hash"),
+                patch("fx_research_agent.context_evaluation._load_matrix", return_value=(metadata, arrays)),
+                patch(
+                    "fx_research_agent.context_evaluation._cluster_assignments",
+                    return_value=np.asarray(["A", "B"]),
+                ),
+            ):
+                first = export_context_labels(
+                    contract_path=contract_path,
+                    discovery_path=discovery_path,
+                    matrix_metadata_path=matrix_path,
+                    output_path=output_path,
+                )
+                second = export_context_labels(
+                    contract_path=contract_path,
+                    discovery_path=discovery_path,
+                    matrix_metadata_path=matrix_path,
+                    output_path=output_path,
+                )
+            payload = json.loads(output_path.read_text(encoding="utf-8"))
+        self.assertEqual(first, second)
+        self.assertEqual(payload["label_count"], 2)
+        self.assertFalse(payload["safety"]["future_outcomes_exported"])
+        self.assertFalse(payload["safety"]["strategy_labels_exported"])
+        self.assertTrue(all(set(row) == {"decision_time_utc", "machine_cluster_id"} for row in payload["labels"]))
 
 
 if __name__ == "__main__":

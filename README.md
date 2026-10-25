@@ -56,6 +56,7 @@ python3 ops/research_supervisor.py context-coverage-audit
 python3 ops/research_supervisor.py context-build-matrix
 python3 ops/research_supervisor.py context-discover --matrix-metadata data/context_discovery/MATRIX_ID.json
 python3 ops/research_supervisor.py context-discovery-status
+python3 ops/research_supervisor.py context-export-labels --matrix-metadata data/context_discovery/MATRIX_ID.json
 ```
 
 ## FX motif discovery

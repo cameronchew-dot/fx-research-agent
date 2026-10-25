@@ -68,6 +68,7 @@ from fx_research_agent.context_discovery import (  # noqa: E402
 )
 from fx_research_agent.context_evaluation import (  # noqa: E402
     evaluate_development as evaluate_context_development,
+    export_context_labels,
     register_evaluation_protocol as register_context_evaluation_protocol,
     register_predeclaration as register_context_predeclaration,
 )
@@ -100,6 +101,7 @@ DEFAULT_CONTEXT_COVERAGE_STATUS = ROOT / "data" / "context_coverage_status.json"
 DEFAULT_CONTEXT_DIR = ROOT / "data" / "context_discovery"
 DEFAULT_CONTEXT_PREDECLARATION = ROOT / "config" / "fx_context_predeclaration_v1.json"
 DEFAULT_CONTEXT_EVALUATION_PROTOCOL = ROOT / "config" / "fx_context_evaluation_protocol_v1.json"
+DEFAULT_CONTEXT_LABEL_EXPORT = ROOT / "data" / "context_discovery" / "context_labels_v1.json"
 SOURCE_REPO = "https://github.com/cameronchew-dot/eur-usd-agent.git"
 SOURCE_COMMIT = "e168603"
 SOURCE_PATH = "config/research_hypothesis_registry.json"
@@ -238,6 +240,11 @@ def main() -> int:
     context_evaluate.add_argument("--matrix-metadata", type=Path, required=True)
     context_evaluate.add_argument("--inbox-dir", type=Path, default=DEFAULT_MARKET_INBOX)
     context_evaluate.add_argument("--output-dir", type=Path, default=DEFAULT_CONTEXT_DIR)
+    context_export = commands.add_parser("context-export-labels")
+    context_export.add_argument("--contract", type=Path, default=DEFAULT_CONTEXT_CONTRACT)
+    context_export.add_argument("--discovery", type=Path, default=DEFAULT_CONTEXT_DIR / "latest_discovery.json")
+    context_export.add_argument("--matrix-metadata", type=Path, required=True)
+    context_export.add_argument("--output", type=Path, default=DEFAULT_CONTEXT_LABEL_EXPORT)
     args = parser.parse_args()
 
     with connect(args.db) as connection:
@@ -488,6 +495,15 @@ def main() -> int:
                     matrix_metadata_path=args.matrix_metadata,
                     inbox_dir=args.inbox_dir,
                     output_dir=args.output_dir,
+                )
+            )
+        elif args.command == "context-export-labels":
+            print_json(
+                export_context_labels(
+                    contract_path=args.contract,
+                    discovery_path=args.discovery,
+                    matrix_metadata_path=args.matrix_metadata,
+                    output_path=args.output,
                 )
             )
     return 0

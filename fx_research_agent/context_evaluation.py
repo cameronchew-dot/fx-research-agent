@@ -32,6 +32,7 @@ PREDECLARATION_SCHEMA = "FX_CONTEXT_PREDECLARATION_V1"
 PROTOCOL_SCHEMA = "FX_CONTEXT_EVALUATION_PROTOCOL_V1"
 EVALUATION_SCHEMA = "FX_CONTEXT_DEVELOPMENT_EVALUATION_REPORT_V1"
 EVENT_SCHEMA = "FX_CONTEXT_DEVELOPMENT_EVENT_LEDGER_V1"
+LABEL_EXPORT_SCHEMA = "FX_CONTEXT_LABEL_EXPORT_V1"
 EVALUATOR_VERSION = "1.0.0"
 PIP_SIZE = 0.0001
 
@@ -206,6 +207,77 @@ def _cluster_assignments(
         raise ValueError("reconstructed context IDs do not match the pinned discovery run")
     labels = _nearest_centroid_labels(standardized, centroids)
     return np.asarray([machine_ids[index] for index in labels])
+
+
+def export_context_labels(
+    *,
+    contract_path: Path,
+    discovery_path: Path,
+    matrix_metadata_path: Path,
+    output_path: Path,
+) -> dict[str, Any]:
+    """Export outcome-free context labels for downstream feasibility checks."""
+    contract = load_contract(contract_path)
+    discovery = json.loads(discovery_path.read_text(encoding="utf-8"))
+    if discovery.get("schema") != REPORT_SCHEMA:
+        raise ValueError("unsupported context discovery report")
+    if discovery.get("future_outcomes_inspected") != 0:
+        raise ValueError("context label export requires outcome-blind discovery")
+    metadata, arrays = _load_matrix(matrix_metadata_path)
+    contract_hash = payload_hash(contract)
+    if metadata.get("contract_sha256") != contract_hash:
+        raise ValueError("context matrix does not match the pinned contract")
+    if discovery.get("matrix_artifact_id") != metadata.get("artifact_id"):
+        raise ValueError("context discovery does not match the pinned matrix")
+    labels = _cluster_assignments(arrays["values"], contract, discovery)
+    times = arrays["times"]
+    if len(times) != len(labels):
+        raise ValueError("context timestamp and label counts differ")
+    identity = {
+        "contract_sha256": contract_hash,
+        "discovery_sha256": sha256_file(discovery_path),
+        "matrix_sha256": metadata["matrix_sha256"],
+    }
+    export_id = "FX_CONTEXT_LABELS_" + hashlib.sha256(
+        canonical_json(identity).encode("utf-8")
+    ).hexdigest()[:20]
+    payload = {
+        "schema": LABEL_EXPORT_SCHEMA,
+        "export_id": export_id,
+        "authority": "RESEARCH_DIAGNOSTIC_ONLY",
+        "contract_id": contract["contract_id"],
+        "source_discovery_run_id": discovery["run_id"],
+        "source_matrix_artifact_id": metadata["artifact_id"],
+        "source_hashes": identity,
+        "label_count": int(len(labels)),
+        "window_start_utc": str(times[0]) if len(times) else None,
+        "window_end_utc": str(times[-1]) if len(times) else None,
+        "labels": [
+            {"decision_time_utc": str(time_utc), "machine_cluster_id": str(label)}
+            for time_utc, label in zip(times, labels, strict=True)
+        ],
+        "safety": {
+            "future_outcomes_exported": False,
+            "strategy_labels_exported": False,
+            "validation_rows_inspected": 0,
+            "holdout_rows_inspected": 0,
+            "paper_or_live_authority": False,
+        },
+    }
+    if output_path.exists():
+        existing = json.loads(output_path.read_text(encoding="utf-8"))
+        if canonical_json(existing) != canonical_json(payload):
+            raise ValueError("conflicting immutable context label export")
+    else:
+        write_json_atomic(output_path, payload)
+    return {
+        "context_label_export_status": "WRITTEN_OUTCOME_BLIND",
+        "export_id": export_id,
+        "output_path": str(output_path),
+        "label_count": int(len(labels)),
+        "future_outcomes_inspected": 0,
+        "paper_or_live_authority": False,
+    }
 
 
 def _trade_outcome(
