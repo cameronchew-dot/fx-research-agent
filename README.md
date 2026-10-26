@@ -245,3 +245,13 @@ enabling the optional weekly proposal job. This credential is kept separate
 from the EUR trading agent. All routine ingestion and evaluation remains
 model-free and consumes no provider tokens.
 
+Import immutable, checksummed locked-research results from the EUR/USD bot:
+
+```bash
+python3 ops/research_supervisor.py sync-research-results
+python3 ops/research_supervisor.py research-result-status
+```
+
+Imported results are historical research evidence only. They cannot approve a
+campaign, activate a downstream profile, or grant order authority.
+

@@ -47,6 +47,13 @@ testing window. A partial panel remains `BLOCKED_DATA_READINESS`; the runner may
 not substitute spot returns for excess returns, infer missing financing, or
 silently shrink the currency universe after results are visible.
 
+Locked research summaries produced outside this repository cross a separate,
+checksummed result-package boundary. The importer rejects broker-account and
+execution fields, stores manifests and result records immutably, and rejects a
+conflicting rewrite atomically. Imported results are visible evidence only:
+they do not approve campaigns, alter downstream lifecycle state, or grant order
+authority.
+
 ## Tape and CVD language
 
 EUR/USD is decentralized. OANDA provides one venue's prices and liquidity

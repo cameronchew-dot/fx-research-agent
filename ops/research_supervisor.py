@@ -72,6 +72,7 @@ from fx_research_agent.context_evaluation import (  # noqa: E402
     register_evaluation_protocol as register_context_evaluation_protocol,
     register_predeclaration as register_context_predeclaration,
 )
+from fx_research_agent.result_packages import result_status, sync_packages  # noqa: E402
 
 
 DEFAULT_DB = ROOT / "data" / "fx_research_agent.sqlite3"
@@ -102,6 +103,9 @@ DEFAULT_CONTEXT_DIR = ROOT / "data" / "context_discovery"
 DEFAULT_CONTEXT_PREDECLARATION = ROOT / "config" / "fx_context_predeclaration_v1.json"
 DEFAULT_CONTEXT_EVALUATION_PROTOCOL = ROOT / "config" / "fx_context_evaluation_protocol_v1.json"
 DEFAULT_CONTEXT_LABEL_EXPORT = ROOT / "data" / "context_discovery" / "context_labels_v1.json"
+DEFAULT_RESULT_SOURCE = Path("/Users/camcam/eur_bot/exports/fx_research_results")
+DEFAULT_RESULT_INBOX = ROOT / "data" / "result_inbox"
+DEFAULT_RESULT_STATUS = ROOT / "data" / "research_result_status.json"
 SOURCE_REPO = "https://github.com/cameronchew-dot/eur-usd-agent.git"
 SOURCE_COMMIT = "e168603"
 SOURCE_PATH = "config/research_hypothesis_registry.json"
@@ -245,6 +249,10 @@ def main() -> int:
     context_export.add_argument("--discovery", type=Path, default=DEFAULT_CONTEXT_DIR / "latest_discovery.json")
     context_export.add_argument("--matrix-metadata", type=Path, required=True)
     context_export.add_argument("--output", type=Path, default=DEFAULT_CONTEXT_LABEL_EXPORT)
+    result_sync = commands.add_parser("sync-research-results")
+    result_sync.add_argument("--source-dir", type=Path, default=DEFAULT_RESULT_SOURCE)
+    result_sync.add_argument("--inbox-dir", type=Path, default=DEFAULT_RESULT_INBOX)
+    commands.add_parser("research-result-status")
     args = parser.parse_args()
 
     with connect(args.db) as connection:
@@ -506,6 +514,15 @@ def main() -> int:
                     output_path=args.output,
                 )
             )
+        elif args.command == "sync-research-results":
+            result = sync_packages(connection, args.source_dir, args.inbox_dir)
+            status_payload = result_status(connection)
+            write_json_atomic(DEFAULT_RESULT_STATUS, status_payload)
+            print_json({"sync": result, "status": status_payload})
+        elif args.command == "research-result-status":
+            status_payload = result_status(connection)
+            write_json_atomic(DEFAULT_RESULT_STATUS, status_payload)
+            print_json(status_payload)
     return 0
 
 

@@ -175,6 +175,12 @@ def status(connection) -> dict[str, Any]:
         "experiment_count": connection.execute("SELECT COUNT(*) AS n FROM experiment_specs").fetchone()["n"],
         "finding_count": connection.execute("SELECT COUNT(*) AS n FROM findings").fetchone()["n"],
         "market_manifest_count": connection.execute("SELECT COUNT(*) AS n FROM market_data_manifests").fetchone()["n"],
+        "external_result_manifest_count": connection.execute(
+            "SELECT COUNT(*) AS n FROM external_result_manifests"
+        ).fetchone()["n"],
+        "external_research_result_count": connection.execute(
+            "SELECT COUNT(*) AS n FROM external_research_results"
+        ).fetchone()["n"],
         "downstream_export_count": connection.execute("SELECT COUNT(*) AS n FROM downstream_exports").fetchone()["n"],
     }
 

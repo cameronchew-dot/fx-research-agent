@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Any
 
 
-SCHEMA_VERSION = "FX_RESEARCH_AGENT_DB_V10"
+SCHEMA_VERSION = "FX_RESEARCH_AGENT_DB_V11"
 
 
 def canonical_json(value: Any) -> str:
@@ -278,6 +278,29 @@ def initialize(connection: sqlite3.Connection) -> None:
             payload_json TEXT NOT NULL,
             created_at_utc TEXT NOT NULL
         );
+
+        CREATE TABLE IF NOT EXISTS external_result_manifests (
+            package_id TEXT PRIMARY KEY,
+            payload_hash TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            imported_at_utc TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS external_research_results (
+            result_id TEXT PRIMARY KEY,
+            payload_hash TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            package_id TEXT NOT NULL,
+            hypothesis_id TEXT NOT NULL,
+            instrument TEXT NOT NULL,
+            result_status TEXT NOT NULL,
+            knowable_at_utc TEXT NOT NULL,
+            imported_at_utc TEXT NOT NULL,
+            FOREIGN KEY (package_id) REFERENCES external_result_manifests(package_id)
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_external_results_hypothesis
+            ON external_research_results(hypothesis_id, knowable_at_utc, result_id);
         """
     )
     connection.execute(
@@ -296,6 +319,7 @@ def insert_immutable(
     payload: dict[str, Any],
     extra_columns: dict[str, Any],
 ) -> bool:
+    caller_manages_transaction = bool(getattr(connection, "in_transaction", False))
     digest = payload_hash(payload)
     existing = connection.execute(
         f"SELECT payload_hash FROM {table} WHERE {id_column} = ?", (record_id,)
@@ -328,6 +352,7 @@ def insert_immutable(
                 f"conflicting immutable rewrite for {table}:{record_id}"
             )
         return False
-    connection.commit()
+    if not caller_manages_transaction:
+        connection.commit()
     return True
 

@@ -133,4 +133,20 @@
   are complete. No direction, geometry, or outcome comparison has been assigned.
 - Next require a small blind human selection and a separate immutable
   predeclaration before implementing any development outcome evaluator.
+- The blind selection and separate predeclaration were completed in the EUR/USD
+  research repository. All three selected cross-mechanism interactions failed
+  development; validation and holdout remained sealed. Their normalized,
+  checksummed rejection records are imported through the external-result
+  boundary and have no downstream authority.
+
+## Phase 7: immutable external result reconciliation
+
+- Accept only checksummed `FX_RESEARCH_RESULT_MANIFEST_V1` packages from the
+  locked bot-research export boundary.
+- Reject account, credential, balance, order, position, token, and transaction
+  fields, as well as any package claiming promotion or execution authority.
+- Store package manifests and result records immutably; conflicting rewrites of
+  an existing result ID fail closed.
+- Keep external results visible in the system-of-record status without
+  reclassifying them as approved forward campaigns.
 

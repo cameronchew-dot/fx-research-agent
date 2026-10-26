@@ -12,6 +12,8 @@ data/evidence_inbox/*
 data/external/*
 data/motif_discovery/*
 data/context_discovery/*
+data/result_inbox/*
+!data/result_inbox/.gitkeep
 !data/evidence_inbox/.gitkeep
 reports/*
 !reports/.gitkeep
