@@ -255,3 +255,10 @@ python3 ops/research_supervisor.py research-result-status
 Imported results are historical research evidence only. They cannot approve a
 campaign, activate a downstream profile, or grant order authority.
 
+For unattended reconciliation, install
+`ops/com.camcam.fx-research-agent.result-reconciliation.plist.example` as a
+LaunchAgent. It watches the bot's result-export directory for immediate imports
+and also runs at 17:05 local time as a daily fallback. Normal and unchanged
+syncs are silent; rejected or conflicting packages use the existing low-noise
+Discord ingest-failure notification path.
+

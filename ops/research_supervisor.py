@@ -516,9 +516,13 @@ def main() -> int:
             )
         elif args.command == "sync-research-results":
             result = sync_packages(connection, args.source_dir, args.inbox_dir)
+            notifications = notify_ingest_failures(connection, "RESEARCH_RESULTS", result)
             status_payload = result_status(connection)
             write_json_atomic(DEFAULT_RESULT_STATUS, status_payload)
-            print_json({"sync": result, "status": status_payload})
+            status_summary = {
+                key: value for key, value in status_payload.items() if key != "results"
+            }
+            print_json({"sync": result, "status": status_summary, "notifications": notifications})
         elif args.command == "research-result-status":
             status_payload = result_status(connection)
             write_json_atomic(DEFAULT_RESULT_STATUS, status_payload)

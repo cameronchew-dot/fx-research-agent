@@ -149,4 +149,7 @@
   an existing result ID fail closed.
 - Keep external results visible in the system-of-record status without
   reclassifying them as approved forward campaigns.
+- Reconcile immediately when a completed result package appears and once daily
+  as a fallback. Notify only on rejected or conflicting packages; unchanged
+  packages remain silent.
 

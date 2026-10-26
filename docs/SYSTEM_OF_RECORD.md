@@ -54,6 +54,12 @@ conflicting rewrite atomically. Imported results are visible evidence only:
 they do not approve campaigns, alter downstream lifecycle state, or grant order
 authority.
 
+The local reconciliation service watches the bot's completed-result export
+directory and has a daily fallback run. It never starts research or regenerates
+results; campaign code remains responsible for producing a finalized package.
+This keeps timing failures separate from research logic and makes repeated
+imports idempotent.
+
 ## Tape and CVD language
 
 EUR/USD is decentralized. OANDA provides one venue's prices and liquidity
