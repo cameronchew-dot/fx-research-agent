@@ -1,0 +1,97 @@
+{
+  "schema": "FX_MOTIF_PREDECLARATION_V1",
+  "predeclaration_id": "GBP_USD_PAIR_NATIVE_MOTIF_CONFIRMATION_V1",
+  "predeclared_at_utc": "2026-10-29T18:50:00Z",
+  "source_discovery_run_id": "MOTIF_DISCOVERY_bbd17aa5438162c0904c",
+  "source_matrix_artifact_id": "MOTIF_MATRIX_GBP_USD_PAIR_NATIVE_MOTIF_DISCOVERY_V1_919d4411122132ae",
+  "source_discovery_report_sha256": "9b9bdfa93d50380b69a3f79fa6951194ac29a73b824a792c575ca47505a5c8c7",
+  "selection_basis": "OUTCOME_BLIND_CENTROID_DESCRIPTORS_ONLY",
+  "selected_motifs": [
+    {
+      "machine_cluster_id": "GBPUSD_MOTIF_V1_8894bb680d51",
+      "mechanism_label": "HIGH_PARTICIPATION_UPSIDE_IMPULSE_CONTINUATION",
+      "direction": "LONG",
+      "blind_rationale": "Largest positive one-bar return state with extreme range, volume, and four-bar continuation."
+    },
+    {
+      "machine_cluster_id": "GBPUSD_MOTIF_V1_8ca5f87cf788",
+      "mechanism_label": "HIGH_PARTICIPATION_DOWNSIDE_IMPULSE_CONTINUATION",
+      "direction": "SHORT",
+      "blind_rationale": "Largest negative one-bar return state with extreme range, volume, and four-bar continuation."
+    },
+    {
+      "machine_cluster_id": "GBPUSD_MOTIF_V1_5ae9813ac292",
+      "mechanism_label": "HIGH_VOLATILITY_LOWER_WICK_REJECTION",
+      "direction": "LONG",
+      "blind_rationale": "Strong lower wick and small body during elevated short- and medium-window volatility."
+    }
+  ],
+  "event_definition": {
+    "decision_time": "COMPLETED_M15_CANDLE_END",
+    "event_start": "FIRST_M15_ROW_ENTERING_SELECTED_CLUSTER",
+    "contiguous_cluster_rows": "ONE_EPISODE",
+    "independence_rule": "PER_MOTIF_KEEP_FIRST_EVENT_THEN_SKIP_NEXT_16_COMPLETED_M15_BARS",
+    "cross_motif_overlap": "RETAIN_AND_REPORT_FOR_LATER_PORTFOLIO_COOCCURRENCE_REVIEW",
+    "rearm_rule": "SELECTED_CLUSTER_MUST_BE_EXITED_BEFORE_A_NEW_EPISODE_CAN_BEGIN"
+  },
+  "execution_geometry": {
+    "entry": "NEXT_COMPLETED_M15_CANDLE_OPEN",
+    "stop": {
+      "long": "MIN_SIGNAL_LOW_OR_ENTRY_MINUS_0_75_SIGNAL_ATR14",
+      "short": "MAX_SIGNAL_HIGH_OR_ENTRY_PLUS_0_75_SIGNAL_ATR14"
+    },
+    "target_r": 1.5,
+    "horizon_bars": [4, 8, 16],
+    "horizon_exit": "CLOSE_OF_FINAL_HORIZON_M15_CANDLE",
+    "same_bar_stop_and_target": "STOP_FIRST_CONSERVATIVE",
+    "adverse_gap_through_stop": "FILL_AT_NEXT_AVAILABLE_OPEN",
+    "favorable_gap_through_target": "FILL_AT_TARGET_CONSERVATIVE"
+  },
+  "cost_model": {
+    "price_basis": "MIDPOINT_CANDLES",
+    "spread_pips_round_trip": 1.6,
+    "entry_slippage_pips": 0.2,
+    "exit_slippage_pips": 0.2,
+    "fixed_round_trip_cost_pips": 2.0,
+    "net_r_formula": "GROSS_R_MINUS_FIXED_ROUND_TRIP_COST_PIPS_DIVIDED_BY_INITIAL_STOP_DISTANCE_PIPS"
+  },
+  "controls": {
+    "required": [
+      "SAME_EVENT_OPPOSITE_DIRECTION_SAME_GEOMETRY",
+      "EVENT_TIMESTAMP_SHIFTED_FORWARD_480_OBSERVED_M15_BARS_SAME_DIRECTION_GEOMETRY"
+    ],
+    "control_results_can_qualify": false
+  },
+  "objective_gates": {
+    "minimum_independent_events_per_primary_hypothesis": 30,
+    "minimum_calendar_months_with_events": 24,
+    "minimum_average_net_r": 0.1,
+    "minimum_median_net_r_exclusive": 0.0,
+    "minimum_positive_net_r_rate": 0.45,
+    "minimum_positive_month_rate": 0.55,
+    "minimum_worst_month_average_net_r": -0.5,
+    "maximum_top_five_percent_positive_r_contribution_fraction": 0.5,
+    "minimum_average_net_r_edge_over_each_control": 0.1,
+    "corrected_significance_required": true
+  },
+  "planned_confirmation_budget": {
+    "selected_motif_count": 3,
+    "direction_count_per_motif": 1,
+    "horizon_bars": [4, 8, 16],
+    "planned_primary_hypothesis_count": 9,
+    "familywise_alpha": 0.0166666667,
+    "correction": "HOLM_BONFERRONI_REQUIRED",
+    "original_blind_discovery_universe_hypothesis_count": 144
+  },
+  "split_access": {
+    "development": "PERMITTED_AFTER_REGISTRATION",
+    "validation_2019_2022": "SEALED_UNTIL_DEVELOPMENT_SURVIVOR_EXISTS",
+    "holdout_2023_PLUS": "SEALED_UNTOUCHED_UNTIL_PREDECLARED_CONFIRMATION"
+  },
+  "authority": {
+    "research_only": true,
+    "automatic_campaign_creation": false,
+    "automatic_downstream_export": false,
+    "paper_or_live_authority": false
+  }
+}

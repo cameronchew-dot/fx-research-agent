@@ -174,6 +174,8 @@ def market_data_status(connection) -> dict[str, Any]:
         "SELECT payload_json, usable_for_testing FROM market_data_manifests ORDER BY registered_at_utc"
     ).fetchall()
     instruments: dict[str, int] = {}
+    data_classes_by_instrument: dict[str, set[str]] = {}
+    windows_by_instrument: dict[str, dict[str, str | None]] = {}
     latest_window_end: str | None = None
     usable = 0
     stale = 0
@@ -183,6 +185,16 @@ def market_data_status(connection) -> dict[str, Any]:
         manifest = json.loads(row["payload_json"])
         instrument = str(manifest.get("instrument") or "UNKNOWN")
         instruments[instrument] = instruments.get(instrument, 0) + 1
+        data_classes_by_instrument.setdefault(instrument, set()).update(
+            str(value) for value in manifest.get("data_classes", [])
+        )
+        window = windows_by_instrument.setdefault(instrument, {"start_utc": None, "end_utc": None})
+        start = str(manifest.get("window_start_utc") or "")
+        end = str(manifest.get("window_end_utc") or "")
+        if start:
+            window["start_utc"] = min(str(window["start_utc"] or start), start)
+        if end:
+            window["end_utc"] = max(str(window["end_utc"] or end), end)
         latest_window_end = max(latest_window_end or "", str(manifest.get("window_end_utc") or "")) or latest_window_end
         usable += int(row["usable_for_testing"])
         stale += int(manifest.get("freshness_status") != "FRESH")
@@ -197,6 +209,10 @@ def market_data_status(connection) -> dict[str, Any]:
         "gapped_manifest_count": gapped,
         "latest_window_end_utc": latest_window_end,
         "instruments": instruments,
+        "data_classes_by_instrument": {
+            instrument: sorted(values) for instrument, values in data_classes_by_instrument.items()
+        },
+        "windows_by_instrument": windows_by_instrument,
         "declared_row_count": total_rows,
         "cvd_disclosure": "OANDA_VENUE_TICK_PROXY_NOT_CENTRALIZED_FX_VOLUME",
     }

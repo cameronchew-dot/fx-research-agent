@@ -1,0 +1,31 @@
+{
+  "schema": "FX_PAIR_NATIVE_MOTIF_BATCH_V1",
+  "batch_id": "AUDUSD_USDJPY_GBPUSD_PAIR_NATIVE_MOTIFS_V1",
+  "created_at_utc": "2026-10-29T18:40:00Z",
+  "contracts": [
+    "config/fx_motif_discovery_audusd_v1.json",
+    "config/fx_motif_discovery_usdjpy_v1.json",
+    "config/fx_motif_discovery_gbpusd_v1.json"
+  ],
+  "selection_policy": {
+    "outcome_blind_discovery_only": true,
+    "maximum_selected_motifs_per_pair": 3,
+    "selection_must_use_centroid_descriptors_only": true,
+    "outcomes_must_remain_sealed_until_selection_is_registered": true,
+    "all_selected_pair_motifs_share_one_multiple_comparisons_family": true,
+    "familywise_alpha": 0.05,
+    "pair_family_alpha": 0.0166666667,
+    "correction": "BONFERRONI_ACROSS_THREE_PAIRS_THEN_HOLM_BONFERRONI_WITHIN_PAIR"
+  },
+  "sequential_policy": {
+    "discovery_may_run_for_all_pairs_without_outcomes": true,
+    "confirmation_runs_one_pair_at_a_time": true,
+    "confirmation_order": ["AUD_USD", "USD_JPY", "GBP_USD"]
+  },
+  "authority": {
+    "research_only": true,
+    "automatic_campaign_creation": false,
+    "automatic_downstream_export": false,
+    "paper_or_live_authority": false
+  }
+}

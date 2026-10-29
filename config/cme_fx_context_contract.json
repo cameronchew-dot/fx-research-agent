@@ -1,0 +1,29 @@
+{
+  "schema": "CME_FX_CONTEXT_CONTRACT_V1",
+  "source_status": "UNCONFIGURED",
+  "products": [
+    {"canonical_product": "6E", "spot_instrument": "EUR_USD", "description": "CME Euro FX futures"},
+    {"canonical_product": "6J", "spot_instrument": "USD_JPY", "description": "CME Japanese Yen futures; normalize inverse quote direction before spot comparison"},
+    {"canonical_product": "6A", "spot_instrument": "AUD_USD", "description": "CME Australian Dollar futures"}
+  ],
+  "accepted_data_classes": [
+    "CME_FX_TRADES",
+    "CME_FX_AGGRESSOR_IMBALANCE",
+    "CME_FX_ORDER_BOOK",
+    "CME_FX_OPEN_INTEREST",
+    "CME_SPOT_BASIS"
+  ],
+  "provider_requirements": {
+    "immutable_market_only_manifests": true,
+    "provider_symbol_and_contract_metadata_required": true,
+    "roll_adjustment_metadata_required": true,
+    "aggressor_side_required_for_true_cvd": true,
+    "credentials_must_not_enter_research_agent": true
+  },
+  "authority": {
+    "context_only": true,
+    "automatic_campaign_approval": false,
+    "automatic_signal_activation": false,
+    "execution_authority": false
+  }
+}

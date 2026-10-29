@@ -18,6 +18,7 @@ from fx_research_agent.motif_discovery import (
     register_predeclaration,
     run_discovery,
 )
+from fx_research_agent.motif_evaluation import _trade_outcome, instrument_pip_size
 from fx_research_agent.storage import connect
 
 
@@ -75,6 +76,32 @@ def candle_groups() -> dict[str, list[dict]]:
 
 
 class MotifDiscoveryTests(unittest.TestCase):
+    def test_trade_cost_uses_instrument_pip_size(self):
+        pack = {
+            "time": np.array([0.0, 60.0]),
+            "end": np.array([60.0, 120.0]),
+            "open": np.array([150.0, 150.0]),
+            "high": np.array([150.1, 150.1]),
+            "low": np.array([149.9, 149.9]),
+            "close": np.array([150.0, 150.0]),
+            "atr14": np.array([0.1, 0.1]),
+        }
+        outcome = _trade_outcome(
+            pack,
+            0,
+            "LONG",
+            1,
+            1.5,
+            2.0,
+            0.01,
+            1000.0,
+        )
+        self.assertIsNotNone(outcome)
+        self.assertAlmostEqual(outcome["stop_distance_pips"], 10.0)
+        self.assertAlmostEqual(outcome["cost_r"], 0.2)
+        self.assertEqual(instrument_pip_size("USD_JPY"), 0.01)
+        self.assertEqual(instrument_pip_size("AUD_USD"), 0.0001)
+
     def _predeclaration_fixture(self, root: Path) -> tuple[Path, Path]:
         discovery = {
             "schema": "FX_MOTIF_DISCOVERY_REPORT_V1",

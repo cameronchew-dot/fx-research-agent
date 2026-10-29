@@ -38,6 +38,7 @@ class MotifEvaluationTests(unittest.TestCase):
             horizon=4,
             target_r=1.5,
             fixed_cost_pips=1.9,
+            pip_size=0.0001,
             development_end=100000.0,
         )
         self.assertEqual(outcome["exit_reason"], "STOP")

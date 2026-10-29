@@ -83,6 +83,9 @@ def load_historical_candles(
 ) -> tuple[dict[str, list[dict[str, Any]]], list[dict[str, Any]]]:
     instrument = str(contract["instrument"])
     required = {str(value) for value in contract["required_granularities"]}
+    selected_manifest_ids = {
+        str(value) for value in contract.get("source_manifest_ids", [])
+    }
     candles: dict[tuple[str, str], dict[str, Any]] = {}
     sources: list[dict[str, Any]] = []
     rows = connection.execute(
@@ -91,6 +94,8 @@ def load_historical_candles(
     for row in rows:
         manifest = json.loads(row["payload_json"])
         if not int(row["usable_for_testing"]):
+            continue
+        if selected_manifest_ids and str(manifest.get("manifest_id")) not in selected_manifest_ids:
             continue
         if manifest.get("instrument") != instrument:
             continue
@@ -134,6 +139,11 @@ def load_historical_candles(
     missing = sorted(granularity for granularity, items in grouped.items() if not items)
     if missing:
         raise ValueError(f"missing historical motif granularities: {missing}")
+    if selected_manifest_ids:
+        observed_ids = {str(source["manifest_id"]) for source in sources}
+        missing_manifests = sorted(selected_manifest_ids - observed_ids)
+        if missing_manifests:
+            raise ValueError(f"selected historical motif manifests unavailable: {missing_manifests}")
     return grouped, sources
 
 

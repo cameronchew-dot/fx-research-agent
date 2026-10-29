@@ -1,0 +1,36 @@
+{
+  "schema": "FX_MOTIF_EVALUATION_PROTOCOL_V1",
+  "protocol_id": "USD_JPY_PAIR_NATIVE_MOTIF_DEVELOPMENT_EVALUATION_V1",
+  "created_at_utc": "2026-10-29T18:51:00Z",
+  "predeclaration_id": "USD_JPY_PAIR_NATIVE_MOTIF_CONFIRMATION_V1",
+  "predeclaration_file_sha256": "af517d522b25c943c22f1c6e3e03962e61314eefc70c8fe623d5fd8a9785e751",
+  "evaluation_split": "DEVELOPMENT_ONLY",
+  "primary_statistic": "MEAN_NET_R",
+  "control_comparison": "PAIRED_PRIMARY_NET_R_MINUS_MAX_OPPOSITE_DIRECTION_AND_SHIFTED_EVENT_NET_R",
+  "significance_test": {
+    "method": "ONE_SIDED_PAIRED_SIGN_FLIP_MONTE_CARLO",
+    "draw_count": 20000,
+    "seed": 20261129,
+    "null": "MEAN_PAIRED_EDGE_LESS_THAN_OR_EQUAL_TO_ZERO",
+    "alternative": "MEAN_PAIRED_EDGE_GREATER_THAN_ZERO"
+  },
+  "multiple_comparisons": {
+    "family": "USD_JPY_NINE_PRIMARY_HYPOTHESES_WITH_ONE_THIRD_BATCH_ALPHA",
+    "method": "HOLM_BONFERRONI",
+    "familywise_alpha": 0.0166666667,
+    "batch_familywise_alpha": 0.05,
+    "pair_family_count": 3,
+    "missing_or_insufficient_hypothesis_p_value": 1.0
+  },
+  "sealed_data_policy": {
+    "validation_rows_permitted": 0,
+    "holdout_rows_permitted": 0,
+    "development_survivor_does_not_automatically_open_validation": true
+  },
+  "authority": {
+    "research_only": true,
+    "automatic_campaign_creation": false,
+    "automatic_downstream_export": false,
+    "paper_or_live_authority": false
+  }
+}

@@ -29,8 +29,14 @@ from .storage import canonical_json, insert_immutable, payload_hash
 PROTOCOL_SCHEMA = "FX_MOTIF_EVALUATION_PROTOCOL_V1"
 EVALUATION_SCHEMA = "FX_MOTIF_DEVELOPMENT_EVALUATION_REPORT_V1"
 EVENT_SCHEMA = "FX_MOTIF_DEVELOPMENT_EVENT_LEDGER_V1"
-EVALUATOR_VERSION = "1.0.1"
-PIP_SIZE = 0.0001
+EVALUATOR_VERSION = "1.1.0"
+
+
+def instrument_pip_size(instrument: str) -> float:
+    parts = str(instrument).upper().split("_")
+    if len(parts) != 2:
+        raise ValueError(f"unsupported instrument format for pip sizing: {instrument}")
+    return 0.01 if parts[1] == "JPY" else 0.0001
 
 
 def load_protocol(path: Path, predeclaration_path: Path) -> dict[str, Any]:
@@ -177,6 +183,7 @@ def _trade_outcome(
     horizon: int,
     target_r: float,
     fixed_cost_pips: float,
+    pip_size: float,
     development_end: float,
 ) -> dict[str, Any] | None:
     entry_index = signal_index + 1
@@ -238,7 +245,9 @@ def _trade_outcome(
             break
     if gross_r is None:
         gross_r = sign * (exit_price - entry) / risk
-    stop_distance_pips = risk / PIP_SIZE
+    if not np.isfinite(pip_size) or pip_size <= 0:
+        raise ValueError("pip size must be positive")
+    stop_distance_pips = risk / pip_size
     cost_r = fixed_cost_pips / stop_distance_pips
     return {
         "entry_time_utc": _iso(float(pack["time"][entry_index])),
@@ -383,6 +392,7 @@ def evaluate_development(
     development_end = parse_utc(contract["development"]["end_utc_exclusive"])
     target_r = float(predeclaration["execution_geometry"]["target_r"])
     cost = float(predeclaration["cost_model"]["fixed_round_trip_cost_pips"])
+    pip_size = instrument_pip_size(str(contract["instrument"]))
     horizons = [int(value) for value in predeclaration["execution_geometry"]["horizon_bars"]]
     all_event_rows: list[dict[str, Any]] = []
     hypothesis_rows: list[dict[str, Any]] = []
@@ -402,14 +412,14 @@ def evaluate_development(
                 signal_index = _raw_index(pack, decision_time)
                 shifted_signal_index = _raw_index(pack, shifted_time)
                 primary = _trade_outcome(
-                    pack, signal_index, motif["direction"], horizon, target_r, cost, development_end
+                    pack, signal_index, motif["direction"], horizon, target_r, cost, pip_size, development_end
                 )
                 opposite_direction = "SHORT" if motif["direction"] == "LONG" else "LONG"
                 opposite = _trade_outcome(
-                    pack, signal_index, opposite_direction, horizon, target_r, cost, development_end
+                    pack, signal_index, opposite_direction, horizon, target_r, cost, pip_size, development_end
                 )
                 shifted = _trade_outcome(
-                    pack, shifted_signal_index, motif["direction"], horizon, target_r, cost, development_end
+                    pack, shifted_signal_index, motif["direction"], horizon, target_r, cost, pip_size, development_end
                 )
                 if primary is None or opposite is None or shifted is None:
                     continue

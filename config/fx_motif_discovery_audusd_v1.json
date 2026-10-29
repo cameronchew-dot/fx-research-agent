@@ -1,0 +1,60 @@
+{
+  "schema": "FX_MOTIF_DISCOVERY_CONTRACT_V1",
+  "contract_id": "AUD_USD_PAIR_NATIVE_MOTIF_DISCOVERY_V1",
+  "instrument": "AUD_USD",
+  "base_granularity": "M15",
+  "required_granularities": ["M15", "H1", "H4", "D"],
+  "decision_time_semantics": "FEATURES_KNOWABLE_AT_COMPLETED_M15_CANDLE_END",
+  "source_data_class": "HISTORICAL_COMPLETED_CANDLES",
+  "source_manifest_ids": ["AUD_USD_HISTORICAL_CANDLES_20261029T170000_2830dabf9c86"],
+  "strategy_labels_allowed": false,
+  "future_outcomes_allowed_in_features": false,
+  "development": {
+    "start_utc": "2010-01-01T00:00:00Z",
+    "end_utc_exclusive": "2019-01-01T00:00:00Z",
+    "minimum_rows": 100000,
+    "minimum_distinct_days": 2000
+  },
+  "validation": {
+    "start_utc": "2019-01-01T00:00:00Z",
+    "end_utc_exclusive": "2023-01-01T00:00:00Z",
+    "access_policy": "SEALED_NOT_USED_BY_DISCOVERY_V1"
+  },
+  "holdout": {
+    "start_utc": "2023-01-01T00:00:00Z",
+    "access_policy": "SEALED_UNTOUCHED_UNTIL_PREDECLARED_CONFIRMATION"
+  },
+  "feature_names": [
+    "return_1", "return_4", "return_16", "range_atr14", "body_ratio",
+    "upper_wick_ratio", "lower_wick_ratio", "atr14_atr96_ratio",
+    "realized_vol16_vol96_ratio", "ema20_distance_atr", "ema50_distance_atr",
+    "ema200_distance_atr", "volume_z96", "prior_day_high_distance_atr",
+    "prior_day_low_distance_atr", "h1_return_1", "h1_ema20_distance_atr",
+    "h4_return_1", "h4_ema20_distance_atr", "daily_return_1",
+    "daily_ema20_distance_atr", "utc_hour_sin", "utc_hour_cos",
+    "weekday_sin", "weekday_cos"
+  ],
+  "clustering": {
+    "algorithm": "DETERMINISTIC_NUMPY_KMEANS_V1",
+    "cluster_count": 24,
+    "seed": 20261029,
+    "maximum_iterations": 300,
+    "tolerance": 0.0001,
+    "maximum_training_rows": 100000,
+    "stable_machine_id_prefix": "AUDUSD_MOTIF_V1"
+  },
+  "planned_confirmation_budget": {
+    "directions": ["LONG", "SHORT"],
+    "horizon_bars": [4, 8, 16],
+    "geometry_count_per_cluster_direction_horizon": 1,
+    "familywise_alpha": 0.05,
+    "pair_batch_familywise_alpha": 0.05,
+    "correction": "HOLM_BONFERRONI_ACROSS_ALL_SELECTED_PAIR_MOTIFS"
+  },
+  "authority": {
+    "research_only": true,
+    "automatic_campaign_creation": false,
+    "automatic_downstream_export": false,
+    "paper_or_live_authority": false
+  }
+}

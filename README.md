@@ -28,6 +28,8 @@ python3 ops/research_supervisor.py status
 python3 ops/research_supervisor.py backlog
 python3 ops/research_supervisor.py sync-market-exports
 python3 ops/research_supervisor.py market-data-status
+python3 ops/research_supervisor.py portfolio-opportunity-report
+python3 ops/research_supervisor.py futures-context-status
 python3 ops/research_supervisor.py literature-panel-status
 python3 ops/research_supervisor.py sync-research-evidence
 python3 ops/research_supervisor.py research-evidence-status
@@ -86,6 +88,38 @@ their controls. None produced positive average net R after the declared
 1.9-pip friction, so no hypothesis received validation access. The exact
 result is archived in `docs/FX_MOTIF_DEVELOPMENT_RESULT.md`; there was no
 retuning.
+
+### Pair-native motif batch
+
+AUD/USD, USD/JPY, and GBP/USD now have their own outcome-blind discovery
+contracts over sealed M15/H1/H4/D histories beginning in 2002. Discovery used
+2010-2018 only; 2019-2022 validation and 2023+ holdout remained sealed. Three
+motifs per pair were chosen from centroid descriptions before outcomes were
+read. The batch allocates one third of the 5% familywise error budget to each
+pair and applies Holm-Bonferroni within each nine-hypothesis pair family.
+
+All 27 development hypotheses failed after a fixed 2.0-pip cost assumption.
+The best average net R was `-0.068R` for AUD/USD, `-0.113R` for USD/JPY, and
+`-0.081R` for GBP/USD. No validation or holdout data was opened, no campaign
+was created, and no pair received shadow, paper, or live authority. The frozen
+design and result are summarized in `docs/PAIR_NATIVE_MOTIF_BATCH_V1.md`.
+
+The bot-side pair exporter continues to supply fresh market-only candles,
+spreads, and bid/ask snapshots. That collection is useful for future
+predeclared work but does not revive these rejected motifs.
+
+### Portfolio and futures context
+
+`portfolio-opportunity-report` reports raw forward candidate cadence and
+trigger-day overlap. Raw candidates are explicitly not treated as validated
+edge or qualified trade frequency. Current EUR evidence has abundant raw
+events but substantial overlap among objective-level, ORB, VWAP, and trend
+pullback families.
+
+`futures-context-status` defines the inert centralized-futures boundary for
+CME 6E, 6J, and 6A. True CVD requires aggressor-side centralized trade data;
+OANDA quote/tick pressure remains a venue proxy. Until a feed is configured,
+the status stays `UNCONFIGURED` and grants no signal or execution authority.
 
 ## FX context discovery
 

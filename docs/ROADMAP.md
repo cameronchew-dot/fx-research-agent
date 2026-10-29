@@ -153,3 +153,18 @@
   as a fallback. Notify only on rejected or conflicting packages; unchanged
   packages remain silent.
 
+## Phase 8: multi-pair market boundary and pair-native discovery
+
+- Collect AUD/USD, USD/JPY, and GBP/USD market-only candles, spreads, and
+  bid/ask snapshots through the separate read-only exporter.
+- Keep each pair's discovery identity, pip size, costs, validation, and
+  lifecycle independent. Never inherit EUR/USD approvals.
+- Maintain the portfolio opportunity report as a cadence/overlap diagnostic;
+  raw candidate frequency is not validated edge.
+- Archive pair-native motif batch V1 as `NO_DEVELOPMENT_SURVIVORS` across all
+  27 frozen hypotheses. Do not retune it or open validation/holdout.
+- Keep the CME 6E/6J/6A context contract inert until a centralized feed with
+  product, roll, timestamp, and aggressor-side provenance is configured.
+- Prefer new economically motivated, predeclared mechanisms over another broad
+  price-pattern sweep.
+

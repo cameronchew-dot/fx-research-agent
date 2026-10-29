@@ -73,6 +73,8 @@ from fx_research_agent.context_evaluation import (  # noqa: E402
     register_predeclaration as register_context_predeclaration,
 )
 from fx_research_agent.result_packages import result_status, sync_packages  # noqa: E402
+from fx_research_agent.portfolio import build_portfolio_opportunity_report  # noqa: E402
+from fx_research_agent.futures_context import futures_context_status  # noqa: E402
 
 
 DEFAULT_DB = ROOT / "data" / "fx_research_agent.sqlite3"
@@ -106,6 +108,8 @@ DEFAULT_CONTEXT_LABEL_EXPORT = ROOT / "data" / "context_discovery" / "context_la
 DEFAULT_RESULT_SOURCE = Path("/Users/camcam/eur_bot/exports/fx_research_results")
 DEFAULT_RESULT_INBOX = ROOT / "data" / "result_inbox"
 DEFAULT_RESULT_STATUS = ROOT / "data" / "research_result_status.json"
+DEFAULT_PORTFOLIO_STATUS = ROOT / "data" / "portfolio_opportunity_report.json"
+DEFAULT_CME_CONTEXT_CONTRACT = ROOT / "config" / "cme_fx_context_contract.json"
 SOURCE_REPO = "https://github.com/cameronchew-dot/eur-usd-agent.git"
 SOURCE_COMMIT = "e168603"
 SOURCE_PATH = "config/research_hypothesis_registry.json"
@@ -139,6 +143,9 @@ def main() -> int:
     sync.add_argument("--source-dir", type=Path, default=DEFAULT_MARKET_SOURCE)
     sync.add_argument("--inbox-dir", type=Path, default=DEFAULT_MARKET_INBOX)
     commands.add_parser("market-data-status")
+    commands.add_parser("portfolio-opportunity-report")
+    futures_status = commands.add_parser("futures-context-status")
+    futures_status.add_argument("--contract", type=Path, default=DEFAULT_CME_CONTEXT_CONTRACT)
     commands.add_parser("literature-panel-status")
     commands.add_parser("financing-source-status")
     evidence = commands.add_parser("register-research-evidence")
@@ -285,6 +292,12 @@ def main() -> int:
             result = market_data_status(connection)
             write_json_atomic(DEFAULT_MARKET_DATA_STATUS, result)
             print_json(result)
+        elif args.command == "portfolio-opportunity-report":
+            result = build_portfolio_opportunity_report(connection, DEFAULT_EVIDENCE_INBOX)
+            write_json_atomic(DEFAULT_PORTFOLIO_STATUS, result)
+            print_json(result)
+        elif args.command == "futures-context-status":
+            print_json(futures_context_status(connection, args.contract))
         elif args.command == "literature-panel-status":
             print_json(panel_status(connection, DEFAULT_MARKET_INBOX))
         elif args.command == "financing-source-status":

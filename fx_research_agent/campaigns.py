@@ -300,6 +300,18 @@ def campaign_instruments(campaign: dict[str, Any]) -> list[str]:
     return [str(value) for value in configured] if isinstance(configured, list) else [str(campaign["instrument"])]
 
 
+DATA_CLASS_EQUIVALENTS = {
+    "HISTORICAL_COMPLETED_CANDLES": {"COMPLETED_CANDLES"},
+}
+
+
+def _expanded_data_classes(values: set[str]) -> set[str]:
+    expanded = set(values)
+    for value in list(values):
+        expanded.update(DATA_CLASS_EQUIVALENTS.get(value, set()))
+    return expanded
+
+
 def campaign_data_readiness(connection, campaign_id: str) -> dict[str, Any]:
     row = connection.execute(
         "SELECT payload_json FROM research_campaigns WHERE campaign_id=?", (campaign_id,)
@@ -319,7 +331,8 @@ def campaign_data_readiness(connection, campaign_id: str) -> dict[str, Any]:
             instrument = str(manifest.get("instrument") or "")
             if instrument not in available_by_instrument:
                 continue
-            available_by_instrument[instrument].update(str(value) for value in manifest.get("data_classes", []))
+            declared = {str(value) for value in manifest.get("data_classes", [])}
+            available_by_instrument[instrument].update(_expanded_data_classes(declared))
             windows.append(
                 (
                     str(manifest.get("window_start_utc") or ""),
