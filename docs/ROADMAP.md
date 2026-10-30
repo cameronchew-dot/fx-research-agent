@@ -168,3 +168,19 @@
 - Prefer new economically motivated, predeclared mechanisms over another broad
   price-pattern sweep.
 
+## Phase 9: official positioning mechanism
+
+- Freeze one three-pair CFTC TFF leveraged-money crowding-reversal test before
+  inspecting outcomes.
+- Use prior-only positioning statistics and an eight-day report-availability
+  lag so Tuesday positions never leak into an earlier decision.
+- Treat each newly re-armed extreme episode as one independent event and forbid
+  overlapping primary holding windows.
+- Require opposite-direction and 26-week shifted-event controls plus
+  Holm-Bonferroni correction across EUR/USD, USD/JPY, and AUD/USD.
+- Keep 2017-2021 validation and the 2022+ holdout sealed during development.
+- Permit no downstream export, paper, live, account, or order authority.
+- Archive V1 as `NO_DEVELOPMENT_SURVIVORS`. USD/JPY's positive small-sample
+  result remains a descriptive lead only; do not retune V1 or open its sealed
+  partitions. See `CFTC_TFF_FX_CROWDING_RESULT.md`.
+

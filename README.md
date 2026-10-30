@@ -230,6 +230,32 @@ locked evaluation produced 1,329 independent development events with
 campaign event preserves the exact payload hash and result summary; it consumes
 no active campaign capacity and has no downstream or order authority.
 
+The official-positioning campaign in
+`config/campaigns/cftc_tff_fx_crowding_reversal_v1.json` is one frozen
+development-only test of newly re-armed CFTC leveraged-money extremes in EUR,
+JPY, and AUD futures. It applies a conservative eight-day publication lag,
+prior-only z-scores, non-overlapping daily holding windows, fixed ATR geometry,
+two controls, and Holm-Bonferroni correction across the three pairs. Validation
+and holdout remain sealed unless development survives and a human explicitly
+opens the next stage. See `docs/CFTC_TFF_FX_CROWDING_CAMPAIGN.md`.
+
+The locked development run produced no survivors. USD/JPY was promising but
+underpowered at 14 independent episodes and failed its worst-year and
+familywise-significance gates; EUR/USD was near flat and lost to the shifted
+control; AUD/USD was negative. Validation and holdout stayed sealed. See
+`docs/CFTC_TFF_FX_CROWDING_RESULT.md`.
+
+Refresh the official public positioning file and run the locked development
+stage with:
+
+```bash
+python3 ops/cftc_tff_fx_extract.py \
+  --contract config/cftc_tff_fx_positioning_data_contract.json \
+  --output data/external/cftc/tff_fx_positioning.csv.gz \
+  --summary data/external/cftc/tff_fx_positioning.summary.json
+python3 ops/cftc_tff_positioning_research.py
+```
+
 Each batch uses its own locked Holm-Bonferroni familywise-error budget. No
 campaign can promote itself or affect a downstream system.
 

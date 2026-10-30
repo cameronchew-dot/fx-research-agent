@@ -1,0 +1,100 @@
+{
+  "schema": "FX_RESEARCH_CAMPAIGN_V1",
+  "campaign_id": "CAMPAIGN_CFTC_TFF_FX_CROWDING_REVERSAL_V1",
+  "hypothesis_id": "HYP_CFTC_TFF_FX_CROWDING_REVERSAL_V1",
+  "created_at_utc": "2026-10-29T22:00:00Z",
+  "state": "DRAFT",
+  "title": "CFTC leveraged-money FX crowding reversal",
+  "instrument": "FX_THREE_PAIR_PANEL",
+  "instruments": ["EUR_USD", "USD_JPY", "AUD_USD"],
+  "mechanism_class": "WEEKLY_POSITIONING_CROWDING_REVERSAL",
+  "research_question": "Do independently re-armed leveraged-money positioning extremes predict a contrarian EUR/USD, USD/JPY, or AUD/USD move after publication-safe entry and realistic costs?",
+  "null_hypothesis": "The fixed crowding-reversal rule has non-positive development expectancy or fails to beat opposite-direction and shifted-event controls after familywise correction.",
+  "required_data_classes": ["CFTC_TFF_FUTURES_ONLY", "HISTORICAL_COMPLETED_DAILY_CANDLES"],
+  "population": {
+    "source": "CFTC_TFF_FUTURES_ONLY_AND_SEALED_OANDA_DAILY_CANDLES",
+    "development_report_date_end_inclusive": "2016-12-31",
+    "sealed_validation_report_dates": "2017-01-01/2021-12-31",
+    "sealed_holdout_report_date_start_inclusive": "2022-01-01",
+    "validation_and_holdout_rows_permitted_in_development": 0
+  },
+  "independence_unit": {
+    "unit": "FIRST_REPORT_IN_REARMED_EXTREME_EPISODE_PER_INSTRUMENT",
+    "extreme_entry_absolute_z": 1.5,
+    "rearm_below_absolute_z": 1.0,
+    "overlapping_primary_holding_windows_allowed": false
+  },
+  "exact_specification": {
+    "positioning_measure": "(LEVERAGED_MONEY_LONG_MINUS_SHORT)/OPEN_INTEREST",
+    "z_score_lookback_prior_reports": 156,
+    "minimum_prior_reports": 104,
+    "current_report_excluded_from_z_score_reference": true,
+    "signal": "CONTRARIAN_TO_EXTREME_LEVERAGED_MONEY_FOREIGN_CURRENCY_POSITION",
+    "direction_mapping": {
+      "EUR_USD": "POSITIVE_Z_SHORT_NEGATIVE_Z_LONG",
+      "AUD_USD": "POSITIVE_Z_SHORT_NEGATIVE_Z_LONG",
+      "USD_JPY": "POSITIVE_Z_LONG_NEGATIVE_Z_SHORT"
+    },
+    "availability_lag_calendar_days": 8,
+    "entry": "FIRST_DAILY_OPEN_STRICTLY_AFTER_CONSERVATIVE_AVAILABILITY_TIME",
+    "atr_period_prior_completed_daily_bars": 20,
+    "stop_atr_multiple": 2.0,
+    "target_atr_multiple": 3.0,
+    "target_r": 1.5,
+    "maximum_horizon_daily_bars": 20,
+    "horizon_exit": "FINAL_DAILY_CLOSE",
+    "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE",
+    "gap_policy": "ADVERSE_GAP_AT_OPEN_AND_FAVORABLE_GAP_AT_TARGET_CONSERVATIVE",
+    "fixed_round_trip_cost_pips": 2.0
+  },
+  "controls": [
+    {
+      "control_id": "OPPOSITE_DIRECTION_SAME_EVENT",
+      "definition": "Reverse direction while preserving the event, entry, ATR, horizon, and costs"
+    },
+    {
+      "control_id": "SHIFTED_EVENT_26_WEEKS",
+      "definition": "Preserve direction and geometry at the first daily open strictly after the event availability time plus 182 calendar days"
+    }
+  ],
+  "metrics": {
+    "primary": "DEVELOPMENT_AVERAGE_NET_R_AFTER_COSTS",
+    "secondary": ["MEDIAN_NET_R", "POSITIVE_NET_R_RATE", "POSITIVE_YEAR_RATE", "WORST_YEAR_AVERAGE_NET_R", "CONTROL_EDGE_R", "OUTLIER_CONTRIBUTION", "HOLM_ADJUSTED_SIGN_FLIP_P_VALUE"]
+  },
+  "review_gates": {
+    "minimum_independent_events_per_instrument": 30,
+    "minimum_average_net_r": 0.1,
+    "minimum_median_net_r_exclusive": 0.0,
+    "minimum_positive_net_r_rate": 0.45,
+    "minimum_positive_year_rate": 0.55,
+    "minimum_worst_year_average_net_r": -0.25,
+    "maximum_top_five_percent_positive_r_contribution_fraction": 0.5,
+    "minimum_average_net_r_edge_over_each_control": 0.1,
+    "holm_adjusted_p_value_maximum": 0.05,
+    "development_survivor_requires_human_review_before_validation": true
+  },
+  "multiple_comparisons_policy": {
+    "primary_hypothesis_count": 3,
+    "method": "HOLM_BONFERRONI",
+    "familywise_alpha": 0.05,
+    "parameter_sweeps_allowed": false
+  },
+  "stopping_rules": {
+    "no_post_result_threshold_changes": true,
+    "no_post_result_geometry_changes": true,
+    "no_early_validation_or_holdout_inspection": true,
+    "no_automatic_second_specification_after_failure": true,
+    "failure_closes_exact_specification": true
+  },
+  "source_manifest_ids": {
+    "EUR_USD": "EUR_USD_HISTORICAL_CANDLES_20261002T204500_5a7afd586133",
+    "AUD_USD": "AUD_USD_HISTORICAL_CANDLES_20261029T170000_2830dabf9c86",
+    "USD_JPY": "USD_JPY_HISTORICAL_CANDLES_20261029T170000_d51de63297f5"
+  },
+  "authority": {
+    "automatic_approval": false,
+    "automatic_execution": false,
+    "downstream_activation": false,
+    "order_authority": false
+  }
+}

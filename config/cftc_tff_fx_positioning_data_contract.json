@@ -1,0 +1,22 @@
+{
+  "schema": "FX_CFTC_TFF_POSITIONING_DATA_CONTRACT_V1",
+  "dataset": "CFTC_TRADERS_IN_FINANCIAL_FUTURES_FUTURES_ONLY",
+  "dataset_id": "gpe5-46if",
+  "source_url": "https://publicreporting.cftc.gov/resource/gpe5-46if.json",
+  "instruments": {
+    "AUD_USD": {"cftc_contract_market_code": "232741", "contract_market_name": "AUSTRALIAN DOLLAR"},
+    "EUR_USD": {"cftc_contract_market_code": "099741", "contract_market_name": "EURO FX"},
+    "USD_JPY": {"cftc_contract_market_code": "097741", "contract_market_name": "JAPANESE YEN"}
+  },
+  "positioning_series": "LEVERAGED_MONEY_NET_CONTRACTS_DIVIDED_BY_OPEN_INTEREST",
+  "report_observation_day": "TUESDAY",
+  "research_availability_lag_calendar_days": 8,
+  "availability_policy": "REPORT_DATE_PLUS_EIGHT_CALENDAR_DAYS_THEN_NEXT_COMPLETED_DAILY_OPEN",
+  "availability_rationale": "Conservative fixed lag avoids treating Tuesday positions as known before the normal Friday publication and avoids relying on an incomplete historical holiday-release calendar.",
+  "authority": {
+    "credentials_allowed": false,
+    "account_data_allowed": false,
+    "order_authority": false,
+    "research_only": true
+  }
+}

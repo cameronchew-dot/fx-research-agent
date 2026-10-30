@@ -327,6 +327,22 @@
       "expected_frequency": "SEVERAL_PER_MONTH",
       "overlap_notes": "Higher-timeframe objective-level failed auctions are evaluated separately from session-level failed auctions and opening-range reversals.",
       "next_action": "ACCRUE_30_POST_APPROVAL_FORWARD_INDEPENDENT_RESOLVED_EVENTS"
+    },
+    {
+      "hypothesis_id": "HYP_CFTC_TFF_FX_CROWDING_REVERSAL_V1",
+      "proposed_at_utc": "2026-10-29T22:00:00Z",
+      "proposed_by": "OPERATOR_AND_CODEX",
+      "state": "REJECTED",
+      "hypothesis_type": "OFFICIAL_POSITIONING_CROWDING_MECHANISM",
+      "classification": "STRATEGY",
+      "priority": 22,
+      "statement": "A newly re-armed extreme in CFTC leveraged-money FX futures positioning may predict a contrarian 20-day spot move after publication-safe entry and costs.",
+      "data_requirements": ["CFTC_TFF_FUTURES_ONLY", "HISTORICAL_COMPLETED_DAILY_CANDLES"],
+      "dependencies": ["PRIOR_ONLY_POSITIONING_Z_SCORE", "EIGHT_DAY_PUBLICATION_LAG", "SEALED_VALIDATION_AND_HOLDOUT", "HOLM_BONFERRONI_THREE_PAIR_FAMILY"],
+      "expected_frequency": "LOW_WEEKLY_TO_MONTHLY_PER_INSTRUMENT",
+      "overlap_notes": "Official positioning mechanism distinct from price-pattern and session-flow families; evaluated independently for each pair.",
+      "evidence_ids": ["CFTC_TFF_FX_CROWDING_REVERSAL_DEVELOPMENT_V1"],
+      "next_action": "CLOSED_NO_DEVELOPMENT_SURVIVORS_DO_NOT_RETUNE_OR_OPEN_SEALED_SPLITS"
     }
   ]
 }

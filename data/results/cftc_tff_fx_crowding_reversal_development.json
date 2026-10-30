@@ -1,0 +1,175 @@
+{
+  "automatic_downstream_export": false,
+  "automatic_validation_access_granted": false,
+  "campaign_id": "CAMPAIGN_CFTC_TFF_FX_CROWDING_REVERSAL_V1",
+  "development_survivor_count": 0,
+  "development_window_end_exclusive": "2017-01-01T00:00:00Z",
+  "holdout_rows_inspected": 0,
+  "hypotheses": [
+    {
+      "development_survivor": false,
+      "gate_blocks": [
+        "INSUFFICIENT_EVENTS",
+        "AVERAGE_NET_R_BELOW_MIN",
+        "MEDIAN_NET_R_NOT_POSITIVE",
+        "POSITIVE_RATE_BELOW_MIN",
+        "POSITIVE_YEAR_RATE_BELOW_MIN",
+        "WORST_YEAR_BELOW_MIN",
+        "SHIFTED_CONTROL_EDGE_BELOW_MIN",
+        "HOLM_SIGNIFICANCE_NOT_CLEAR"
+      ],
+      "instrument": "EUR_USD",
+      "opposite_direction_control": {
+        "average_net_r": -0.34065588,
+        "calendar_year_count": 6,
+        "event_count": 12,
+        "median_net_r": -1.0085671,
+        "positive_net_r_rate": 0.33333333,
+        "positive_year_rate": 0.5,
+        "top_five_percent_positive_r_contribution_fraction": 0.37273642,
+        "total_net_r": -4.0878706,
+        "worst_year_average_net_r": -1.01165977
+      },
+      "paired_edge_over_stronger_control_average_r": -0.54052921,
+      "primary": {
+        "average_net_r": 0.04841798,
+        "calendar_year_count": 6,
+        "edge_over_opposite_control": 0.38907386,
+        "edge_over_shifted_control": -0.20473537,
+        "event_count": 12,
+        "holm_adjusted_p_value": 1.0,
+        "median_net_r": -0.52911642,
+        "positive_net_r_rate": 0.41666667,
+        "positive_year_rate": 0.5,
+        "top_five_percent_positive_r_contribution_fraction": 0.22303816,
+        "total_net_r": 0.58101581,
+        "worst_year_average_net_r": -0.84080169
+      },
+      "raw_sign_flip_p_value": 0.8147092645,
+      "shifted_event_control": {
+        "average_net_r": 0.25315335,
+        "calendar_year_count": 6,
+        "event_count": 12,
+        "median_net_r": 0.03875678,
+        "positive_net_r_rate": 0.5,
+        "positive_year_rate": 0.66666667,
+        "top_five_percent_positive_r_contribution_fraction": 0.19617883,
+        "total_net_r": 3.03784023,
+        "worst_year_average_net_r": -0.65189475
+      }
+    },
+    {
+      "development_survivor": false,
+      "gate_blocks": [
+        "INSUFFICIENT_EVENTS",
+        "WORST_YEAR_BELOW_MIN",
+        "HOLM_SIGNIFICANCE_NOT_CLEAR"
+      ],
+      "instrument": "USD_JPY",
+      "opposite_direction_control": {
+        "average_net_r": -0.18403749,
+        "calendar_year_count": 8,
+        "event_count": 14,
+        "median_net_r": -1.01012404,
+        "positive_net_r_rate": 0.35714286,
+        "positive_year_rate": 0.5,
+        "top_five_percent_positive_r_contribution_fraction": 0.22844525,
+        "total_net_r": -2.5765249,
+        "worst_year_average_net_r": -1.01897127
+      },
+      "paired_edge_over_stronger_control_average_r": -0.11855172,
+      "primary": {
+        "average_net_r": 0.40268473,
+        "calendar_year_count": 8,
+        "edge_over_opposite_control": 0.58672222,
+        "edge_over_shifted_control": 0.35391651,
+        "event_count": 14,
+        "holm_adjusted_p_value": 1.0,
+        "median_net_r": 1.20758617,
+        "positive_net_r_rate": 0.57142857,
+        "positive_year_rate": 0.75,
+        "top_five_percent_positive_r_contribution_fraction": 0.13146584,
+        "total_net_r": 5.63758619,
+        "worst_year_average_net_r": -1.0158625
+      },
+      "raw_sign_flip_p_value": 0.5777211139,
+      "shifted_event_control": {
+        "average_net_r": 0.04876822,
+        "calendar_year_count": 8,
+        "event_count": 14,
+        "median_net_r": -0.49828666,
+        "positive_net_r_rate": 0.5,
+        "positive_year_rate": 0.5,
+        "top_five_percent_positive_r_contribution_fraction": 0.1918281,
+        "total_net_r": 0.68275507,
+        "worst_year_average_net_r": -1.01687342
+      }
+    },
+    {
+      "development_survivor": false,
+      "gate_blocks": [
+        "INSUFFICIENT_EVENTS",
+        "AVERAGE_NET_R_BELOW_MIN",
+        "MEDIAN_NET_R_NOT_POSITIVE",
+        "POSITIVE_RATE_BELOW_MIN",
+        "POSITIVE_YEAR_RATE_BELOW_MIN",
+        "WORST_YEAR_BELOW_MIN",
+        "OUTLIER_DEPENDENCE_ABOVE_MAX",
+        "OPPOSITE_CONTROL_EDGE_BELOW_MIN",
+        "SHIFTED_CONTROL_EDGE_BELOW_MIN",
+        "HOLM_SIGNIFICANCE_NOT_CLEAR"
+      ],
+      "instrument": "AUD_USD",
+      "opposite_direction_control": {
+        "average_net_r": 0.72339532,
+        "calendar_year_count": 5,
+        "event_count": 5,
+        "median_net_r": 1.48736097,
+        "positive_net_r_rate": 0.8,
+        "positive_year_rate": 0.8,
+        "top_five_percent_positive_r_contribution_fraction": 0.32208288,
+        "total_net_r": 3.61697662,
+        "worst_year_average_net_r": -1.01068947
+      },
+      "paired_edge_over_stronger_control_average_r": -1.45152169,
+      "primary": {
+        "average_net_r": -0.50980149,
+        "calendar_year_count": 5,
+        "edge_over_opposite_control": -1.23319681,
+        "edge_over_shifted_control": -0.26074314,
+        "event_count": 5,
+        "holm_adjusted_p_value": 1.0,
+        "median_net_r": -1.00950796,
+        "positive_net_r_rate": 0.2,
+        "positive_year_rate": 0.2,
+        "top_five_percent_positive_r_contribution_fraction": 1.0,
+        "total_net_r": -2.54900743,
+        "worst_year_average_net_r": -1.01263903
+      },
+      "raw_sign_flip_p_value": 0.9398530073,
+      "shifted_event_control": {
+        "average_net_r": -0.24905835,
+        "calendar_year_count": 5,
+        "event_count": 5,
+        "median_net_r": -0.61915533,
+        "positive_net_r_rate": 0.4,
+        "positive_year_rate": 0.4,
+        "top_five_percent_positive_r_contribution_fraction": 0.8930778,
+        "total_net_r": -1.24529177,
+        "worst_year_average_net_r": -1.0153929
+      }
+    }
+  ],
+  "instrument_hypothesis_count": 3,
+  "next_gate": "ARCHIVE_WITHOUT_RETUNING",
+  "paper_or_live_authority": false,
+  "provenance": {
+    "campaign_sha256": "584b078e3a050e070612e38d01fee881f66e21b39922bf2136e1ab7dd1f9009b",
+    "event_ledger": "data/results/cftc_tff_fx_crowding_reversal_development.events.json.gz",
+    "event_ledger_sha256": "7650eb07b579db33bd3b0dd1b3f584af77d3183cca6c34ec90e2074764556846",
+    "reports_sha256": "6c223af683612b60fba9f1c55d5b9c1ba39a7da907f6a1bb427f7874e3b53486"
+  },
+  "schema": "FX_CFTC_TFF_CROWDING_REVERSAL_DEVELOPMENT_RESULT_V1",
+  "status": "NO_DEVELOPMENT_SURVIVORS",
+  "validation_rows_inspected": 0
+}
