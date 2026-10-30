@@ -102,6 +102,30 @@ def _current_evidence_manifest_ids(connection, instruments: list[str]) -> list[s
     ]
 
 
+def _build_progress_snapshot(
+    campaign_id: str,
+    evaluation: dict[str, Any],
+    gate_reached: bool,
+) -> dict[str, Any]:
+    snapshot = {
+        "schema": "FX_RESEARCH_CAMPAIGN_PROGRESS_V1",
+        "campaign_id": campaign_id,
+        "observed_at_utc": evaluation["evaluated_at_utc"],
+        "evidence_cutoff_utc": evaluation["evidence_cutoff_utc"],
+        "predeclared_at_utc": evaluation["predeclared_at_utc"],
+        "evidence_manifest_ids": evaluation["evidence_manifest_ids"],
+        "market_data_manifest_ids": evaluation["market_data_manifest_ids"],
+        "independent_episode_count": evaluation["independent_episode_count"],
+        "source_reports": evaluation["source_reports"],
+        "sample_gate_reached": gate_reached,
+        "automatic_promotion_allowed": False,
+    }
+    # Address the complete immutable snapshot. Exact refresh repeats are
+    # idempotent, while any changed progress receives a distinct record ID.
+    snapshot["snapshot_id"] = f"PROGRESS_{payload_hash(snapshot)[:24]}"
+    return snapshot
+
+
 def refresh_approved_campaigns(
     connection,
     evidence_inbox: Path,
@@ -175,26 +199,7 @@ def refresh_approved_campaigns(
         )
         gate_reached = any(report["sample_gates_met"] for report in evaluation["source_reports"])
         previous_gate_reached = bool(previous and previous.get("sample_gate_reached"))
-        snapshot_identity = {
-            "campaign_id": campaign_id,
-            "predeclared_at_utc": evaluation["predeclared_at_utc"],
-            "evidence_manifest_ids": evaluation["evidence_manifest_ids"],
-            "market_data_manifest_ids": evaluation["market_data_manifest_ids"],
-        }
-        snapshot = {
-            "schema": "FX_RESEARCH_CAMPAIGN_PROGRESS_V1",
-            "snapshot_id": f"PROGRESS_{payload_hash(snapshot_identity)[:24]}",
-            "campaign_id": campaign_id,
-            "observed_at_utc": evaluation["evaluated_at_utc"],
-            "evidence_cutoff_utc": evaluation["evidence_cutoff_utc"],
-            "predeclared_at_utc": evaluation["predeclared_at_utc"],
-            "evidence_manifest_ids": evaluation["evidence_manifest_ids"],
-            "market_data_manifest_ids": evaluation["market_data_manifest_ids"],
-            "independent_episode_count": evaluation["independent_episode_count"],
-            "source_reports": evaluation["source_reports"],
-            "sample_gate_reached": gate_reached,
-            "automatic_promotion_allowed": False,
-        }
+        snapshot = _build_progress_snapshot(campaign_id, evaluation, gate_reached)
         inserted = insert_immutable(
             connection,
             "campaign_progress_snapshots",

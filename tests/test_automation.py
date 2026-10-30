@@ -4,7 +4,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from fx_research_agent.automation import load_policy, refresh_approved_campaigns, register_policy
+from fx_research_agent.automation import (
+    _build_progress_snapshot,
+    load_policy,
+    refresh_approved_campaigns,
+    register_policy,
+)
 from fx_research_agent.campaigns import approve_campaign, register_campaign
 from fx_research_agent.storage import initialize
 
@@ -142,6 +147,28 @@ class AutomationPolicyTests(unittest.TestCase):
         self.assertEqual(result["campaigns"][0]["skip_reason"], "CAMPAIGN_DATA_NOT_READY")
         self.assertFalse(result["campaigns"][0]["evaluation_refreshed"])
         connection.close()
+
+    def test_progress_snapshot_identity_is_idempotent_and_content_addressed(self):
+        evaluation = {
+            "evaluated_at_utc": "2026-10-30T16:30:00Z",
+            "evidence_cutoff_utc": "2026-10-30T16:30:00Z",
+            "predeclared_at_utc": "2026-10-13T01:00:00Z",
+            "evidence_manifest_ids": ["EVIDENCE_1"],
+            "market_data_manifest_ids": ["MARKET_1"],
+            "independent_episode_count": 25,
+            "source_reports": [{"sample_gates_met": False}],
+        }
+        first = _build_progress_snapshot("CAMPAIGN_1", evaluation, False)
+        repeated = _build_progress_snapshot("CAMPAIGN_1", dict(evaluation), False)
+        advanced = _build_progress_snapshot(
+            "CAMPAIGN_1",
+            {**evaluation, "independent_episode_count": 26},
+            False,
+        )
+
+        self.assertEqual(first, repeated)
+        self.assertEqual(first["snapshot_id"], repeated["snapshot_id"])
+        self.assertNotEqual(first["snapshot_id"], advanced["snapshot_id"])
 
 
 if __name__ == "__main__":
