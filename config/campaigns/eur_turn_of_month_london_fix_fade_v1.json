@@ -1,0 +1,97 @@
+{
+  "schema": "FX_RESEARCH_CAMPAIGN_V1",
+  "campaign_id": "CAMPAIGN_EUR_TURN_OF_MONTH_LONDON_FIX_FADE_V1",
+  "hypothesis_id": "HYP_EUR_TURN_OF_MONTH_LONDON_FIX_FADE_V1",
+  "created_at_utc": "2026-10-31T13:11:59Z",
+  "state": "DRAFT",
+  "title": "EUR/USD turn-of-month London-fix stretch reversion",
+  "instrument": "EUR_USD",
+  "mechanism_class": "TIME_ANCHORED_MONTH_END_FIX_REVERSION",
+  "research_question": "Does the locked turn-of-month London-fix stretch-fade setup have positive forward net R after observed spread?",
+  "null_hypothesis": "The locked setup has non-positive average forward net R after observed spread.",
+  "required_data_classes": [
+    "FORWARD_STRATEGY_SHADOW_EVENTS",
+    "FORWARD_STRATEGY_SHADOW_OUTCOMES"
+  ],
+  "population": {
+    "source": "EUR_AGENT_STRATEGY_SHADOW_FORWARD_ONLY",
+    "mechanism_id": "TURN_OF_MONTH_REBALANCE_FADE",
+    "setup_id": "TURN_OF_MONTH_LONDON_FIX_STRETCH_FADE_V1",
+    "timeframe": "M15",
+    "entry_model": "NEXT_M15_OPEN_WITH_DECISION_SPREAD",
+    "stop_model": "SIGNAL_EXTREME_PLUS_BUFFER",
+    "target_r": 1.5,
+    "outcome_horizon_m15_bars": 16,
+    "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE"
+  },
+  "independence_unit": {
+    "unit": "FIRST_EVENT_PER_SETUP_DIRECTION_LONDON_CALENDAR_DAY",
+    "calendar_phase_and_rank_are_descriptive_only": true,
+    "repeated_same_day_events_count_once": true
+  },
+  "exact_specification": {
+    "contract": "EUR_AGENT_STRATEGY_EXPANSION_SHADOW_V2",
+    "timezone": "Europe/London",
+    "eligible_days": "FIRST_TWO_AND_LAST_TWO_WEEKDAYS_OF_LOCAL_MONTH",
+    "reference_window_start_local": "08:00",
+    "reference_window_end_local": "09:00",
+    "reference_price": "FIRST_REFERENCE_WINDOW_CANDLE_OPEN",
+    "pre_fix_end_local": "16:00",
+    "pre_fix_price": "LATEST_COMPLETED_CANDLE_CLOSE_AT_OR_BEFORE_16_00_LOCAL",
+    "confirmation_start_local": "16:15",
+    "confirmation_end_local": "17:00",
+    "minimum_stretch_pips": 8.0,
+    "maximum_atr_threshold_pips": 25.0,
+    "stretch_threshold_formula": "MAX(MINIMUM_STRETCH_PIPS,MIN(MAXIMUM_ATR_THRESHOLD_PIPS,TIMESTAMP_VALID_M15_ATR_PIPS))",
+    "direction": "FADE_REFERENCE_TO_PRE_FIX_STRETCH",
+    "confirmation": "COMPLETED_M15_CANDLE_DIRECTION_MUST_OPPOSE_PRE_FIX_STRETCH",
+    "holiday_policy": "WEEKDAYS_ONLY_BANK_HOLIDAYS_NOT_REMOVED",
+    "parameters_locked_before_forward_collection": true
+  },
+  "controls": [
+    {
+      "control_id": "ZERO_NET_R_NULL",
+      "definition": "Average forward net R must exceed zero after observed spread; no generated control is pooled with treatment.",
+      "post_selection_mutation_allowed": false
+    }
+  ],
+  "metrics": {
+    "primary": "AVERAGE_FORWARD_NET_R",
+    "expected_direction": "POSITIVE",
+    "secondary": [
+      "MEDIAN_NET_R",
+      "POSITIVE_NET_R_RATE",
+      "MFE_R",
+      "MAE_R",
+      "SAMPLE_COUNT",
+      "MONTH_START_END_DESCRIPTIVE_BREAKDOWN",
+      "DIRECTION_DESCRIPTIVE_BREAKDOWN"
+    ],
+    "outcome_types_pooled": false
+  },
+  "review_gates": {
+    "minimum_resolved_independent_treatment_episodes": 30,
+    "minimum_resolved_independent_comparator_episodes": 0,
+    "treatment_average_net_r_must_be_positive": true,
+    "review_is_not_promotion": true
+  },
+  "multiple_comparisons_policy": {
+    "batch_id": "BATCH_EUR_TIME_ANCHORED_FORWARD_V1",
+    "confirmatory_hypothesis_count": 1,
+    "calendar_phase_and_direction_breakdowns": "DESCRIPTIVE_ONLY",
+    "parameter_sweeps_allowed": false,
+    "post_hoc_substitution_allowed": false
+  },
+  "stopping_rules": {
+    "no_early_success_declaration": true,
+    "no_early_parameter_retuning": true,
+    "review_only_after_declared_sample_gate": true,
+    "failed_specification_requires_new_campaign_version": true
+  },
+  "authority": {
+    "automatic_approval": false,
+    "automatic_execution": false,
+    "downstream_activation": false,
+    "order_authority": false
+  }
+}

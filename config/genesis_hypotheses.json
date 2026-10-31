@@ -343,6 +343,21 @@
       "overlap_notes": "Official positioning mechanism distinct from price-pattern and session-flow families; evaluated independently for each pair.",
       "evidence_ids": ["CFTC_TFF_FX_CROWDING_REVERSAL_DEVELOPMENT_V1"],
       "next_action": "CLOSED_NO_DEVELOPMENT_SURVIVORS_DO_NOT_RETUNE_OR_OPEN_SEALED_SPLITS"
+    },
+    {
+      "hypothesis_id": "HYP_EUR_TURN_OF_MONTH_LONDON_FIX_FADE_V1",
+      "proposed_at_utc": "2026-10-31T13:11:59Z",
+      "proposed_by": "OPERATOR_AND_CODEX",
+      "state": "PROPOSED",
+      "hypothesis_type": "FORWARD_TIME_ANCHORED_STRATEGY_MECHANISM",
+      "classification": "STRATEGY",
+      "priority": 23,
+      "statement": "On the first two or last two London weekdays of a month, a sufficiently large London-open-to-fix directional stretch followed by a completed post-fix reversal candle may have positive forward net expectancy after observed spread.",
+      "data_requirements": ["FORWARD_STRATEGY_SHADOW_EVENTS", "FORWARD_STRATEGY_SHADOW_OUTCOMES"],
+      "dependencies": ["EUROPE_LONDON_TIMEZONE", "NEXT_M15_OPEN_ENTRY", "POST_FIX_COMPLETED_CANDLE_CONFIRMATION", "INDEPENDENT_LONDON_CALENDAR_DAY_DEDUPLICATION"],
+      "expected_frequency": "UP_TO_FOUR_ELIGIBLE_WINDOWS_PER_MONTH_BEFORE_STRETCH_AND_CONFIRMATION_FILTERS",
+      "overlap_notes": "Calendar-flow mechanism distinct from ORB, VWAP, horizontal objective-level, and HTF trend campaigns.",
+      "next_action": "ACCRUE_30_POST_APPROVAL_FORWARD_INDEPENDENT_RESOLVED_EVENTS"
     }
   ]
 }

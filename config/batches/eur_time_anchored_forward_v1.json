@@ -1,0 +1,24 @@
+{
+  "schema": "FX_RESEARCH_BATCH_V1",
+  "batch_id": "BATCH_EUR_TIME_ANCHORED_FORWARD_V1",
+  "created_at_utc": "2026-10-31T13:11:59Z",
+  "title": "EUR/USD time-anchored forward strategy confirmation",
+  "instrument": "EUR_USD",
+  "maximum_active_campaigns": 1,
+  "campaign_ids": [
+    "CAMPAIGN_EUR_TURN_OF_MONTH_LONDON_FIX_FADE_V1"
+  ],
+  "multiplicity_policy": {
+    "method": "HOLM_BONFERRONI",
+    "familywise_alpha": 0.05,
+    "hypothesis_budget": 1,
+    "post_hoc_campaign_substitution_allowed": false,
+    "descriptive_calendar_phase_and_direction_breakdowns_consume_no_confirmation_alpha": true
+  },
+  "authority": {
+    "automatic_campaign_addition": false,
+    "automatic_approval": false,
+    "automatic_promotion": false,
+    "downstream_authority": false
+  }
+}
