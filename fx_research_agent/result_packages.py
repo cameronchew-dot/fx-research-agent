@@ -15,6 +15,21 @@ PROHIBITED_KEYS = {
     "account_id", "account_name", "balance", "balances", "credential", "credentials",
     "order", "orders", "position", "positions", "token", "tokens", "transaction", "transactions",
 }
+PAIR_RESEARCH_UNIVERSE = (
+    "AUD_USD",
+    "USD_JPY",
+    "GBP_USD",
+    "USD_CAD",
+    "EUR_CHF",
+    "USD_CHF",
+    "NZD_USD",
+)
+LEGACY_MECHANISM_CLASSES = {
+    "AUDUSD_USDCNH_ASIA_LEAD_LAG_V1": "CHINA_PROXY_INTERMARKET_LEAD_LAG",
+    "GBPUSD_LONDON_FIX_STRETCH_UNWIND_V1": "TIME_ANCHORED_FIXING_FLOW",
+    "USDCAD_WTI_SHOCK_PRIOR_DAY_FAILED_AUCTION_V1": "COMMODITY_INTERMARKET",
+    "EURCHF_SPX_RISK_OFF_SAFE_HAVEN_CONTINUATION_V1": "SAFE_HAVEN_RISK_REGIME",
+}
 REQUIRED_MANIFEST_FIELDS = {
     "schema", "package_id", "created_at_utc", "source_system", "source_repo", "source_commit",
     "payload_path", "payload_sha256", "content_sha256", "result_count", "authority",
@@ -191,6 +206,92 @@ def result_status(connection) -> dict[str, Any]:
         "by_instrument": dict(sorted(by_instrument.items())),
         "by_result_status": dict(sorted(by_status.items())),
         "results": records,
+        "automatic_promotion_allowed": False,
+        "downstream_authority": "NONE",
+    }
+
+
+def _stage_summary(metrics: Any) -> dict[str, Any]:
+    if not isinstance(metrics, dict):
+        return {"sample_count": None, "average_net_r": None, "average_net_pips": None}
+    signal = metrics.get("signal") if isinstance(metrics.get("signal"), dict) else {}
+    return {
+        "sample_count": signal.get("count"),
+        "average_net_r": signal.get("avg_net_r"),
+        "average_net_pips": signal.get("avg_net_pips"),
+    }
+
+
+def _is_survivor(status: str) -> bool:
+    normalized = status.upper()
+    return normalized.startswith("PASS") or normalized in {
+        "VALIDATED",
+        "APPROVED",
+        "PAPER_CANDIDATE_READY",
+    }
+
+
+def pair_research_inventory(
+    connection,
+    *,
+    instruments: tuple[str, ...] = PAIR_RESEARCH_UNIVERSE,
+) -> dict[str, Any]:
+    rows = connection.execute(
+        "SELECT result_id, hypothesis_id, instrument, result_status, knowable_at_utc, payload_json "
+        "FROM external_research_results ORDER BY instrument, knowable_at_utc, result_id"
+    ).fetchall()
+    grouped: dict[str, list[dict[str, Any]]] = {instrument: [] for instrument in instruments}
+    for row in rows:
+        instrument = str(row["instrument"])
+        if instrument not in grouped:
+            continue
+        payload = json.loads(row["payload_json"])
+        metrics = payload.get("metrics") if isinstance(payload.get("metrics"), dict) else {}
+        hypothesis_id = str(row["hypothesis_id"])
+        grouped[instrument].append(
+            {
+                "result_id": str(row["result_id"]),
+                "hypothesis_id": hypothesis_id,
+                "mechanism_class": payload.get("mechanism_class")
+                or LEGACY_MECHANISM_CLASSES.get(hypothesis_id),
+                "result_status": str(row["result_status"]),
+                "knowable_at_utc": str(row["knowable_at_utc"]),
+                "development": _stage_summary(metrics.get("development")),
+                "dated_confirmation": _stage_summary(metrics.get("dated_confirmation")),
+            }
+        )
+    pair_rows = []
+    for instrument in instruments:
+        results = grouped[instrument]
+        survivor_count = sum(_is_survivor(str(row["result_status"])) for row in results)
+        pair_rows.append(
+            {
+                "instrument": instrument,
+                "research_state": (
+                    "UNTESTED"
+                    if not results
+                    else "HAS_SURVIVOR"
+                    if survivor_count
+                    else "TESTED_NO_SURVIVOR"
+                ),
+                "result_count": len(results),
+                "survivor_count": survivor_count,
+                "non_survivor_count": len(results) - survivor_count,
+                "mechanism_class_count": len(
+                    {row["mechanism_class"] for row in results if row["mechanism_class"]}
+                ),
+                "results": results,
+            }
+        )
+    return {
+        "schema": "PAIR_RESEARCH_INVENTORY_V1",
+        "inventory_status": "READY",
+        "pair_count": len(pair_rows),
+        "tested_pair_count": sum(row["result_count"] > 0 for row in pair_rows),
+        "untested_pairs": [row["instrument"] for row in pair_rows if row["research_state"] == "UNTESTED"],
+        "total_result_count": sum(row["result_count"] for row in pair_rows),
+        "total_survivor_count": sum(row["survivor_count"] for row in pair_rows),
+        "pairs": pair_rows,
         "automatic_promotion_allowed": False,
         "downstream_authority": "NONE",
     }

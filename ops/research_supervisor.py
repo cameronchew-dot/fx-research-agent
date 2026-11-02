@@ -72,7 +72,11 @@ from fx_research_agent.context_evaluation import (  # noqa: E402
     register_evaluation_protocol as register_context_evaluation_protocol,
     register_predeclaration as register_context_predeclaration,
 )
-from fx_research_agent.result_packages import result_status, sync_packages  # noqa: E402
+from fx_research_agent.result_packages import (  # noqa: E402
+    pair_research_inventory,
+    result_status,
+    sync_packages,
+)
 from fx_research_agent.portfolio import build_portfolio_opportunity_report  # noqa: E402
 from fx_research_agent.futures_context import futures_context_status  # noqa: E402
 
@@ -108,6 +112,7 @@ DEFAULT_CONTEXT_LABEL_EXPORT = ROOT / "data" / "context_discovery" / "context_la
 DEFAULT_RESULT_SOURCE = Path("/Users/camcam/eur_bot/exports/fx_research_results")
 DEFAULT_RESULT_INBOX = ROOT / "data" / "result_inbox"
 DEFAULT_RESULT_STATUS = ROOT / "data" / "research_result_status.json"
+DEFAULT_PAIR_RESEARCH_INVENTORY = ROOT / "data" / "pair_research_inventory.json"
 DEFAULT_PORTFOLIO_STATUS = ROOT / "data" / "portfolio_opportunity_report.json"
 DEFAULT_CME_CONTEXT_CONTRACT = ROOT / "config" / "cme_fx_context_contract.json"
 SOURCE_REPO = "https://github.com/cameronchew-dot/eur-usd-agent.git"
@@ -260,6 +265,7 @@ def main() -> int:
     result_sync.add_argument("--source-dir", type=Path, default=DEFAULT_RESULT_SOURCE)
     result_sync.add_argument("--inbox-dir", type=Path, default=DEFAULT_RESULT_INBOX)
     commands.add_parser("research-result-status")
+    commands.add_parser("pair-research-inventory")
     args = parser.parse_args()
 
     with connect(args.db) as connection:
@@ -540,6 +546,10 @@ def main() -> int:
             status_payload = result_status(connection)
             write_json_atomic(DEFAULT_RESULT_STATUS, status_payload)
             print_json(status_payload)
+        elif args.command == "pair-research-inventory":
+            inventory = pair_research_inventory(connection)
+            write_json_atomic(DEFAULT_PAIR_RESEARCH_INVENTORY, inventory)
+            print_json(inventory)
     return 0
 
 

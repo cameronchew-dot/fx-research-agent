@@ -167,6 +167,11 @@
   product, roll, timestamp, and aggressor-side provenance is configured.
 - Prefer new economically motivated, predeclared mechanisms over another broad
   price-pattern sweep.
+- Reconcile every frozen pair-research decision through the immutable external
+  result boundary and publish one pair/mechanism inventory. Historical terminal
+  results from AUD/USD, USD/JPY, GBP/USD, USD/CAD, and EUR/CHF are represented;
+  missing pairs remain explicitly `UNTESTED` rather than being treated as
+  rejected or silently rerun.
 
 ## Phase 9: official positioning mechanism
 

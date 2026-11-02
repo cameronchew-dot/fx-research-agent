@@ -6,7 +6,13 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from fx_research_agent.result_packages import register_package, result_status, sync_packages, validate_package
+from fx_research_agent.result_packages import (
+    pair_research_inventory,
+    register_package,
+    result_status,
+    sync_packages,
+    validate_package,
+)
 from fx_research_agent.storage import initialize
 
 
@@ -19,14 +25,22 @@ class ResultPackageTests(unittest.TestCase):
     def tearDown(self):
         self.connection.close()
 
-    def _package(self, root: Path, *, result_id: str = "RESULT_1", forbidden: bool = False) -> Path:
+    def _package(
+        self,
+        root: Path,
+        *,
+        result_id: str = "RESULT_1",
+        forbidden: bool = False,
+        instrument: str = "EUR_USD",
+        result_status_value: str = "REJECTED",
+    ) -> Path:
         root.mkdir(parents=True, exist_ok=True)
         record = {
             "schema": "FX_EXTERNAL_RESEARCH_RESULT_V1",
             "result_id": result_id,
             "hypothesis_id": "HYP_1",
-            "instrument": "EUR_USD",
-            "result_status": "REJECTED",
+            "instrument": instrument,
+            "result_status": result_status_value,
             "knowable_at_utc": "2026-10-25T00:00:00Z",
             "safety": {"research_only": True, "downstream_authority": "NONE"},
         }
@@ -114,6 +128,76 @@ class ResultPackageTests(unittest.TestCase):
             second = sync_packages(self.connection, source, root / "inbox")
         self.assertEqual(first["inserted"], 1)
         self.assertEqual(second["unchanged"], 1)
+
+    def test_pair_inventory_distinguishes_failed_surviving_and_untested_pairs(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            aud = self._package(
+                root / "aud",
+                result_id="RESULT_AUD",
+                instrument="AUD_USD",
+                result_status_value="FAIL_DEVELOPMENT",
+            )
+            usd_jpy = self._package(
+                root / "jpy",
+                result_id="RESULT_JPY",
+                instrument="USD_JPY",
+                result_status_value="PASS_LOCKED_HYPOTHESIS",
+            )
+            register_package(self.connection, aud)
+            register_package(self.connection, usd_jpy)
+        inventory = pair_research_inventory(
+            self.connection,
+            instruments=("AUD_USD", "USD_JPY", "NZD_USD"),
+        )
+        by_pair = {row["instrument"]: row for row in inventory["pairs"]}
+        self.assertEqual(by_pair["AUD_USD"]["research_state"], "TESTED_NO_SURVIVOR")
+        self.assertEqual(by_pair["USD_JPY"]["research_state"], "HAS_SURVIVOR")
+        self.assertEqual(by_pair["NZD_USD"]["research_state"], "UNTESTED")
+        self.assertEqual(inventory["untested_pairs"], ["NZD_USD"])
+        self.assertEqual(inventory["total_survivor_count"], 1)
+
+    def test_pair_inventory_classifies_legacy_results_without_rewriting_them(self):
+        with tempfile.TemporaryDirectory() as directory:
+            manifest = self._package(
+                Path(directory),
+                result_id="RESULT_USDCAD_WTI",
+                instrument="USD_CAD",
+                result_status_value="FAIL_DEVELOPMENT",
+            )
+            package_manifest, package_payload = validate_package(manifest)
+            package_payload["result_records"][0]["hypothesis_id"] = (
+                "USDCAD_WTI_SHOCK_PRIOR_DAY_FAILED_AUCTION_V1"
+            )
+            # Register the synthetic row directly because package checksum behavior is
+            # covered separately; this test is only for inventory classification.
+            record = package_payload["result_records"][0]
+            self.connection.execute(
+                "INSERT INTO external_result_manifests "
+                "(package_id, payload_hash, payload_json, imported_at_utc) VALUES (?, ?, ?, ?)",
+                (package_manifest["package_id"], "hash", "{}", "2026-10-25T00:00:00Z"),
+            )
+            self.connection.execute(
+                "INSERT INTO external_research_results "
+                "(result_id, payload_hash, payload_json, package_id, hypothesis_id, instrument, "
+                "result_status, knowable_at_utc, imported_at_utc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                (
+                    record["result_id"],
+                    "hash",
+                    json.dumps(record),
+                    package_manifest["package_id"],
+                    record["hypothesis_id"],
+                    record["instrument"],
+                    record["result_status"],
+                    record["knowable_at_utc"],
+                    "2026-10-25T00:00:00Z",
+                ),
+            )
+        inventory = pair_research_inventory(self.connection, instruments=("USD_CAD",))
+        self.assertEqual(
+            inventory["pairs"][0]["results"][0]["mechanism_class"],
+            "COMMODITY_INTERMARKET",
+        )
 
 
 if __name__ == "__main__":
