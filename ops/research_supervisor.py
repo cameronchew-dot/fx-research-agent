@@ -79,6 +79,9 @@ from fx_research_agent.result_packages import (  # noqa: E402
 )
 from fx_research_agent.portfolio import build_portfolio_opportunity_report  # noqa: E402
 from fx_research_agent.futures_context import futures_context_status  # noqa: E402
+from fx_research_agent.edge_forensics import (  # noqa: E402
+    build_cross_system_edge_forensics,
+)
 
 
 DEFAULT_DB = ROOT / "data" / "fx_research_agent.sqlite3"
@@ -113,6 +116,17 @@ DEFAULT_RESULT_SOURCE = Path("/Users/camcam/eur_bot/exports/fx_research_results"
 DEFAULT_RESULT_INBOX = ROOT / "data" / "result_inbox"
 DEFAULT_RESULT_STATUS = ROOT / "data" / "research_result_status.json"
 DEFAULT_PAIR_RESEARCH_INVENTORY = ROOT / "data" / "pair_research_inventory.json"
+DEFAULT_EDGE_FORENSICS = ROOT / "data" / "cross_system_edge_forensics.json"
+DEFAULT_EUR_AGENT_DB = Path("/Users/camcam/eur_agent/data/eur_agent.sqlite3")
+DEFAULT_EUR_AGENT_EXPERIMENT = Path(
+    "/Users/camcam/eur_agent/config/agent_experiment_contract.json"
+)
+DEFAULT_EUR_PROFILE_VALIDATION = Path(
+    "/Users/camcam/eur_bot/data/eur_profile_validation.json"
+)
+DEFAULT_EUR_PROFILE_DATED = Path(
+    "/Users/camcam/eur_bot/data/eur_active_profile_dated_confirmation.json"
+)
 DEFAULT_PORTFOLIO_STATUS = ROOT / "data" / "portfolio_opportunity_report.json"
 DEFAULT_CME_CONTEXT_CONTRACT = ROOT / "config" / "cme_fx_context_contract.json"
 SOURCE_REPO = "https://github.com/cameronchew-dot/eur-usd-agent.git"
@@ -266,6 +280,18 @@ def main() -> int:
     result_sync.add_argument("--inbox-dir", type=Path, default=DEFAULT_RESULT_INBOX)
     commands.add_parser("research-result-status")
     commands.add_parser("pair-research-inventory")
+    forensics = commands.add_parser("cross-system-edge-forensics")
+    forensics.add_argument("--agent-db", type=Path, default=DEFAULT_EUR_AGENT_DB)
+    forensics.add_argument(
+        "--agent-experiment", type=Path, default=DEFAULT_EUR_AGENT_EXPERIMENT
+    )
+    forensics.add_argument(
+        "--eur-profile-validation", type=Path, default=DEFAULT_EUR_PROFILE_VALIDATION
+    )
+    forensics.add_argument(
+        "--eur-profile-dated", type=Path, default=DEFAULT_EUR_PROFILE_DATED
+    )
+    forensics.add_argument("--output", type=Path, default=DEFAULT_EDGE_FORENSICS)
     args = parser.parse_args()
 
     with connect(args.db) as connection:
@@ -550,6 +576,16 @@ def main() -> int:
             inventory = pair_research_inventory(connection)
             write_json_atomic(DEFAULT_PAIR_RESEARCH_INVENTORY, inventory)
             print_json(inventory)
+        elif args.command == "cross-system-edge-forensics":
+            report = build_cross_system_edge_forensics(
+                connection,
+                agent_db_path=args.agent_db,
+                agent_experiment_contract_path=args.agent_experiment,
+                eur_profile_validation_path=args.eur_profile_validation,
+                eur_profile_dated_path=args.eur_profile_dated,
+            )
+            write_json_atomic(args.output, report)
+            print_json(report)
     return 0
 
 

@@ -189,3 +189,24 @@
   result remains a descriptive lead only; do not retune V1 or open its sealed
   partitions. See `CFTC_TFF_FX_CROWDING_RESULT.md`.
 
+## Phase 10: cross-system edge forensics and focused forward learning
+
+- Maintain one read-only report across immutable non-EUR research results,
+  exact EUR/USD lifecycle profiles, and deduplicated EUR-agent forward
+  episodes. Never pool these evidence classes.
+- Pause broad pair-pattern expansion after only 1 of 20 R-based non-EUR studies
+  produced positive development expectancy, with widespread control, OOS, and
+  cost failures.
+- Keep the three exact historically positive EUR/USD lifecycle profiles
+  unchanged while they await exact forward matches.
+- Accumulate strictly deduplicated forward evidence for HTF-aligned trend
+  pullback continuation and VWAP reclaim / mean reversion. Their initial
+  +0.250R averages each have only four episodes and remain descriptive until
+  the locked sample threshold is reached.
+- Prioritize prospective direction and whipsaw discrimination over additional
+  raw emitters. Treat spread add-back figures as diagnostics, never proof of
+  zero-cost edge.
+- Require a new economic mechanism and immutable predeclaration before opening
+  another pair campaign. See
+  `CROSS_SYSTEM_EDGE_FORENSICS_RESULT_2026-11-01.md`.
+
