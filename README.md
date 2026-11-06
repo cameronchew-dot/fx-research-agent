@@ -209,6 +209,11 @@ fixed at 30 resolved pairs and additionally requires positive treatment net R,
 positive paired lift, at least 44% positive outcomes, and positive average net
 R in both chronological halves. Prior broad-ORB outcomes cannot qualify.
 
+The Asia ORB V1 confirmation applies the same paired research design to the
+Tokyo 09:00 local opening range. It has independent setup IDs, a Tokyo-local
+daily first-event lock, and its own 30-pair review gate. Asia evidence cannot be
+pooled with London evidence, and neither campaign can activate execution.
+
 The governed EUR/USD batch retains its original three-slot boundary and contains three explicitly approved campaigns,
 each accruing only evidence observed after its own approval timestamp:
 
