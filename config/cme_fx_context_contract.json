@@ -1,6 +1,7 @@
 {
   "schema": "CME_FX_CONTEXT_CONTRACT_V1",
   "source_status": "UNCONFIGURED",
+  "primary_phase_id": "EUR_USD_6E_BASELINE_V1",
   "products": [
     {"canonical_product": "6E", "spot_instrument": "EUR_USD", "description": "CME Euro FX futures"},
     {"canonical_product": "6J", "spot_instrument": "USD_JPY", "description": "CME Japanese Yen futures; normalize inverse quote direction before spot comparison"},
@@ -12,6 +13,23 @@
     "CME_FX_ORDER_BOOK",
     "CME_FX_OPEN_INTEREST",
     "CME_SPOT_BASIS"
+  ],
+  "activation_phases": [
+    {
+      "phase_id": "EUR_USD_6E_BASELINE_V1",
+      "required_products": ["6E"],
+      "required_data_classes": ["CME_FX_TRADES"]
+    },
+    {
+      "phase_id": "EUR_USD_6E_ORDER_FLOW_V1",
+      "required_products": ["6E"],
+      "required_data_classes": ["CME_FX_TRADES", "CME_FX_AGGRESSOR_IMBALANCE"]
+    },
+    {
+      "phase_id": "MULTIPAIR_FUTURES_BASELINE_V1",
+      "required_products": ["6E", "6J", "6A"],
+      "required_data_classes": ["CME_FX_TRADES"]
+    }
   ],
   "provider_requirements": {
     "immutable_market_only_manifests": true,

@@ -121,6 +121,34 @@ CME 6E, 6J, and 6A. True CVD requires aggressor-side centralized trade data;
 OANDA quote/tick pressure remains a venue proxy. Until a feed is configured,
 the status stays `UNCONFIGURED` and grants no signal or execution authority.
 
+The first activation phase requires only completed CME 6E bars, so EUR/USD
+futures context can be evaluated before purchasing or importing 6J and 6A.
+The separate order-flow phase additionally requires classified centralized
+buy/sell volume. A generic volume column is never accepted as true CVD.
+
+Provider exports stay credential-free. Convert a provider CSV into an
+immutable payload and manifest with:
+
+```bash
+python3 ops/cme_fx_context_import.py /path/to/6e.csv \
+  --output-dir data/external_market_exports \
+  --product 6E \
+  --provider PROVIDER_NAME \
+  --source-symbol PROVIDER_6E_SYMBOL \
+  --contract-mode CONTINUOUS \
+  --roll-method VOLUME_SWITCH \
+  --price-adjustment BACK_ADJUSTED \
+  --aggressor-side-method NONE
+python3 ops/research_supervisor.py register-market-export \
+  data/external_market_exports/<generated-manifest>.manifest.json
+python3 ops/research_supervisor.py futures-context-status
+```
+
+Required CSV columns are `window_start_utc`, `window_end_utc`, `open`, `high`,
+`low`, `close`, `volume`, and `trade_count`. Optional `open_interest`,
+`aggressive_buy_volume`, and `aggressive_sell_volume` columns activate their
+respective data classes only when complete and correctly labeled.
+
 ## FX context discovery
 
 `EUR_USD_CONTEXT_DISCOVERY_V1` is the next outcome-blind discovery lane. It
