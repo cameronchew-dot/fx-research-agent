@@ -197,6 +197,10 @@ counterfactuals and shadow actions in separate cohorts, takes only the first
 eligible baseline outcome per independent episode, and records immutable runs
 and findings. Reaching a sample gate produces a human-review state only; it
 cannot promote a hypothesis or affect a trading system.
+For strategy-shadow campaigns, distinct event IDs are not automatically
+independent. The evaluator keeps only the first event in each non-overlapping
+fixed outcome horizon, separately by outcome source and cohort, so overlapping
+signals cannot inflate the effective sample size.
 
 The governed EUR/USD batch retains its original three-slot boundary and contains three explicitly approved campaigns,
 each accruing only evidence observed after its own approval timestamp:

@@ -116,6 +116,29 @@ def _strategy_shadow_eligible_rows(
     return rows
 
 
+def _deduplicate_fixed_horizon_windows(
+    rows: list[dict[str, Any]],
+    *,
+    horizon_m15_bars: int,
+) -> list[dict[str, Any]]:
+    horizon = timedelta(minutes=15 * horizon_m15_bars)
+    next_available_by_cohort: dict[tuple[str, str], datetime] = {}
+    independent = []
+    for record in sorted(
+        rows,
+        key=lambda value: (value["decision_time_utc"], value["candidate_id"], value["outcome_id"]),
+    ):
+        decision_time = datetime.fromisoformat(
+            str(record["decision_time_utc"]).replace("Z", "+00:00")
+        ).astimezone(timezone.utc)
+        cohort_key = (str(record["outcome_source"]), str(record["cohort"]))
+        if decision_time < next_available_by_cohort.get(cohort_key, datetime.min.replace(tzinfo=timezone.utc)):
+            continue
+        independent.append(record)
+        next_available_by_cohort[cohort_key] = decision_time + horizon
+    return independent
+
+
 def _read_json_payload(path: Path) -> dict[str, Any]:
     if path.suffix == ".gz":
         with gzip.open(path, "rt", encoding="utf-8") as handle:
@@ -474,7 +497,19 @@ def build_evaluation(
         key=lambda value: (value["decision_time_utc"], value["candidate_id"], value["outcome_id"]),
     ):
         first_per_episode.setdefault(str(record["episode_id"]), record)
-    independent = list(first_per_episode.values())
+    episode_unique = list(first_per_episode.values())
+    strategy_shadow_source = (
+        campaign["population"].get("source") == "EUR_AGENT_STRATEGY_SHADOW_FORWARD_ONLY"
+    )
+    if strategy_shadow_source:
+        independent = _deduplicate_fixed_horizon_windows(
+            episode_unique,
+            horizon_m15_bars=int(campaign["population"]["outcome_horizon_m15_bars"]),
+        )
+        independence_policy = "FIRST_EVENT_PER_NON_OVERLAPPING_FIXED_OUTCOME_HORIZON"
+    else:
+        independent = episode_unique
+        independence_policy = "FIRST_CANDIDATE_PER_DECLARED_EPISODE_ID"
     sources = sorted({str(record["outcome_source"]) for record in independent})
     source_reports = []
     minimum_treatment = int(campaign["review_gates"]["minimum_resolved_independent_treatment_episodes"])
@@ -530,7 +565,9 @@ def build_evaluation(
         "evidence_manifest_ids": evidence["manifest_ids"],
         "market_data_manifest_ids": market["manifest_ids"],
         "eligible_candidate_count_before_episode_deduplication": len(eligible),
+        "unique_episode_id_count": len(episode_unique),
         "independent_episode_count": len(independent),
+        "independence_policy": independence_policy,
         "outcome_sources_pooled": False,
         "source_reports": source_reports,
         "review_status": (
