@@ -358,6 +358,21 @@
       "expected_frequency": "UP_TO_FOUR_ELIGIBLE_WINDOWS_PER_MONTH_BEFORE_STRETCH_AND_CONFIRMATION_FILTERS",
       "overlap_notes": "Calendar-flow mechanism distinct from ORB, VWAP, horizontal objective-level, and HTF trend campaigns.",
       "next_action": "ACCRUE_30_POST_APPROVAL_FORWARD_INDEPENDENT_RESOLVED_EVENTS"
+    },
+    {
+      "hypothesis_id": "HYP_EUR_LONDON_ORB_REVERSAL_CONFIRMATION_V3",
+      "proposed_at_utc": "2026-11-06T04:10:24Z",
+      "proposed_by": "OPERATOR_AND_CODEX",
+      "state": "PROPOSED",
+      "hypothesis_type": "FORWARD_PAIRED_CONFIRMATION_STRATEGY_MECHANISM",
+      "classification": "STRATEGY",
+      "priority": 24,
+      "statement": "The first daylight-saving-aware London 30-minute opening-range sweep and completed M15 close back inside each trading day may have positive forward net expectancy and outperform following the same failed breakout.",
+      "data_requirements": ["FORWARD_STRATEGY_SHADOW_EVENTS", "FORWARD_STRATEGY_SHADOW_OUTCOMES"],
+      "dependencies": ["EUROPE_LONDON_TIMEZONE", "NEXT_M15_OPEN_ENTRY", "PAIRED_BREAKOUT_DIRECTION_CONTROL", "FIXED_FOUR_HOUR_NON_OVERLAPPING_EPISODES", "OBSERVED_SPREAD_COSTS"],
+      "expected_frequency": "SEVERAL_PER_MONTH",
+      "overlap_notes": "Fresh confirmatory refinement of the broad DST-safe ORB reversal after that population failed its corrected non-overlapping review; no prior outcomes qualify.",
+      "next_action": "ACCRUE_30_POST_APPROVAL_PAIRED_FORWARD_INDEPENDENT_EPISODES"
     }
   ]
 }

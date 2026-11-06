@@ -196,6 +196,7 @@ class ExperimentTests(unittest.TestCase):
                 "source": "EUR_AGENT_STRATEGY_SHADOW_FORWARD_ONLY",
                 "mechanism_id": "ORB_REVERSAL",
                 "setup_id": "OPENING_RANGE_SWEEP_CLOSE_INSIDE_DST_SAFE_V2",
+                "comparator_setup_id": "OPENING_RANGE_BREAKOUT_CONTROL_V2",
                 "timeframe": "M15",
                 "outcome_horizon_m15_bars": 16,
                 "entry_model": "NEXT_M15_OPEN_WITH_DECISION_SPREAD",
@@ -206,6 +207,8 @@ class ExperimentTests(unittest.TestCase):
                 "minimum_resolved_independent_comparator_episodes": 0,
                 "treatment_average_net_r_must_be_positive": False,
                 "primary_lift_must_be_positive": False,
+                "minimum_treatment_positive_net_r_rate": 0.5,
+                "minimum_each_half_average_net_r": 0.0,
             }
             campaign_path = root / "strategy_campaign.json"
             campaign_path.write_text(json.dumps(campaign), encoding="utf-8")
@@ -226,28 +229,33 @@ class ExperimentTests(unittest.TestCase):
             events = []
             outcomes = []
             for index, decision_time in enumerate(event_times, start=1):
-                events.append(
-                    {
-                        "event_id": f"SE{index}",
-                        "mechanism_id": "ORB_REVERSAL",
-                        "setup_id": "OPENING_RANGE_SWEEP_CLOSE_INSIDE_DST_SAFE_V2",
-                        "instrument": "EUR_USD",
-                        "direction": "SHORT",
-                        "decision_time_utc": decision_time,
-                        "base_timeframe": "M15",
-                    }
-                )
-                outcomes.append(
-                    {
-                        "outcome_id": f"SO{index}",
-                        "event_id": f"SE{index}",
-                        "observed_at_utc": "2026-10-13T10:00:00Z",
-                        "realized_net_r": 1.0,
-                        "entry_model": "NEXT_M15_OPEN_WITH_DECISION_SPREAD",
-                        "horizon_bars": 16,
-                        "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE",
-                    }
-                )
+                for cohort, setup_id, net_r in (
+                    ("T", "OPENING_RANGE_SWEEP_CLOSE_INSIDE_DST_SAFE_V2", 1.0),
+                    ("C", "OPENING_RANGE_BREAKOUT_CONTROL_V2", -1.0),
+                ):
+                    event_id = f"SE{index}{cohort}"
+                    events.append(
+                        {
+                            "event_id": event_id,
+                            "mechanism_id": "ORB_REVERSAL",
+                            "setup_id": setup_id,
+                            "instrument": "EUR_USD",
+                            "direction": "SHORT" if cohort == "T" else "LONG",
+                            "decision_time_utc": decision_time,
+                            "base_timeframe": "M15",
+                        }
+                    )
+                    outcomes.append(
+                        {
+                            "outcome_id": f"SO{index}{cohort}",
+                            "event_id": event_id,
+                            "observed_at_utc": "2026-10-13T10:00:00Z",
+                            "realized_net_r": net_r,
+                            "entry_model": "NEXT_M15_OPEN_WITH_DECISION_SPREAD",
+                            "horizon_bars": 16,
+                            "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE",
+                        }
+                    )
             payload = {
                 "schema": "FX_RESEARCH_EVIDENCE_PAYLOAD_V1",
                 "manifest_id": "STRATEGY_EVIDENCE_TEST",
@@ -282,13 +290,19 @@ class ExperimentTests(unittest.TestCase):
                 evaluated_at_utc="2026-10-13T10:00:00Z",
             )
 
-        self.assertEqual(result["eligible_candidate_count_before_episode_deduplication"], 3)
-        self.assertEqual(result["unique_episode_id_count"], 3)
-        self.assertEqual(result["independent_episode_count"], 2)
+        self.assertEqual(result["eligible_candidate_count_before_episode_deduplication"], 6)
+        self.assertEqual(result["unique_episode_id_count"], 6)
+        self.assertEqual(result["independent_episode_count"], 4)
         self.assertEqual(
             result["independence_policy"],
             "FIRST_EVENT_PER_NON_OVERLAPPING_FIXED_OUTCOME_HORIZON",
         )
+        report = result["source_reports"][0]
+        self.assertEqual(report["treatment"]["independent_episode_count"], 2)
+        self.assertEqual(report["comparator"]["independent_episode_count"], 2)
+        self.assertEqual(report["average_net_r_lift"], 2.0)
+        self.assertTrue(report["treatment_positive_rate_gate"])
+        self.assertTrue(report["treatment_temporal_stability_gate"])
 
 
 if __name__ == "__main__":

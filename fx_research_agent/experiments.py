@@ -78,6 +78,10 @@ def _strategy_shadow_eligible_rows(
     population = campaign["population"]
     mechanism_id = str(population["mechanism_id"])
     setup_id = str(population["setup_id"])
+    comparator_setup_id = str(population.get("comparator_setup_id") or "")
+    allowed_setup_ids = {setup_id}
+    if comparator_setup_id:
+        allowed_setup_ids.add(comparator_setup_id)
     outcome_by_event = {
         str(value.get("event_id")): value
         for value in evidence["strategy_outcomes"].values()
@@ -86,7 +90,7 @@ def _strategy_shadow_eligible_rows(
     for event in evidence["strategy_events"].values():
         if event.get("instrument") != campaign["instrument"]:
             continue
-        if event.get("mechanism_id") != mechanism_id or event.get("setup_id") != setup_id:
+        if event.get("mechanism_id") != mechanism_id or event.get("setup_id") not in allowed_setup_ids:
             continue
         if event.get("base_timeframe") != population["timeframe"]:
             continue
@@ -102,6 +106,7 @@ def _strategy_shadow_eligible_rows(
             continue
         if outcome.get("same_bar_tie_policy") != population["same_bar_tie_policy"]:
             continue
+        cohort = "COMPARATOR" if event.get("setup_id") == comparator_setup_id else "TREATMENT"
         rows.append({
             "episode_id": event["event_id"],
             "candidate_id": event["event_id"],
@@ -110,8 +115,8 @@ def _strategy_shadow_eligible_rows(
             "observed_at_utc": outcome["observed_at_utc"],
             "outcome_source": "FORWARD_STRATEGY_SHADOW",
             "realized_net_r": outcome.get("realized_net_r"),
-            "cohort": "TREATMENT",
-            "cohort_label": setup_id,
+            "cohort": cohort,
+            "cohort_label": event.get("setup_id"),
         })
     return rows
 
@@ -215,6 +220,18 @@ def _metric_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "minimum_net_r": round(min(values), 6) if values else None,
         "maximum_net_r": round(max(values), 6) if values else None,
         "small_sample": len(values) < 30,
+    }
+
+
+def _temporal_half_summaries(rows: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    ordered = sorted(
+        rows,
+        key=lambda value: (value["decision_time_utc"], value["candidate_id"], value["outcome_id"]),
+    )
+    midpoint = len(ordered) // 2
+    return {
+        "first_half": _metric_summary(ordered[:midpoint]),
+        "second_half": _metric_summary(ordered[midpoint:]),
     }
 
 
@@ -520,6 +537,7 @@ def build_evaluation(
         comparator = [record for record in source_rows if record["cohort"] == "COMPARATOR"]
         treatment_metrics = _metric_summary(treatment)
         comparator_metrics = _metric_summary(comparator)
+        treatment_temporal_halves = _temporal_half_summaries(treatment)
         lift = None
         if treatment_metrics["average_net_r"] is not None and comparator_metrics["average_net_r"] is not None:
             lift = round(treatment_metrics["average_net_r"] - comparator_metrics["average_net_r"], 6)
@@ -534,20 +552,46 @@ def build_evaluation(
             not bool(campaign["review_gates"].get("primary_lift_must_be_positive"))
             or (lift is not None and lift > 0)
         )
+        minimum_positive_rate = campaign["review_gates"].get(
+            "minimum_treatment_positive_net_r_rate"
+        )
+        positive_rate_gate = (
+            minimum_positive_rate is None
+            or (
+                treatment_metrics["positive_net_r_rate"] is not None
+                and treatment_metrics["positive_net_r_rate"] >= float(minimum_positive_rate)
+            )
+        )
+        minimum_half_average = campaign["review_gates"].get(
+            "minimum_each_half_average_net_r"
+        )
+        temporal_stability_gate = (
+            minimum_half_average is None
+            or all(
+                summary["average_net_r"] is not None
+                and summary["average_net_r"] > float(minimum_half_average)
+                for summary in treatment_temporal_halves.values()
+            )
+        )
         gates_met = (
             treatment_metrics["priced_episode_count"] >= minimum_treatment
             and comparator_metrics["priced_episode_count"] >= minimum_comparator
             and average_gate
             and lift_gate
+            and positive_rate_gate
+            and temporal_stability_gate
         )
         source_reports.append(
             {
                 "outcome_source": source,
                 "treatment": treatment_metrics,
                 "comparator": comparator_metrics,
+                "treatment_temporal_halves": treatment_temporal_halves,
                 "average_net_r_lift": lift,
                 "treatment_average_positive_gate": average_gate,
                 "primary_lift_positive_gate": lift_gate,
+                "treatment_positive_rate_gate": positive_rate_gate,
+                "treatment_temporal_stability_gate": temporal_stability_gate,
                 "sample_gates_met": gates_met,
                 "result_interpretation": "READY_FOR_HUMAN_REVIEW" if gates_met else "ACCRUING_NO_CONCLUSION",
             }

@@ -202,6 +202,13 @@ independent. The evaluator keeps only the first event in each non-overlapping
 fixed outcome horizon, separately by outcome source and cohort, so overlapping
 signals cannot inflate the effective sample size.
 
+The London ORB V3 confirmation is a single predeclared paired experiment. It
+compares the first failed-break reversal of each London trading day with a
+breakout-direction control from the identical trigger. Its first review is
+fixed at 30 resolved pairs and additionally requires positive treatment net R,
+positive paired lift, at least 44% positive outcomes, and positive average net
+R in both chronological halves. Prior broad-ORB outcomes cannot qualify.
+
 The governed EUR/USD batch retains its original three-slot boundary and contains three explicitly approved campaigns,
 each accruing only evidence observed after its own approval timestamp:
 

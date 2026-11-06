@@ -1,0 +1,90 @@
+{
+  "schema": "FX_RESEARCH_CAMPAIGN_V1",
+  "campaign_id": "CAMPAIGN_EUR_LONDON_ORB_REVERSAL_CONFIRMATION_V3",
+  "hypothesis_id": "HYP_EUR_LONDON_ORB_REVERSAL_CONFIRMATION_V3",
+  "created_at_utc": "2026-11-06T04:10:24Z",
+  "state": "DRAFT",
+  "title": "EUR/USD London ORB reversal paired confirmation",
+  "instrument": "EUR_USD",
+  "mechanism_class": "ORB_REVERSAL",
+  "research_question": "Does the first London opening-range failed breakout each trading day have positive forward net R and outperform following the same breakout?",
+  "null_hypothesis": "The reversal has non-positive forward net R or does not outperform its paired breakout-direction control.",
+  "required_data_classes": [
+    "FORWARD_STRATEGY_SHADOW_EVENTS",
+    "FORWARD_STRATEGY_SHADOW_OUTCOMES"
+  ],
+  "population": {
+    "source": "EUR_AGENT_STRATEGY_SHADOW_FORWARD_ONLY",
+    "mechanism_id": "LONDON_ORB_REVERSAL_CONFIRMATION",
+    "setup_id": "LONDON_ORB_SWEEP_CLOSE_INSIDE_REVERSAL_V3",
+    "comparator_setup_id": "LONDON_ORB_SWEEP_CLOSE_INSIDE_BREAKOUT_CONTROL_V3",
+    "timeframe": "M15",
+    "entry_model": "NEXT_M15_OPEN_WITH_DECISION_SPREAD",
+    "outcome_horizon_m15_bars": 16,
+    "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE"
+  },
+  "independence_unit": {
+    "unit": "FIRST_PAIRED_EVENT_PER_LONDON_TRADING_DAY_AND_NON_OVERLAPPING_FIXED_HORIZON",
+    "repeated_events_count_once": true
+  },
+  "exact_specification": {
+    "contract": "EUR_AGENT_STRATEGY_EXPANSION_SHADOW_V3",
+    "opening_range_minutes": 30,
+    "session_open": {
+      "timezone": "Europe/London",
+      "local_time": "08:00"
+    },
+    "trigger": "SWEEP_BOUNDARY_BY_LOCKED_BUFFER_AND_COMPLETED_M15_CLOSE_BACK_INSIDE",
+    "treatment_direction": "FADE_FAILED_BREAKOUT",
+    "comparator_direction": "FOLLOW_BREAKOUT",
+    "entry": "NEXT_M15_OPEN_WITH_DECISION_SPREAD",
+    "stop": "SIGNAL_EXTREME_PLUS_BUFFER",
+    "target_r": 1.5,
+    "outcome_horizon_m15_bars": 16,
+    "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE",
+    "parameters_locked_before_forward_collection": true
+  },
+  "controls": [
+    {
+      "control_id": "PAIRED_BREAKOUT_DIRECTION_CONTROL",
+      "definition": "For the identical trigger and decision time, trade in the breakout direction using the same forward-only execution framework."
+    }
+  ],
+  "metrics": {
+    "primary": "PAIRED_AVERAGE_FORWARD_NET_R_LIFT",
+    "secondary": [
+      "TREATMENT_AVERAGE_NET_R",
+      "POSITIVE_NET_R_RATE",
+      "FIRST_HALF_AVERAGE_NET_R",
+      "SECOND_HALF_AVERAGE_NET_R",
+      "MFE_R",
+      "MAE_R",
+      "PAIRED_SAMPLE_COUNT"
+    ]
+  },
+  "review_gates": {
+    "minimum_resolved_independent_treatment_episodes": 30,
+    "minimum_resolved_independent_comparator_episodes": 30,
+    "treatment_average_net_r_must_be_positive": true,
+    "primary_lift_must_be_positive": true,
+    "minimum_treatment_positive_net_r_rate": 0.44,
+    "minimum_each_half_average_net_r": 0.0,
+    "review_is_not_promotion": true
+  },
+  "multiple_comparisons_policy": {
+    "confirmatory_slice_count": 1,
+    "parameter_sweeps_allowed": false,
+    "post_hoc_session_or_geometry_subsets_cannot_qualify": true
+  },
+  "stopping_rules": {
+    "no_early_success_declaration": true,
+    "no_early_parameter_retuning": true,
+    "fixed_first_review_at_paired_n": 30
+  },
+  "authority": {
+    "automatic_approval": false,
+    "automatic_execution": false,
+    "downstream_activation": false,
+    "order_authority": false
+  }
+}
