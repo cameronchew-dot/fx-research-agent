@@ -200,6 +200,15 @@ Validation (2023-2024) and dated confirmation (2025 onward) were not opened.
 The exact campaign is parked without retuning and is summarized in
 `docs/CME_FUTURES_CONTEXT_BREAKOUT_RETEST_RESULT.md`.
 
+A second, futures-native campaign then tested two mechanisms directly on the
+centralized data: participation-shock acceptance continuation and
+participation-shock failed-auction reversal. Both used volume at least `1.75x`
+and true range at least `1.5x` their prior-only, time-of-day baselines. Neither
+survived. Continuation averaged `-0.324R` over 4,573 events and reversal
+averaged `-0.295R` over 2,477; both also trailed their paired controls. The
+2023+ partitions remain sealed. See
+`docs/CME_FUTURES_PARTICIPATION_SHOCK_RESULT.md`.
+
 ## FX context discovery
 
 `EUR_USD_CONTEXT_DISCOVERY_V1` is the next outcome-blind discovery lane. It

@@ -206,6 +206,22 @@
   2025+ dated confirmation split. See
   `CME_FUTURES_CONTEXT_BREAKOUT_RETEST_RESULT.md`.
 
+## Phase 9B: futures-native participation shocks
+
+- Freeze two mutually exclusive centralized-futures mechanisms: acceptance
+  continuation and failed-auction reversal after simultaneous volume and range
+  shocks.
+- Define both shock baselines from the same local quarter-hour over the prior
+  20 available observations only. Require volume ratio `>=1.75`, true-range
+  ratio `>=1.5`, and completed futures/spot M15 alignment.
+- Use next-spot-M15-open execution, ATR risk, fixed pair costs, opposite-side
+  and one-hour-delayed paired controls, non-overlapping horizons, and Holm
+  correction across the two mechanisms.
+- Archive V1 as `NO_DEVELOPMENT_SURVIVORS`: continuation and reversal were
+  both materially negative and underperformed their controls. Do not retune or
+  open the sealed 2023+ partitions. See
+  `CME_FUTURES_PARTICIPATION_SHOCK_RESULT.md`.
+
 ## Phase 10: cross-system edge forensics and focused forward learning
 
 - Maintain one read-only report across immutable non-EUR research results,

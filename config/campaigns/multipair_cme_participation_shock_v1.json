@@ -1,0 +1,114 @@
+{
+  "schema": "FX_RESEARCH_CAMPAIGN_V1",
+  "campaign_id": "CAMPAIGN_MULTIPAIR_CME_PARTICIPATION_SHOCK_V1",
+  "hypothesis_id": "HYP_MULTIPAIR_CME_PARTICIPATION_SHOCK_V1",
+  "created_at_utc": "2026-11-07T14:19:57Z",
+  "state": "DRAFT",
+  "title": "CME FX participation-shock acceptance and rejection",
+  "instrument": "FX_THREE_PAIR_PANEL",
+  "instruments": ["EUR_USD", "USD_JPY", "AUD_USD"],
+  "mechanism_class": "CENTRALIZED_FUTURES_PARTICIPATION_SHOCK",
+  "research_question": "Do predeclared high-volume, range-expanding CME FX futures acceptance or failed-auction bars predict the next four hours of corresponding spot movement after costs?",
+  "null_hypothesis": "Neither acceptance continuation nor failed-auction reversal has positive pooled net expectancy and paired lift over both locked controls after familywise correction.",
+  "required_data_classes": ["HISTORICAL_COMPLETED_M15_CANDLES", "CME_FX_CONTINUOUS_BARS", "CME_FX_ROLL_SCHEDULE", "CME_FX_OUTRIGHT_DEFINITIONS"],
+  "population": {
+    "source": "SEALED_OANDA_M15_AND_CAUSAL_DATABENTO_CME_FX_DERIVED_DATA",
+    "common_history_start_inclusive": "2018-09-20T00:00:00Z",
+    "development_decision_time_end_exclusive": "2023-01-01T00:00:00Z",
+    "sealed_validation_decision_times": "2023-01-01T00:00:00Z/2025-01-01T00:00:00Z",
+    "untouched_dated_confirmation_start_inclusive": "2025-01-01T00:00:00Z",
+    "validation_and_confirmation_rows_permitted_in_development": 0,
+    "decision_timeframe": "M15",
+    "entry_model": "NEXT_SPOT_M15_OPEN",
+    "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE"
+  },
+  "independence_unit": {
+    "unit": "FIRST_EVENT_PER_MECHANISM_DIRECTION_CME_SESSION_WITH_NON_OVERLAPPING_PRIMARY_HORIZON",
+    "cme_session_boundary": "17:00_AMERICA_CHICAGO",
+    "repeated_same_mechanism_direction_events_count_once": true,
+    "overlapping_primary_holding_windows_allowed": false,
+    "pair_results": "DESCRIPTIVE_ONLY",
+    "pooled_panel": "PRIMARY_CONFIRMATORY_POPULATION"
+  },
+  "exact_specification": {
+    "futures_mapping": {"EUR_USD": "6E", "USD_JPY": "6J_NORMALIZED_TO_USD_JPY", "AUD_USD": "6A"},
+    "futures_bar": {
+      "timeframe": "15_MINUTES_FROM_COMPLETED_1M_ROWS",
+      "minimum_source_minutes": 10,
+      "decision_alignment": "FUTURES_BAR_END_EQUALS_COMPLETED_SPOT_M15_END",
+      "volume_seasonality_baseline": "MEDIAN_SAME_AMERICA_NEW_YORK_LOCAL_QUARTER_HOUR_OVER_PRIOR_20_AVAILABLE_OBSERVATIONS",
+      "range_seasonality_baseline": "MEDIAN_TRUE_RANGE_SAME_AMERICA_NEW_YORK_LOCAL_QUARTER_HOUR_OVER_PRIOR_20_AVAILABLE_OBSERVATIONS",
+      "minimum_prior_slot_observations": 20,
+      "minimum_volume_ratio": 1.75,
+      "minimum_true_range_ratio": 1.5,
+      "attempted_direction": "UP_IF_HIGH_MINUS_PRIOR_FUTURES_CLOSE_EXCEEDS_PRIOR_FUTURES_CLOSE_MINUS_LOW_OTHERWISE_DOWN"
+    },
+    "acceptance_continuation": {
+      "mechanism_id": "VOLUME_RANGE_SHOCK_ACCEPTANCE_CONTINUATION",
+      "up_acceptance": "ATTEMPTED_UP_AND_FUTURES_CLOSE_LOCATION_AT_OR_ABOVE_0_75_AND_CLOSE_ABOVE_OPEN",
+      "down_acceptance": "ATTEMPTED_DOWN_AND_FUTURES_CLOSE_LOCATION_AT_OR_BELOW_0_25_AND_CLOSE_BELOW_OPEN",
+      "trade_direction": "SAME_AS_ATTEMPTED_DIRECTION"
+    },
+    "failed_auction_reversal": {
+      "mechanism_id": "VOLUME_RANGE_SHOCK_FAILED_AUCTION_REVERSAL",
+      "up_rejection": "ATTEMPTED_UP_AND_FUTURES_CLOSE_LOCATION_AT_OR_BELOW_0_35",
+      "down_rejection": "ATTEMPTED_DOWN_AND_FUTURES_CLOSE_LOCATION_AT_OR_ABOVE_0_65",
+      "trade_direction": "OPPOSITE_ATTEMPTED_DIRECTION"
+    },
+    "spot_execution": {
+      "entry": "NEXT_SPOT_M15_OPEN_AFTER_FUTURES_DECISION_BAR",
+      "atr": "ATR14_FROM_PRIOR_COMPLETED_SPOT_M15_BARS",
+      "stop_distance": "MAX_1_0_X_ATR14_OR_5_0_PIPS",
+      "target_r": 1.5,
+      "maximum_horizon_m15_bars": 16,
+      "horizon_exit": "FINAL_SPOT_M15_CLOSE",
+      "gap_policy": "ADVERSE_OPEN_GAP_AT_OPEN_AND_FAVORABLE_OPEN_GAP_AT_TARGET_CONSERVATIVE",
+      "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE",
+      "fixed_round_trip_cost_pips": {"EUR_USD": 1.5, "USD_JPY": 1.8, "AUD_USD": 2.0}
+    },
+    "primary_hypotheses": ["VOLUME_RANGE_SHOCK_ACCEPTANCE_CONTINUATION", "VOLUME_RANGE_SHOCK_FAILED_AUCTION_REVERSAL"]
+  },
+  "controls": [
+    {"control_id": "OPPOSITE_DIRECTION_SAME_EVENT", "definition": "Reverse the trade direction at the identical next spot M15 open while preserving ATR risk, horizon, and costs."},
+    {"control_id": "FOUR_M15_BAR_DELAY_SAME_DIRECTION", "definition": "Preserve event direction and original ATR risk but enter at the fifth spot M15 open after the decision, one hour later, with the same 16-bar horizon and costs."}
+  ],
+  "metrics": {
+    "primary": "POOLED_DEVELOPMENT_AVERAGE_NET_R_AFTER_FIXED_PAIR_COST",
+    "secondary": ["EVENT_COUNT", "CALENDAR_MONTH_COUNT", "MEDIAN_NET_R", "POSITIVE_NET_R_RATE", "POSITIVE_MONTH_RATE", "WORST_MONTH_AVERAGE_NET_R", "MAXIMUM_DRAWDOWN_R", "MFE_R", "MAE_R", "PAIRED_EDGE_OVER_OPPOSITE_DIRECTION_R", "PAIRED_EDGE_OVER_DELAYED_ENTRY_R", "HOLM_ADJUSTED_ONE_SIDED_SIGN_FLIP_P_VALUE"],
+    "pair_breakdowns": "DESCRIPTIVE_ONLY"
+  },
+  "review_gates": {
+    "minimum_pooled_independent_events": 60,
+    "minimum_calendar_months_with_events": 18,
+    "minimum_average_net_r": 0.1,
+    "minimum_median_net_r_exclusive": 0.0,
+    "minimum_positive_net_r_rate": 0.45,
+    "minimum_positive_month_rate": 0.55,
+    "minimum_worst_month_average_net_r": -0.35,
+    "maximum_top_five_percent_positive_r_contribution_fraction": 0.5,
+    "minimum_paired_average_net_r_edge_over_each_control": 0.1,
+    "holm_adjusted_p_value_maximum": 0.05,
+    "development_survivor_requires_human_review_before_validation": true
+  },
+  "multiple_comparisons_policy": {
+    "primary_hypothesis_count": 2,
+    "method": "HOLM_BONFERRONI",
+    "familywise_alpha": 0.05,
+    "parameter_sweeps_allowed": false,
+    "pair_breakdowns_can_qualify": false
+  },
+  "stopping_rules": {
+    "no_post_result_threshold_changes": true,
+    "no_post_result_geometry_changes": true,
+    "no_early_validation_or_confirmation_inspection": true,
+    "no_automatic_second_specification_after_failure": true,
+    "failure_closes_exact_specification": true
+  },
+  "source_manifest_ids": {
+    "EUR_USD": "EUR_USD_HISTORICAL_CANDLES_20261002T204500_5a7afd586133",
+    "USD_JPY": "USD_JPY_HISTORICAL_CANDLES_20261029T170000_d51de63297f5",
+    "AUD_USD": "AUD_USD_HISTORICAL_CANDLES_20261029T170000_2830dabf9c86"
+  },
+  "futures_build_ids": {"6E": "B4E29C6EA1D8FC3D4AA7", "6J": "EC7B572F0FADDCE3ADA3", "6A": "26875F02A6C758377359"},
+  "authority": {"automatic_approval": false, "automatic_execution": false, "downstream_activation": false, "order_authority": false}
+}

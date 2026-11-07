@@ -105,11 +105,27 @@ def load_futures_m15(
     bars["end_time"] = bars.index + pd.Timedelta(minutes=15)
     local = bars.index.tz_convert("America/New_York")
     bars["local_slot"] = local.hour * 4 + local.minute // 15
+    chicago = bars.index.tz_convert("America/Chicago")
+    bars["session_date"] = (chicago + pd.Timedelta(hours=7)).date.astype(str)
     baseline = bars.groupby("local_slot", group_keys=False)["volume"].transform(
         lambda values: values.shift(1).rolling(20, min_periods=20).median()
     )
     bars["volume_baseline"] = baseline
     bars["volume_ratio"] = bars["volume"] / baseline.replace(0, np.nan)
+    previous_close = bars["close"].shift(1)
+    bars["true_range"] = pd.concat(
+        [
+            bars["high"] - bars["low"],
+            (bars["high"] - previous_close).abs(),
+            (bars["low"] - previous_close).abs(),
+        ],
+        axis=1,
+    ).max(axis=1)
+    range_baseline = bars.groupby("local_slot", group_keys=False)["true_range"].transform(
+        lambda values: values.shift(1).rolling(20, min_periods=20).median()
+    )
+    bars["range_baseline"] = range_baseline
+    bars["range_ratio"] = bars["true_range"] / range_baseline.replace(0, np.nan)
     bars["return"] = bars["close"] / bars["open"] - 1.0
     return bars.reset_index(drop=True).set_index("end_time", drop=False)
 

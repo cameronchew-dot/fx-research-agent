@@ -403,6 +403,21 @@
       "expected_frequency": "MULTIPLE_PER_MONTH_POOLED_ACROSS_THREE_INSTRUMENTS",
       "overlap_notes": "Context-selection test on one fixed spot setup; it is not a new standalone futures-direction signal and pair-level results are descriptive only.",
       "next_action": "RUN_LOCKED_DEVELOPMENT_ONLY_EVALUATION_WITHOUT_OPENING_VALIDATION_OR_CONFIRMATION"
+    },
+    {
+      "hypothesis_id": "HYP_MULTIPAIR_CME_PARTICIPATION_SHOCK_V1",
+      "proposed_at_utc": "2026-11-07T14:19:57Z",
+      "proposed_by": "OPERATOR_AND_CODEX",
+      "state": "PROPOSED",
+      "hypothesis_type": "CENTRALIZED_FUTURES_PARTICIPATION_SHOCK_MECHANISM",
+      "classification": "STRATEGY",
+      "priority": 27,
+      "statement": "An unusually high-volume, range-expanding CME FX futures bar may predict either immediate continuation when its close accepts the attempted direction or reversal when its close rejects the attempted direction.",
+      "data_requirements": ["HISTORICAL_COMPLETED_M15_CANDLES", "CME_FX_CONTINUOUS_BARS"],
+      "dependencies": ["PRIOR_SESSION_CONTRACT_SELECTION", "PRIOR_ONLY_INTRADAY_SEASONALITY", "NEXT_M15_OPEN_ENTRY", "PAIRED_OPPOSITE_AND_DELAYED_CONTROLS", "SEALED_VALIDATION_AND_DATED_CONFIRMATION", "HOLM_BONFERRONI_TWO_MECHANISM_FAMILY"],
+      "expected_frequency": "MULTIPLE_PER_MONTH_POOLED_ACROSS_THREE_INSTRUMENTS",
+      "overlap_notes": "Futures-native event trigger rather than a filter on a spot setup; continuation and failed-auction reversal are separate confirmatory hypotheses.",
+      "next_action": "RUN_LOCKED_DEVELOPMENT_ONLY_EVALUATION_WITHOUT_OPENING_VALIDATION_OR_CONFIRMATION"
     }
   ]
 }
