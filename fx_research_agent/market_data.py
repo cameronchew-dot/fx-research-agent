@@ -87,6 +87,8 @@ def validate_manifest(manifest_path: Path) -> dict[str, Any]:
     if data_classes & {
         "CME_FX_BARS",
         "CME_FX_TRADES",
+        "CME_FX_STATISTICS",
+        "CME_FX_DEFINITIONS",
         "CME_FX_AGGRESSOR_IMBALANCE",
         "CME_FX_ORDER_BOOK",
         "CME_FX_OPEN_INTEREST",
@@ -114,6 +116,8 @@ def register_manifest(connection, manifest_path: Path) -> dict[str, Any]:
         and bool(data_classes & {
             "CME_FX_BARS",
             "CME_FX_TRADES",
+            "CME_FX_STATISTICS",
+            "CME_FX_DEFINITIONS",
             "CME_FX_AGGRESSOR_IMBALANCE",
             "CME_FX_ORDER_BOOK",
             "CME_FX_OPEN_INTEREST",

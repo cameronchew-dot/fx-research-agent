@@ -13,6 +13,8 @@ from typing import Any
 FUTURES_DATA_CLASSES = {
     "CME_FX_BARS",
     "CME_FX_TRADES",
+    "CME_FX_STATISTICS",
+    "CME_FX_DEFINITIONS",
     "CME_FX_AGGRESSOR_IMBALANCE",
     "CME_FX_ORDER_BOOK",
     "CME_FX_OPEN_INTEREST",
@@ -31,6 +33,16 @@ REQUIRED_BAR_FIELDS = {
     "volume",
     "trade_count",
 }
+
+
+def databento_schema_data_class(source_schema: str) -> str | None:
+    if source_schema.startswith("ohlcv-"):
+        return "CME_FX_BARS"
+    return {
+        "trades": "CME_FX_TRADES",
+        "statistics": "CME_FX_STATISTICS",
+        "definition": "CME_FX_DEFINITIONS",
+    }.get(source_schema)
 
 
 def _utc(value: Any, field: str) -> str:
@@ -67,7 +79,7 @@ def _validate_databento_package(
         raise ValueError("Databento package job provenance must match the manifest")
     source_schema = str(payload.get("source_schema") or "")
     classes = {str(value) for value in manifest.get("data_classes", [])}
-    expected_class = "CME_FX_BARS" if source_schema.startswith("ohlcv-") else "CME_FX_TRADES" if source_schema == "trades" else None
+    expected_class = databento_schema_data_class(source_schema)
     if expected_class is None or expected_class not in classes:
         raise ValueError("Databento source schema does not match declared futures data classes")
     quality = payload.get("quality")

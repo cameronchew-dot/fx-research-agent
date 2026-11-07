@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from .futures_context import SUPPORTED_PRODUCTS
+from .futures_context import SUPPORTED_PRODUCTS, databento_schema_data_class
 from .market_data import validate_manifest
 
 
@@ -46,6 +46,9 @@ def verify_source_package(source_dir: Path) -> dict[str, Any]:
         raise ValueError(f"unsupported CME FX product: {product}")
     if metadata.get("job_id") != provider_manifest.get("job_id"):
         raise ValueError("Databento metadata and manifest job IDs disagree")
+    source_schema = str(query.get("schema") or "")
+    if databento_schema_data_class(source_schema) is None:
+        raise ValueError(f"unsupported Databento CME FX schema: {source_schema}")
 
     verified_files = []
     for item in provider_manifest.get("files", []):
@@ -72,7 +75,7 @@ def verify_source_package(source_dir: Path) -> dict[str, Any]:
         "metadata": metadata,
         "provider_manifest": provider_manifest,
         "product": product,
-        "source_schema": str(query.get("schema") or ""),
+        "source_schema": source_schema,
         "source_symbol": str(symbols[0]),
         "window_start_utc": iso_from_ns(query["start"]),
         "window_end_utc": iso_from_ns(query["end"]),
@@ -122,7 +125,9 @@ def import_package(source_dir: Path, output_root: Path) -> dict[str, Any]:
         payload_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         payload_digest = sha256_file(payload_path)
         source_schema = verified["source_schema"]
-        data_class = "CME_FX_BARS" if source_schema.startswith("ohlcv-") else "CME_FX_TRADES"
+        data_class = databento_schema_data_class(source_schema)
+        if data_class is None:
+            raise ValueError(f"unsupported Databento CME FX schema: {source_schema}")
         provider_provenance = {
             "provider": "DATABENTO",
             "source_dataset": "GLBX.MDP3",

@@ -16,30 +16,34 @@ def digest(path: Path) -> str:
 
 
 class DatabentoPackageTests(unittest.TestCase):
+    def build_package(self, root: Path, *, job_id: str, schema: str, product: str = "6E") -> Path:
+        source = root / job_id
+        source.mkdir()
+        data_file = source / f"glbx.{schema}.dbn.zst"
+        data_file.write_bytes(b"immutable-provider-data")
+        (source / "condition.json").write_text(json.dumps([
+            {"date": "2020-01-01", "condition": "available"},
+            {"date": "2020-01-02", "condition": "degraded"},
+        ]), encoding="utf-8")
+        metadata = {
+            "job_id": job_id,
+            "query": {
+                "dataset": "GLBX.MDP3", "schema": schema, "symbols": [f"{product}.FUT"],
+                "start": 1577836800000000000, "end": 1578009600000000000,
+                "encoding": "dbn", "compression": "zstd",
+            },
+        }
+        (source / "metadata.json").write_text(json.dumps(metadata), encoding="utf-8")
+        manifest_files = []
+        for path in (source / "condition.json", source / "metadata.json", data_file):
+            manifest_files.append({"filename": path.name, "size": path.stat().st_size, "hash": f"sha256:{digest(path)}"})
+        (source / "manifest.json").write_text(json.dumps({"job_id": job_id, "files": manifest_files}), encoding="utf-8")
+        return source
+
     def test_import_preserves_source_and_declares_degraded_date_exclusion(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            source = root / "source"
-            source.mkdir()
-            data_file = source / "glbx.ohlcv-1m.dbn.zst"
-            data_file.write_bytes(b"immutable-provider-data")
-            (source / "condition.json").write_text(json.dumps([
-                {"date": "2020-01-01", "condition": "available"},
-                {"date": "2020-01-02", "condition": "degraded"},
-            ]), encoding="utf-8")
-            metadata = {
-                "job_id": "GLBX-TEST",
-                "query": {
-                    "dataset": "GLBX.MDP3", "schema": "ohlcv-1m", "symbols": ["6E.FUT"],
-                    "start": 1577836800000000000, "end": 1578009600000000000,
-                    "encoding": "dbn", "compression": "zstd",
-                },
-            }
-            (source / "metadata.json").write_text(json.dumps(metadata), encoding="utf-8")
-            manifest_files = []
-            for path in (source / "condition.json", source / "metadata.json", data_file):
-                manifest_files.append({"filename": path.name, "size": path.stat().st_size, "hash": f"sha256:{digest(path)}"})
-            (source / "manifest.json").write_text(json.dumps({"job_id": "GLBX-TEST", "files": manifest_files}), encoding="utf-8")
+            source = self.build_package(root, job_id="GLBX-TEST", schema="ohlcv-1m")
 
             imported = import_package(source, root / "external")
             generated_manifest = Path(imported["manifest_path"])
@@ -54,6 +58,22 @@ class DatabentoPackageTests(unittest.TestCase):
         self.assertEqual(payload["quality"]["excluded_dates"], ["2020-01-02"])
         self.assertTrue(registered["usable_for_testing"])
         self.assertEqual(status["context_status"], "READY")
+
+    def test_statistics_package_has_distinct_non_trade_capability(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = self.build_package(root, job_id="GLBX-STATS", schema="statistics", product="6J")
+            imported = import_package(source, root / "external")
+            generated_manifest = Path(imported["manifest_path"])
+            manifest = json.loads(generated_manifest.read_text())
+            connection = sqlite3.connect(":memory:")
+            connection.row_factory = sqlite3.Row
+            initialize(connection)
+            registered = register_manifest(connection, generated_manifest)
+
+        self.assertEqual(manifest["data_classes"], ["CME_FX_STATISTICS"])
+        self.assertTrue(registered["usable_for_testing"])
+        self.assertNotIn("CME_FX_TRADES", manifest["data_classes"])
 
     def test_declared_exclusions_cannot_unlock_unvalidated_generic_data(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

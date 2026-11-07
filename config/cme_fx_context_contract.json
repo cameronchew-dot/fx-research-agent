@@ -10,6 +10,8 @@
   "accepted_data_classes": [
     "CME_FX_BARS",
     "CME_FX_TRADES",
+    "CME_FX_STATISTICS",
+    "CME_FX_DEFINITIONS",
     "CME_FX_AGGRESSOR_IMBALANCE",
     "CME_FX_ORDER_BOOK",
     "CME_FX_OPEN_INTEREST",
@@ -30,6 +32,16 @@
       "phase_id": "MULTIPAIR_FUTURES_BASELINE_V1",
       "required_products": ["6E", "6J", "6A"],
       "required_data_classes": ["CME_FX_BARS"]
+    },
+    {
+      "phase_id": "MULTIPAIR_FUTURES_STATISTICS_V1",
+      "required_products": ["6E", "6J", "6A"],
+      "required_data_classes": ["CME_FX_STATISTICS"]
+    },
+    {
+      "phase_id": "MULTIPAIR_FUTURES_DEFINITIONS_V1",
+      "required_products": ["6E", "6J", "6A"],
+      "required_data_classes": ["CME_FX_DEFINITIONS"]
     }
   ],
   "provider_requirements": {

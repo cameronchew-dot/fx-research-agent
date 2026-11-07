@@ -163,6 +163,10 @@ The importer verifies every provider checksum, preserves the original support
 files, and records non-`available` condition dates as mandatory research
 exclusions. A package with declared exclusions can be usable only because the
 exclusion list is immutable and enforced by the futures payload contract.
+Supported source schemas are one-minute or other OHLCV bars, trades, official
+venue statistics, and point-in-time instrument definitions. Each is registered
+under a distinct capability; statistics and definitions never imply trade-level
+order flow, aggressor classification, or true CVD.
 
 ## FX context discovery
 
