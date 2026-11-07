@@ -8,6 +8,7 @@
     {"canonical_product": "6A", "spot_instrument": "AUD_USD", "description": "CME Australian Dollar futures"}
   ],
   "accepted_data_classes": [
+    "CME_FX_BARS",
     "CME_FX_TRADES",
     "CME_FX_AGGRESSOR_IMBALANCE",
     "CME_FX_ORDER_BOOK",
@@ -18,7 +19,7 @@
     {
       "phase_id": "EUR_USD_6E_BASELINE_V1",
       "required_products": ["6E"],
-      "required_data_classes": ["CME_FX_TRADES"]
+      "required_data_classes": ["CME_FX_BARS"]
     },
     {
       "phase_id": "EUR_USD_6E_ORDER_FLOW_V1",
@@ -28,7 +29,7 @@
     {
       "phase_id": "MULTIPAIR_FUTURES_BASELINE_V1",
       "required_products": ["6E", "6J", "6A"],
-      "required_data_classes": ["CME_FX_TRADES"]
+      "required_data_classes": ["CME_FX_BARS"]
     }
   ],
   "provider_requirements": {

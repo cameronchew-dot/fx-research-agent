@@ -85,6 +85,7 @@ def validate_manifest(manifest_path: Path) -> dict[str, Any]:
         raise ValueError(f"market payload contains prohibited fields: {prohibited_payload}")
     data_classes = {str(value) for value in manifest.get("data_classes", [])}
     if data_classes & {
+        "CME_FX_BARS",
         "CME_FX_TRADES",
         "CME_FX_AGGRESSOR_IMBALANCE",
         "CME_FX_ORDER_BOOK",
@@ -93,7 +94,7 @@ def validate_manifest(manifest_path: Path) -> dict[str, Any]:
     }:
         from .futures_context import validate_futures_payload
 
-        validate_futures_payload(manifest, payload)
+        validate_futures_payload(manifest, payload, payload_path)
     if data_classes & {
         "COMPLETED_DAILY_BID_ASK_CANDLES",
         "MONTHLY_FINANCING_OR_FORWARD_POINTS",
@@ -107,7 +108,21 @@ def validate_manifest(manifest_path: Path) -> dict[str, Any]:
 
 def register_manifest(connection, manifest_path: Path) -> dict[str, Any]:
     manifest = validate_manifest(manifest_path)
-    usable = manifest["freshness_status"] == "FRESH" and manifest["gap_status"] == "COMPLETE"
+    data_classes = {str(value) for value in manifest.get("data_classes", [])}
+    declared_exclusions_are_validated = (
+        manifest["gap_status"] == "COMPLETE_WITH_DECLARED_EXCLUSIONS"
+        and bool(data_classes & {
+            "CME_FX_BARS",
+            "CME_FX_TRADES",
+            "CME_FX_AGGRESSOR_IMBALANCE",
+            "CME_FX_ORDER_BOOK",
+            "CME_FX_OPEN_INTEREST",
+            "CME_SPOT_BASIS",
+        })
+    )
+    usable = manifest["freshness_status"] == "FRESH" and (
+        manifest["gap_status"] == "COMPLETE" or declared_exclusions_are_validated
+    )
     inserted = insert_immutable(
         connection,
         "market_data_manifests",

@@ -149,6 +149,21 @@ Required CSV columns are `window_start_utc`, `window_end_utc`, `open`, `high`,
 `aggressive_buy_volume`, and `aggressive_sell_volume` columns activate their
 respective data classes only when complete and correctly labeled.
 
+Databento batch packages can be ingested directly without converting or
+altering their DBN source files:
+
+```bash
+python3 ops/databento_package_import.py /path/to/GLBX-JOB-ID
+python3 ops/research_supervisor.py register-market-export \
+  data/external/databento/GLBX-JOB-ID/GLBX-JOB-ID.market.manifest.json
+python3 ops/research_supervisor.py futures-context-status
+```
+
+The importer verifies every provider checksum, preserves the original support
+files, and records non-`available` condition dates as mandatory research
+exclusions. A package with declared exclusions can be usable only because the
+exclusion list is immutable and enforced by the futures payload contract.
+
 ## FX context discovery
 
 `EUR_USD_CONTEXT_DISCOVERY_V1` is the next outcome-blind discovery lane. It

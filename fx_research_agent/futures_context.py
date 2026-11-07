@@ -11,6 +11,7 @@ from typing import Any
 
 
 FUTURES_DATA_CLASSES = {
+    "CME_FX_BARS",
     "CME_FX_TRADES",
     "CME_FX_AGGRESSOR_IMBALANCE",
     "CME_FX_ORDER_BOOK",
@@ -53,8 +54,57 @@ def _finite_nonnegative(value: Any, field: str) -> float:
     return number
 
 
-def validate_futures_payload(manifest: dict[str, Any], payload: Any) -> dict[str, Any]:
-    if not isinstance(payload, dict) or payload.get("schema") != "CME_FX_CONTEXT_EXPORT_V1":
+def _validate_databento_package(
+    manifest: dict[str, Any], payload: dict[str, Any], payload_path: Path | None
+) -> dict[str, Any]:
+    product = str(payload.get("canonical_product") or "")
+    if product not in SUPPORTED_PRODUCTS or str(manifest.get("instrument")) != product:
+        raise ValueError("Databento CME FX package product must match the manifest instrument")
+    if payload.get("source_provider") != "DATABENTO" or payload.get("source_dataset") != "GLBX.MDP3":
+        raise ValueError("unsupported Databento CME source provenance")
+    provenance = manifest.get("provider_provenance")
+    if not isinstance(provenance, dict) or provenance.get("source_job_id") != payload.get("source_job_id"):
+        raise ValueError("Databento package job provenance must match the manifest")
+    source_schema = str(payload.get("source_schema") or "")
+    classes = {str(value) for value in manifest.get("data_classes", [])}
+    expected_class = "CME_FX_BARS" if source_schema.startswith("ohlcv-") else "CME_FX_TRADES" if source_schema == "trades" else None
+    if expected_class is None or expected_class not in classes:
+        raise ValueError("Databento source schema does not match declared futures data classes")
+    quality = payload.get("quality")
+    if not isinstance(quality, dict) or quality.get("exclusion_policy") != "EXCLUDE_NON_AVAILABLE_SOURCE_DATES":
+        raise ValueError("Databento package requires an explicit source-condition exclusion policy")
+    excluded_dates = quality.get("excluded_dates")
+    if not isinstance(excluded_dates, list):
+        raise ValueError("Databento package requires excluded_dates")
+    expected_gap_status = "COMPLETE_WITH_DECLARED_EXCLUSIONS" if excluded_dates else "COMPLETE"
+    if manifest.get("gap_status") != expected_gap_status:
+        raise ValueError("Databento package gap status must reflect declared exclusions")
+    files = payload.get("files")
+    if not isinstance(files, list) or not files:
+        raise ValueError("Databento package requires source files")
+    if payload_path is not None:
+        root = payload_path.parent.resolve()
+        for item in files:
+            if not isinstance(item, dict) or not item.get("filename") or not item.get("sha256"):
+                raise ValueError("Databento source file entries require filename and SHA-256")
+            source_file = (root / str(item["filename"])).resolve()
+            if source_file.parent != root or not source_file.is_file():
+                raise ValueError("Databento source file is missing or outside its immutable package")
+            if source_file.stat().st_size != int(item.get("size_bytes") or -1):
+                raise ValueError("Databento source file size mismatch")
+            if hashlib.sha256(source_file.read_bytes()).hexdigest() != item["sha256"]:
+                raise ValueError("Databento source file checksum mismatch")
+    return payload
+
+
+def validate_futures_payload(
+    manifest: dict[str, Any], payload: Any, payload_path: Path | None = None
+) -> dict[str, Any]:
+    if not isinstance(payload, dict):
+        raise ValueError("unsupported CME FX context payload schema")
+    if payload.get("schema") == "CME_FX_DATABENTO_PACKAGE_V1":
+        return _validate_databento_package(manifest, payload, payload_path)
+    if payload.get("schema") != "CME_FX_CONTEXT_EXPORT_V1":
         raise ValueError("unsupported CME FX context payload schema")
     product = str(payload.get("canonical_product") or "")
     if product not in SUPPORTED_PRODUCTS or str(manifest.get("instrument")) != product:
@@ -112,8 +162,8 @@ def validate_futures_payload(manifest: dict[str, Any], payload: Any) -> dict[str
             _finite_nonnegative(row["open_interest"], f"bars[{index}].open_interest")
 
     classes = {str(value) for value in manifest.get("data_classes", [])}
-    if "CME_FX_TRADES" not in classes:
-        raise ValueError("CME FX bar payload must declare CME_FX_TRADES")
+    if "CME_FX_BARS" not in classes:
+        raise ValueError("CME FX bar payload must declare CME_FX_BARS")
     if "CME_FX_AGGRESSOR_IMBALANCE" in classes and method == "NONE":
         raise ValueError("aggressor imbalance cannot be declared without classified centralized volume")
     if method != "NONE" and "CME_FX_AGGRESSOR_IMBALANCE" not in classes:
@@ -165,7 +215,7 @@ def package_csv_export(
         },
         "bars": rows,
     }
-    data_classes = ["CME_FX_TRADES"]
+    data_classes = ["CME_FX_BARS"]
     if aggressor_side_method != "NONE":
         data_classes.append("CME_FX_AGGRESSOR_IMBALANCE")
     if all(row.get("open_interest") is not None for row in rows):

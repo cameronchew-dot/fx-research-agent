@@ -105,7 +105,7 @@ class FuturesContextTests(unittest.TestCase):
                 "payload_path": payload_path.name,
                 "freshness_status": "FRESH",
                 "gap_status": "COMPLETE",
-                "data_classes": ["CME_FX_TRADES", "CME_FX_AGGRESSOR_IMBALANCE"],
+                "data_classes": ["CME_FX_BARS", "CME_FX_AGGRESSOR_IMBALANCE"],
                 "provider_provenance": {
                     "provider": "TEST_PROVIDER",
                     "source_symbol": "6E",
