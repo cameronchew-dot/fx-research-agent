@@ -388,6 +388,21 @@
       "expected_frequency": "SEVERAL_PER_MONTH",
       "overlap_notes": "Session-specific companion to London V3; Asia and London observations remain separate and cannot be pooled for qualification.",
       "next_action": "ACCRUE_30_POST_APPROVAL_PAIRED_FORWARD_INDEPENDENT_EPISODES"
+    },
+    {
+      "hypothesis_id": "HYP_MULTIPAIR_CME_FUTURES_CONTEXT_BREAKOUT_RETEST_V1",
+      "proposed_at_utc": "2026-11-07T09:49:36Z",
+      "proposed_by": "OPERATOR_AND_CODEX",
+      "state": "PROPOSED",
+      "hypothesis_type": "CENTRALIZED_FUTURES_CONTEXT_SELECTION_MECHANISM",
+      "classification": "CONTEXT",
+      "priority": 26,
+      "statement": "Causally available CME FX futures volume, open interest, and settlement direction may improve selection of a fixed prior-day accepted-breakout/retest setup across EUR/USD, USD/JPY, and AUD/USD.",
+      "data_requirements": ["HISTORICAL_COMPLETED_M15_CANDLES", "CME_FX_CONTINUOUS_BARS", "CME_FX_CANONICAL_STATISTICS"],
+      "dependencies": ["PRIOR_SESSION_CONTRACT_SELECTION", "STRICT_POINT_IN_TIME_STATISTIC_AVAILABILITY", "NEXT_M15_OPEN_ENTRY", "SEALED_VALIDATION_AND_DATED_CONFIRMATION", "HOLM_BONFERRONI_THREE_FILTER_FAMILY"],
+      "expected_frequency": "MULTIPLE_PER_MONTH_POOLED_ACROSS_THREE_INSTRUMENTS",
+      "overlap_notes": "Context-selection test on one fixed spot setup; it is not a new standalone futures-direction signal and pair-level results are descriptive only.",
+      "next_action": "RUN_LOCKED_DEVELOPMENT_ONLY_EVALUATION_WITHOUT_OPENING_VALIDATION_OR_CONFIRMATION"
     }
   ]
 }

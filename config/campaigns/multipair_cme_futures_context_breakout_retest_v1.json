@@ -1,0 +1,119 @@
+{
+  "schema": "FX_RESEARCH_CAMPAIGN_V1",
+  "campaign_id": "CAMPAIGN_MULTIPAIR_CME_FUTURES_CONTEXT_BREAKOUT_RETEST_V1",
+  "hypothesis_id": "HYP_MULTIPAIR_CME_FUTURES_CONTEXT_BREAKOUT_RETEST_V1",
+  "created_at_utc": "2026-11-07T09:49:36Z",
+  "state": "DRAFT",
+  "title": "CME futures context for prior-day accepted breakout/retest",
+  "instrument": "FX_THREE_PAIR_PANEL",
+  "instruments": ["EUR_USD", "USD_JPY", "AUD_USD"],
+  "mechanism_class": "CENTRALIZED_FUTURES_CONTEXT_CONFIRMATION",
+  "research_question": "Do causally available CME futures participation and official positioning context improve selection of one fixed prior-day accepted-breakout/retest setup across three liquid FX pairs?",
+  "null_hypothesis": "None of the three predeclared futures-context filters has positive net expectancy and positive lift over both the unfiltered setup and its opposite-context control after familywise correction.",
+  "required_data_classes": ["HISTORICAL_COMPLETED_M15_CANDLES", "CME_FX_CONTINUOUS_BARS", "CME_FX_ROLL_SCHEDULE", "CME_FX_CANONICAL_STATISTICS", "CME_FX_OUTRIGHT_DEFINITIONS"],
+  "population": {
+    "source": "SEALED_OANDA_M15_AND_CAUSAL_DATABENTO_CME_FX_DERIVED_DATA",
+    "common_history_start_inclusive": "2018-09-20T00:00:00Z",
+    "development_decision_time_end_exclusive": "2023-01-01T00:00:00Z",
+    "sealed_validation_decision_times": "2023-01-01T00:00:00Z/2025-01-01T00:00:00Z",
+    "untouched_dated_confirmation_start_inclusive": "2025-01-01T00:00:00Z",
+    "validation_and_confirmation_rows_permitted_in_development": 0,
+    "decision_timeframe": "M15",
+    "entry_model": "NEXT_M15_OPEN",
+    "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE"
+  },
+  "independence_unit": {
+    "unit": "FIRST_QUALIFIED_PRIOR_DAY_LEVEL_DIRECTION_TRADING_DAY_WITH_NON_OVERLAPPING_PRIMARY_HORIZON",
+    "trading_day_boundary": "17:00_AMERICA_NEW_YORK",
+    "repeated_same_level_direction_events_count_once": true,
+    "overlapping_primary_holding_windows_allowed": false,
+    "pair_results": "DESCRIPTIVE_ONLY",
+    "pooled_panel": "PRIMARY_CONFIRMATORY_POPULATION"
+  },
+  "exact_specification": {
+    "spot_setup": {
+      "levels": "PRIOR_COMPLETED_17:00_NEW_YORK_TRADING_DAY_HIGH_AND_LOW",
+      "atr": "ATR14_FROM_PRIOR_COMPLETED_M15_BARS",
+      "breakout_pad": "MAX_1_0_PIP_OR_0_05_X_ATR14",
+      "long_breakout": "FIRST_COMPLETED_M15_CLOSE_AT_OR_ABOVE_PRIOR_DAY_HIGH_PLUS_BREAKOUT_PAD",
+      "short_breakout": "FIRST_COMPLETED_M15_CLOSE_AT_OR_BELOW_PRIOR_DAY_LOW_MINUS_BREAKOUT_PAD",
+      "retest_window_after_breakout_m15_bars": 8,
+      "retest_touch_distance": "MAX_1_5_PIPS_OR_0_10_X_ATR14",
+      "hold_distance": "0_5_PIP_BEYOND_LEVEL_IN_BREAKOUT_DIRECTION",
+      "entry": "NEXT_M15_OPEN_AFTER_QUALIFYING_RETEST_CLOSE",
+      "stop": "RETEST_CANDLE_EXTREME_PLUS_MAX_1_0_PIP_OR_0_05_X_ATR14_BUFFER_WITH_MINIMUM_4_0_PIP_ENTRY_RISK",
+      "target_r": 1.5,
+      "maximum_horizon_m15_bars": 16,
+      "horizon_exit": "FINAL_M15_CLOSE",
+      "gap_policy": "ADVERSE_OPEN_GAP_AT_OPEN_AND_FAVORABLE_OPEN_GAP_AT_TARGET_CONSERVATIVE",
+      "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE",
+      "fixed_round_trip_cost_pips": {"EUR_USD": 1.5, "USD_JPY": 1.8, "AUD_USD": 2.0}
+    },
+    "futures_mapping": {"EUR_USD": "6E", "USD_JPY": "6J_NORMALIZED_TO_USD_JPY", "AUD_USD": "6A"},
+    "availability": {
+      "continuous_contract": "PREVIOUS_VALID_COMPLETED_SESSION_OUTRIGHT_VOLUME_LEADER",
+      "intraday_bars": "FUTURES_1M_ROWS_WITH_WINDOW_END_AT_OR_BEFORE_SPOT_DECISION_TIME",
+      "official_statistics": "AVAILABLE_AT_UTC_STRICTLY_BEFORE_SPOT_DECISION_TIME",
+      "lookahead_or_revised_final_statistic_use_allowed": false
+    },
+    "intraday_volume_confirmation": {
+      "futures_return": "DECISION_ALIGNED_COMPLETED_15M_CLOSE_OVER_OPEN_MINUS_ONE",
+      "seasonality_baseline": "MEDIAN_VOLUME_FOR_SAME_AMERICA_NEW_YORK_LOCAL_QUARTER_HOUR_OVER_PRIOR_20_AVAILABLE_SESSIONS",
+      "minimum_prior_slot_observations": 20,
+      "minimum_volume_ratio": 1.25,
+      "confirmation": "FUTURES_RETURN_SIGN_ALIGNS_WITH_SPOT_DIRECTION_AND_VOLUME_RATIO_AT_OR_ABOVE_THRESHOLD",
+      "opposite_context_control": "FUTURES_RETURN_SIGN_OPPOSES_SPOT_DIRECTION_AND_VOLUME_RATIO_AT_OR_ABOVE_THRESHOLD"
+    },
+    "open_interest_settlement_confirmation": {
+      "open_interest": "LATEST_AVAILABLE_SELECTED_CONTRACT_REFERENCE_VALUE_EXCEEDS_PREVIOUS_REFERENCE_VALUE",
+      "settlement": "LATEST_AVAILABLE_SELECTED_CONTRACT_SETTLEMENT_CHANGE_SIGN_ALIGNS_WITH_SPOT_DIRECTION",
+      "confirmation": "OPEN_INTEREST_INCREASE_AND_SETTLEMENT_DIRECTION_ALIGNMENT",
+      "opposite_context_control": "OPEN_INTEREST_INCREASE_AND_SETTLEMENT_DIRECTION_OPPOSITION"
+    },
+    "treatments": ["INTRADAY_VOLUME_CONFIRMATION", "OI_AND_SETTLEMENT_CONFIRMATION", "ALL_CONTEXT_CONFLUENCE"]
+  },
+  "controls": [
+    {"control_id": "UNFILTERED_FIXED_SPOT_SETUP", "definition": "All independent fixed-geometry prior-day breakout/retest events before applying futures context."},
+    {"control_id": "OPPOSITE_CONTEXT_MATCHED_THRESHOLD", "definition": "For each treatment use the same thresholds but require futures directional context to oppose the spot setup; no outcomes or labels alter membership."}
+  ],
+  "metrics": {
+    "primary": "POOLED_DEVELOPMENT_AVERAGE_NET_R_AFTER_FIXED_PAIR_COST",
+    "secondary": ["EVENT_COUNT", "CALENDAR_MONTH_COUNT", "MEDIAN_NET_R", "POSITIVE_NET_R_RATE", "POSITIVE_MONTH_RATE", "WORST_MONTH_AVERAGE_NET_R", "MAXIMUM_DRAWDOWN_R", "MFE_R", "MAE_R", "EDGE_OVER_UNFILTERED_R", "EDGE_OVER_OPPOSITE_CONTEXT_R", "HOLM_ADJUSTED_ONE_SIDED_SIGN_FLIP_P_VALUE"],
+    "pair_breakdowns": "DESCRIPTIVE_ONLY"
+  },
+  "review_gates": {
+    "minimum_pooled_independent_events": 60,
+    "minimum_calendar_months_with_events": 18,
+    "minimum_average_net_r": 0.1,
+    "minimum_median_net_r_exclusive": 0.0,
+    "minimum_positive_net_r_rate": 0.45,
+    "minimum_positive_month_rate": 0.55,
+    "minimum_worst_month_average_net_r": -0.35,
+    "maximum_top_five_percent_positive_r_contribution_fraction": 0.5,
+    "minimum_average_net_r_edge_over_unfiltered": 0.05,
+    "minimum_average_net_r_edge_over_opposite_context": 0.1,
+    "holm_adjusted_p_value_maximum": 0.05,
+    "development_survivor_requires_human_review_before_validation": true
+  },
+  "multiple_comparisons_policy": {
+    "primary_hypothesis_count": 3,
+    "method": "HOLM_BONFERRONI",
+    "familywise_alpha": 0.05,
+    "parameter_sweeps_allowed": false,
+    "pair_breakdowns_can_qualify": false
+  },
+  "stopping_rules": {
+    "no_post_result_threshold_changes": true,
+    "no_post_result_geometry_changes": true,
+    "no_early_validation_or_confirmation_inspection": true,
+    "no_automatic_second_specification_after_failure": true,
+    "failure_closes_exact_specification": true
+  },
+  "source_manifest_ids": {
+    "EUR_USD": "EUR_USD_HISTORICAL_CANDLES_20261002T204500_5a7afd586133",
+    "USD_JPY": "USD_JPY_HISTORICAL_CANDLES_20261029T170000_d51de63297f5",
+    "AUD_USD": "AUD_USD_HISTORICAL_CANDLES_20261029T170000_2830dabf9c86"
+  },
+  "futures_build_ids": {"6E": "B4E29C6EA1D8FC3D4AA7", "6J": "EC7B572F0FADDCE3ADA3", "6A": "26875F02A6C758377359"},
+  "authority": {"automatic_approval": false, "automatic_execution": false, "downstream_activation": false, "order_authority": false}
+}

@@ -183,6 +183,23 @@ CME session. `6J` OHLC is inverted with high/low swapped so its normalized
 orientation matches `USD_JPY`. Outputs are checksum-validated Zstandard Parquet
 artifacts and remain research context only.
 
+The first locked use of those datasets tested whether centralized intraday
+volume, last-known open interest plus settlement direction, or their
+confluence improved one fixed prior-day accepted-breakout/retest setup across
+EUR/USD, USD/JPY, and AUD/USD. Run the reproducible development-only evaluator
+with:
+
+```bash
+python3 ops/futures_context_breakout_retest_research.py
+```
+
+All three filters failed. The unfiltered setup averaged `-0.371R`; the least
+negative filter, aligned high-volume confirmation, averaged `-0.295R` over 700
+events and did not clear the corrected significance or absolute-edge gates.
+Validation (2023-2024) and dated confirmation (2025 onward) were not opened.
+The exact campaign is parked without retuning and is summarized in
+`docs/CME_FUTURES_CONTEXT_BREAKOUT_RETEST_RESULT.md`.
+
 ## FX context discovery
 
 `EUR_USD_CONTEXT_DISCOVERY_V1` is the next outcome-blind discovery lane. It

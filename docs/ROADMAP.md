@@ -189,6 +189,23 @@
   result remains a descriptive lead only; do not retune V1 or open its sealed
   partitions. See `CFTC_TFF_FX_CROWDING_RESULT.md`.
 
+## Phase 9A: centralized futures context selection
+
+- Preserve the causal 6E/6J/6A continuous series, roll schedules, point-in-time
+  definitions, official statistics, and declared degraded-session exclusions.
+- Freeze one shared prior-day accepted-breakout/retest setup before reading
+  outcomes; use next-M15-open entry, fixed pair costs, stop-first ties, and
+  non-overlapping independent horizons.
+- Test exactly three context filters: aligned high-volume confirmation,
+  rising-open-interest plus aligned-settlement confirmation, and full
+  confluence. Correct the three-test family with Holm-Bonferroni.
+- Keep pair breakdowns descriptive and use the pooled three-pair panel as the
+  only confirmatory population.
+- Archive the completed development run as `NO_DEVELOPMENT_SURVIVORS`. Do not
+  retune thresholds or geometry, and do not open 2023-2024 validation or the
+  2025+ dated confirmation split. See
+  `CME_FUTURES_CONTEXT_BREAKOUT_RETEST_RESULT.md`.
+
 ## Phase 10: cross-system edge forensics and focused forward learning
 
 - Maintain one read-only report across immutable non-EUR research results,
