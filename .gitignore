@@ -18,4 +18,5 @@ data/result_inbox/*
 !data/evidence_inbox/.gitkeep
 reports/*
 !reports/.gitkeep
+exports/*
 

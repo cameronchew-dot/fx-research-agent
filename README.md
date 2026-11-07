@@ -175,6 +175,19 @@ Once bars, official statistics, and point-in-time definitions are available for
 python3 ops/databento_continuous_build.py --product all --register
 ```
 
+Export the latest causal 15-minute participation snapshot from the registered
+6E/6J/6A continuous series with:
+
+```bash
+python3 ops/cme_forward_context_export.py
+```
+
+The atomic JSON pack under `exports/cme_forward_context/latest.json` contains
+market context only and grants no downstream execution authority. The receiver
+must record first ingestion time and reject stale or retroactive context. The
+historical Databento packages do not update themselves; a current data source
+is required before this export can accumulate forward evidence.
+
 The versioned builder admits outright futures only, defines CME sessions at
 17:00 America/Chicago, selects each target session's contract from the previous
 valid completed session's volume leader, and ratio-adjusts rolls using only
