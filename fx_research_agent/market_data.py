@@ -93,6 +93,10 @@ def validate_manifest(manifest_path: Path) -> dict[str, Any]:
         "CME_FX_ORDER_BOOK",
         "CME_FX_OPEN_INTEREST",
         "CME_SPOT_BASIS",
+        "CME_FX_CONTINUOUS_BARS",
+        "CME_FX_ROLL_SCHEDULE",
+        "CME_FX_CANONICAL_STATISTICS",
+        "CME_FX_OUTRIGHT_DEFINITIONS",
     }:
         from .futures_context import validate_futures_payload
 
@@ -122,6 +126,10 @@ def register_manifest(connection, manifest_path: Path) -> dict[str, Any]:
             "CME_FX_ORDER_BOOK",
             "CME_FX_OPEN_INTEREST",
             "CME_SPOT_BASIS",
+            "CME_FX_CONTINUOUS_BARS",
+            "CME_FX_ROLL_SCHEDULE",
+            "CME_FX_CANONICAL_STATISTICS",
+            "CME_FX_OUTRIGHT_DEFINITIONS",
         })
     )
     usable = manifest["freshness_status"] == "FRESH" and (

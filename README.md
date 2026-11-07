@@ -168,6 +168,21 @@ venue statistics, and point-in-time instrument definitions. Each is registered
 under a distinct capability; statistics and definitions never imply trade-level
 order flow, aggressor classification, or true CVD.
 
+Once bars, official statistics, and point-in-time definitions are available for
+`6E`, `6J`, and `6A`, build the causal continuous datasets with:
+
+```bash
+python3 ops/databento_continuous_build.py --product all --register
+```
+
+The versioned builder admits outright futures only, defines CME sessions at
+17:00 America/Chicago, selects each target session's contract from the previous
+valid completed session's volume leader, and ratio-adjusts rolls using only
+prior-session closes. Provider-degraded UTC dates exclude every intersecting
+CME session. `6J` OHLC is inverted with high/low swapped so its normalized
+orientation matches `USD_JPY`. Outputs are checksum-validated Zstandard Parquet
+artifacts and remain research context only.
+
 ## FX context discovery
 
 `EUR_USD_CONTEXT_DISCOVERY_V1` is the next outcome-blind discovery lane. It

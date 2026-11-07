@@ -19,6 +19,10 @@ FUTURES_DATA_CLASSES = {
     "CME_FX_ORDER_BOOK",
     "CME_FX_OPEN_INTEREST",
     "CME_SPOT_BASIS",
+    "CME_FX_CONTINUOUS_BARS",
+    "CME_FX_ROLL_SCHEDULE",
+    "CME_FX_CANONICAL_STATISTICS",
+    "CME_FX_OUTRIGHT_DEFINITIONS",
 }
 
 SUPPORTED_PRODUCTS = {"6E", "6J", "6A"}
@@ -109,6 +113,62 @@ def _validate_databento_package(
     return payload
 
 
+def _validate_causal_continuous(
+    manifest: dict[str, Any], payload: dict[str, Any], payload_path: Path | None
+) -> dict[str, Any]:
+    product = str(payload.get("canonical_product") or "")
+    if product not in SUPPORTED_PRODUCTS or str(manifest.get("instrument")) != product:
+        raise ValueError("causal continuous product must match the manifest")
+    algorithm = payload.get("algorithm_spec")
+    if not isinstance(algorithm, dict):
+        raise ValueError("causal continuous payload requires an algorithm specification")
+    if algorithm.get("selection_information_cutoff") != "STRICTLY_BEFORE_TARGET_SESSION":
+        raise ValueError("causal continuous selection must be prior-session only")
+    if algorithm.get("roll_method") != "PREVIOUS_VALID_COMPLETED_SESSION_OUTRIGHT_VOLUME_LEADER":
+        raise ValueError("unsupported causal continuous roll method")
+    if algorithm.get("contract_filter") != "POINT_IN_TIME_DEFINITION_INSTRUMENT_CLASS_F_LEG_COUNT_0":
+        raise ValueError("causal continuous output must use point-in-time outright definitions")
+    authority = payload.get("authority")
+    if not isinstance(authority, dict) or authority.get("execution_authority") is not False:
+        raise ValueError("causal continuous output cannot have execution authority")
+    quality = payload.get("quality")
+    if not isinstance(quality, dict) or quality.get("exclusion_policy") != "EXCLUDE_INTERSECTING_CME_SESSIONS":
+        raise ValueError("causal continuous output requires declared session exclusions")
+    if manifest.get("gap_status") != "COMPLETE_WITH_DECLARED_EXCLUSIONS":
+        raise ValueError("causal continuous output must declare exclusions in its gap status")
+    required_classes = {
+        "CME_FX_CONTINUOUS_BARS",
+        "CME_FX_ROLL_SCHEDULE",
+        "CME_FX_CANONICAL_STATISTICS",
+        "CME_FX_OUTRIGHT_DEFINITIONS",
+    }
+    if not required_classes.issubset({str(value) for value in manifest.get("data_classes", [])}):
+        raise ValueError("causal continuous manifest is missing derived data classes")
+    sources = payload.get("source_packages")
+    if not isinstance(sources, list) or {str(value.get("category")) for value in sources} != {
+        "bars", "definition", "statistics"
+    }:
+        raise ValueError("causal continuous output requires bars, definitions, and statistics sources")
+    outputs = payload.get("outputs")
+    if not isinstance(outputs, list) or {str(value.get("data_class")) for value in outputs} != required_classes:
+        raise ValueError("causal continuous payload outputs are incomplete")
+    if payload_path is not None:
+        root = payload_path.parent.resolve()
+        for item in outputs:
+            output_path = (root / str(item.get("path") or "")).resolve()
+            if output_path.parent != root or not output_path.is_file():
+                raise ValueError("causal continuous output is missing or outside its immutable package")
+            if output_path.stat().st_size != int(item.get("size_bytes") or -1):
+                raise ValueError("causal continuous output size mismatch")
+            digest = hashlib.sha256()
+            with output_path.open("rb") as handle:
+                for chunk in iter(lambda: handle.read(8 * 1024 * 1024), b""):
+                    digest.update(chunk)
+            if digest.hexdigest() != item.get("sha256"):
+                raise ValueError("causal continuous output checksum mismatch")
+    return payload
+
+
 def validate_futures_payload(
     manifest: dict[str, Any], payload: Any, payload_path: Path | None = None
 ) -> dict[str, Any]:
@@ -116,6 +176,8 @@ def validate_futures_payload(
         raise ValueError("unsupported CME FX context payload schema")
     if payload.get("schema") == "CME_FX_DATABENTO_PACKAGE_V1":
         return _validate_databento_package(manifest, payload, payload_path)
+    if payload.get("schema") == "CME_FX_CAUSAL_CONTINUOUS_V1":
+        return _validate_causal_continuous(manifest, payload, payload_path)
     if payload.get("schema") != "CME_FX_CONTEXT_EXPORT_V1":
         raise ValueError("unsupported CME FX context payload schema")
     product = str(payload.get("canonical_product") or "")

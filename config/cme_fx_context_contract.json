@@ -15,7 +15,11 @@
     "CME_FX_AGGRESSOR_IMBALANCE",
     "CME_FX_ORDER_BOOK",
     "CME_FX_OPEN_INTEREST",
-    "CME_SPOT_BASIS"
+    "CME_SPOT_BASIS",
+    "CME_FX_CONTINUOUS_BARS",
+    "CME_FX_ROLL_SCHEDULE",
+    "CME_FX_CANONICAL_STATISTICS",
+    "CME_FX_OUTRIGHT_DEFINITIONS"
   ],
   "activation_phases": [
     {
@@ -42,6 +46,16 @@
       "phase_id": "MULTIPAIR_FUTURES_DEFINITIONS_V1",
       "required_products": ["6E", "6J", "6A"],
       "required_data_classes": ["CME_FX_DEFINITIONS"]
+    },
+    {
+      "phase_id": "MULTIPAIR_FUTURES_CAUSAL_CONTINUOUS_V1",
+      "required_products": ["6E", "6J", "6A"],
+      "required_data_classes": [
+        "CME_FX_CONTINUOUS_BARS",
+        "CME_FX_ROLL_SCHEDULE",
+        "CME_FX_CANONICAL_STATISTICS",
+        "CME_FX_OUTRIGHT_DEFINITIONS"
+      ]
     }
   ],
   "provider_requirements": {

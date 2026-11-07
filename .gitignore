@@ -10,6 +10,7 @@ data/inbox/*
 !data/inbox/.gitkeep
 data/evidence_inbox/*
 data/external/*
+data/derived/*
 data/motif_discovery/*
 data/context_discovery/*
 data/result_inbox/*
