@@ -61,6 +61,15 @@ python3 ops/research_supervisor.py context-discovery-status
 python3 ops/research_supervisor.py context-export-labels --matrix-metadata data/context_discovery/MATRIX_ID.json
 ```
 
+## Medium-horizon G10 trend diagnostic
+
+The locked G10 time-series momentum campaign evaluates one weekly 21/63/126-day
+trend ensemble across seven liquid USD majors. It is deliberately spot-only and
+cannot qualify for downstream use without observed historical financing or
+forward points. Reproduce it with the commands in
+`docs/G10_TIME_SERIES_MOMENTUM_DIAGNOSTIC.md`. The locked specification failed
+dated confirmation and is closed; see `docs/G10_TIME_SERIES_MOMENTUM_RESULT.md`.
+
 ## FX motif discovery
 
 `FX_MOTIF_DISCOVERY_V1` adds a research-only discovery lane modeled on the

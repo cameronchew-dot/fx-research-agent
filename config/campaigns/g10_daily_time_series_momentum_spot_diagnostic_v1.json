@@ -1,0 +1,91 @@
+{
+  "schema": "FX_RESEARCH_CAMPAIGN_V1",
+  "campaign_id": "CAMPAIGN_G10_DAILY_TIME_SERIES_MOMENTUM_SPOT_DIAGNOSTIC_V1",
+  "hypothesis_id": "HYP_G10_DAILY_TIME_SERIES_MOMENTUM_SPOT_DIAGNOSTIC_V1",
+  "created_at_utc": "2026-11-09T16:00:00Z",
+  "state": "DRAFT",
+  "title": "G10 daily time-series momentum spot-only diagnostic",
+  "instrument": "G10_USD_MAJOR_PORTFOLIO",
+  "instruments": ["EUR_USD", "GBP_USD", "AUD_USD", "NZD_USD", "USD_JPY", "USD_CHF", "USD_CAD"],
+  "mechanism_class": "MULTI_HORIZON_TIME_SERIES_MOMENTUM",
+  "research_question": "Does one predeclared weekly G10 time-series momentum portfolio retain positive net spot performance after turnover costs in chronological OOS and untouched dated confirmation windows?",
+  "null_hypothesis": "The locked portfolio has non-positive net spot return or no positive edge over its locked controls after costs.",
+  "required_data_classes": ["BIS_DAILY_AVERAGE_SPOT"],
+  "population": {
+    "source": "BIS_WS_XRU_DAILY_AVERAGE",
+    "base_currency": "USD",
+    "sample_calendar": "COMMON_COMPLETE_DAILY_OBSERVATIONS_ONLY",
+    "quote_normalization": "USD_VALUE_OF_ONE_UNIT_FOREIGN_CURRENCY",
+    "incomplete_cross_sections_are_excluded": true,
+    "daily_average_is_not_executable_bid_ask": true
+  },
+  "independence_unit": {
+    "unit": "ONE_ISO_WEEK_PORTFOLIO_HOLDING_INTERVAL",
+    "decision_time": "LAST_COMMON_DAILY_OBSERVATION_IN_ISO_WEEK",
+    "entry_time": "NEXT_COMMON_DAILY_OBSERVATION_AFTER_DECISION",
+    "overlapping_weeks_count_once": true
+  },
+  "exact_specification": {
+    "confirmatory_strategy": "G10_DAILY_TSMOM_21_63_126_WEEKLY_V1",
+    "lookback_common_trading_days": [21, 63, 126],
+    "direction_rule": "AT_LEAST_TWO_OF_THREE_LOG_RETURN_SIGNS_AGREE",
+    "volatility_lookback_common_trading_days": 20,
+    "weighting": "INVERSE_DAILY_VOLATILITY",
+    "maximum_absolute_pair_weight": 0.25,
+    "maximum_absolute_net_usd_factor_weight": 0.50,
+    "maximum_gross_weight": 1.0,
+    "rebalance_frequency": "WEEKLY",
+    "primary_cost_model": "FIVE_BPS_PER_UNIT_ONE_WAY_TURNOVER",
+    "stress_cost_model": "TEN_BPS_PER_UNIT_ONE_WAY_TURNOVER",
+    "return_definition": "WEEKLY_LOG_SPOT_RETURN_EXCLUDING_FINANCING",
+    "interpretation_limit": "DIAGNOSTIC_ONLY_NOT_CURRENCY_EXCESS_RETURN_NOT_PROMOTABLE",
+    "sample_partition": {
+      "development": "FIRST_60_PERCENT",
+      "chronological_oos": "NEXT_20_PERCENT",
+      "dated_confirmation": "FINAL_20_PERCENT_UNTOUCHED_UNTIL_LOCK"
+    },
+    "parameter_sweeps_allowed": false
+  },
+  "controls": [
+    {"control_id": "OPPOSITE_DIRECTION_CONTROL", "definition": "Reverse every primary pair direction with identical absolute weights"},
+    {"control_id": "ONE_WEEK_STALE_SIGNAL_CONTROL", "definition": "Apply the complete primary target portfolio known one additional decision week earlier"},
+    {"control_id": "FIXED_HASH_RANDOM_DIRECTION_CONTROL", "definition": "Replace active-pair directions with SHA-256 seed 20261109 while preserving primary absolute weights and caps"},
+    {"control_id": "SINGLE_USD_FACTOR_TREND_BASELINE", "definition": "Apply one common direction from the equal-weight 126-day G10 foreign-currency basket with identical volatility sizing and caps"}
+  ],
+  "metrics": {
+    "primary": "DATED_CONFIRMATION_AVERAGE_WEEKLY_NET_SPOT_RETURN",
+    "secondary": ["OOS_AVERAGE_WEEKLY_NET_SPOT_RETURN", "ANNUALIZED_SHARPE_ZERO_RATE", "POSITIVE_YEAR_RATE", "MAXIMUM_DRAWDOWN", "TURNOVER", "CONTROL_EDGE"]
+  },
+  "review_gates": {
+    "minimum_development_weeks": 500,
+    "minimum_chronological_oos_weeks": 150,
+    "minimum_dated_confirmation_weeks": 150,
+    "oos_average_net_spot_return_must_be_positive": true,
+    "dated_confirmation_average_net_spot_return_must_be_positive": true,
+    "dated_confirmation_annualized_sharpe_minimum": 0.5,
+    "dated_confirmation_positive_year_rate_minimum": 0.60,
+    "dated_confirmation_maximum_log_drawdown_floor": -0.20,
+    "all_four_dated_control_edges_must_be_positive": true,
+    "historical_financing_required_for_any_promotion": true,
+    "review_is_not_promotion": true
+  },
+  "multiple_comparisons_policy": {
+    "confirmatory_strategy_count": 1,
+    "parameter_sweeps_allowed": false,
+    "lookback_components_are_one_predeclared_ensemble": true
+  },
+  "stopping_rules": {
+    "no_early_success_declaration": true,
+    "no_post_result_universe_changes": true,
+    "no_post_result_lookback_changes": true,
+    "no_early_holdout_inspection": true,
+    "failed_oos_gate_closes_exact_specification": true,
+    "spot_diagnostic_cannot_activate_downstream_behavior": true
+  },
+  "research_basis": {
+    "primary_source": "Moskowitz, Ooi, and Pedersen, Time Series Momentum, Journal of Financial Economics 2012",
+    "source_url": "https://www.sciencedirect.com/science/article/pii/S0304405X11002613",
+    "translation_note": "The 21/63/126-day majority ensemble is locked as one specification. This diagnostic tests spot predictability only because historical financing is unavailable."
+  },
+  "authority": {"automatic_approval": false, "automatic_execution": false, "downstream_activation": false, "order_authority": false}
+}

@@ -418,6 +418,22 @@
       "expected_frequency": "MULTIPLE_PER_MONTH_POOLED_ACROSS_THREE_INSTRUMENTS",
       "overlap_notes": "Futures-native event trigger rather than a filter on a spot setup; continuation and failed-auction reversal are separate confirmatory hypotheses.",
       "next_action": "RUN_LOCKED_DEVELOPMENT_ONLY_EVALUATION_WITHOUT_OPENING_VALIDATION_OR_CONFIRMATION"
+    },
+    {
+      "hypothesis_id": "HYP_G10_DAILY_TIME_SERIES_MOMENTUM_SPOT_DIAGNOSTIC_V1",
+      "proposed_at_utc": "2026-11-09T16:00:00Z",
+      "proposed_by": "OPERATOR_AND_CODEX",
+      "state": "REJECTED",
+      "hypothesis_type": "MEDIUM_HORIZON_MULTI_INSTRUMENT_STRATEGY_DIAGNOSTIC",
+      "classification": "STRATEGY",
+      "priority": 28,
+      "statement": "A weekly inverse-volatility G10 portfolio whose pair direction is supported by at least two of the prior 21-, 63-, and 126-common-day spot returns may have positive net spot expectancy after turnover costs.",
+      "data_requirements": ["BIS_DAILY_AVERAGE_SPOT", "HISTORICAL_FINANCING_OR_FORWARD_POINTS_BEFORE_ANY_PROMOTION"],
+      "dependencies": ["NEXT_COMMON_DAY_ENTRY", "WEEKLY_NON_OVERLAPPING_HOLDS", "PAIR_AND_USD_FACTOR_CAPS", "SEALED_CHRONOLOGICAL_PARTITIONS", "FOUR_LOCKED_CONTROLS"],
+      "expected_frequency": "ONE_WEEKLY_PORTFOLIO_REBALANCE_WITH_ZERO_TO_SEVERAL_POSITION_CHANGES",
+      "overlap_notes": "Time-series trend evaluates each pair against its own past and is distinct from the existing monthly G10 cross-sectional MOM(1,1) ranking campaign.",
+      "evidence_ids": ["G10_DAILY_TIME_SERIES_MOMENTUM_SPOT_PRIMARY_V1", "G10_DAILY_TIME_SERIES_MOMENTUM_SPOT_STRESS_V1"],
+      "next_action": "CLOSED_FAILED_DATED_CONFIRMATION_AND_CONTROLS_DO_NOT_RETUNE"
     }
   ]
 }
