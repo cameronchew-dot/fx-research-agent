@@ -1,0 +1,4263 @@
+{
+  "assets": [
+    "SPY",
+    "EFA",
+    "IEF",
+    "TLT",
+    "GLD",
+    "DBC",
+    "UUP"
+  ],
+  "cash_proxy": "BIL",
+  "common_daily_observation_count": 4894,
+  "controls_dated_confirmation": {
+    "buy_hold": {
+      "annualized_information_ratio_over_cash": 0.5418659773312487,
+      "annualized_log_return": 0.06946054682684609,
+      "annualized_sharpe_zero_rate": 1.4516148729765495,
+      "annualized_volatility": 0.04785053399488571,
+      "average_active_asset_count": 7.0,
+      "average_monthly_excess_cash_return": 0.0021612744918386947,
+      "average_monthly_net_return": 0.005788378902237174,
+      "average_risky_gross_weight": 0.9496594769116615,
+      "average_turnover": 0.05011836099935605,
+      "maximum_log_drawdown": -0.033929973049422794,
+      "month_count": 45,
+      "positive_month_rate": 0.7111111111111111,
+      "positive_year_rate": 1.0,
+      "year_count": 4
+    },
+    "opposite": {
+      "annualized_information_ratio_over_cash": 0.06531051049343733,
+      "annualized_log_return": 0.046423703156677265,
+      "annualized_sharpe_zero_rate": 1.04856853007536,
+      "annualized_volatility": 0.04427340877123293,
+      "average_active_asset_count": 1.7555555555555555,
+      "average_monthly_excess_cash_return": 0.00024153751932462595,
+      "average_monthly_net_return": 0.0038686419297231057,
+      "average_risky_gross_weight": 0.38131377757842866,
+      "average_turnover": 0.19734512066785037,
+      "maximum_log_drawdown": -0.03811887819082718,
+      "month_count": 45,
+      "positive_month_rate": 0.6888888888888889,
+      "positive_year_rate": 1.0,
+      "year_count": 4
+    },
+    "random": {
+      "annualized_information_ratio_over_cash": -0.23481134739842952,
+      "annualized_log_return": 0.030658495885508723,
+      "annualized_sharpe_zero_rate": 0.5590688846647347,
+      "annualized_volatility": 0.05483849437246748,
+      "average_active_asset_count": 3.3777777777777778,
+      "average_monthly_excess_cash_return": -0.0010722297532727522,
+      "average_monthly_net_return": 0.002554874657125727,
+      "average_risky_gross_weight": 0.6704306262089812,
+      "average_turnover": 0.8038771080670685,
+      "maximum_log_drawdown": -0.055266250286586494,
+      "month_count": 45,
+      "positive_month_rate": 0.6444444444444445,
+      "positive_year_rate": 1.0,
+      "year_count": 4
+    },
+    "stale": {
+      "annualized_information_ratio_over_cash": 0.8906823307727517,
+      "annualized_log_return": 0.08312515024782191,
+      "annualized_sharpe_zero_rate": 1.869226112120541,
+      "annualized_volatility": 0.04447035578457691,
+      "average_active_asset_count": 5.177777777777778,
+      "average_monthly_excess_cash_return": 0.00329999144358668,
+      "average_monthly_net_return": 0.00692709585398516,
+      "average_risky_gross_weight": 0.8266913996436267,
+      "average_turnover": 0.20714631339203401,
+      "maximum_log_drawdown": -0.02899776135184149,
+      "month_count": 45,
+      "positive_month_rate": 0.7333333333333333,
+      "positive_year_rate": 1.0,
+      "year_count": 4
+    }
+  },
+  "cost_model": {
+    "one_way_cost_bps_per_unit_turnover": 10.0
+  },
+  "dated_average_excess_cash_edge": {
+    "buy_hold": 0.00011371798497195919,
+    "opposite": 0.002033454957486028,
+    "random": 0.003347222230083406,
+    "stale": -0.001024998966776026
+  },
+  "dated_sharpe_edge": {
+    "buy_hold": 0.12193873236935482,
+    "opposite": 0.5249850752705443,
+    "random": 1.0144847206811696,
+    "stale": -0.29567250677463663
+  },
+  "interpretation": "REJECTED_AS_SPECIFIED_CONTROL_NOT_DEFEATED",
+  "partitions": {
+    "chronological_oos": {
+      "annualized_information_ratio_over_cash": 0.37393541185572304,
+      "annualized_log_return": 0.027560435822731294,
+      "annualized_sharpe_zero_rate": 0.5416437184401297,
+      "annualized_volatility": 0.05088296030110366,
+      "average_active_asset_count": 4.204545454545454,
+      "average_monthly_excess_cash_return": 0.001600807895886089,
+      "average_monthly_net_return": 0.0022967029852276077,
+      "average_risky_gross_weight": 0.704516271062726,
+      "average_turnover": 0.14309700931931088,
+      "maximum_log_drawdown": -0.04956269815881968,
+      "month_count": 44,
+      "positive_month_rate": 0.5,
+      "positive_year_rate": 0.6,
+      "year_count": 5
+    },
+    "dated_confirmation": {
+      "annualized_information_ratio_over_cash": 0.6098848985092348,
+      "annualized_log_return": 0.07082516264650959,
+      "annualized_sharpe_zero_rate": 1.5735536053459043,
+      "annualized_volatility": 0.04500969169775474,
+      "average_active_asset_count": 5.2444444444444445,
+      "average_monthly_excess_cash_return": 0.002274992476810654,
+      "average_monthly_net_return": 0.005902096887209133,
+      "average_risky_gross_weight": 0.8337028968132963,
+      "average_turnover": 0.21729849437059612,
+      "maximum_log_drawdown": -0.03068594212080161,
+      "month_count": 45,
+      "positive_month_rate": 0.6888888888888889,
+      "positive_year_rate": 1.0,
+      "year_count": 4
+    },
+    "development": {
+      "annualized_information_ratio_over_cash": 0.35714718929010697,
+      "annualized_log_return": 0.023865161887665985,
+      "annualized_sharpe_zero_rate": 0.4212585360660901,
+      "annualized_volatility": 0.05665205531626745,
+      "average_active_asset_count": 4.318181818181818,
+      "average_monthly_excess_cash_return": 0.0016868292708687438,
+      "average_monthly_net_return": 0.0019887634906388322,
+      "average_risky_gross_weight": 0.7641400396444192,
+      "average_turnover": 0.19783111134839296,
+      "maximum_log_drawdown": -0.08352119546294462,
+      "month_count": 132,
+      "positive_month_rate": 0.6212121212121212,
+      "positive_year_rate": 0.75,
+      "year_count": 12
+    }
+  },
+  "portfolio_month_count": 221,
+  "promotion_blockers": [
+    "LOCKED_REVIEW_GATE_FAILED",
+    "INDEPENDENT_ADJUSTED_PRICE_SOURCE_CONFIRMATION_REQUIRED"
+  ],
+  "promotion_eligible": false,
+  "provenance": {
+    "campaign_spec": "config/campaigns/cross_asset_etf_trend_v1.json",
+    "campaign_spec_sha256": "0b80b072a5a1801aa42a12e10ea090b2b4cbea9ef1156555548c62458a6f56ff",
+    "prices_sha256": "d954c9d2c78a26a1e58a21bb19a1e692e446fb26edeb91548a18e6c57396efdc"
+  },
+  "review_gate_assessment": {
+    "dated_average_excess_cash_return_positive": true,
+    "dated_drawdown_better_than_buy_hold": true,
+    "dated_drawdown_within_twenty_five_percent": true,
+    "dated_excess_return_beats_opposite_random_and_stale": false,
+    "dated_information_ratio_at_least_point_five": true,
+    "dated_positive_year_rate_at_least_sixty_percent": true,
+    "dated_sharpe_beats_buy_hold": true,
+    "discovery_source_survivor": false,
+    "eligible_for_promotion": false,
+    "minimum_chronological_oos_months": true,
+    "minimum_dated_confirmation_months": true,
+    "minimum_development_months": true,
+    "oos_average_excess_cash_return_positive": true,
+    "promotion_blocker": "INDEPENDENT_ADJUSTED_PRICE_SOURCE_CONFIRMATION_REQUIRED"
+  },
+  "rows": [
+    {
+      "active_assets": [
+        "DBC",
+        "GLD",
+        "IEF",
+        "TLT"
+      ],
+      "cash_return": 0.0018757368884129873,
+      "cash_weight": 0.31897598008824435,
+      "cost_return": 0.0006810240199117556,
+      "decision_date": "2008-05-30",
+      "entry_date": "2008-06-02",
+      "excess_cash_return": 0.024285792966219497,
+      "exit_date": "2008-07-01",
+      "net_return": 0.026161529854632486,
+      "risky_gross_weight": 0.6810240199117557,
+      "turnover": 0.6810240199117557
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "GLD",
+        "IEF",
+        "TLT"
+      ],
+      "cash_return": 0.0012193893438194954,
+      "cash_weight": 0.33648039678562236,
+      "cost_return": 1.750441669737804e-05,
+      "decision_date": "2008-06-30",
+      "entry_date": "2008-07-01",
+      "excess_cash_return": -0.02015170935557068,
+      "exit_date": "2008-08-01",
+      "net_return": -0.018932320011751186,
+      "risky_gross_weight": 0.6635196032143776,
+      "turnover": 0.01750441669737804
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "GLD",
+        "IEF",
+        "TLT"
+      ],
+      "cash_return": 0.0018098282774910185,
+      "cash_weight": 0.3288617502985267,
+      "cost_return": 2.4036271929800846e-05,
+      "decision_date": "2008-07-31",
+      "entry_date": "2008-08-01",
+      "excess_cash_return": -0.01887493174798714,
+      "exit_date": "2008-09-02",
+      "net_return": -0.01706510347049612,
+      "risky_gross_weight": 0.6711382497014733,
+      "turnover": 0.024036271929800845
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "GLD",
+        "IEF",
+        "TLT"
+      ],
+      "cash_return": 0.004198884582450643,
+      "cash_weight": 0.35172944304164155,
+      "cost_return": 2.2867692743114886e-05,
+      "decision_date": "2008-08-29",
+      "entry_date": "2008-09-02",
+      "excess_cash_return": 0.00026671614398340003,
+      "exit_date": "2008-10-01",
+      "net_return": 0.004465600726434043,
+      "risky_gross_weight": 0.6482705569583584,
+      "turnover": 0.022867692743114884
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "GLD",
+        "IEF",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": -0.0024600888881226727,
+      "cash_weight": 0.2098776830634348,
+      "cost_return": 0.00029730728198667,
+      "decision_date": "2008-09-30",
+      "entry_date": "2008-10-01",
+      "excess_cash_return": -0.035099836431948715,
+      "exit_date": "2008-11-03",
+      "net_return": -0.03755992532007139,
+      "risky_gross_weight": 0.7901223169365652,
+      "turnover": 0.29730728198667
+    },
+    {
+      "active_assets": [
+        "IEF",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0025286256769910284,
+      "cash_weight": 0.3999999999999999,
+      "cost_return": 0.00022928135890144192,
+      "decision_date": "2008-10-31",
+      "entry_date": "2008-11-03",
+      "excess_cash_return": 0.04986328706941818,
+      "exit_date": "2008-12-01",
+      "net_return": 0.052391912746409204,
+      "risky_gross_weight": 0.6000000000000001,
+      "turnover": 0.2292813589014419
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": -0.002224094709681483,
+      "cash_weight": 0.2979847515739735,
+      "cost_return": 0.0001306494656921792,
+      "decision_date": "2008-11-28",
+      "entry_date": "2008-12-01",
+      "excess_cash_return": 0.01918786643329164,
+      "exit_date": "2009-01-02",
+      "net_return": 0.016963771723610157,
+      "risky_gross_weight": 0.7020152484260265,
+      "turnover": 0.1306494656921792
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.002355095558916171,
+      "cash_weight": 0.28750744221692215,
+      "cost_return": 1.997390399923836e-05,
+      "decision_date": "2008-12-31",
+      "entry_date": "2009-01-02",
+      "excess_cash_return": -0.011558413734049405,
+      "exit_date": "2009-02-02",
+      "net_return": -0.009203318175133233,
+      "risky_gross_weight": 0.7124925577830779,
+      "turnover": 0.01997390399923836
+    },
+    {
+      "active_assets": [
+        "IEF",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": -6.508041438799714e-05,
+      "cash_weight": 0.4,
+      "cost_return": 0.0001138577763254916,
+      "decision_date": "2009-01-30",
+      "entry_date": "2009-02-02",
+      "excess_cash_return": 0.001787262424591519,
+      "exit_date": "2009-03-02",
+      "net_return": 0.0017221820102035219,
+      "risky_gross_weight": 0.6,
+      "turnover": 0.11385777632549159
+    },
+    {
+      "active_assets": [
+        "IEF",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": -0.00047961551431728973,
+      "cash_weight": 0.3999999999999999,
+      "cost_return": 1.0087952001461287e-07,
+      "decision_date": "2009-02-27",
+      "entry_date": "2009-03-02",
+      "excess_cash_return": 0.0033149220770279752,
+      "exit_date": "2009-04-01",
+      "net_return": 0.0028353065627106855,
+      "risky_gross_weight": 0.6000000000000001,
+      "turnover": 0.00010087952001461287
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.000763201423580403,
+      "cash_weight": 0.24214280673032595,
+      "cost_return": 0.00018066905325725521,
+      "decision_date": "2009-03-31",
+      "entry_date": "2009-04-01",
+      "excess_cash_return": -0.03366933581258365,
+      "exit_date": "2009-05-01",
+      "net_return": -0.03290613438900324,
+      "risky_gross_weight": 0.757857193269674,
+      "turnover": 0.1806690532572552
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": -0.0010033045525272579,
+      "cash_weight": 0.2391589803401155,
+      "cost_return": 1.482745108764802e-05,
+      "decision_date": "2009-04-30",
+      "entry_date": "2009-05-01",
+      "excess_cash_return": -0.015303996488979248,
+      "exit_date": "2009-06-01",
+      "net_return": -0.016307301041506506,
+      "risky_gross_weight": 0.7608410196598845,
+      "turnover": 0.01482745108764802
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0006756328743914501,
+      "cash_weight": 0.22688046681520324,
+      "cost_return": 1.8484070485678767e-05,
+      "decision_date": "2009-05-29",
+      "entry_date": "2009-06-01",
+      "excess_cash_return": 0.0027045798523452355,
+      "exit_date": "2009-07-01",
+      "net_return": 0.0033802127267366856,
+      "risky_gross_weight": 0.7731195331847968,
+      "turnover": 0.018484070485678766
+    },
+    {
+      "active_assets": [
+        "IEF",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": -0.00039236537991371186,
+      "cash_weight": 0.4,
+      "cost_return": 0.00020584473153664344,
+      "decision_date": "2009-06-30",
+      "entry_date": "2009-07-01",
+      "excess_cash_return": -0.0073125868822748455,
+      "exit_date": "2009-08-03",
+      "net_return": -0.0077049522621885575,
+      "risky_gross_weight": 0.6,
+      "turnover": 0.20584473153664345
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": -0.00017381847502983378,
+      "cash_weight": 0.1875918773310773,
+      "cost_return": 0.0002710658430825533,
+      "decision_date": "2009-07-31",
+      "entry_date": "2009-08-03",
+      "excess_cash_return": 0.012943398879831532,
+      "exit_date": "2009-09-01",
+      "net_return": 0.012769580404801698,
+      "risky_gross_weight": 0.8124081226689227,
+      "turnover": 0.2710658430825533
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "TLT"
+      ],
+      "cash_return": 0.00026139565360783196,
+      "cash_weight": 0.35,
+      "cost_return": 0.00031254211768181586,
+      "decision_date": "2009-08-31",
+      "entry_date": "2009-09-01",
+      "excess_cash_return": 0.021141133032199153,
+      "exit_date": "2009-10-01",
+      "net_return": 0.021402528685806985,
+      "risky_gross_weight": 0.65,
+      "turnover": 0.31254211768181583
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "IEF",
+        "TLT"
+      ],
+      "cash_return": 0.0006756957474627614,
+      "cash_weight": 0.19072508697178892,
+      "cost_return": 0.00021935496243360105,
+      "decision_date": "2009-09-30",
+      "entry_date": "2009-10-01",
+      "excess_cash_return": 0.005179000306992774,
+      "exit_date": "2009-11-02",
+      "net_return": 0.005854696054455535,
+      "risky_gross_weight": 0.8092749130282111,
+      "turnover": 0.21935496243360106
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": -0.0004360995435439344,
+      "cash_weight": 0.13868267934598533,
+      "cost_return": 0.00028139081283098266,
+      "decision_date": "2009-10-30",
+      "entry_date": "2009-11-02",
+      "excess_cash_return": 0.04411292724862087,
+      "exit_date": "2009-12-01",
+      "net_return": 0.043676827705076936,
+      "risky_gross_weight": 0.8613173206540147,
+      "turnover": 0.28139081283098266
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY"
+      ],
+      "cash_return": -0.00013029225475509682,
+      "cash_weight": 0.18273872488229992,
+      "cost_return": 0.00030563868142915,
+      "decision_date": "2009-11-30",
+      "entry_date": "2009-12-01",
+      "excess_cash_return": -0.01486653761252321,
+      "exit_date": "2010-01-04",
+      "net_return": -0.014996829867278306,
+      "risky_gross_weight": 0.8172612751177001,
+      "turnover": 0.30563868142914996
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "SPY"
+      ],
+      "cash_return": 0.00021784078498258307,
+      "cash_weight": 0.19999999999999996,
+      "cost_return": 0.00048273872488229994,
+      "decision_date": "2009-12-31",
+      "entry_date": "2010-01-04",
+      "excess_cash_return": -0.03896103714074737,
+      "exit_date": "2010-02-01",
+      "net_return": -0.038743196355764786,
+      "risky_gross_weight": 0.8,
+      "turnover": 0.48273872488229996
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "SPY"
+      ],
+      "cash_return": -0.0004358335477668022,
+      "cash_weight": 0.19999999999999996,
+      "cost_return": 2.0494212030964076e-05,
+      "decision_date": "2010-01-29",
+      "entry_date": "2010-02-01",
+      "excess_cash_return": 0.0075380808548655845,
+      "exit_date": "2010-03-01",
+      "net_return": 0.007102247307098782,
+      "risky_gross_weight": 0.8,
+      "turnover": 0.020494212030964076
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY"
+      ],
+      "cash_return": 0.00043583354776679145,
+      "cash_weight": 0.18444796004112762,
+      "cost_return": 0.0004844479600411277,
+      "decision_date": "2010-02-26",
+      "entry_date": "2010-03-01",
+      "excess_cash_return": 0.019232113457705848,
+      "exit_date": "2010-04-01",
+      "net_return": 0.019667947005472638,
+      "risky_gross_weight": 0.8155520399588724,
+      "turnover": 0.48444796004112767
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "SPY"
+      ],
+      "cash_return": -0.0002178407849825737,
+      "cash_weight": 0.19999999999999996,
+      "cost_return": 0.0004844479600411277,
+      "decision_date": "2010-03-31",
+      "entry_date": "2010-04-01",
+      "excess_cash_return": 0.01157065787498915,
+      "exit_date": "2010-05-03",
+      "net_return": 0.011352817090006576,
+      "risky_gross_weight": 0.8,
+      "turnover": 0.48444796004112767
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY"
+      ],
+      "cash_return": 0.00021784078498258307,
+      "cash_weight": 0.168198997866441,
+      "cost_return": 0.0004681989978664411,
+      "decision_date": "2010-04-30",
+      "entry_date": "2010-05-03",
+      "excess_cash_return": -0.042052514374609516,
+      "exit_date": "2010-06-01",
+      "net_return": -0.04183467358962693,
+      "risky_gross_weight": 0.831801002133559,
+      "turnover": 0.46819899786644104
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.09789277258340268,
+      "cost_return": 0.0006153506329965919,
+      "decision_date": "2010-05-28",
+      "entry_date": "2010-06-01",
+      "excess_cash_return": 0.0005727142841295542,
+      "exit_date": "2010-07-01",
+      "net_return": 0.0005727142841295542,
+      "risky_gross_weight": 0.9021072274165973,
+      "turnover": 0.6153506329965919
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": -0.0004358335477668022,
+      "cash_weight": 0.10512753567123767,
+      "cost_return": 2.625785495256358e-05,
+      "decision_date": "2010-06-30",
+      "entry_date": "2010-07-01",
+      "excess_cash_return": 0.005090509295689768,
+      "exit_date": "2010-08-02",
+      "net_return": 0.004654675747922965,
+      "risky_gross_weight": 0.8948724643287623,
+      "turnover": 0.02625785495256358
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.00021799276278431046,
+      "cash_weight": 0.05804783894535237,
+      "cost_return": 0.00015299119314470143,
+      "decision_date": "2010-07-30",
+      "entry_date": "2010-08-02",
+      "excess_cash_return": 0.017288336741056374,
+      "exit_date": "2010-09-01",
+      "net_return": 0.017506329503840685,
+      "risky_gross_weight": 0.9419521610546476,
+      "turnover": 0.15299119314470144
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.06688267557566385,
+      "cost_return": 0.00011823730087333968,
+      "decision_date": "2010-08-31",
+      "entry_date": "2010-09-01",
+      "excess_cash_return": 0.011129948172268728,
+      "exit_date": "2010-10-01",
+      "net_return": 0.011129948172268728,
+      "risky_gross_weight": 0.9331173244243361,
+      "turnover": 0.11823730087333968
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.00021784078498258307,
+      "cash_weight": 0.007459110441078276,
+      "cost_return": 0.00015428986855627446,
+      "decision_date": "2010-09-30",
+      "entry_date": "2010-10-01",
+      "excess_cash_return": 0.006910089409469672,
+      "exit_date": "2010-11-01",
+      "net_return": 0.007127930194452255,
+      "risky_gross_weight": 0.9925408895589217,
+      "turnover": 0.15428986855627447
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": -0.0002178407849825737,
+      "cash_weight": 0.04442047100497981,
+      "cost_return": 0.0003630386394360985,
+      "decision_date": "2010-10-29",
+      "entry_date": "2010-11-01",
+      "excess_cash_return": -0.0016484034847996476,
+      "exit_date": "2010-12-01",
+      "net_return": -0.0018662442697822213,
+      "risky_gross_weight": 0.9555795289950202,
+      "turnover": 0.36303863943609854
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.00021784078498258307,
+      "cash_weight": 0.0,
+      "cost_return": 0.0003344352367265352,
+      "decision_date": "2010-11-30",
+      "entry_date": "2010-12-01",
+      "excess_cash_return": 0.009222875180614796,
+      "exit_date": "2011-01-03",
+      "net_return": 0.009440715965597379,
+      "risky_gross_weight": 1.0,
+      "turnover": 0.3344352367265352
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": -0.0002178407849825737,
+      "cash_weight": 0.01157131374997511,
+      "cost_return": 0.00036728439398153983,
+      "decision_date": "2010-12-31",
+      "entry_date": "2011-01-03",
+      "excess_cash_return": 0.0034306314327578937,
+      "exit_date": "2011-02-01",
+      "net_return": 0.00321279064777532,
+      "risky_gross_weight": 0.9884286862500249,
+      "turnover": 0.36728439398153984
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.0,
+      "cost_return": 1.6719482315523116e-05,
+      "decision_date": "2011-01-31",
+      "entry_date": "2011-02-01",
+      "excess_cash_return": 0.019742584009580018,
+      "exit_date": "2011-03-01",
+      "net_return": 0.019742584009580018,
+      "risky_gross_weight": 1.0,
+      "turnover": 0.016719482315523115
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 1.1102230246251565e-16,
+      "cost_return": 4.313630170905411e-05,
+      "decision_date": "2011-02-28",
+      "entry_date": "2011-03-01",
+      "excess_cash_return": 0.006088218760984127,
+      "exit_date": "2011-04-01",
+      "net_return": 0.006088218760984127,
+      "risky_gross_weight": 0.9999999999999999,
+      "turnover": 0.04313630170905411
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.05207618759653798,
+      "cost_return": 0.00013188079973677148,
+      "decision_date": "2011-03-31",
+      "entry_date": "2011-04-01",
+      "excess_cash_return": 0.03144095225367568,
+      "exit_date": "2011-05-02",
+      "net_return": 0.03144095225367568,
+      "risky_gross_weight": 0.947923812403462,
+      "turnover": 0.13188079973677147
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.061045021662867405,
+      "cost_return": 4.270749124598164e-05,
+      "decision_date": "2011-04-29",
+      "entry_date": "2011-05-02",
+      "excess_cash_return": -0.0021229934292730235,
+      "exit_date": "2011-06-01",
+      "net_return": -0.0021229934292730235,
+      "risky_gross_weight": 0.9389549783371326,
+      "turnover": 0.04270749124598164
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.10992208066176534,
+      "cost_return": 8.248711664352038e-05,
+      "decision_date": "2011-05-31",
+      "entry_date": "2011-06-01",
+      "excess_cash_return": -0.011734184195604846,
+      "exit_date": "2011-07-01",
+      "net_return": -0.011734184195604846,
+      "risky_gross_weight": 0.8900779193382347,
+      "turnover": 0.08248711664352038
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY"
+      ],
+      "cash_return": 0.00021784078498258307,
+      "cash_weight": 0.14328749684904918,
+      "cost_return": 0.0002927235816009074,
+      "decision_date": "2011-06-30",
+      "entry_date": "2011-07-01",
+      "excess_cash_return": 0.014864408073765968,
+      "exit_date": "2011-08-01",
+      "net_return": 0.015082248858748551,
+      "risky_gross_weight": 0.8567125031509508,
+      "turnover": 0.2927235816009074
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.07685571654313539,
+      "cost_return": 0.00024891904270187123,
+      "decision_date": "2011-07-29",
+      "entry_date": "2011-08-01",
+      "excess_cash_return": 0.02761290519561995,
+      "exit_date": "2011-09-01",
+      "net_return": 0.02761290519561995,
+      "risky_gross_weight": 0.9231442834568646,
+      "turnover": 0.2489190427018712
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": -0.0002178407849825737,
+      "cash_weight": 0.08701216769278741,
+      "cost_return": 0.00017635411637076408,
+      "decision_date": "2011-08-31",
+      "entry_date": "2011-09-01",
+      "excess_cash_return": -0.03912141545337983,
+      "exit_date": "2011-10-03",
+      "net_return": -0.03933925623836241,
+      "risky_gross_weight": 0.9129878323072126,
+      "turnover": 0.1763541163707641
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.1510563646140638,
+      "cost_return": 0.0001359722300143026,
+      "decision_date": "2011-09-30",
+      "entry_date": "2011-10-03",
+      "excess_cash_return": 0.023282657082482543,
+      "exit_date": "2011-11-01",
+      "net_return": 0.023282657082482543,
+      "risky_gross_weight": 0.8489436353859362,
+      "turnover": 0.1359722300143026
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": -0.00043634666925459017,
+      "cash_weight": 0.15231290324614766,
+      "cost_return": 1.0949502354573287e-05,
+      "decision_date": "2011-10-31",
+      "entry_date": "2011-11-01",
+      "excess_cash_return": 0.0020178886147089715,
+      "exit_date": "2011-12-01",
+      "net_return": 0.0015815419454543811,
+      "risky_gross_weight": 0.8476870967538523,
+      "turnover": 0.010949502354573287
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": -0.0001748011046750805,
+      "cash_weight": 0.16025684133741647,
+      "cost_return": 1.8445741170953516e-05,
+      "decision_date": "2011-11-30",
+      "entry_date": "2011-12-01",
+      "excess_cash_return": -0.0011079885330685256,
+      "exit_date": "2012-01-03",
+      "net_return": -0.001282789637743606,
+      "risky_gross_weight": 0.8397431586625835,
+      "turnover": 0.018445741170953517
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.2595761287538523,
+      "cost_return": 0.00028471129858674126,
+      "decision_date": "2011-12-30",
+      "entry_date": "2012-01-03",
+      "excess_cash_return": 0.02390124418933831,
+      "exit_date": "2012-02-01",
+      "net_return": 0.02390124418933831,
+      "risky_gross_weight": 0.7404238712461477,
+      "turnover": 0.28471129858674127
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.26730345816978296,
+      "cost_return": 2.542721588877081e-05,
+      "decision_date": "2012-01-31",
+      "entry_date": "2012-02-01",
+      "excess_cash_return": -0.003164969395791267,
+      "exit_date": "2012-03-01",
+      "net_return": -0.003164969395791267,
+      "risky_gross_weight": 0.732696541830217,
+      "turnover": 0.02542721588877081
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": -0.00021812604520086415,
+      "cash_weight": 0.2631498459271877,
+      "cost_return": 7.129290580504841e-05,
+      "decision_date": "2012-02-29",
+      "entry_date": "2012-03-01",
+      "excess_cash_return": -0.0033017649318357795,
+      "exit_date": "2012-04-02",
+      "net_return": -0.0035198909770366438,
+      "risky_gross_weight": 0.7368501540728123,
+      "turnover": 0.0712929058050484
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0004366226518341166,
+      "cash_weight": 0.11796511558836964,
+      "cost_return": 0.0002933426410097246,
+      "decision_date": "2012-03-30",
+      "entry_date": "2012-04-02",
+      "excess_cash_return": 0.006279733134667326,
+      "exit_date": "2012-05-01",
+      "net_return": 0.006716355786501442,
+      "risky_gross_weight": 0.8820348844116304,
+      "turnover": 0.2933426410097246
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.1479462194788299,
+      "cost_return": 4.29000848811924e-05,
+      "decision_date": "2012-04-30",
+      "entry_date": "2012-05-01",
+      "excess_cash_return": 0.015362624062443523,
+      "exit_date": "2012-06-01",
+      "net_return": 0.015362624062443523,
+      "risky_gross_weight": 0.8520537805211701,
+      "turnover": 0.0429000848811924
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": -0.0004366226518341504,
+      "cash_weight": 0.15058353775735123,
+      "cost_return": 4.677889026153676e-05,
+      "decision_date": "2012-05-31",
+      "entry_date": "2012-06-01",
+      "excess_cash_return": -0.0010908680501722356,
+      "exit_date": "2012-07-02",
+      "net_return": -0.001527490702006386,
+      "risky_gross_weight": 0.8494164622426488,
+      "turnover": 0.046778890261536754
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.00021812604520084298,
+      "cash_weight": 0.17428580932386206,
+      "cost_return": 3.9530035878290345e-05,
+      "decision_date": "2012-06-29",
+      "entry_date": "2012-07-02",
+      "excess_cash_return": 0.008233542766551916,
+      "exit_date": "2012-08-01",
+      "net_return": 0.00845166881175276,
+      "risky_gross_weight": 0.8257141906761379,
+      "turnover": 0.03953003587829035
+    },
+    {
+      "active_assets": [
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": -0.00021812604520086415,
+      "cash_weight": 0.2629946892671039,
+      "cost_return": 0.00015813735121681418,
+      "decision_date": "2012-07-31",
+      "entry_date": "2012-08-01",
+      "excess_cash_return": -0.0027722905568083114,
+      "exit_date": "2012-09-04",
+      "net_return": -0.0029904166020091757,
+      "risky_gross_weight": 0.7370053107328961,
+      "turnover": 0.1581373512168142
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.17164363862029675,
+      "cost_return": 0.00011239949246986582,
+      "decision_date": "2012-08-31",
+      "entry_date": "2012-09-04",
+      "excess_cash_return": 0.0007103077734537969,
+      "exit_date": "2012-10-01",
+      "net_return": 0.0007103077734537969,
+      "risky_gross_weight": 0.8283563613797033,
+      "turnover": 0.11239949246986583
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.00021812604520084298,
+      "cash_weight": 0.09506326792291109,
+      "cost_return": 0.000502028606115447,
+      "decision_date": "2012-09-28",
+      "entry_date": "2012-10-01",
+      "excess_cash_return": -0.015076864864737423,
+      "exit_date": "2012-11-01",
+      "net_return": -0.014858738819536579,
+      "risky_gross_weight": 0.9049367320770889,
+      "turnover": 0.502028606115447
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": -0.00021812604520086415,
+      "cash_weight": 0.14692942459542502,
+      "cost_return": 0.0004951026781811408,
+      "decision_date": "2012-10-31",
+      "entry_date": "2012-11-01",
+      "excess_cash_return": 0.004676242102653391,
+      "exit_date": "2012-12-03",
+      "net_return": 0.004458116057452527,
+      "risky_gross_weight": 0.853070575404575,
+      "turnover": 0.49510267818114073
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.15182467605015548,
+      "cost_return": 0.0004005967991733014,
+      "decision_date": "2012-11-30",
+      "entry_date": "2012-12-03",
+      "excess_cash_return": 0.0029612884408524664,
+      "exit_date": "2013-01-02",
+      "net_return": 0.0029612884408524664,
+      "risky_gross_weight": 0.8481753239498445,
+      "turnover": 0.40059679917330143
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": -0.0002182782355137397,
+      "cash_weight": 0.09249353446945141,
+      "cost_return": 0.00024390040683021943,
+      "decision_date": "2012-12-31",
+      "entry_date": "2013-01-02",
+      "excess_cash_return": 0.0024340704578493006,
+      "exit_date": "2013-02-01",
+      "net_return": 0.002215792222335561,
+      "risky_gross_weight": 0.9075064655305486,
+      "turnover": 0.24390040683021944
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.0002182782355136419,
+      "cash_weight": 0.14298039721763267,
+      "cost_return": 0.00025002304281367783,
+      "decision_date": "2013-01-31",
+      "entry_date": "2013-02-01",
+      "excess_cash_return": -0.004015346330516424,
+      "exit_date": "2013-03-01",
+      "net_return": -0.003797068095002782,
+      "risky_gross_weight": 0.8570196027823673,
+      "turnover": 0.2500230428136778
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": -0.0002182782355137397,
+      "cash_weight": 0.17427932171337213,
+      "cost_return": 0.00043406933227470697,
+      "decision_date": "2013-02-28",
+      "entry_date": "2013-03-01",
+      "excess_cash_return": 0.005011712967052328,
+      "exit_date": "2013-04-01",
+      "net_return": 0.0047934347315385884,
+      "risky_gross_weight": 0.8257206782866279,
+      "turnover": 0.434069332274707
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.15653588979906075,
+      "cost_return": 2.0873899395443234e-05,
+      "decision_date": "2013-03-28",
+      "entry_date": "2013-04-01",
+      "excess_cash_return": 0.016046571517220616,
+      "exit_date": "2013-05-01",
+      "net_return": 0.016046571517220616,
+      "risky_gross_weight": 0.8434641102009393,
+      "turnover": 0.020873899395443235
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0002182782355136419,
+      "cash_weight": 0.17588361820498122,
+      "cost_return": 1.93477284059205e-05,
+      "decision_date": "2013-04-30",
+      "entry_date": "2013-05-01",
+      "excess_cash_return": -0.013326008851904492,
+      "exit_date": "2013-06-03",
+      "net_return": -0.01310773061639085,
+      "risky_gross_weight": 0.8241163817950188,
+      "turnover": 0.0193477284059205
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "SPY"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.6,
+      "cost_return": 0.0007416460116592672,
+      "decision_date": "2013-05-31",
+      "entry_date": "2013-06-03",
+      "excess_cash_return": -0.007675376909225758,
+      "exit_date": "2013-07-01",
+      "net_return": -0.007675376909225758,
+      "risky_gross_weight": 0.4,
+      "turnover": 0.7416460116592671
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "SPY"
+      ],
+      "cash_return": -0.00043681337307977707,
+      "cash_weight": 0.35,
+      "cost_return": 0.00025,
+      "decision_date": "2013-06-28",
+      "entry_date": "2013-07-01",
+      "excess_cash_return": 0.029261964665458454,
+      "exit_date": "2013-08-01",
+      "net_return": 0.028825151292378677,
+      "risky_gross_weight": 0.65,
+      "turnover": 0.25
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "SPY"
+      ],
+      "cash_return": 0.00021853513756602073,
+      "cash_weight": 0.6,
+      "cost_return": 0.00025,
+      "decision_date": "2013-07-31",
+      "entry_date": "2013-08-01",
+      "excess_cash_return": -0.010655537265153966,
+      "exit_date": "2013-09-03",
+      "net_return": -0.010437002127587946,
+      "risky_gross_weight": 0.4,
+      "turnover": 0.25
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "SPY"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.6,
+      "cost_return": 0.0,
+      "decision_date": "2013-08-30",
+      "entry_date": "2013-09-03",
+      "excess_cash_return": 0.019219810738491397,
+      "exit_date": "2013-10-01",
+      "net_return": 0.019219810738491397,
+      "risky_gross_weight": 0.4,
+      "turnover": 0.0
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "SPY"
+      ],
+      "cash_return": -0.0004362808726789754,
+      "cash_weight": 0.6,
+      "cost_return": 0.0,
+      "decision_date": "2013-09-30",
+      "entry_date": "2013-10-01",
+      "excess_cash_return": 0.012507706885885355,
+      "exit_date": "2013-11-01",
+      "net_return": 0.01207142601320638,
+      "risky_gross_weight": 0.4,
+      "turnover": 0.0
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "SPY"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.6,
+      "cost_return": 0.0,
+      "decision_date": "2013-10-31",
+      "entry_date": "2013-11-01",
+      "excess_cash_return": 0.005422896220792561,
+      "exit_date": "2013-12-02",
+      "net_return": 0.005422896220792561,
+      "risky_gross_weight": 0.4,
+      "turnover": 0.0
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "SPY"
+      ],
+      "cash_return": -0.00021883985050094164,
+      "cash_weight": 0.6,
+      "cost_return": 0.0,
+      "decision_date": "2013-11-29",
+      "entry_date": "2013-12-02",
+      "excess_cash_return": 0.0060125905893992386,
+      "exit_date": "2014-01-02",
+      "net_return": 0.005793750738898297,
+      "risky_gross_weight": 0.4,
+      "turnover": 0.0
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "SPY"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.6,
+      "cost_return": 0.0,
+      "decision_date": "2013-12-31",
+      "entry_date": "2014-01-02",
+      "excess_cash_return": -0.021037091690152856,
+      "exit_date": "2014-02-03",
+      "net_return": -0.021037091690152856,
+      "risky_gross_weight": 0.4,
+      "turnover": 0.0
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.00021883985050095574,
+      "cash_weight": 0.3999999999999999,
+      "cost_return": 0.00022637245152447728,
+      "decision_date": "2014-01-31",
+      "entry_date": "2014-02-03",
+      "excess_cash_return": 0.0206771539709383,
+      "exit_date": "2014-03-03",
+      "net_return": 0.020895993821439255,
+      "risky_gross_weight": 0.6000000000000001,
+      "turnover": 0.22637245152447727
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "SPY"
+      ],
+      "cash_return": -0.00021883985050094164,
+      "cash_weight": 0.6,
+      "cost_return": 0.00022637245152447728,
+      "decision_date": "2014-02-28",
+      "entry_date": "2014-03-03",
+      "excess_cash_return": 0.008883693084636445,
+      "exit_date": "2014-04-01",
+      "net_return": 0.008664853234135503,
+      "risky_gross_weight": 0.4,
+      "turnover": 0.22637245152447727
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "SPY"
+      ],
+      "cash_return": -0.00021920183056999188,
+      "cash_weight": 0.6,
+      "cost_return": 0.0,
+      "decision_date": "2014-03-31",
+      "entry_date": "2014-04-01",
+      "excess_cash_return": 0.00275824858805002,
+      "exit_date": "2014-05-01",
+      "net_return": 0.0025390467574800285,
+      "risky_gross_weight": 0.4,
+      "turnover": 0.0
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "SPY"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.35,
+      "cost_return": 0.00025,
+      "decision_date": "2014-04-30",
+      "entry_date": "2014-05-01",
+      "excess_cash_return": 0.005547381774758283,
+      "exit_date": "2014-06-02",
+      "net_return": 0.005547381774758283,
+      "risky_gross_weight": 0.65,
+      "turnover": 0.25
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.0002192018305700322,
+      "cash_weight": 0.22434411851350444,
+      "cost_return": 0.0006743441185135045,
+      "decision_date": "2014-05-30",
+      "entry_date": "2014-06-02",
+      "excess_cash_return": 0.0063030438853568125,
+      "exit_date": "2014-07-01",
+      "net_return": 0.006522245715926845,
+      "risky_gross_weight": 0.7756558814864956,
+      "turnover": 0.6743441185135045
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": -0.00021920183056999188,
+      "cash_weight": 0.05496341923956449,
+      "cost_return": 0.0004245658084820852,
+      "decision_date": "2014-06-30",
+      "entry_date": "2014-07-01",
+      "excess_cash_return": -0.017018550912806525,
+      "exit_date": "2014-08-01",
+      "net_return": -0.01723775274337652,
+      "risky_gross_weight": 0.9450365807604355,
+      "turnover": 0.42456580848208525
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": -0.00021820273692190893,
+      "cash_weight": 0.19999999999999996,
+      "cost_return": 0.0004147494993170958,
+      "decision_date": "2014-07-31",
+      "entry_date": "2014-08-01",
+      "excess_cash_return": 0.015000253589345949,
+      "exit_date": "2014-09-02",
+      "net_return": 0.014782050852424039,
+      "risky_gross_weight": 0.8,
+      "turnover": 0.41474949931709576
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.00021820273692187034,
+      "cash_weight": 0.19999999999999996,
+      "cost_return": 2.1866469991022595e-05,
+      "decision_date": "2014-08-29",
+      "entry_date": "2014-09-02",
+      "excess_cash_return": -0.012631635999439126,
+      "exit_date": "2014-10-01",
+      "net_return": -0.012413433262517256,
+      "risky_gross_weight": 0.8,
+      "turnover": 0.021866469991022597
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": -0.00043676731121249204,
+      "cash_weight": 0.16141170466745502,
+      "cost_return": 0.0003901979676524939,
+      "decision_date": "2014-09-30",
+      "entry_date": "2014-10-01",
+      "excess_cash_return": 0.010934147210151002,
+      "exit_date": "2014-11-03",
+      "net_return": 0.01049737989893851,
+      "risky_gross_weight": 0.838588295332545,
+      "turnover": 0.3901979676524939
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.15311641081381644,
+      "cost_return": 5.3382838986291205e-05,
+      "decision_date": "2014-10-31",
+      "entry_date": "2014-11-03",
+      "excess_cash_return": 0.011001127944603114,
+      "exit_date": "2014-12-01",
+      "net_return": 0.011001127944603114,
+      "risky_gross_weight": 0.8468835891861836,
+      "turnover": 0.0533828389862912
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": -0.00021871711493612304,
+      "cash_weight": 0.14109046253319546,
+      "cost_return": 2.0296370414625703e-05,
+      "decision_date": "2014-11-28",
+      "entry_date": "2014-12-01",
+      "excess_cash_return": 0.012143027720307249,
+      "exit_date": "2015-01-02",
+      "net_return": 0.011924310605371125,
+      "risky_gross_weight": 0.8589095374668045,
+      "turnover": 0.020296370414625703
+    },
+    {
+      "active_assets": [
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.24638417486943986,
+      "cost_return": 0.00017070311663285325,
+      "decision_date": "2014-12-31",
+      "entry_date": "2015-01-02",
+      "excess_cash_return": 0.02599906238770885,
+      "exit_date": "2015-02-02",
+      "net_return": 0.02599906238770885,
+      "risky_gross_weight": 0.7536158251305601,
+      "turnover": 0.17070311663285326
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": -0.00021845061191554045,
+      "cash_weight": 0.1485056491128116,
+      "cost_return": 0.00013814691188549568,
+      "decision_date": "2015-01-30",
+      "entry_date": "2015-02-02",
+      "excess_cash_return": -0.01606670023243744,
+      "exit_date": "2015-03-02",
+      "net_return": -0.01628515084435298,
+      "risky_gross_weight": 0.8514943508871884,
+      "turnover": 0.1381469118854957
+    },
+    {
+      "active_assets": [
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": -0.0002191271845687874,
+      "cash_weight": 0.21558204212210386,
+      "cost_return": 0.00013538932668792012,
+      "decision_date": "2015-02-27",
+      "entry_date": "2015-03-02",
+      "excess_cash_return": 0.012195996860451558,
+      "exit_date": "2015-04-01",
+      "net_return": 0.011976869675882771,
+      "risky_gross_weight": 0.7844179578778961,
+      "turnover": 0.13538932668792011
+    },
+    {
+      "active_assets": [
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.19783779355073405,
+      "cost_return": 2.5877587315503353e-05,
+      "decision_date": "2015-03-31",
+      "entry_date": "2015-04-01",
+      "excess_cash_return": -0.015892469199492613,
+      "exit_date": "2015-05-01",
+      "net_return": -0.015892469199492613,
+      "risky_gross_weight": 0.802162206449266,
+      "turnover": 0.025877587315503353
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.06922826249637326,
+      "cost_return": 0.00019918860100205774,
+      "decision_date": "2015-04-30",
+      "entry_date": "2015-05-01",
+      "excess_cash_return": -0.0004656884054487995,
+      "exit_date": "2015-06-01",
+      "net_return": -0.0004656884054487995,
+      "risky_gross_weight": 0.9307717375036267,
+      "turnover": 0.19918860100205774
+    },
+    {
+      "active_assets": [
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.17286175686973937,
+      "cost_return": 0.00021228273723456113,
+      "decision_date": "2015-05-29",
+      "entry_date": "2015-06-01",
+      "excess_cash_return": -0.017601819177066828,
+      "exit_date": "2015-07-01",
+      "net_return": -0.017601819177066828,
+      "risky_gross_weight": 0.8271382431302606,
+      "turnover": 0.21228273723456115
+    },
+    {
+      "active_assets": [
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.15865925951402682,
+      "cost_return": 3.2989045877759774e-05,
+      "decision_date": "2015-06-30",
+      "entry_date": "2015-07-01",
+      "excess_cash_return": 0.020498968223149304,
+      "exit_date": "2015-08-03",
+      "net_return": 0.020498968223149304,
+      "risky_gross_weight": 0.8413407404859732,
+      "turnover": 0.032989045877759776
+    },
+    {
+      "active_assets": [
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.17229007158376664,
+      "cost_return": 1.363081206973979e-05,
+      "decision_date": "2015-07-31",
+      "entry_date": "2015-08-03",
+      "excess_cash_return": -0.026472674288226875,
+      "exit_date": "2015-09-01",
+      "net_return": -0.026472674288226875,
+      "risky_gross_weight": 0.8277099284162334,
+      "turnover": 0.01363081206973979
+    },
+    {
+      "active_assets": [
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": -0.00021833657270672,
+      "cash_weight": 0.2510935278160614,
+      "cost_return": 0.00010424520889311639,
+      "decision_date": "2015-08-31",
+      "entry_date": "2015-09-01",
+      "excess_cash_return": 0.008059339299493916,
+      "exit_date": "2015-10-01",
+      "net_return": 0.007841002726787196,
+      "risky_gross_weight": 0.7489064721839386,
+      "turnover": 0.10424520889311639
+    },
+    {
+      "active_assets": [
+        "IEF",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": -0.00043786496706382745,
+      "cash_weight": 0.4,
+      "cost_return": 0.0001759928836594915,
+      "decision_date": "2015-09-30",
+      "entry_date": "2015-10-01",
+      "excess_cash_return": -0.003316774872214433,
+      "exit_date": "2015-11-02",
+      "net_return": -0.0037546398392782603,
+      "risky_gross_weight": 0.6,
+      "turnover": 0.1759928836594915
+    },
+    {
+      "active_assets": [
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.2832354737872065,
+      "cost_return": 0.00012897215648520688,
+      "decision_date": "2015-10-30",
+      "entry_date": "2015-11-02",
+      "excess_cash_return": 0.008186581861648458,
+      "exit_date": "2015-12-01",
+      "net_return": 0.008186581861648458,
+      "risky_gross_weight": 0.7167645262127935,
+      "turnover": 0.12897215648520688
+    },
+    {
+      "active_assets": [
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.00021864189081245567,
+      "cash_weight": 0.2680390752998213,
+      "cost_return": 1.5634126055067714e-05,
+      "decision_date": "2015-11-30",
+      "entry_date": "2015-12-01",
+      "excess_cash_return": -0.010508651921276079,
+      "exit_date": "2016-01-04",
+      "net_return": -0.010290010030463623,
+      "risky_gross_weight": 0.7319609247001787,
+      "turnover": 0.015634126055067712
+    },
+    {
+      "active_assets": [
+        "IEF",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": -0.00043785608858730327,
+      "cash_weight": 0.36204063126300434,
+      "cost_return": 0.00023507124980999655,
+      "decision_date": "2015-12-31",
+      "entry_date": "2016-01-04",
+      "excess_cash_return": -0.0004178860819785335,
+      "exit_date": "2016-02-01",
+      "net_return": -0.0008557421705658368,
+      "risky_gross_weight": 0.6379593687369957,
+      "turnover": 0.23507124980999652
+    },
+    {
+      "active_assets": [
+        "IEF",
+        "UUP"
+      ],
+      "cash_return": 0.0004378560885872148,
+      "cash_weight": 0.55,
+      "cost_return": 0.00018795936873699568,
+      "decision_date": "2016-01-29",
+      "entry_date": "2016-02-01",
+      "excess_cash_return": 0.0004328615339949648,
+      "exit_date": "2016-03-01",
+      "net_return": 0.0008707176225821796,
+      "risky_gross_weight": 0.45,
+      "turnover": 0.18795936873699567
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.2675563672943706,
+      "cost_return": 0.00030999139449784625,
+      "decision_date": "2016-02-29",
+      "entry_date": "2016-03-01",
+      "excess_cash_return": -0.004202239685922449,
+      "exit_date": "2016-04-01",
+      "net_return": -0.004202239685922449,
+      "risky_gross_weight": 0.7324436327056294,
+      "turnover": 0.30999139449784624
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.00021922307625146976,
+      "cash_weight": 0.3093398974336826,
+      "cost_return": 0.00039745962123992015,
+      "decision_date": "2016-03-31",
+      "entry_date": "2016-04-01",
+      "excess_cash_return": 0.003063414228146692,
+      "exit_date": "2016-05-02",
+      "net_return": 0.0032826373043981618,
+      "risky_gross_weight": 0.6906601025663174,
+      "turnover": 0.3974596212399201
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.00021833657270680935,
+      "cash_weight": 0.282503563743848,
+      "cost_return": 5.3442810851890644e-05,
+      "decision_date": "2016-04-29",
+      "entry_date": "2016-05-02",
+      "excess_cash_return": -0.0017371797636314009,
+      "exit_date": "2016-06-01",
+      "net_return": -0.0015188431909245916,
+      "risky_gross_weight": 0.717496436256152,
+      "turnover": 0.05344281085189065
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.00021912718456884236,
+      "cash_weight": 0.2536959227367719,
+      "cost_return": 2.9143088957212987e-05,
+      "decision_date": "2016-05-31",
+      "entry_date": "2016-06-01",
+      "excess_cash_return": 0.03520454942213275,
+      "exit_date": "2016-07-01",
+      "net_return": 0.03542367660670159,
+      "risky_gross_weight": 0.7463040772632281,
+      "turnover": 0.029143088957212987
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": -0.0002191271845687874,
+      "cash_weight": 0.2636377615910622,
+      "cost_return": 4.059225005782299e-05,
+      "decision_date": "2016-06-30",
+      "entry_date": "2016-07-01",
+      "excess_cash_return": 0.005795570886112618,
+      "exit_date": "2016-08-01",
+      "net_return": 0.00557644370154383,
+      "risky_gross_weight": 0.7363622384089378,
+      "turnover": 0.04059225005782299
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.00021912718456884236,
+      "cash_weight": 0.2497089923451119,
+      "cost_return": 2.4461655762411466e-05,
+      "decision_date": "2016-07-29",
+      "entry_date": "2016-08-01",
+      "excess_cash_return": -0.005238646962290506,
+      "exit_date": "2016-09-01",
+      "net_return": -0.005019519777721664,
+      "risky_gross_weight": 0.7502910076548881,
+      "turnover": 0.024461655762411466
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.17089658074390357,
+      "cost_return": 0.0001421893083003768,
+      "decision_date": "2016-08-31",
+      "entry_date": "2016-09-01",
+      "excess_cash_return": -0.0037592512128320696,
+      "exit_date": "2016-10-03",
+      "net_return": -0.0037592512128320696,
+      "risky_gross_weight": 0.8291034192560964,
+      "turnover": 0.1421893083003768
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.0002184506119154756,
+      "cash_weight": 0.13657768530937842,
+      "cost_return": 9.092634259491345e-05,
+      "decision_date": "2016-09-30",
+      "entry_date": "2016-10-03",
+      "excess_cash_return": -0.01997056188013384,
+      "exit_date": "2016-11-01",
+      "net_return": -0.019752111268218363,
+      "risky_gross_weight": 0.8634223146906216,
+      "turnover": 0.09092634259491345
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.00024092135114719734,
+      "cash_weight": 0.14374296239924822,
+      "cost_return": 0.0004071652770898698,
+      "decision_date": "2016-10-31",
+      "entry_date": "2016-11-01",
+      "excess_cash_return": -0.02471798034563268,
+      "exit_date": "2016-12-01",
+      "net_return": -0.024477058994485483,
+      "risky_gross_weight": 0.8562570376007518,
+      "turnover": 0.4071652770898698
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "GLD",
+        "IEF",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.00019709334496505898,
+      "cash_weight": 0.16240806043129696,
+      "cost_return": 0.00024988231745790896,
+      "decision_date": "2016-11-30",
+      "entry_date": "2016-12-01",
+      "excess_cash_return": 0.009388968716685046,
+      "exit_date": "2017-01-03",
+      "net_return": 0.009586062061650105,
+      "risky_gross_weight": 0.837591939568703,
+      "turnover": 0.24988231745790898
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 6.554953951397858e-05,
+      "cash_weight": 0.0,
+      "cost_return": 0.000306189203712461,
+      "decision_date": "2016-12-30",
+      "entry_date": "2017-01-03",
+      "excess_cash_return": 0.00385423237682319,
+      "exit_date": "2017-02-01",
+      "net_return": 0.003919781916337168,
+      "risky_gross_weight": 1.0,
+      "turnover": 0.30618920371246106
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 4.355770052918674e-05,
+      "cash_weight": 0.11419678690472179,
+      "cost_return": 0.0005518883584563184,
+      "decision_date": "2017-01-31",
+      "entry_date": "2017-02-01",
+      "excess_cash_return": 0.022055116653185276,
+      "exit_date": "2017-03-01",
+      "net_return": 0.022098674353714463,
+      "risky_gross_weight": 0.8858032130952782,
+      "turnover": 0.5518883584563183
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.00030652554186469454,
+      "cash_weight": 0.11055411154587902,
+      "cost_return": 6.25480572410636e-06,
+      "decision_date": "2017-02-28",
+      "entry_date": "2017-03-01",
+      "excess_cash_return": -0.007446451756994053,
+      "exit_date": "2017-04-03",
+      "net_return": -0.007139926215129358,
+      "risky_gross_weight": 0.889445888454121,
+      "turnover": 0.00625480572410636
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.0005897554342280464,
+      "cash_weight": 0.09082841013120246,
+      "cost_return": 3.03101719559353e-05,
+      "decision_date": "2017-03-31",
+      "entry_date": "2017-04-03",
+      "excess_cash_return": 0.0024571289198718348,
+      "exit_date": "2017-05-01",
+      "net_return": 0.003046884354099881,
+      "risky_gross_weight": 0.9091715898687975,
+      "turnover": 0.0303101719559353
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.0005912896938004683,
+      "cash_weight": 0.2096399518712495,
+      "cost_return": 0.00020176122223821143,
+      "decision_date": "2017-04-28",
+      "entry_date": "2017-05-01",
+      "excess_cash_return": 0.0022935575678120317,
+      "exit_date": "2017-06-01",
+      "net_return": 0.0028848472616125,
+      "risky_gross_weight": 0.7903600481287505,
+      "turnover": 0.2017612222382114
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.0007658350996577201,
+      "cash_weight": 0.20418172879517726,
+      "cost_return": 0.00039354487487601035,
+      "decision_date": "2017-05-31",
+      "entry_date": "2017-06-01",
+      "excess_cash_return": -0.01120381952508347,
+      "exit_date": "2017-07-03",
+      "net_return": -0.01043798442542575,
+      "risky_gross_weight": 0.7958182712048227,
+      "turnover": 0.39354487487601036
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "SPY"
+      ],
+      "cash_return": 0.00048106414053241444,
+      "cash_weight": 0.6,
+      "cost_return": 0.0004217213378243244,
+      "decision_date": "2017-06-30",
+      "entry_date": "2017-07-03",
+      "excess_cash_return": 0.010147125470072096,
+      "exit_date": "2017-08-01",
+      "net_return": 0.01062818961060451,
+      "risky_gross_weight": 0.4,
+      "turnover": 0.42172133782432436
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "SPY"
+      ],
+      "cash_return": 0.000940049258666742,
+      "cash_weight": 0.3991285713637066,
+      "cost_return": 0.0002008714286362934,
+      "decision_date": "2017-07-31",
+      "entry_date": "2017-08-01",
+      "excess_cash_return": 0.002079907347084048,
+      "exit_date": "2017-09-01",
+      "net_return": 0.00301995660575079,
+      "risky_gross_weight": 0.6008714286362934,
+      "turnover": 0.2008714286362934
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "SPY"
+      ],
+      "cash_return": 0.0006996360747879727,
+      "cash_weight": 0.19999999999999996,
+      "cost_return": 0.00027760979807076345,
+      "decision_date": "2017-08-31",
+      "entry_date": "2017-09-01",
+      "excess_cash_return": -0.0006631324059239907,
+      "exit_date": "2017-10-02",
+      "net_return": 3.650366886398201e-05,
+      "risky_gross_weight": 0.8,
+      "turnover": 0.27760979807076347
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "SPY"
+      ],
+      "cash_return": 0.0007658159889676837,
+      "cash_weight": 0.38271454687460693,
+      "cost_return": 0.00029402382255986313,
+      "decision_date": "2017-09-29",
+      "entry_date": "2017-10-02",
+      "excess_cash_return": 0.017415120985912077,
+      "exit_date": "2017-11-01",
+      "net_return": 0.018180936974879762,
+      "risky_gross_weight": 0.6172854531253931,
+      "turnover": 0.29402382255986315
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "SPY"
+      ],
+      "cash_return": 0.0005025833262061807,
+      "cash_weight": 0.3729784311253126,
+      "cost_return": 9.736115749294255e-06,
+      "decision_date": "2017-10-31",
+      "entry_date": "2017-11-01",
+      "excess_cash_return": 0.009323294670170176,
+      "exit_date": "2017-12-01",
+      "net_return": 0.009825877996376357,
+      "risky_gross_weight": 0.6270215688746874,
+      "turnover": 0.009736115749294255
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.000787316923466999,
+      "cash_weight": 0.04036261306992128,
+      "cost_return": 0.0006243734957666658,
+      "decision_date": "2017-11-30",
+      "entry_date": "2017-12-01",
+      "excess_cash_return": 0.010921409788343594,
+      "exit_date": "2018-01-02",
+      "net_return": 0.011708726711810592,
+      "risky_gross_weight": 0.9596373869300787,
+      "turnover": 0.6243734957666658
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.0011590840911444421,
+      "cash_weight": 0.0636889113033412,
+      "cost_return": 4.248055807263613e-05,
+      "decision_date": "2017-12-29",
+      "entry_date": "2018-01-02",
+      "excess_cash_return": 0.011287431462992546,
+      "exit_date": "2018-02-01",
+      "net_return": 0.012446515554136988,
+      "risky_gross_weight": 0.9363110886966588,
+      "turnover": 0.042480558072636135
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.0009733907425013192,
+      "cash_weight": 0.08774247360745147,
+      "cost_return": 6.571804335220007e-05,
+      "decision_date": "2018-01-31",
+      "entry_date": "2018-02-01",
+      "excess_cash_return": -0.02818208140948821,
+      "exit_date": "2018-03-01",
+      "net_return": -0.02720869066698689,
+      "risky_gross_weight": 0.9122575263925485,
+      "turnover": 0.06571804335220006
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.0011476989648434234,
+      "cash_weight": 0.061240555349789005,
+      "cost_return": 0.0005561814455074492,
+      "decision_date": "2018-02-28",
+      "entry_date": "2018-03-01",
+      "excess_cash_return": 0.003346230521837908,
+      "exit_date": "2018-04-02",
+      "net_return": 0.004493929486681331,
+      "risky_gross_weight": 0.938759444650211,
+      "turnover": 0.5561814455074492
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.0011690655289494296,
+      "cash_weight": 0.06948231923121861,
+      "cost_return": 6.863297637423303e-05,
+      "decision_date": "2018-03-29",
+      "entry_date": "2018-04-02",
+      "excess_cash_return": 0.0020867767381089093,
+      "exit_date": "2018-05-01",
+      "net_return": 0.003255842267058339,
+      "risky_gross_weight": 0.9305176807687814,
+      "turnover": 0.06863297637423302
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "SPY"
+      ],
+      "cash_return": 0.0014862755128877223,
+      "cash_weight": 0.2175283176959636,
+      "cost_return": 0.00036028843223861995,
+      "decision_date": "2018-04-30",
+      "entry_date": "2018-05-01",
+      "excess_cash_return": 0.005453473067559508,
+      "exit_date": "2018-06-01",
+      "net_return": 0.00693974858044723,
+      "risky_gross_weight": 0.7824716823040364,
+      "turnover": 0.36028843223861995
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "SPY"
+      ],
+      "cash_return": 0.0012788638778756685,
+      "cash_weight": 0.19999999999999996,
+      "cost_return": 1.7528317695963607e-05,
+      "decision_date": "2018-05-31",
+      "entry_date": "2018-06-01",
+      "excess_cash_return": -0.024392877169308467,
+      "exit_date": "2018-07-02",
+      "net_return": -0.023114013291432797,
+      "risky_gross_weight": 0.8,
+      "turnover": 0.017528317695963608
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.0015840635542453802,
+      "cash_weight": 0.10623460937570284,
+      "cost_return": 0.00035380534190562426,
+      "decision_date": "2018-06-29",
+      "entry_date": "2018-07-02",
+      "excess_cash_return": 0.001520944595859807,
+      "exit_date": "2018-08-01",
+      "net_return": 0.003105008150105187,
+      "risky_gross_weight": 0.8937653906242972,
+      "turnover": 0.3538053419056243
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.0016175930521760337,
+      "cash_weight": 0.24777717888644246,
+      "cost_return": 0.00030602816301918183,
+      "decision_date": "2018-07-31",
+      "entry_date": "2018-08-01",
+      "excess_cash_return": 0.005194889199997125,
+      "exit_date": "2018-09-04",
+      "net_return": 0.006812482252173159,
+      "risky_gross_weight": 0.7522228211135575,
+      "turnover": 0.30602816301918184
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.001376380004574297,
+      "cash_weight": 0.2556156843060198,
+      "cost_return": 2.0405177227315497e-05,
+      "decision_date": "2018-08-31",
+      "entry_date": "2018-09-04",
+      "excess_cash_return": 0.013222191220142744,
+      "exit_date": "2018-10-01",
+      "net_return": 0.014598571224717041,
+      "risky_gross_weight": 0.7443843156939802,
+      "turnover": 0.020405177227315496
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.0018576478447192523,
+      "cash_weight": 0.25411493333847435,
+      "cost_return": 1.1236127031923921e-05,
+      "decision_date": "2018-09-28",
+      "entry_date": "2018-10-01",
+      "excess_cash_return": -0.03818391381723003,
+      "exit_date": "2018-11-01",
+      "net_return": -0.03632626597251078,
+      "risky_gross_weight": 0.7458850666615257,
+      "turnover": 0.01123612703192392
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.001606184399509136,
+      "cash_weight": 0.37108354005960553,
+      "cost_return": 0.00026515774428784004,
+      "decision_date": "2018-10-31",
+      "entry_date": "2018-11-01",
+      "excess_cash_return": -0.010989089680913269,
+      "exit_date": "2018-12-03",
+      "net_return": -0.009382905281404133,
+      "risky_gross_weight": 0.6289164599403945,
+      "turnover": 0.26515774428784
+    },
+    {
+      "active_assets": [
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.0017489570480362295,
+      "cash_weight": 0.5602945547687526,
+      "cost_return": 0.000250748256180613,
+      "decision_date": "2018-11-30",
+      "entry_date": "2018-12-03",
+      "excess_cash_return": -0.0261270950824794,
+      "exit_date": "2019-01-02",
+      "net_return": -0.02437813803444317,
+      "risky_gross_weight": 0.43970544523124744,
+      "turnover": 0.250748256180613
+    },
+    {
+      "active_assets": [
+        "IEF",
+        "UUP"
+      ],
+      "cash_return": 0.0019556972484348063,
+      "cash_weight": 0.55,
+      "cost_return": 0.0004897054452312474,
+      "decision_date": "2018-12-31",
+      "entry_date": "2019-01-02",
+      "excess_cash_return": -0.0035716610631214506,
+      "exit_date": "2019-02-01",
+      "net_return": -0.0016159638146866443,
+      "risky_gross_weight": 0.45,
+      "turnover": 0.48970544523124737
+    },
+    {
+      "active_assets": [
+        "IEF",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0018573311870886964,
+      "cash_weight": 0.3999999999999999,
+      "cost_return": 0.00023443087698627938,
+      "decision_date": "2019-01-31",
+      "entry_date": "2019-02-01",
+      "excess_cash_return": -0.002558131549751164,
+      "exit_date": "2019-03-01",
+      "net_return": -0.0007008003626624676,
+      "risky_gross_weight": 0.6000000000000001,
+      "turnover": 0.2344308769862794
+    },
+    {
+      "active_assets": [
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0018148341264485374,
+      "cash_weight": 0.3118604758753951,
+      "cost_return": 0.00011455785486168217,
+      "decision_date": "2019-02-28",
+      "entry_date": "2019-03-01",
+      "excess_cash_return": 0.016594887699245265,
+      "exit_date": "2019-04-01",
+      "net_return": 0.018409721825693802,
+      "risky_gross_weight": 0.6881395241246049,
+      "turnover": 0.11455785486168218
+    },
+    {
+      "active_assets": [
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0017918513081745223,
+      "cash_weight": 0.26729453529401614,
+      "cost_return": 5.27113952207847e-05,
+      "decision_date": "2019-03-29",
+      "entry_date": "2019-04-01",
+      "excess_cash_return": 0.002822966522752453,
+      "exit_date": "2019-05-01",
+      "net_return": 0.004614817830926975,
+      "risky_gross_weight": 0.7327054647059839,
+      "turnover": 0.05271139522078469
+    },
+    {
+      "active_assets": [
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0020320378394067134,
+      "cash_weight": 0.23556979965359315,
+      "cost_return": 6.128313788866659e-05,
+      "decision_date": "2019-04-30",
+      "entry_date": "2019-05-01",
+      "excess_cash_return": 0.007685592043057741,
+      "exit_date": "2019-06-03",
+      "net_return": 0.009717629882464454,
+      "risky_gross_weight": 0.7644302003464069,
+      "turnover": 0.0612831378886666
+    },
+    {
+      "active_assets": [
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0018027172366094258,
+      "cash_weight": 0.270135201105702,
+      "cost_return": 4.144220757059872e-05,
+      "decision_date": "2019-05-31",
+      "entry_date": "2019-06-03",
+      "excess_cash_return": 0.010232100665149298,
+      "exit_date": "2019-07-01",
+      "net_return": 0.012034817901758723,
+      "risky_gross_weight": 0.729864798894298,
+      "turnover": 0.041442207570598716
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0021304403193987517,
+      "cash_weight": 0.09524474609575384,
+      "cost_return": 0.0002997184980800302,
+      "decision_date": "2019-06-28",
+      "entry_date": "2019-07-01",
+      "excess_cash_return": 0.010026800420462608,
+      "exit_date": "2019-08-01",
+      "net_return": 0.01215724073986136,
+      "risky_gross_weight": 0.9047552539042462,
+      "turnover": 0.2997184980800302
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0016174264451053768,
+      "cash_weight": 0.17539002624994593,
+      "cost_return": 0.0001555478643995711,
+      "decision_date": "2019-07-31",
+      "entry_date": "2019-08-01",
+      "excess_cash_return": 0.026497360687409655,
+      "exit_date": "2019-09-03",
+      "net_return": 0.028114787132515032,
+      "risky_gross_weight": 0.8246099737500541,
+      "turnover": 0.15554786439957108
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0013871467602689647,
+      "cash_weight": 0.20313042405629245,
+      "cost_return": 3.9839613625794466e-05,
+      "decision_date": "2019-08-30",
+      "entry_date": "2019-09-03",
+      "excess_cash_return": -0.010057359203409824,
+      "exit_date": "2019-10-01",
+      "net_return": -0.00867021244314086,
+      "risky_gross_weight": 0.7968695759437076,
+      "turnover": 0.03983961362579447
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0016282486372651227,
+      "cash_weight": 0.20187027014519987,
+      "cost_return": 2.684487906568331e-05,
+      "decision_date": "2019-09-30",
+      "entry_date": "2019-10-01",
+      "excess_cash_return": 0.0002543897755986366,
+      "exit_date": "2019-11-01",
+      "net_return": 0.0018826384128637593,
+      "risky_gross_weight": 0.7981297298548001,
+      "turnover": 0.026844879065683308
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0011685805000159143,
+      "cash_weight": 0.13682971363172025,
+      "cost_return": 0.00017368421819145835,
+      "decision_date": "2019-10-31",
+      "entry_date": "2019-11-01",
+      "excess_cash_return": -0.005529876341293625,
+      "exit_date": "2019-12-02",
+      "net_return": -0.004361295841277711,
+      "risky_gross_weight": 0.8631702863682797,
+      "turnover": 0.17368421819145835
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0013670309105176285,
+      "cash_weight": 0.086335647466388,
+      "cost_return": 0.00018646141395028132,
+      "decision_date": "2019-11-29",
+      "entry_date": "2019-12-02",
+      "excess_cash_return": 0.01655654561055021,
+      "exit_date": "2020-01-02",
+      "net_return": 0.01792357652106784,
+      "risky_gross_weight": 0.913664352533612,
+      "turnover": 0.18646141395028132
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0009621373622001936,
+      "cash_weight": 0.0979354813204113,
+      "cost_return": 7.814219721151284e-05,
+      "decision_date": "2019-12-31",
+      "entry_date": "2020-01-02",
+      "excess_cash_return": 0.00033776997995087763,
+      "exit_date": "2020-02-03",
+      "net_return": 0.0012999073421510712,
+      "risky_gross_weight": 0.9020645186795887,
+      "turnover": 0.07814219721151285
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0013883438682250442,
+      "cash_weight": 0.13342257474164243,
+      "cost_return": 0.00016091517194362216,
+      "decision_date": "2020-01-31",
+      "entry_date": "2020-02-03",
+      "excess_cash_return": -0.004362214047048644,
+      "exit_date": "2020-03-02",
+      "net_return": -0.0029738701788236,
+      "risky_gross_weight": 0.8665774252583576,
+      "turnover": 0.16091517194362215
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0016598996213788748,
+      "cash_weight": 0.1527526729919937,
+      "cost_return": 0.0001332429156340361,
+      "decision_date": "2020-02-28",
+      "entry_date": "2020-03-02",
+      "excess_cash_return": -0.01736911140880436,
+      "exit_date": "2020-04-01",
+      "net_return": -0.015709211787425487,
+      "risky_gross_weight": 0.8472473270080063,
+      "turnover": 0.1332429156340361
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": -0.00028386233764154034,
+      "cash_weight": 0.23896002764988622,
+      "cost_return": 0.00027962520409608783,
+      "decision_date": "2020-03-31",
+      "entry_date": "2020-04-01",
+      "excess_cash_return": 0.011879366493062425,
+      "exit_date": "2020-05-01",
+      "net_return": 0.011595504155420884,
+      "risky_gross_weight": 0.7610399723501138,
+      "turnover": 0.2796252040960878
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0001096019713295946,
+      "cash_weight": 0.19604054101274893,
+      "cost_return": 0.00010350939470021705,
+      "decision_date": "2020-04-30",
+      "entry_date": "2020-05-01",
+      "excess_cash_return": 0.003092338624919674,
+      "exit_date": "2020-06-01",
+      "net_return": 0.0032019405962492686,
+      "risky_gross_weight": 0.8039594589872511,
+      "turnover": 0.10350939470021704
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": -0.00010960197132958272,
+      "cash_weight": 0.1943268977688395,
+      "cost_return": 6.60142642118941e-06,
+      "decision_date": "2020-05-29",
+      "entry_date": "2020-06-01",
+      "excess_cash_return": 0.0038928044779723858,
+      "exit_date": "2020-07-01",
+      "net_return": 0.003783202506642803,
+      "risky_gross_weight": 0.8056731022311605,
+      "turnover": 0.00660142642118941
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.2472080841115627,
+      "cost_return": 6.302824249728569e-05,
+      "decision_date": "2020-06-30",
+      "entry_date": "2020-07-01",
+      "excess_cash_return": 0.016084408906442225,
+      "exit_date": "2020-08-03",
+      "net_return": 0.016084408906442225,
+      "risky_gross_weight": 0.7527919158884373,
+      "turnover": 0.0630282424972857
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.0001096019713295946,
+      "cash_weight": 0.3241542029625927,
+      "cost_return": 0.00033906412313129474,
+      "decision_date": "2020-07-31",
+      "entry_date": "2020-08-03",
+      "excess_cash_return": -0.0006894861564598153,
+      "exit_date": "2020-09-01",
+      "net_return": -0.0005798841851302206,
+      "risky_gross_weight": 0.6758457970374073,
+      "turnover": 0.33906412313129475
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": -0.00021911612044222037,
+      "cash_weight": 0.29678311182653616,
+      "cost_return": 0.00017871427506688223,
+      "decision_date": "2020-08-31",
+      "entry_date": "2020-09-01",
+      "excess_cash_return": -0.00955777132218947,
+      "exit_date": "2020-10-01",
+      "net_return": -0.00977688744263169,
+      "risky_gross_weight": 0.7032168881734638,
+      "turnover": 0.17871427506688223
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.00010951414911261834,
+      "cash_weight": 0.3179519172860228,
+      "cost_return": 3.2172653281998474e-05,
+      "decision_date": "2020-09-30",
+      "entry_date": "2020-10-01",
+      "excess_cash_return": -0.012924397536469333,
+      "exit_date": "2020-11-02",
+      "net_return": -0.012814883387356715,
+      "risky_gross_weight": 0.6820480827139772,
+      "turnover": 0.032172653281998476
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": -0.00018589164325317893,
+      "cash_weight": 0.38828614430030606,
+      "cost_return": 0.00016776063973685185,
+      "decision_date": "2020-10-30",
+      "entry_date": "2020-11-02",
+      "excess_cash_return": 0.004619425501380043,
+      "exit_date": "2020-12-01",
+      "net_return": 0.004433533858126865,
+      "risky_gross_weight": 0.6117138556996939,
+      "turnover": 0.16776063973685185
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.00010912318206351675,
+      "cash_weight": 0.2652116106770612,
+      "cost_return": 0.00016338714985046987,
+      "decision_date": "2020-11-30",
+      "entry_date": "2020-12-01",
+      "excess_cash_return": 0.014048193750327337,
+      "exit_date": "2021-01-04",
+      "net_return": 0.014157316932390853,
+      "risky_gross_weight": 0.7347883893229388,
+      "turnover": 0.16338714985046987
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.23680960939777107,
+      "cost_return": 4.449749961383451e-05,
+      "decision_date": "2020-12-31",
+      "entry_date": "2021-01-04",
+      "excess_cash_return": -0.011093347823022213,
+      "exit_date": "2021-02-01",
+      "net_return": -0.011093347823022213,
+      "risky_gross_weight": 0.7631903906022289,
+      "turnover": 0.04449749961383451
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": -0.00021845798260198288,
+      "cash_weight": 0.1597978557978229,
+      "cost_return": 0.00019131521048002513,
+      "decision_date": "2021-01-29",
+      "entry_date": "2021-02-01",
+      "excess_cash_return": -0.0077807623567285236,
+      "exit_date": "2021-03-01",
+      "net_return": -0.007999220339330506,
+      "risky_gross_weight": 0.8402021442021771,
+      "turnover": 0.19131521048002514
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY"
+      ],
+      "cash_return": 0.00010933480053852301,
+      "cash_weight": 0.17851656927035997,
+      "cost_return": 0.00025517957565489454,
+      "decision_date": "2021-02-26",
+      "entry_date": "2021-03-01",
+      "excess_cash_return": 0.005675368332656413,
+      "exit_date": "2021-04-01",
+      "net_return": 0.0057847031331949355,
+      "risky_gross_weight": 0.82148343072964,
+      "turnover": 0.2551795756548946
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "SPY"
+      ],
+      "cash_return": -0.00010933480053854384,
+      "cash_weight": 0.19999999999999996,
+      "cost_return": 0.00047851656927036003,
+      "decision_date": "2021-03-31",
+      "entry_date": "2021-04-01",
+      "excess_cash_return": 0.033798602912342005,
+      "exit_date": "2021-05-03",
+      "net_return": 0.033689268111803464,
+      "risky_gross_weight": 0.8,
+      "turnover": 0.47851656927036007
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "SPY"
+      ],
+      "cash_return": -0.00021840584174981088,
+      "cash_weight": 0.19999999999999996,
+      "cost_return": 1.715033936513302e-05,
+      "decision_date": "2021-04-30",
+      "entry_date": "2021-05-03",
+      "excess_cash_return": 0.02723248323666892,
+      "exit_date": "2021-06-01",
+      "net_return": 0.02701407739491911,
+      "risky_gross_weight": 0.8,
+      "turnover": 0.01715033936513302
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "SPY"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.19999999999999996,
+      "cost_return": 1.3531766374418858e-05,
+      "decision_date": "2021-05-28",
+      "entry_date": "2021-06-01",
+      "excess_cash_return": -0.009748275057122523,
+      "exit_date": "2021-07-01",
+      "net_return": -0.009748275057122523,
+      "risky_gross_weight": 0.8,
+      "turnover": 0.013531766374418858
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "SPY"
+      ],
+      "cash_return": -0.00021865334858342538,
+      "cash_weight": 0.35,
+      "cost_return": 0.0003296388635476037,
+      "decision_date": "2021-06-30",
+      "entry_date": "2021-07-01",
+      "excess_cash_return": 0.004786966859118695,
+      "exit_date": "2021-08-02",
+      "net_return": 0.0045683135105352695,
+      "risky_gross_weight": 0.65,
+      "turnover": 0.3296388635476037
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "SPY"
+      ],
+      "cash_return": -0.00010939456000902825,
+      "cash_weight": 0.35499083389220965,
+      "cost_return": 4.990833892209695e-06,
+      "decision_date": "2021-07-30",
+      "entry_date": "2021-08-02",
+      "excess_cash_return": 0.007574660654148903,
+      "exit_date": "2021-09-01",
+      "net_return": 0.007465266094139875,
+      "risky_gross_weight": 0.6450091661077904,
+      "turnover": 0.004990833892209695
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "SPY"
+      ],
+      "cash_return": 0.00010939456000895639,
+      "cash_weight": 0.3968399281685623,
+      "cost_return": 4.1849094276352586e-05,
+      "decision_date": "2021-08-31",
+      "entry_date": "2021-09-01",
+      "excess_cash_return": -0.0013628725720249975,
+      "exit_date": "2021-10-01",
+      "net_return": -0.001253478012016041,
+      "risky_gross_weight": 0.6031600718314377,
+      "turnover": 0.04184909427635258
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "SPY"
+      ],
+      "cash_return": -0.00010939456000902825,
+      "cash_weight": 0.3779109722385149,
+      "cost_return": 1.89289559300474e-05,
+      "decision_date": "2021-09-30",
+      "entry_date": "2021-10-01",
+      "excess_cash_return": 0.03051708731603767,
+      "exit_date": "2021-11-01",
+      "net_return": 0.030407692756028643,
+      "risky_gross_weight": 0.6220890277614851,
+      "turnover": 0.018928955930047398
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "SPY"
+      ],
+      "cash_return": -0.00010910676800623358,
+      "cash_weight": 0.36324742726431536,
+      "cost_return": 1.4663544974199472e-05,
+      "decision_date": "2021-10-29",
+      "entry_date": "2021-11-01",
+      "excess_cash_return": -0.04203943265981254,
+      "exit_date": "2021-12-01",
+      "net_return": -0.04214853942781877,
+      "risky_gross_weight": 0.6367525727356846,
+      "turnover": 0.014663544974199472
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": -0.00021894885061152656,
+      "cash_weight": 0.27614111968429533,
+      "cost_return": 0.00031536132761179924,
+      "decision_date": "2021-11-30",
+      "entry_date": "2021-12-01",
+      "excess_cash_return": 0.03301870648671857,
+      "exit_date": "2022-01-03",
+      "net_return": 0.03279975763610704,
+      "risky_gross_weight": 0.7238588803157047,
+      "turnover": 0.31536132761179925
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.27609461765347365,
+      "cost_return": 1.920379465061489e-05,
+      "decision_date": "2021-12-31",
+      "entry_date": "2022-01-03",
+      "excess_cash_return": -0.007753582680204478,
+      "exit_date": "2022-02-01",
+      "net_return": -0.007753582680204478,
+      "risky_gross_weight": 0.7239053823465263,
+      "turnover": 0.01920379465061489
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.00013171482031879565,
+      "cash_weight": 0.2678945560728704,
+      "cost_return": 3.646892217506772e-05,
+      "decision_date": "2022-01-31",
+      "entry_date": "2022-02-01",
+      "excess_cash_return": -0.0076589849977353195,
+      "exit_date": "2022-03-01",
+      "net_return": -0.007527270177416524,
+      "risky_gross_weight": 0.7321054439271296,
+      "turnover": 0.036468922175067725
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.00021842048179188694,
+      "cash_weight": 0.14910612464677542,
+      "cost_return": 0.0004771075907188619,
+      "decision_date": "2022-02-28",
+      "entry_date": "2022-03-01",
+      "excess_cash_return": 0.008438138650505859,
+      "exit_date": "2022-04-01",
+      "net_return": 0.008656559132297745,
+      "risky_gross_weight": 0.8508938753532246,
+      "turnover": 0.4771075907188619
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "GLD",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.3171504117115489,
+      "cost_return": 0.00036435562430358595,
+      "decision_date": "2022-03-31",
+      "entry_date": "2022-04-01",
+      "excess_cash_return": -0.004371479495384617,
+      "exit_date": "2022-05-02",
+      "net_return": -0.004371479495384617,
+      "risky_gross_weight": 0.6828495882884511,
+      "turnover": 0.364355624303586
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "GLD",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.00022955985801159496,
+      "cash_weight": 0.326541302878001,
+      "cost_return": 2.7905729962658622e-05,
+      "decision_date": "2022-04-29",
+      "entry_date": "2022-05-02",
+      "excess_cash_return": -0.002053558096212149,
+      "exit_date": "2022-06-01",
+      "net_return": -0.0018239982382005542,
+      "risky_gross_weight": 0.673458697121999,
+      "turnover": 0.027905729962658624
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "UUP"
+      ],
+      "cash_return": 0.0006888626349753281,
+      "cash_weight": 0.6189502627015477,
+      "cost_return": 0.00043915225519386924,
+      "decision_date": "2022-05-31",
+      "entry_date": "2022-06-01",
+      "excess_cash_return": -0.01026998459667962,
+      "exit_date": "2022-07-01",
+      "net_return": -0.009581121961704292,
+      "risky_gross_weight": 0.38104973729845226,
+      "turnover": 0.4391522551938692
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "GLD",
+        "UUP"
+      ],
+      "cash_return": 0.000513916469379517,
+      "cash_weight": 0.3999999999999999,
+      "cost_return": 0.00025389928044886414,
+      "decision_date": "2022-06-30",
+      "entry_date": "2022-07-01",
+      "excess_cash_return": -0.011742369709575484,
+      "exit_date": "2022-08-01",
+      "net_return": -0.011228453240195967,
+      "risky_gross_weight": 0.6000000000000001,
+      "turnover": 0.2538992804488641
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "UUP"
+      ],
+      "cash_return": 0.0020665688242402385,
+      "cash_weight": 0.5653878452925881,
+      "cost_return": 0.00030746169785782375,
+      "decision_date": "2022-07-29",
+      "entry_date": "2022-08-01",
+      "excess_cash_return": 0.0032757725983423663,
+      "exit_date": "2022-09-01",
+      "net_return": 0.005342341422582605,
+      "risky_gross_weight": 0.4346121547074119,
+      "turnover": 0.30746169785782373
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "UUP"
+      ],
+      "cash_return": 0.0015841064267736586,
+      "cash_weight": 0.5631475482489042,
+      "cost_return": 2.2402970436839477e-06,
+      "decision_date": "2022-08-31",
+      "entry_date": "2022-09-01",
+      "excess_cash_return": -0.003256964175661372,
+      "exit_date": "2022-10-03",
+      "net_return": -0.0016728577488877132,
+      "risky_gross_weight": 0.43685245175109577,
+      "turnover": 0.0022402970436839476
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "UUP"
+      ],
+      "cash_return": 0.0019454601220320925,
+      "cash_weight": 0.5507877929198925,
+      "cost_return": 1.235975532901168e-05,
+      "decision_date": "2022-09-30",
+      "entry_date": "2022-10-03",
+      "excess_cash_return": 0.009659298212667557,
+      "exit_date": "2022-11-01",
+      "net_return": 0.01160475833469965,
+      "risky_gross_weight": 0.44921220708010745,
+      "turnover": 0.012359755329011679
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "UUP"
+      ],
+      "cash_return": 0.003277984183599893,
+      "cash_weight": 0.55,
+      "cost_return": 7.877929198925326e-07,
+      "decision_date": "2022-10-31",
+      "entry_date": "2022-11-01",
+      "excess_cash_return": -0.014935472489414759,
+      "exit_date": "2022-12-01",
+      "net_return": -0.011657488305814865,
+      "risky_gross_weight": 0.45,
+      "turnover": 0.0007877929198925326
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "UUP"
+      ],
+      "cash_return": 0.003509505286689836,
+      "cash_weight": 0.55,
+      "cost_return": 0.0,
+      "decision_date": "2022-11-30",
+      "entry_date": "2022-12-01",
+      "excess_cash_return": -0.012541756433155004,
+      "exit_date": "2023-01-03",
+      "net_return": -0.009032251146465168,
+      "risky_gross_weight": 0.45,
+      "turnover": 0.0
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "UUP"
+      ],
+      "cash_return": 0.0027949113126219953,
+      "cash_weight": 0.55,
+      "cost_return": 0.0,
+      "decision_date": "2022-12-30",
+      "entry_date": "2023-01-03",
+      "excess_cash_return": -0.003963983575035752,
+      "exit_date": "2023-02-01",
+      "net_return": -0.0011690722624137565,
+      "risky_gross_weight": 0.45,
+      "turnover": 0.0
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "GLD",
+        "UUP"
+      ],
+      "cash_return": 0.003441073211690939,
+      "cash_weight": 0.3999999999999999,
+      "cost_return": 0.00025755508460431685,
+      "decision_date": "2023-01-31",
+      "entry_date": "2023-02-01",
+      "excess_cash_return": -0.009451589956690258,
+      "exit_date": "2023-03-01",
+      "net_return": -0.00601051674499932,
+      "risky_gross_weight": 0.6000000000000001,
+      "turnover": 0.25755508460431686
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "UUP"
+      ],
+      "cash_return": 0.004168816628785194,
+      "cash_weight": 0.55,
+      "cost_return": 0.00025755508460431685,
+      "decision_date": "2023-02-28",
+      "entry_date": "2023-03-01",
+      "excess_cash_return": -0.006260698709872066,
+      "exit_date": "2023-04-03",
+      "net_return": -0.0020918820810868722,
+      "risky_gross_weight": 0.45,
+      "turnover": 0.25755508460431686
+    },
+    {
+      "active_assets": [
+        "GLD",
+        "UUP"
+      ],
+      "cash_return": 0.0034160999214075845,
+      "cash_weight": 0.55,
+      "cost_return": 0.0005,
+      "decision_date": "2023-03-31",
+      "entry_date": "2023-04-03",
+      "excess_cash_return": -0.0018041539982788543,
+      "exit_date": "2023-05-01",
+      "net_return": 0.0016119459231287302,
+      "risky_gross_weight": 0.45,
+      "turnover": 0.5
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.004269480444495287,
+      "cash_weight": 0.20945612990813844,
+      "cost_return": 0.0004594561299081386,
+      "decision_date": "2023-04-28",
+      "entry_date": "2023-05-01",
+      "excess_cash_return": -0.0035531875949262356,
+      "exit_date": "2023-06-01",
+      "net_return": 0.0007162928495690512,
+      "risky_gross_weight": 0.7905438700918616,
+      "turnover": 0.45945612990813856
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.004289390566472535,
+      "cash_weight": 0.21837983418783458,
+      "cost_return": 2.383215405617184e-05,
+      "decision_date": "2023-05-31",
+      "entry_date": "2023-06-01",
+      "excess_cash_return": 0.008781049425834422,
+      "exit_date": "2023-07-03",
+      "net_return": 0.013070439992306957,
+      "risky_gross_weight": 0.7816201658121654,
+      "turnover": 0.02383215405617184
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.0038639897305197323,
+      "cash_weight": 0.1982765013173453,
+      "cost_return": 2.5559715528506387e-05,
+      "decision_date": "2023-06-30",
+      "entry_date": "2023-07-03",
+      "excess_cash_return": 0.007408399781033665,
+      "exit_date": "2023-08-01",
+      "net_return": 0.011272389511553398,
+      "risky_gross_weight": 0.8017234986826547,
+      "turnover": 0.025559715528506388
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.004856105706764367,
+      "cash_weight": 0.1839974778395994,
+      "cost_return": 5.0918271487071006e-05,
+      "decision_date": "2023-07-31",
+      "entry_date": "2023-08-01",
+      "excess_cash_return": -0.007026619578227331,
+      "exit_date": "2023-09-01",
+      "net_return": -0.002170513871462964,
+      "risky_gross_weight": 0.8160025221604006,
+      "turnover": 0.05091827148707101
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.003971989510191197,
+      "cash_weight": 0.1544351581494825,
+      "cost_return": 3.342944319330471e-05,
+      "decision_date": "2023-08-31",
+      "entry_date": "2023-09-01",
+      "excess_cash_return": -0.032487417759529846,
+      "exit_date": "2023-10-02",
+      "net_return": -0.028515428249338646,
+      "risky_gross_weight": 0.8455648418505175,
+      "turnover": 0.03342944319330471
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "SPY"
+      ],
+      "cash_return": 0.004453286470573225,
+      "cash_weight": 0.19999999999999996,
+      "cost_return": 0.00046041477117663544,
+      "decision_date": "2023-09-29",
+      "entry_date": "2023-10-02",
+      "excess_cash_return": 0.006559459107063069,
+      "exit_date": "2023-11-01",
+      "net_return": 0.011012745577636294,
+      "risky_gross_weight": 0.8,
+      "turnover": 0.4604147711766355
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.004572623146318799,
+      "cash_weight": 0.22333999837091567,
+      "cost_return": 0.0004334258683420236,
+      "decision_date": "2023-10-31",
+      "entry_date": "2023-11-01",
+      "excess_cash_return": 0.029926118380495793,
+      "exit_date": "2023-12-01",
+      "net_return": 0.03449874152681459,
+      "risky_gross_weight": 0.7766600016290843,
+      "turnover": 0.43342586834202357
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.004167953876346531,
+      "cash_weight": 0.1896201410866044,
+      "cost_return": 3.371985728431121e-05,
+      "decision_date": "2023-11-30",
+      "entry_date": "2023-12-01",
+      "excess_cash_return": 0.006958914986883265,
+      "exit_date": "2024-01-02",
+      "net_return": 0.011126868863229796,
+      "risky_gross_weight": 0.8103798589133956,
+      "turnover": 0.033719857284311205
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.00465180489968718,
+      "cash_weight": 0.06818123458907521,
+      "cost_return": 0.0004512666562771933,
+      "decision_date": "2023-12-29",
+      "entry_date": "2024-01-02",
+      "excess_cash_return": 0.007983992489148072,
+      "exit_date": "2024-02-01",
+      "net_return": 0.012635797388835251,
+      "risky_gross_weight": 0.9318187654109248,
+      "turnover": 0.4512666562771933
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.00420374507007148,
+      "cash_weight": 0.07299999436372118,
+      "cost_return": 0.00017362101691401877,
+      "decision_date": "2024-01-31",
+      "entry_date": "2024-02-01",
+      "excess_cash_return": 0.008641000989381569,
+      "exit_date": "2024-03-01",
+      "net_return": 0.012844746059453049,
+      "risky_gross_weight": 0.9270000056362788,
+      "turnover": 0.17362101691401877
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.004093466650573314,
+      "cash_weight": 0.09307580878130006,
+      "cost_return": 2.2647811292912352e-05,
+      "decision_date": "2024-02-29",
+      "entry_date": "2024-03-01",
+      "excess_cash_return": 0.016108463740056665,
+      "exit_date": "2024-04-01",
+      "net_return": 0.02020193039062998,
+      "risky_gross_weight": 0.9069241912186999,
+      "turnover": 0.02264781129291235
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.004235997273512279,
+      "cash_weight": 0.1486881928096706,
+      "cost_return": 0.0004004831045210003,
+      "decision_date": "2024-03-28",
+      "entry_date": "2024-04-01",
+      "excess_cash_return": -0.008721893673896097,
+      "exit_date": "2024-05-01",
+      "net_return": -0.004485896400383817,
+      "risky_gross_weight": 0.8513118071903294,
+      "turnover": 0.40048310452100033
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.004530189684673941,
+      "cash_weight": 0.1501691744289939,
+      "cost_return": 6.909282260396605e-05,
+      "decision_date": "2024-04-30",
+      "entry_date": "2024-05-01",
+      "excess_cash_return": 0.012621468535608573,
+      "exit_date": "2024-06-03",
+      "net_return": 0.017151658220282515,
+      "risky_gross_weight": 0.8498308255710061,
+      "turnover": 0.06909282260396604
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.004170374860845216,
+      "cash_weight": 0.15805988776480118,
+      "cost_return": 4.730423778314954e-05,
+      "decision_date": "2024-05-31",
+      "entry_date": "2024-06-03",
+      "excess_cash_return": 0.007001469676793329,
+      "exit_date": "2024-07-01",
+      "net_return": 0.011171844537638545,
+      "risky_gross_weight": 0.8419401122351988,
+      "turnover": 0.047304237783149544
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.004388740980868906,
+      "cash_weight": 0.16210904775895685,
+      "cost_return": 3.816674650615754e-05,
+      "decision_date": "2024-06-28",
+      "entry_date": "2024-07-01",
+      "excess_cash_return": -0.010506136468334093,
+      "exit_date": "2024-08-01",
+      "net_return": -0.006117395487465186,
+      "risky_gross_weight": 0.8378909522410432,
+      "turnover": 0.03816674650615755
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.004759662392246801,
+      "cash_weight": 0.15324572011905502,
+      "cost_return": 0.0004911366723600982,
+      "decision_date": "2024-07-31",
+      "entry_date": "2024-08-01",
+      "excess_cash_return": 0.0061835797729917295,
+      "exit_date": "2024-09-03",
+      "net_return": 0.01094324216523853,
+      "risky_gross_weight": 0.846754279880945,
+      "turnover": 0.49113667236009817
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.004049038349842171,
+      "cash_weight": 0.09831920191570731,
+      "cost_return": 0.0001826691799121511,
+      "decision_date": "2024-08-30",
+      "entry_date": "2024-09-03",
+      "excess_cash_return": 0.012508103997609828,
+      "exit_date": "2024-10-01",
+      "net_return": 0.016557142347451998,
+      "risky_gross_weight": 0.9016807980842927,
+      "turnover": 0.1826691799121511
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.004137204019388608,
+      "cash_weight": 0.10644252714318081,
+      "cost_return": 5.518694651161946e-05,
+      "decision_date": "2024-09-30",
+      "entry_date": "2024-10-01",
+      "excess_cash_return": -0.01834856335580997,
+      "exit_date": "2024-11-01",
+      "net_return": -0.014211359336421363,
+      "risky_gross_weight": 0.8935574728568192,
+      "turnover": 0.055186946511619456
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0035473997862149214,
+      "cash_weight": 0.0964760994163143,
+      "cost_return": 9.966427726866498e-06,
+      "decision_date": "2024-10-31",
+      "entry_date": "2024-11-01",
+      "excess_cash_return": 0.011635481092742801,
+      "exit_date": "2024-12-02",
+      "net_return": 0.015182880878957722,
+      "risky_gross_weight": 0.9035239005836857,
+      "turnover": 0.009966427726866497
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.003968432881293805,
+      "cash_weight": 0.06838667763759365,
+      "cost_return": 6.96399653992622e-05,
+      "decision_date": "2024-11-29",
+      "entry_date": "2024-12-02",
+      "excess_cash_return": -0.018098376075097285,
+      "exit_date": "2025-01-02",
+      "net_return": -0.01412994319380348,
+      "risky_gross_weight": 0.9316133223624063,
+      "turnover": 0.0696399653992622
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.0035595705542014904,
+      "cash_weight": 0.13926109771780593,
+      "cost_return": 0.0006621747890285671,
+      "decision_date": "2024-12-31",
+      "entry_date": "2025-01-02",
+      "excess_cash_return": 0.019346614658600256,
+      "exit_date": "2025-02-03",
+      "net_return": 0.022906185212801747,
+      "risky_gross_weight": 0.8607389022821941,
+      "turnover": 0.6621747890285671
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.0031558049771775953,
+      "cash_weight": 0.05146915659480822,
+      "cost_return": 0.00041220805887700235,
+      "decision_date": "2025-01-31",
+      "entry_date": "2025-02-03",
+      "excess_cash_return": 0.005954403295228592,
+      "exit_date": "2025-03-03",
+      "net_return": 0.009110208272406188,
+      "risky_gross_weight": 0.9485308434051918,
+      "turnover": 0.4122080588770023
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0032870864211329313,
+      "cash_weight": 0.0014859046443045365,
+      "cost_return": 0.00017730109201932206,
+      "decision_date": "2025-02-28",
+      "entry_date": "2025-03-03",
+      "excess_cash_return": -0.000619105983429488,
+      "exit_date": "2025-04-01",
+      "net_return": 0.0026679804377034433,
+      "risky_gross_weight": 0.9985140953556955,
+      "turnover": 0.17730109201932204
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0034074459417922087,
+      "cash_weight": 0.0011248749921061174,
+      "cost_return": 5.6603065912313144e-05,
+      "decision_date": "2025-03-31",
+      "entry_date": "2025-04-01",
+      "excess_cash_return": -0.017145953432661398,
+      "exit_date": "2025-05-01",
+      "net_return": -0.013738507490869188,
+      "risky_gross_weight": 0.9988751250078939,
+      "turnover": 0.05660306591231315
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.0035596230756102763,
+      "cash_weight": 0.23409016631667656,
+      "cost_return": 0.00045140462337953596,
+      "decision_date": "2025-04-30",
+      "entry_date": "2025-05-01",
+      "excess_cash_return": 0.00769980139008381,
+      "exit_date": "2025-06-02",
+      "net_return": 0.011259424465694086,
+      "risky_gross_weight": 0.7659098336833234,
+      "turnover": 0.45140462337953596
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.003341326868674373,
+      "cash_weight": 0.23572786811025015,
+      "cost_return": 0.00045083186989419477,
+      "decision_date": "2025-05-30",
+      "entry_date": "2025-06-02",
+      "excess_cash_return": 0.0018985289418786736,
+      "exit_date": "2025-07-01",
+      "net_return": 0.005239855810553046,
+      "risky_gross_weight": 0.7642721318897499,
+      "turnover": 0.45083186989419477
+    },
+    {
+      "active_assets": [
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY"
+      ],
+      "cash_return": 0.0038109625913002806,
+      "cash_weight": 0.3082789711370386,
+      "cost_return": 0.0003274488969732116,
+      "decision_date": "2025-06-30",
+      "entry_date": "2025-07-01",
+      "excess_cash_return": -0.0029885924597777606,
+      "exit_date": "2025-08-01",
+      "net_return": 0.0008223701315225201,
+      "risky_gross_weight": 0.6917210288629614,
+      "turnover": 0.3274488969732116
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.003514991323607328,
+      "cash_weight": 0.06824175244033692,
+      "cost_return": 0.00041733014047681946,
+      "decision_date": "2025-07-31",
+      "entry_date": "2025-08-01",
+      "excess_cash_return": 0.013015369250145323,
+      "exit_date": "2025-09-02",
+      "net_return": 0.01653036057375265,
+      "risky_gross_weight": 0.9317582475596631,
+      "turnover": 0.41733014047681943
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.003286116644084578,
+      "cash_weight": 0.05398816446568322,
+      "cost_return": 5.598456502835052e-05,
+      "decision_date": "2025-08-29",
+      "entry_date": "2025-09-02",
+      "excess_cash_return": 0.021370365966904264,
+      "exit_date": "2025-10-01",
+      "net_return": 0.024656482610988843,
+      "risky_gross_weight": 0.9460118355343168,
+      "turnover": 0.055984565028350516
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.0034167896659580365,
+      "cash_weight": 0.038777163136070714,
+      "cost_return": 3.667155198184914e-05,
+      "decision_date": "2025-09-30",
+      "entry_date": "2025-10-01",
+      "excess_cash_return": 0.013552839383421252,
+      "exit_date": "2025-11-03",
+      "net_return": 0.01696962904937929,
+      "risky_gross_weight": 0.9612228368639293,
+      "turnover": 0.03667155198184914
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0028497271676926977,
+      "cash_weight": 0.044074955249280734,
+      "cost_return": 0.0002582146688567077,
+      "decision_date": "2025-10-31",
+      "entry_date": "2025-11-03",
+      "excess_cash_return": 9.722554216291769e-05,
+      "exit_date": "2025-12-01",
+      "net_return": 0.0029469527098556153,
+      "risky_gross_weight": 0.9559250447507193,
+      "turnover": 0.2582146688567077
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.0036635964833677784,
+      "cash_weight": 0.15194166661333364,
+      "cost_return": 0.000304708885364285,
+      "decision_date": "2025-11-28",
+      "entry_date": "2025-12-01",
+      "excess_cash_return": 0.0015162689174961302,
+      "exit_date": "2026-01-02",
+      "net_return": 0.0051798654008639086,
+      "risky_gross_weight": 0.8480583333866664,
+      "turnover": 0.304708885364285
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.0026660105634689867,
+      "cash_weight": 0.17040770736290356,
+      "cost_return": 3.503273874341175e-05,
+      "decision_date": "2025-12-31",
+      "entry_date": "2026-01-02",
+      "excess_cash_return": 0.014700334059939858,
+      "exit_date": "2026-02-02",
+      "net_return": 0.017366344623408844,
+      "risky_gross_weight": 0.8295922926370964,
+      "turnover": 0.03503273874341175
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.002655768676731401,
+      "cash_weight": 0.2006096188523574,
+      "cost_return": 4.852084691413067e-05,
+      "decision_date": "2026-01-30",
+      "entry_date": "2026-02-02",
+      "excess_cash_return": 0.025212214139503468,
+      "exit_date": "2026-03-02",
+      "net_return": 0.02786798281623487,
+      "risky_gross_weight": 0.7993903811476426,
+      "turnover": 0.04852084691413067
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT"
+      ],
+      "cash_return": 0.0029944361138629877,
+      "cash_weight": 0.19061015289923333,
+      "cost_return": 5.616051126910243e-05,
+      "decision_date": "2026-02-27",
+      "entry_date": "2026-03-02",
+      "excess_cash_return": -0.021615571905979906,
+      "exit_date": "2026-04-01",
+      "net_return": -0.018621135792116918,
+      "risky_gross_weight": 0.8093898471007667,
+      "turnover": 0.05616051126910243
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.002950678654606896,
+      "cash_weight": 0.09734910847774425,
+      "cost_return": 0.00034089744213031765,
+      "decision_date": "2026-03-31",
+      "entry_date": "2026-04-01",
+      "excess_cash_return": 0.011319520899887359,
+      "exit_date": "2026-05-01",
+      "net_return": 0.014270199554494255,
+      "risky_gross_weight": 0.9026508915222557,
+      "turnover": 0.34089744213031764
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.002939041412556069,
+      "cash_weight": 0.20964113095142878,
+      "cost_return": 0.0001928545814876954,
+      "decision_date": "2026-04-30",
+      "entry_date": "2026-05-01",
+      "excess_cash_return": 0.004611102137188934,
+      "exit_date": "2026-06-01",
+      "net_return": 0.0075501435497450035,
+      "risky_gross_weight": 0.7903588690485712,
+      "turnover": 0.1928545814876954
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0029288285738248254,
+      "cash_weight": 0.09873956390880023,
+      "cost_return": 0.00021339383756522273,
+      "decision_date": "2026-05-29",
+      "entry_date": "2026-06-01",
+      "excess_cash_return": -0.011874578580889668,
+      "exit_date": "2026-07-01",
+      "net_return": -0.008945750007064842,
+      "risky_gross_weight": 0.9012604360911998,
+      "turnover": 0.21339383756522273
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "TLT",
+        "UUP"
+      ],
+      "cash_return": 0.0032008791036570445,
+      "cash_weight": 0.11058221773290666,
+      "cost_return": 2.7378705385100487e-05,
+      "decision_date": "2026-06-30",
+      "entry_date": "2026-07-01",
+      "excess_cash_return": -0.0035194542953788286,
+      "exit_date": "2026-08-03",
+      "net_return": -0.0003185751917217839,
+      "risky_gross_weight": 0.8894177822670933,
+      "turnover": 0.02737870538510049
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.002731221668830509,
+      "cash_weight": 0.19749619544528296,
+      "cost_return": 0.00022608766302864894,
+      "decision_date": "2026-07-31",
+      "entry_date": "2026-08-03",
+      "excess_cash_return": 0.009522886096166751,
+      "exit_date": "2026-09-01",
+      "net_return": 0.01225410776499726,
+      "risky_gross_weight": 0.802503804554717,
+      "turnover": 0.22608766302864894
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "IEF",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.003092925923009274,
+      "cash_weight": 0.1913307714001593,
+      "cost_return": 2.332760033255057e-05,
+      "decision_date": "2026-08-31",
+      "entry_date": "2026-09-01",
+      "excess_cash_return": -0.0075678908859981905,
+      "exit_date": "2026-10-01",
+      "net_return": -0.004474964962988917,
+      "risky_gross_weight": 0.8086692285998407,
+      "turnover": 0.023327600332550567
+    },
+    {
+      "active_assets": [
+        "DBC",
+        "EFA",
+        "GLD",
+        "SPY",
+        "UUP"
+      ],
+      "cash_return": 0.0,
+      "cash_weight": 0.23448262736486536,
+      "cost_return": 0.000456848144035294,
+      "decision_date": "2026-09-30",
+      "entry_date": "2026-10-01",
+      "excess_cash_return": -0.008170530482993668,
+      "exit_date": "2026-11-02",
+      "net_return": -0.008170530482993668,
+      "risky_gross_weight": 0.7655173726351346,
+      "turnover": 0.456848144035294
+    }
+  ],
+  "schema": "CROSS_ASSET_ETF_TREND_DIAGNOSTIC_RESULT_V1",
+  "strategy": "CROSS_ASSET_ETF_12M_TREND_LONG_OR_CASH_V1",
+  "window_end": "2026-11-02",
+  "window_start": "2008-06-02"
+}

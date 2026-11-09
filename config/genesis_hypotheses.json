@@ -434,6 +434,37 @@
       "overlap_notes": "Time-series trend evaluates each pair against its own past and is distinct from the existing monthly G10 cross-sectional MOM(1,1) ranking campaign.",
       "evidence_ids": ["G10_DAILY_TIME_SERIES_MOMENTUM_SPOT_PRIMARY_V1", "G10_DAILY_TIME_SERIES_MOMENTUM_SPOT_STRESS_V1"],
       "next_action": "CLOSED_FAILED_DATED_CONFIRMATION_AND_CONTROLS_DO_NOT_RETUNE"
+    },
+    {
+      "hypothesis_id": "HYP_CROSS_ASSET_ETF_TREND_V1",
+      "proposed_at_utc": "2026-11-09T17:00:00Z",
+      "proposed_by": "OPERATOR_AND_CODEX",
+      "state": "REJECTED",
+      "hypothesis_type": "CROSS_ASSET_MEDIUM_HORIZON_STRATEGY_DIAGNOSTIC",
+      "classification": "STRATEGY",
+      "priority": 29,
+      "statement": "A monthly long-or-cash portfolio across liquid equity, Treasury, gold, commodity, and dollar ETFs, selected by positive twelve-month trend and inverse-volatility sized, may deliver positive excess-cash returns with better risk-adjusted performance than locked controls.",
+      "data_requirements": ["DAILY_DISTRIBUTION_ADJUSTED_ETF_PRICES", "INDEPENDENT_SOURCE_CONFIRMATION_BEFORE_PROMOTION"],
+      "dependencies": ["NEXT_COMMON_DAY_ENTRY", "BIL_CASH_RETURN", "ASSET_AND_CLASS_CAPS", "TEN_AND_TWENTY_FIVE_BP_COSTS", "SEALED_CHRONOLOGICAL_PARTITIONS"],
+      "expected_frequency": "MONTHLY_REBALANCE_WITH_ZERO_TO_SEVERAL_POSITION_CHANGES",
+      "overlap_notes": "Cross-asset long-or-cash risk-premium research, distinct from the rejected seven-pair FX-only weekly time-series momentum ensemble.",
+      "evidence_ids": ["CAMPAIGN_CROSS_ASSET_ETF_TREND_V1_PRIMARY", "CAMPAIGN_CROSS_ASSET_ETF_TREND_V1_STRESS"],
+      "next_action": "CLOSED_PRIMARY_FAILED_STALE_CONTROL_DO_NOT_RETUNE_STALE_IS_DESCRIPTIVE_LEAD_ONLY"
+    },
+    {
+      "hypothesis_id": "HYP_CROSS_ASSET_ETF_DELAYED_TREND_CONFIRMATION_V2",
+      "proposed_at_utc": "2026-11-09T23:30:00Z",
+      "proposed_by": "CODEX_POST_CONTROL_CONFIRMATORY_LEAD",
+      "state": "PROPOSED",
+      "hypothesis_type": "CROSS_ASSET_MEDIUM_HORIZON_CONFIRMATORY_DIAGNOSTIC",
+      "classification": "STRATEGY",
+      "priority": 30,
+      "statement": "A one-month-delayed version of the locked cross-asset ETF trend target may retain positive excess-cash returns and risk-adjusted performance when evaluated as a new primary against independent distributions-adjusted prices and evidence not used to select it.",
+      "data_requirements": ["INDEPENDENT_DAILY_DISTRIBUTION_ADJUSTED_PRICES", "NEW_CONFIRMATORY_EVIDENCE_NOT_USED_TO_SELECT_DELAY"],
+      "dependencies": ["V1_STALE_CONTROL_IS_SELECTION_EVIDENCE_NOT_CONFIRMATION", "NO_REUSE_OF_V1_DATED_WINDOW_AS_V2_CONFIRMATION", "SAME_ASSET_UNIVERSE_AND_CAPS", "TEN_AND_TWENTY_FIVE_BP_COSTS"],
+      "expected_frequency": "MONTHLY_REBALANCE_WITH_ONE_MONTH_TARGET_DELAY",
+      "overlap_notes": "Post-control lead from rejected V1; it carries no edge claim, cannot inherit V1 approval, and cannot use the V1 dated window as confirmatory evidence.",
+      "next_action": "ACQUIRE_INDEPENDENT_ADJUSTED_PRICE_SOURCE_AND_PREDECLARE_FRESH_CONFIRMATION_WINDOW_BEFORE_EVALUATION"
     }
   ]
 }

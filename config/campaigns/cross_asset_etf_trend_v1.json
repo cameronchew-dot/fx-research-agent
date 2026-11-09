@@ -1,0 +1,81 @@
+{
+  "schema": "FX_RESEARCH_CAMPAIGN_V1",
+  "campaign_id": "CAMPAIGN_CROSS_ASSET_ETF_TREND_V1",
+  "hypothesis_id": "HYP_CROSS_ASSET_ETF_TREND_V1",
+  "created_at_utc": "2026-11-09T17:00:00Z",
+  "state": "DRAFT",
+  "title": "Diversified cross-asset ETF twelve-month trend",
+  "instrument": "CROSS_ASSET_ETF_PORTFOLIO",
+  "instruments": ["SPY", "EFA", "IEF", "TLT", "GLD", "DBC", "UUP", "BIL"],
+  "mechanism_class": "DIVERSIFIED_TIME_SERIES_TREND_LONG_OR_CASH",
+  "research_question": "Does one predeclared diversified long-or-cash twelve-month trend portfolio retain positive excess-cash performance after costs in chronological OOS and dated confirmation?",
+  "null_hypothesis": "The locked portfolio has non-positive excess-cash return, unacceptable drawdown, or no risk-adjusted benefit over its controls.",
+  "required_data_classes": ["DAILY_DISTRIBUTION_ADJUSTED_ETF_PRICES"],
+  "population": {
+    "source": "YAHOO_CHART_ADJUSTED_CLOSE_DISCOVERY_ONLY",
+    "risky_assets": ["SPY", "EFA", "IEF", "TLT", "GLD", "DBC", "UUP"],
+    "cash_proxy": "BIL",
+    "classes": {"EQUITY": ["SPY", "EFA"], "BOND": ["IEF", "TLT"], "REAL_ASSET": ["GLD", "DBC"], "CURRENCY": ["UUP"]},
+    "common_complete_us_trading_dates_only": true,
+    "independent_source_confirmation_required_for_promotion": true
+  },
+  "independence_unit": {
+    "unit": "ONE_MONTHLY_PORTFOLIO_HOLDING_INTERVAL",
+    "decision_time": "LAST_COMMON_ADJUSTED_CLOSE_IN_MONTH",
+    "entry_time": "NEXT_COMMON_ADJUSTED_CLOSE_AFTER_DECISION",
+    "overlapping_months_count_once": true
+  },
+  "exact_specification": {
+    "confirmatory_strategy": "CROSS_ASSET_ETF_12M_TREND_LONG_OR_CASH_V1",
+    "trend_lookback_common_trading_days": 252,
+    "direction_rule": "LONG_IF_252_DAY_LOG_TOTAL_RETURN_POSITIVE_OTHERWISE_CASH",
+    "volatility_lookback_common_trading_days": 63,
+    "weighting": "INVERSE_DAILY_VOLATILITY",
+    "maximum_asset_weight": 0.25,
+    "maximum_class_weights": {"EQUITY": 0.40, "BOND": 0.40, "REAL_ASSET": 0.40, "CURRENCY": 0.20},
+    "maximum_risky_gross_weight": 1.0,
+    "unallocated_weight": "BIL_CASH_PROXY",
+    "rebalance_frequency": "MONTHLY",
+    "primary_cost_model": "TEN_BPS_PER_UNIT_ONE_WAY_RISKY_ASSET_TURNOVER",
+    "stress_cost_model": "TWENTY_FIVE_BPS_PER_UNIT_ONE_WAY_RISKY_ASSET_TURNOVER",
+    "sample_partition": {"development": "FIRST_60_PERCENT", "chronological_oos": "NEXT_20_PERCENT", "dated_confirmation": "FINAL_20_PERCENT"},
+    "parameter_sweeps_allowed": false
+  },
+  "controls": [
+    {"control_id": "OPPOSITE_TREND_LONG_ONLY", "definition": "Hold only assets whose 252-day return is non-positive with identical sizing and caps"},
+    {"control_id": "ONE_MONTH_STALE_TARGET", "definition": "Apply the complete primary target portfolio known one additional decision month earlier"},
+    {"control_id": "FIXED_HASH_RANDOM_ACTIVATION", "definition": "Activate assets using SHA-256 seed 20261109 with identical volatility sizing and caps"},
+    {"control_id": "VOLATILITY_BALANCED_BUY_AND_HOLD", "definition": "Hold every risky asset continuously with identical volatility sizing and caps"}
+  ],
+  "metrics": {
+    "primary": "DATED_CONFIRMATION_AVERAGE_MONTHLY_EXCESS_CASH_RETURN",
+    "secondary": ["OOS_EXCESS_CASH_RETURN", "INFORMATION_RATIO_OVER_CASH", "SHARPE", "POSITIVE_YEAR_RATE", "MAXIMUM_DRAWDOWN", "CONTROL_EDGE", "TURNOVER"]
+  },
+  "review_gates": {
+    "minimum_development_months": 96,
+    "minimum_chronological_oos_months": 36,
+    "minimum_dated_confirmation_months": 36,
+    "oos_and_dated_excess_cash_return_must_be_positive": true,
+    "dated_information_ratio_minimum": 0.5,
+    "dated_positive_year_rate_minimum": 0.60,
+    "dated_maximum_log_drawdown_floor": -0.25,
+    "dated_excess_return_must_beat_opposite_random_and_stale": true,
+    "dated_sharpe_and_drawdown_must_beat_buy_hold": true,
+    "independent_adjusted_price_source_required_for_promotion": true,
+    "review_is_not_promotion": true
+  },
+  "multiple_comparisons_policy": {"confirmatory_strategy_count": 1, "parameter_sweeps_allowed": false},
+  "stopping_rules": {
+    "no_early_success_declaration": true,
+    "no_post_result_universe_changes": true,
+    "no_post_result_lookback_changes": true,
+    "no_early_holdout_inspection": true,
+    "failed_oos_or_dated_gate_closes_exact_specification": true
+  },
+  "research_basis": {
+    "primary_source": "Moskowitz, Ooi, and Pedersen, Time Series Momentum, Journal of Financial Economics 2012",
+    "source_url": "https://www.sciencedirect.com/science/article/pii/S0304405X11002613",
+    "translation_note": "The classic twelve-month directional mechanism is expressed through liquid ETFs and cash so the design is feasible for a small account; it is not a futures replication."
+  },
+  "authority": {"automatic_approval": false, "automatic_execution": false, "downstream_activation": false, "order_authority": false}
+}

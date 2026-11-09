@@ -70,6 +70,18 @@ forward points. Reproduce it with the commands in
 `docs/G10_TIME_SERIES_MOMENTUM_DIAGNOSTIC.md`. The locked specification failed
 dated confirmation and is closed; see `docs/G10_TIME_SERIES_MOMENTUM_RESULT.md`.
 
+## Cross-asset research
+
+`CAMPAIGN_CROSS_ASSET_ETF_TREND_V1` is the first cross-asset campaign. It tests
+one monthly long-or-cash twelve-month trend specification across liquid ETFs,
+with BIL as cash and explicit asset/class caps. Yahoo adjusted closes are
+discovery-only. The primary was positive in every chronological partition and
+under 25 bp cost stress, but failed the locked comparison because the
+one-month-stale control was stronger. V1 is closed without retuning. Delayed
+timing is only a proposed confirmatory lead requiring independent prices and
+fresh evidence. See `docs/CROSS_ASSET_ETF_TREND_V1.md` and
+`docs/CROSS_ASSET_ETF_TREND_RESULT.md`.
+
 ## FX motif discovery
 
 `FX_MOTIF_DISCOVERY_V1` adds a research-only discovery lane modeled on the
