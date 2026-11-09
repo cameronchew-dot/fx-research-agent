@@ -464,7 +464,7 @@
       "dependencies": ["V1_STALE_CONTROL_IS_SELECTION_EVIDENCE_NOT_CONFIRMATION", "NO_REUSE_OF_V1_DATED_WINDOW_AS_V2_CONFIRMATION", "SAME_ASSET_UNIVERSE_AND_CAPS", "TEN_AND_TWENTY_FIVE_BP_COSTS"],
       "expected_frequency": "MONTHLY_REBALANCE_WITH_ONE_MONTH_TARGET_DELAY",
       "overlap_notes": "Post-control lead from rejected V1; it carries no edge claim, cannot inherit V1 approval, and cannot use the V1 dated window as confirmatory evidence.",
-      "next_action": "ACQUIRE_INDEPENDENT_ADJUSTED_PRICE_SOURCE_AND_PREDECLARE_FRESH_CONFIRMATION_WINDOW_BEFORE_EVALUATION"
+      "next_action": "ADD_LOCAL_TWELVE_DATA_API_KEY_RUN_CROSS_SOURCE_REPLICATION_THEN_ACCRUE_36_FORWARD_MONTHS_FROM_2026_12_01"
     }
   ]
 }

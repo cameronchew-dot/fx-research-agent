@@ -82,6 +82,13 @@ timing is only a proposed confirmatory lead requiring independent prices and
 fresh evidence. See `docs/CROSS_ASSET_ETF_TREND_V1.md` and
 `docs/CROSS_ASSET_ETF_TREND_RESULT.md`.
 
+The V2 follow-up is now frozen in
+`config/campaigns/cross_asset_etf_delayed_trend_v2.json`. It uses Twelve Data
+as the independent split-and-dividend-adjusted source, treats all reused
+history as measurement replication only, and writes only post-December-2026
+resolved months to an immutable forward ledger. Setup and review boundaries
+are documented in `docs/CROSS_ASSET_ETF_DELAYED_TREND_V2.md`.
+
 ## FX motif discovery
 
 `FX_MOTIF_DISCOVERY_V1` adds a research-only discovery lane modeled on the

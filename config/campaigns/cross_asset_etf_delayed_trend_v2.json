@@ -1,0 +1,83 @@
+{
+  "schema": "FX_RESEARCH_CAMPAIGN_V1",
+  "campaign_id": "CAMPAIGN_CROSS_ASSET_ETF_DELAYED_TREND_V2",
+  "hypothesis_id": "HYP_CROSS_ASSET_ETF_DELAYED_TREND_CONFIRMATION_V2",
+  "created_at_utc": "2026-11-09T23:30:00Z",
+  "state": "DRAFT",
+  "title": "Independent confirmation of one-month-delayed cross-asset ETF trend",
+  "instrument": "CROSS_ASSET_ETF_PORTFOLIO",
+  "instruments": ["SPY", "EFA", "IEF", "TLT", "GLD", "DBC", "UUP", "BIL"],
+  "mechanism_class": "DIVERSIFIED_TIME_SERIES_TREND_LONG_OR_CASH_DELAYED_TARGET",
+  "research_question": "Does the one-month-delayed target suggested by the V1 stale control retain positive excess-cash performance in an independent adjusted-price source and genuinely new forward monthly outcomes?",
+  "null_hypothesis": "The delayed target fails independent source replication, has non-positive forward excess-cash return, unacceptable drawdown, or no benefit over locked controls.",
+  "required_data_classes": ["TWELVE_DATA_DAILY_SPLIT_AND_DIVIDEND_ADJUSTED_ETF_PRICES", "FORWARD_MONTHLY_OUTCOMES_AFTER_2026_11_30"],
+  "population": {
+    "source": "TWELVE_DATA_TIME_SERIES_ADJUST_ALL",
+    "risky_assets": ["SPY", "EFA", "IEF", "TLT", "GLD", "DBC", "UUP"],
+    "cash_proxy": "BIL",
+    "common_complete_us_trading_dates_only": true
+  },
+  "evidence_roles": {
+    "history_through_2026_11_30": "CROSS_SOURCE_MEASUREMENT_REPLICATION_ONLY",
+    "resolved_months_entered_on_or_after_2026_12_01": "FRESH_FORWARD_CONFIRMATION",
+    "v1_yahoo_dated_window": "SELECTION_EVIDENCE_NOT_V2_CONFIRMATION"
+  },
+  "independence_unit": {
+    "unit": "ONE_NON_OVERLAPPING_MONTHLY_PORTFOLIO_HOLDING_INTERVAL",
+    "decision_time": "LAST_COMMON_ADJUSTED_CLOSE_IN_ORIGINAL_TARGET_MONTH",
+    "effective_target_time": "ONE_COMPLETE_DECISION_MONTH_LATER",
+    "entry_time": "NEXT_COMMON_ADJUSTED_CLOSE_AFTER_DELAYED_DECISION",
+    "overlapping_months_count_once": true
+  },
+  "exact_specification": {
+    "confirmatory_strategy": "CROSS_ASSET_ETF_12M_TREND_ONE_MONTH_DELAY_V2",
+    "trend_lookback_common_trading_days": 252,
+    "target_delay": "ONE_COMPLETE_MONTH",
+    "direction_rule": "LONG_IF_PRIOR_TARGET_MONTH_252_DAY_LOG_TOTAL_RETURN_WAS_POSITIVE_OTHERWISE_CASH",
+    "volatility_lookback_common_trading_days": 63,
+    "weighting": "INVERSE_DAILY_VOLATILITY_AT_ORIGINAL_TARGET_DECISION",
+    "maximum_asset_weight": 0.25,
+    "maximum_class_weights": {"EQUITY": 0.40, "BOND": 0.40, "REAL_ASSET": 0.40, "CURRENCY": 0.20},
+    "maximum_risky_gross_weight": 1.0,
+    "unallocated_weight": "BIL_CASH_PROXY",
+    "rebalance_frequency": "MONTHLY",
+    "forward_start": "2026-12-01",
+    "primary_cost_model": "TEN_BPS_PER_UNIT_ONE_WAY_RISKY_ASSET_TURNOVER",
+    "stress_cost_model": "TWENTY_FIVE_BPS_PER_UNIT_ONE_WAY_RISKY_ASSET_TURNOVER",
+    "parameter_sweeps_allowed": false
+  },
+  "controls": [
+    {"control_id": "IMMEDIATE_MONTHLY_TARGET", "definition": "Use the current completed-month trend target without the one-month delay"},
+    {"control_id": "OPPOSITE_TREND_LONG_ONLY", "definition": "Hold only assets whose original target-month 252-day return was non-positive"},
+    {"control_id": "FIXED_HASH_RANDOM_ACTIVATION", "definition": "Use the unchanged V1 fixed-hash activation control"},
+    {"control_id": "VOLATILITY_BALANCED_BUY_AND_HOLD", "definition": "Hold every risky asset continuously with identical sizing and caps"}
+  ],
+  "metrics": {
+    "primary": "FORWARD_AVERAGE_MONTHLY_EXCESS_CASH_RETURN",
+    "secondary": ["FORWARD_INFORMATION_RATIO_OVER_CASH", "FORWARD_SHARPE", "FORWARD_POSITIVE_YEAR_RATE", "FORWARD_MAXIMUM_DRAWDOWN", "CONTROL_EDGE", "TURNOVER", "CROSS_SOURCE_REPLICATION_DIFFERENCE"]
+  },
+  "review_gates": {
+    "cross_source_replication_required": true,
+    "minimum_forward_resolved_months": 36,
+    "forward_average_excess_cash_return_positive": true,
+    "forward_information_ratio_minimum": 0.5,
+    "forward_positive_year_rate_minimum": 0.60,
+    "forward_maximum_log_drawdown_floor": -0.25,
+    "forward_excess_return_must_beat_immediate_opposite_and_random": true,
+    "forward_sharpe_and_drawdown_must_beat_buy_hold": true,
+    "ten_and_twenty_five_bp_results_must_pass": true,
+    "review_is_not_promotion": true
+  },
+  "multiple_comparisons_policy": {
+    "confirmatory_strategy_count": 1,
+    "parameter_sweeps_allowed": false,
+    "v1_stale_control_is_selection_evidence": true
+  },
+  "stopping_rules": {
+    "no_historical_reuse_as_fresh_confirmation": true,
+    "no_early_success_declaration": true,
+    "no_post_result_universe_or_parameter_changes": true,
+    "conflicting_forward_event_rewrites_rejected": true
+  },
+  "authority": {"automatic_approval": false, "automatic_execution": false, "downstream_activation": false, "order_authority": false}
+}
