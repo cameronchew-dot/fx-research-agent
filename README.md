@@ -243,6 +243,18 @@ Validation (2023-2024) and dated confirmation (2025 onward) were not opened.
 The exact campaign is parked without retuning and is summarized in
 `docs/CME_FUTURES_CONTEXT_BREAKOUT_RETEST_RESULT.md`.
 
+The separately predeclared EUR/USD agent-context diagnostic joined causal 6E
+15-minute price, volume, range, and realized-volatility features to 69
+independent failed-auction episodes. It failed: calibration worsened versus the
+spot-only model, the current feature pack lost to a 24-hour-lagged control, and
+the ranked outcome ordering was inverted. It does not justify agent activation
+or a live CME subscription. See
+`docs/EUR_CME_BAR_CONTEXT_DIAGNOSTIC_RESULT_V1.md` and reproduce with:
+
+```bash
+python3 ops/eur_cme_bar_context_diagnostic.py
+```
+
 A second, futures-native campaign then tested two mechanisms directly on the
 centralized data: participation-shock acceptance continuation and
 participation-shock failed-auction reversal. Both used volume at least `1.75x`
