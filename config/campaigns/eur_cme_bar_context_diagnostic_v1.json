@@ -1,0 +1,122 @@
+{
+  "schema": "FX_CME_AGENT_CONTEXT_DIAGNOSTIC_CAMPAIGN_V1",
+  "campaign_id": "CAMPAIGN_EUR_CME_BAR_CONTEXT_DIAGNOSTIC_V1",
+  "hypothesis_id": "HYP_EUR_CME_BAR_CONTEXT_INCREMENTAL_DISCRIMINATION_V1",
+  "created_at_utc": "2026-11-09T23:31:41Z",
+  "state": "PREDECLARED_DIAGNOSTIC",
+  "title": "Causal 6E bar and participation context for EUR/USD failed-auction episodes",
+  "instrument": "EUR_USD",
+  "futures_product": "6E",
+  "research_question": "Do causal CME 6E price, range, volume, and realized-volatility features improve walk-forward discrimination of positive-net-R EUR/USD failed-auction episodes beyond the frozen spot-context baseline?",
+  "evidence_role": "RETROSPECTIVE_DIAGNOSTIC_ONLY_REQUIRES_FRESH_FORWARD_CONFIRMATION",
+  "population": {
+    "source": "IMMUTABLE_EUR_AGENT_RESEARCH_EVIDENCE_EXPORTS",
+    "mechanism_class": "OBJECTIVE_LEVEL_FAILED_AUCTION",
+    "arm_id": "RULE_BASELINE",
+    "entry_model": "NEXT_M15_OPEN_WITH_DECISION_SPREAD",
+    "target_r": 1.5,
+    "horizon_m15_bars": 16,
+    "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE",
+    "positive_label": "REALIZED_NET_R_GREATER_THAN_ZERO",
+    "episode_deduplication": "FIRST_CANDIDATE_PER_EPISODE_ID",
+    "independence": "FIRST_EPISODE_PER_NON_OVERLAPPING_240_MINUTE_OUTCOME_WINDOW",
+    "maximum_decision_time_utc": "2026-11-06T00:00:00Z"
+  },
+  "futures_source": {
+    "provider": "DATABENTO",
+    "dataset": "GLBX.MDP3",
+    "continuous_build_id": "B4E29C6EA1D8FC3D4AA7",
+    "schema": "OHLCV_1M_CAUSAL_CONTINUOUS",
+    "available_data_classes": [
+      "CME_FX_CONTINUOUS_BARS",
+      "CME_FX_ROLL_SCHEDULE",
+      "CME_FX_CANONICAL_STATISTICS",
+      "CME_FX_OUTRIGHT_DEFINITIONS"
+    ],
+    "explicitly_unavailable": [
+      "TICK_TRADES",
+      "AGGRESSOR_SIDE",
+      "TRUE_CVD",
+      "BBO",
+      "SPREAD",
+      "QUOTE_PRESSURE",
+      "ORDER_BOOK_DEPTH"
+    ]
+  },
+  "causal_join": {
+    "futures_bar": "LATEST_COMPLETE_15M_BAR_WITH_END_TIME_EQUAL_TO_EPISODE_DECISION_TIME",
+    "minimum_source_minutes": 10,
+    "intraday_baseline": "PRIOR_20_COMPLETE_BARS_IN_SAME_AMERICA_NEW_YORK_15M_SLOT",
+    "lookahead_allowed": false
+  },
+  "spot_baseline_features": [
+    "SPREAD_TO_ATR",
+    "MAXIMUM_TOUCH_INDEX",
+    "REWARD_ROOM_R",
+    "DAILY_ATR_CONSUMED_FRACTION",
+    "DIRECTION_LONG",
+    "HTF_ALIGNMENT_FIXED_ONE_HOT",
+    "SESSION_BUCKET_FIXED_ONE_HOT",
+    "MACRO_BLACKOUT"
+  ],
+  "cme_feature_pack": [
+    "CANDIDATE_DIRECTION_SIGNED_15M_RETURN_BPS",
+    "CANDIDATE_DIRECTION_SIGNED_15M_CLOSE_LOCATION",
+    "LOG_15M_VOLUME_RATIO",
+    "LOG_15M_TRUE_RANGE_RATIO",
+    "CANDIDATE_DIRECTION_SIGNED_60M_RETURN_BPS",
+    "LOG_15M_REALIZED_VOLATILITY_RATIO"
+  ],
+  "locked_model": {
+    "type": "L2_LOGISTIC_REGRESSION_NEWTON",
+    "l2_penalty": 1.0,
+    "intercept_penalized": false,
+    "continuous_imputation": "PRIOR_TRAINING_MEDIAN",
+    "continuous_scaling": "PRIOR_TRAINING_MEAN_AND_STANDARD_DEVIATION",
+    "minimum_initial_training_episodes": 30,
+    "prediction_protocol": "EXPANDING_ONE_STEP_AHEAD_WALK_FORWARD",
+    "hyperparameter_tuning": false
+  },
+  "controls": [
+    {
+      "control_id": "SPOT_CONTEXT_ONLY",
+      "definition": "The identical locked model using only the frozen spot-context features"
+    },
+    {
+      "control_id": "CME_CONTEXT_LAGGED_24H",
+      "definition": "Replace every current CME feature with the same feature observed exactly 24 hours earlier"
+    }
+  ],
+  "metrics": {
+    "primary": ["ROC_AUC", "BRIER_SCORE", "LOG_LOSS"],
+    "secondary": [
+      "TOP_TERCILE_AVERAGE_NET_R",
+      "BOTTOM_TERCILE_AVERAGE_NET_R",
+      "DATED_TAIL_METRICS",
+      "FEATURE_COVERAGE"
+    ]
+  },
+  "review_gates": {
+    "minimum_independent_joined_episodes": 60,
+    "minimum_walk_forward_predictions": 30,
+    "minimum_dated_tail_predictions": 12,
+    "minimum_auc_lift_over_spot": 0.03,
+    "brier_must_improve_over_spot": true,
+    "log_loss_must_improve_over_spot": true,
+    "must_beat_24h_lag_control": true,
+    "dated_tail_metric_directions_must_agree": true,
+    "top_tercile_average_net_r_must_exceed_bottom": true,
+    "review_is_not_promotion": true
+  },
+  "multiple_comparisons": {
+    "primary_feature_pack_count": 1,
+    "parameter_sweeps_allowed": false,
+    "post_result_feature_selection_allowed": false
+  },
+  "authority": {
+    "automatic_approval": false,
+    "automatic_agent_context_activation": false,
+    "automatic_signal_activation": false,
+    "paper_or_live_authority": false
+  }
+}
