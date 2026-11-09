@@ -224,6 +224,12 @@
 
 ## Phase 10: cross-system edge forensics and focused forward learning
 
+- Keep the retrospective CME live-data cost ablation explicit: the spot-only,
+  trades/volume, official-statistics, and full-confluence populations were all
+  negative in locked development. Do not purchase a recurring live CME feed
+  without a new preregistered mechanism that demonstrates positive absolute
+  expectancy and incremental value. See `CME_LIVE_DATA_COST_ABLATION_V1.md`.
+
 - Maintain one read-only report across immutable non-EUR research results,
   exact EUR/USD lifecycle profiles, and deduplicated EUR-agent forward
   episodes. Never pool these evidence classes.

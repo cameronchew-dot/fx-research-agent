@@ -1,0 +1,28 @@
+{
+  "schema": "FX_RESEARCH_CME_LIVE_DATA_COST_ABLATION_CONTRACT_V1",
+  "ablation_id": "CME_LIVE_DATA_COST_ABLATION_V1",
+  "status": "RETROSPECTIVE_DIAGNOSTIC_ONLY",
+  "source_result": "data/results/multipair_cme_futures_context_breakout_retest_development.json",
+  "source_campaign": "CAMPAIGN_MULTIPAIR_CME_FUTURES_CONTEXT_BREAKOUT_RETEST_V1",
+  "populations": {
+    "OANDA_REPRODUCIBLE_SPOT_ONLY": "unfiltered_spot_setup",
+    "CME_TRADES_VOLUME_ONLY": "INTRADAY_VOLUME_CONFIRMATION",
+    "CME_OFFICIAL_STATISTICS_ONLY": "OI_AND_SETTLEMENT_CONFIRMATION",
+    "CME_FULL_CONTEXT": "ALL_CONTEXT_CONFLUENCE"
+  },
+  "decision_rule": {
+    "purchase_live_cme_only_if": [
+      "POSITIVE_ABSOLUTE_EXPECTANCY",
+      "DEVELOPMENT_SURVIVOR_TRUE",
+      "INCREMENTAL_VALUE_OVER_SPOT_ONLY"
+    ],
+    "automatic_purchase_allowed": false,
+    "automatic_downstream_export_allowed": false
+  },
+  "limitations": [
+    "RESULTS_ALREADY_OBSERVED_BEFORE_THIS_DIAGNOSTIC_WAS_DECLARED",
+    "DEVELOPMENT_PARTITION_ONLY",
+    "NOT_CONFIRMATORY_EVIDENCE",
+    "NO_THRESHOLD_RETUNING"
+  ]
+}

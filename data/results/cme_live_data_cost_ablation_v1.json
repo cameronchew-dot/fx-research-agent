@@ -1,0 +1,105 @@
+{
+  "ablation_id": "CME_LIVE_DATA_COST_ABLATION_V1",
+  "automatic_downstream_export_allowed": false,
+  "automatic_purchase_allowed": false,
+  "dated_confirmation_rows_inspected": 0,
+  "development_partition_only": true,
+  "diagnostic_only": true,
+  "generated_at_utc": "2026-11-09T04:50:39.982983Z",
+  "limitations": [
+    "RESULTS_ALREADY_OBSERVED_BEFORE_THIS_DIAGNOSTIC_WAS_DECLARED",
+    "DEVELOPMENT_PARTITION_ONLY",
+    "NOT_CONFIRMATORY_EVIDENCE",
+    "NO_THRESHOLD_RETUNING"
+  ],
+  "live_cme_purchase_supported": false,
+  "paper_or_live_authority": false,
+  "populations": [
+    {
+      "average_net_r": -0.37099356,
+      "development_survivor": false,
+      "event_count": 2328,
+      "gate_blocks": [
+        "NEGATIVE_ABSOLUTE_EXPECTANCY"
+      ],
+      "median_net_r": -1.16100231,
+      "population_id": "OANDA_REPRODUCIBLE_SPOT_ONLY",
+      "positive_month_rate": 0.07692308,
+      "positive_net_r_rate": 0.38058419,
+      "source_population": "unfiltered_spot_setup",
+      "worst_month_average_net_r": -0.73156116
+    },
+    {
+      "average_net_r": -0.2954755,
+      "development_survivor": false,
+      "event_count": 700,
+      "gate_blocks": [
+        "AVERAGE_NET_R_BELOW_MIN",
+        "MEDIAN_NET_R_NOT_POSITIVE",
+        "POSITIVE_RATE_BELOW_MIN",
+        "POSITIVE_MONTH_RATE_BELOW_MIN",
+        "WORST_MONTH_BELOW_MIN",
+        "HOLM_SIGNIFICANCE_NOT_CLEAR"
+      ],
+      "median_net_r": -1.10582307,
+      "population_id": "CME_TRADES_VOLUME_ONLY",
+      "positive_month_rate": 0.17307692,
+      "positive_net_r_rate": 0.38285714,
+      "source_population": "INTRADAY_VOLUME_CONFIRMATION",
+      "worst_month_average_net_r": -1.09249629
+    },
+    {
+      "average_net_r": -0.4154916,
+      "development_survivor": false,
+      "event_count": 838,
+      "gate_blocks": [
+        "AVERAGE_NET_R_BELOW_MIN",
+        "MEDIAN_NET_R_NOT_POSITIVE",
+        "POSITIVE_RATE_BELOW_MIN",
+        "POSITIVE_MONTH_RATE_BELOW_MIN",
+        "WORST_MONTH_BELOW_MIN",
+        "UNFILTERED_EDGE_BELOW_MIN",
+        "OPPOSITE_CONTEXT_EDGE_BELOW_MIN",
+        "HOLM_SIGNIFICANCE_NOT_CLEAR"
+      ],
+      "median_net_r": -1.1754446,
+      "population_id": "CME_OFFICIAL_STATISTICS_ONLY",
+      "positive_month_rate": 0.15384615,
+      "positive_net_r_rate": 0.36873508,
+      "source_population": "OI_AND_SETTLEMENT_CONFIRMATION",
+      "worst_month_average_net_r": -1.04340205
+    },
+    {
+      "average_net_r": -0.34163014,
+      "development_survivor": false,
+      "event_count": 267,
+      "gate_blocks": [
+        "AVERAGE_NET_R_BELOW_MIN",
+        "MEDIAN_NET_R_NOT_POSITIVE",
+        "POSITIVE_RATE_BELOW_MIN",
+        "POSITIVE_MONTH_RATE_BELOW_MIN",
+        "WORST_MONTH_BELOW_MIN",
+        "UNFILTERED_EDGE_BELOW_MIN",
+        "HOLM_SIGNIFICANCE_NOT_CLEAR"
+      ],
+      "median_net_r": -1.11688312,
+      "population_id": "CME_FULL_CONTEXT",
+      "positive_month_rate": 0.26923077,
+      "positive_net_r_rate": 0.37827715,
+      "source_population": "ALL_CONTEXT_CONFLUENCE",
+      "worst_month_average_net_r": -1.31793479
+    }
+  ],
+  "provenance": {
+    "contract_path": "config/cme_live_data_cost_ablation_v1.json",
+    "contract_sha256": "cebfffc62456c3c300ce7e15b71108ffd3ad1ef4c6cc38a88b7e03e0e343c40f",
+    "source_campaign": "CAMPAIGN_MULTIPAIR_CME_FUTURES_CONTEXT_BREAKOUT_RETEST_V1",
+    "source_result": "data/results/multipair_cme_futures_context_breakout_retest_development.json",
+    "source_result_sha256": "f73af82082b5f7cccecfd3ac3c2a79affacc78057dea27f479725e71660f7eaa"
+  },
+  "reason": "No CME-dependent population had positive absolute expectancy or survived the locked development gates.",
+  "recommendation": "DO_NOT_BUY_LIVE_CME; CONTINUE OANDA_REPRODUCIBLE_FORWARD_CONTEXT",
+  "schema": "FX_RESEARCH_CME_LIVE_DATA_COST_ABLATION_REPORT_V1",
+  "status": "NO_EVIDENCE_TO_PURCHASE_LIVE_CME",
+  "validation_rows_inspected": 0
+}
