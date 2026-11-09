@@ -42,3 +42,11 @@ The campaign remains non-promotable until all of the following are true:
 
 This repository has no order authority, and even a passing review cannot
 activate downstream behavior.
+
+## Initial independent replication
+
+The first Twelve Data extraction completed on `2026-11-09`. Both 10 bp and
+25 bp cross-source checks passed over V1's exact 45-month dated window, with
+negligible differences from the Yahoo reference. The campaign is now in
+`FORWARD_ACCUMULATION` at `0/36` resolved forward months. See
+`docs/CROSS_ASSET_ETF_DELAYED_TREND_V2_RESULT.md`.

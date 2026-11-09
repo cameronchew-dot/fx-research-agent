@@ -29,23 +29,27 @@ def _sha256(path: Path) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Evaluate locked delayed cross-asset trend V2")
     parser.add_argument("--prices", type=Path, default=ROOT / "data/external/cross_asset/twelve_data_adjusted_daily.csv.gz")
-    parser.add_argument("--v1-result", type=Path, default=ROOT / "data/results/cross_asset_etf_trend_primary.json")
+    parser.add_argument("--v1-result", type=Path)
     parser.add_argument("--cost-bps", type=float, choices=(10.0, 25.0), default=10.0)
     parser.add_argument("--forward-start", default=FORWARD_START_DATE)
     parser.add_argument("--output", type=Path, default=ROOT / "data/results/cross_asset_etf_delayed_trend_v2.json")
     parser.add_argument("--ledger", type=Path, default=ROOT / "data/derived/cross_asset_etf_delayed_trend_forward.jsonl")
     args = parser.parse_args()
 
+    reference_result = args.v1_result or ROOT / "data/results" / (
+        "cross_asset_etf_trend_stress.json" if args.cost_bps == 25.0 else "cross_asset_etf_trend_primary.json"
+    )
     result = evaluate_delayed(
         args.prices,
-        args.v1_result,
+        reference_result,
         one_way_cost_bps=args.cost_bps,
         forward_start=args.forward_start,
     )
     result["provenance"] = {
         "campaign_spec": "config/campaigns/cross_asset_etf_delayed_trend_v2.json",
         "prices_sha256": _sha256(args.prices),
-        "v1_result_sha256": _sha256(args.v1_result),
+        "v1_result": str(reference_result.relative_to(ROOT)),
+        "v1_result_sha256": _sha256(reference_result),
     }
     added = append_forward_ledger(
         args.ledger,

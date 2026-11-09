@@ -1,0 +1,227 @@
+{
+  "authority": {
+    "automatic_approval": false,
+    "downstream_activation": false,
+    "order_authority": false
+  },
+  "cost_model": {
+    "one_way_cost_bps_per_unit_turnover": 25.0
+  },
+  "cross_source_replication": {
+    "absolute_tolerances": {
+      "annualized_sharpe_zero_rate": 0.25,
+      "average_monthly_excess_cash_return": 0.0005,
+      "maximum_log_drawdown": 0.02
+    },
+    "candidate_dated_metrics": {
+      "annualized_information_ratio_over_cash": 0.8094435898089664,
+      "annualized_log_return": 0.07920953713083634,
+      "annualized_sharpe_zero_rate": 1.7891823612030433,
+      "annualized_volatility": 0.04427136039815191,
+      "average_active_asset_count": 5.177777777777778,
+      "average_monthly_excess_cash_return": 0.0029874439229001398,
+      "average_monthly_net_return": 0.006600794760903028,
+      "average_risky_gross_weight": 0.8266927961570428,
+      "average_turnover": 0.2071804621718747,
+      "maximum_log_drawdown": -0.02912369557547586,
+      "month_count": 45,
+      "positive_month_rate": 0.7333333333333333,
+      "positive_year_rate": 1.0,
+      "year_count": 4
+    },
+    "candidate_minus_reference": {
+      "annualized_sharpe_zero_rate": -0.00453360997801866,
+      "average_monthly_excess_cash_return": -1.8280505984890998e-06,
+      "maximum_log_drawdown": -1.1217243111000946e-05
+    },
+    "comparison_window": {
+      "entry_date_end": "2026-10-01",
+      "entry_date_start": "2023-02-01"
+    },
+    "gates": {
+      "annualized_sharpe_zero_rate_within_tolerance": true,
+      "average_monthly_excess_cash_return_within_tolerance": true,
+      "maximum_log_drawdown_within_tolerance": true,
+      "month_count_matches": true
+    },
+    "passed": true,
+    "role": "MEASUREMENT_REPLICATION_ONLY_NOT_FRESH_CONFIRMATION",
+    "v1_stale_control_reference": {
+      "annualized_information_ratio_over_cash": 0.8104527024720585,
+      "annualized_log_return": 0.07939651660676529,
+      "annualized_sharpe_zero_rate": 1.793715971181062,
+      "annualized_volatility": 0.044263706117578426,
+      "average_active_asset_count": 5.177777777777778,
+      "average_monthly_excess_cash_return": 0.002989271973498629,
+      "average_monthly_net_return": 0.006616376383897108,
+      "average_risky_gross_weight": 0.8266913996436267,
+      "average_turnover": 0.20714631339203401,
+      "maximum_log_drawdown": -0.02911247833236486,
+      "month_count": 45,
+      "positive_month_rate": 0.7333333333333333,
+      "positive_year_rate": 1.0,
+      "year_count": 4
+    }
+  },
+  "forward": {
+    "controls": {
+      "buy_hold": {
+        "annualized_information_ratio_over_cash": null,
+        "annualized_log_return": null,
+        "annualized_sharpe_zero_rate": null,
+        "annualized_volatility": null,
+        "average_active_asset_count": null,
+        "average_monthly_excess_cash_return": null,
+        "average_monthly_net_return": null,
+        "average_risky_gross_weight": null,
+        "average_turnover": null,
+        "maximum_log_drawdown": null,
+        "month_count": 0,
+        "positive_month_rate": null,
+        "positive_year_rate": null,
+        "year_count": 0
+      },
+      "immediate": {
+        "annualized_information_ratio_over_cash": null,
+        "annualized_log_return": null,
+        "annualized_sharpe_zero_rate": null,
+        "annualized_volatility": null,
+        "average_active_asset_count": null,
+        "average_monthly_excess_cash_return": null,
+        "average_monthly_net_return": null,
+        "average_risky_gross_weight": null,
+        "average_turnover": null,
+        "maximum_log_drawdown": null,
+        "month_count": 0,
+        "positive_month_rate": null,
+        "positive_year_rate": null,
+        "year_count": 0
+      },
+      "opposite": {
+        "annualized_information_ratio_over_cash": null,
+        "annualized_log_return": null,
+        "annualized_sharpe_zero_rate": null,
+        "annualized_volatility": null,
+        "average_active_asset_count": null,
+        "average_monthly_excess_cash_return": null,
+        "average_monthly_net_return": null,
+        "average_risky_gross_weight": null,
+        "average_turnover": null,
+        "maximum_log_drawdown": null,
+        "month_count": 0,
+        "positive_month_rate": null,
+        "positive_year_rate": null,
+        "year_count": 0
+      },
+      "random": {
+        "annualized_information_ratio_over_cash": null,
+        "annualized_log_return": null,
+        "annualized_sharpe_zero_rate": null,
+        "annualized_volatility": null,
+        "average_active_asset_count": null,
+        "average_monthly_excess_cash_return": null,
+        "average_monthly_net_return": null,
+        "average_risky_gross_weight": null,
+        "average_turnover": null,
+        "maximum_log_drawdown": null,
+        "month_count": 0,
+        "positive_month_rate": null,
+        "positive_year_rate": null,
+        "year_count": 0
+      }
+    },
+    "gates": {
+      "average_excess_cash_positive": false,
+      "excess_return_beats_immediate_opposite_and_random": false,
+      "information_ratio_at_least_point_five": false,
+      "maximum_drawdown_within_twenty_five_percent": false,
+      "minimum_36_resolved_months": false,
+      "positive_year_rate_at_least_sixty_percent": false,
+      "sharpe_and_drawdown_beat_buy_hold": false
+    },
+    "ledger": {
+      "new_immutable_rows": 0,
+      "path": "/Users/camcam/fx_research_agent/data/derived/cross_asset_etf_delayed_trend_forward.jsonl"
+    },
+    "metrics": {
+      "annualized_information_ratio_over_cash": null,
+      "annualized_log_return": null,
+      "annualized_sharpe_zero_rate": null,
+      "annualized_volatility": null,
+      "average_active_asset_count": null,
+      "average_monthly_excess_cash_return": null,
+      "average_monthly_net_return": null,
+      "average_risky_gross_weight": null,
+      "average_turnover": null,
+      "maximum_log_drawdown": null,
+      "month_count": 0,
+      "positive_month_rate": null,
+      "positive_year_rate": null,
+      "year_count": 0
+    },
+    "review_ready": false,
+    "rows": []
+  },
+  "forward_start": "2026-12-01",
+  "historical_replication_partitions": {
+    "chronological_oos": {
+      "annualized_information_ratio_over_cash": -0.042690790299143765,
+      "annualized_log_return": 0.006523131784329228,
+      "annualized_sharpe_zero_rate": 0.11204143765781636,
+      "annualized_volatility": 0.05822070763007701,
+      "average_active_asset_count": 4.116279069767442,
+      "average_monthly_excess_cash_return": -0.0002093963192002205,
+      "average_monthly_net_return": 0.000543594315360769,
+      "average_risky_gross_weight": 0.6955101133986883,
+      "average_turnover": 0.14403287963087966,
+      "maximum_log_drawdown": -0.06984604889781998,
+      "month_count": 43,
+      "positive_month_rate": 0.4418604651162791,
+      "positive_year_rate": 0.6,
+      "year_count": 5
+    },
+    "dated_confirmation": {
+      "annualized_information_ratio_over_cash": 0.7550054949176056,
+      "annualized_log_return": 0.07740560440536254,
+      "annualized_sharpe_zero_rate": 1.7129381609818648,
+      "annualized_volatility": 0.04518879091408253,
+      "average_active_asset_count": 5.3023255813953485,
+      "average_monthly_excess_cash_return": 0.002845545130919643,
+      "average_monthly_net_return": 0.006450467033780211,
+      "average_risky_gross_weight": 0.8407250192341146,
+      "average_turnover": 0.21082699174536307,
+      "maximum_log_drawdown": -0.02912369557547586,
+      "month_count": 43,
+      "positive_month_rate": 0.7209302325581395,
+      "positive_year_rate": 1.0,
+      "year_count": 4
+    },
+    "development": {
+      "annualized_information_ratio_over_cash": 0.3154953784373096,
+      "annualized_log_return": 0.02238906224483827,
+      "annualized_sharpe_zero_rate": 0.3759838538006457,
+      "annualized_volatility": 0.05954793541934757,
+      "average_active_asset_count": 4.2578125,
+      "average_monthly_excess_cash_return": 0.001566683946502531,
+      "average_monthly_net_return": 0.0018657551870698559,
+      "average_risky_gross_weight": 0.7605003102528866,
+      "average_turnover": 0.19982004045617044,
+      "maximum_log_drawdown": -0.09943978331272871,
+      "month_count": 128,
+      "positive_month_rate": 0.65625,
+      "positive_year_rate": 0.5454545454545454,
+      "year_count": 11
+    }
+  },
+  "promotion_eligible": false,
+  "provenance": {
+    "campaign_spec": "config/campaigns/cross_asset_etf_delayed_trend_v2.json",
+    "prices_sha256": "86a7528a62ec231e32b5477a6a594355b0acd309197f55369609bee8d076055c",
+    "v1_result": "data/results/cross_asset_etf_trend_stress.json",
+    "v1_result_sha256": "7463e90458cf654f5d6d1ea8651c3bb369ca412ecf47472c73c6edfbca40d86b"
+  },
+  "schema": "CROSS_ASSET_ETF_DELAYED_TREND_RESULT_V2",
+  "source_role": "INDEPENDENT_CROSS_SOURCE_AND_FORWARD_EVIDENCE",
+  "status": "FORWARD_ACCUMULATION",
+  "strategy": "CROSS_ASSET_ETF_12M_TREND_ONE_MONTH_DELAY_V2"
+}

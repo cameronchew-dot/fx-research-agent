@@ -87,7 +87,9 @@ The V2 follow-up is now frozen in
 as the independent split-and-dividend-adjusted source, treats all reused
 history as measurement replication only, and writes only post-December-2026
 resolved months to an immutable forward ledger. Setup and review boundaries
-are documented in `docs/CROSS_ASSET_ETF_DELAYED_TREND_V2.md`.
+are documented in `docs/CROSS_ASSET_ETF_DELAYED_TREND_V2.md`. The independent
+10 bp and 25 bp source replications passed; V2 remains non-promotable at `0/36`
+fresh forward months. See `docs/CROSS_ASSET_ETF_DELAYED_TREND_V2_RESULT.md`.
 
 ## FX motif discovery
 

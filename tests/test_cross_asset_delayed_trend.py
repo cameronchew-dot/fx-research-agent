@@ -43,6 +43,7 @@ class CrossAssetDelayedTrendTests(unittest.TestCase):
             result = evaluate_delayed(prices, reference, forward_start="2099-01-01")
 
         self.assertTrue(result["cross_source_replication"]["passed"])
+        self.assertIn("entry_date_start", result["cross_source_replication"]["comparison_window"])
         self.assertEqual(result["status"], "FORWARD_ACCUMULATION")
         self.assertEqual(result["forward"]["metrics"]["month_count"], 0)
         self.assertFalse(result["promotion_eligible"])
@@ -83,6 +84,16 @@ class CrossAssetDelayedTrendTests(unittest.TestCase):
         )
         self.assertFalse(campaign["exact_specification"]["parameter_sweeps_allowed"])
         self.assertFalse(campaign["authority"]["order_authority"])
+
+    def test_sealed_independent_replications_pass_but_are_not_promotable(self):
+        for name in ("primary", "stress"):
+            result = json.loads(
+                Path(f"data/results/cross_asset_etf_delayed_trend_v2_{name}.json").read_text(encoding="utf-8")
+            )
+            self.assertTrue(result["cross_source_replication"]["passed"])
+            self.assertEqual(result["status"], "FORWARD_ACCUMULATION")
+            self.assertEqual(result["forward"]["metrics"]["month_count"], 0)
+            self.assertFalse(result["promotion_eligible"])
 
 
 if __name__ == "__main__":

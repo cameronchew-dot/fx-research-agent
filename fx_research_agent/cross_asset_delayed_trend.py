@@ -123,11 +123,24 @@ def evaluate_delayed(
         "buy_hold": portfolio_rows(panel, targets, control="BUY_HOLD", one_way_cost_bps=one_way_cost_bps),
     }
 
-    partitions = _partition(delayed_rows)
-    dated_candidate = summarize(partitions["dated_confirmation"])
     v1_result = json.loads(v1_result_path.read_text(encoding="utf-8"))
+    v1_rows = v1_result["rows"]
+    v1_dated_start_index = int(len(v1_rows) * 0.8)
+    replication_start = v1_rows[v1_dated_start_index]["entry_date"]
+    replication_end = v1_rows[-1]["entry_date"]
+    replication_rows = [
+        row
+        for row in delayed_rows
+        if replication_start <= row["entry_date"] <= replication_end
+    ]
+    partitions = _partition(delayed_rows)
+    dated_candidate = summarize(replication_rows)
     reference = v1_result["controls_dated_confirmation"]["stale"]
     replication = _cross_source_replication(dated_candidate, reference)
+    replication["comparison_window"] = {
+        "entry_date_start": replication_start,
+        "entry_date_end": replication_end,
+    }
 
     forward_rows = [row for row in delayed_rows if row["entry_date"] >= forward_start]
     forward_entry_dates = {row["entry_date"] for row in forward_rows}
