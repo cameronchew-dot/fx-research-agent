@@ -21,4 +21,5 @@ data/result_inbox/*
 reports/*
 !reports/.gitkeep
 exports/*
+archives/
 
