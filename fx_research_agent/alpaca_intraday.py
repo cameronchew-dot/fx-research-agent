@@ -151,6 +151,8 @@ def load_minute_bars(path: Path) -> list[dict[str, Any]]:
             if prior_timestamp is not None and timestamp <= prior_timestamp:
                 raise ValueError("minute bars must be strictly increasing")
             prior_timestamp = timestamp
+            if timestamp.astimezone(NEW_YORK).strftime("%H:%M") not in REQUIRED_TIMES:
+                continue
             rows.append(
                 {
                     "timestamp_utc": timestamp,
@@ -394,7 +396,7 @@ def evaluate(path: Path, campaign: dict[str, Any]) -> dict[str, Any]:
             else "HISTORICAL_GATE_FAIL"
         ),
         "population": {
-            "minute_bar_count": len(minute_rows),
+            "required_timestamp_bar_count": len(minute_rows),
             "complete_session_count": len(sessions),
             "session_start": sessions[0]["date"] if sessions else None,
             "session_end": sessions[-1]["date"] if sessions else None,
