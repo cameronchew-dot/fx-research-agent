@@ -17,6 +17,12 @@ OANDA venue quote/tick-pressure proxy, never as true market-wide volume.
 
 ## System of record
 
+The supervisor discovers `eur_bot` and `eur_agent` as sibling repositories of
+this checkout. Set `FX_RESEARCH_RUNTIME_ROOT` when all three repositories share
+a different parent directory, or use `FX_RESEARCH_EUR_BOT_ROOT` and
+`FX_RESEARCH_EUR_AGENT_ROOT` for individual overrides. This keeps one portable
+configuration for macOS development and Linux runtime deployment.
+
 This repository becomes the canonical home for new research hypotheses. The
 seven EUR agent records are imported once as immutable genesis history. The EUR
 agent retains its existing rows as a historical downstream mirror.

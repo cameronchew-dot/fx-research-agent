@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 import tempfile
 from pathlib import Path
@@ -86,11 +87,23 @@ from fx_research_agent.edge_forensics import (  # noqa: E402
 
 DEFAULT_DB = ROOT / "data" / "fx_research_agent.sqlite3"
 DEFAULT_GENESIS = ROOT / "config" / "genesis_hypotheses.json"
-DEFAULT_MARKET_SOURCE = Path("/Users/camcam/eur_bot/exports/fx_research")
+
+
+def sibling_repo_root(name: str, *, runtime_root: Path | None = None) -> Path:
+    base = runtime_root or Path(
+        os.getenv("FX_RESEARCH_RUNTIME_ROOT", str(ROOT.parent))
+    )
+    override = os.getenv(f"FX_RESEARCH_{name.upper()}_ROOT")
+    return Path(override) if override else base / name
+
+
+EUR_BOT_ROOT = sibling_repo_root("eur_bot")
+EUR_AGENT_ROOT = sibling_repo_root("eur_agent")
+DEFAULT_MARKET_SOURCE = EUR_BOT_ROOT / "exports" / "fx_research"
 DEFAULT_MARKET_INBOX = ROOT / "data" / "inbox"
 DEFAULT_MARKET_SYNC_STATUS = ROOT / "data" / "market_ingest_status.json"
 DEFAULT_MARKET_DATA_STATUS = ROOT / "data" / "market_data_status.json"
-DEFAULT_EVIDENCE_SOURCE = Path("/Users/camcam/eur_agent/exports/fx_research")
+DEFAULT_EVIDENCE_SOURCE = EUR_AGENT_ROOT / "exports" / "fx_research"
 DEFAULT_EVIDENCE_INBOX = ROOT / "data" / "evidence_inbox"
 DEFAULT_EVIDENCE_SYNC_STATUS = ROOT / "data" / "evidence_ingest_status.json"
 DEFAULT_EVIDENCE_STATUS = ROOT / "data" / "research_evidence_status.json"
@@ -112,20 +125,18 @@ DEFAULT_CONTEXT_DIR = ROOT / "data" / "context_discovery"
 DEFAULT_CONTEXT_PREDECLARATION = ROOT / "config" / "fx_context_predeclaration_v1.json"
 DEFAULT_CONTEXT_EVALUATION_PROTOCOL = ROOT / "config" / "fx_context_evaluation_protocol_v1.json"
 DEFAULT_CONTEXT_LABEL_EXPORT = ROOT / "data" / "context_discovery" / "context_labels_v1.json"
-DEFAULT_RESULT_SOURCE = Path("/Users/camcam/eur_bot/exports/fx_research_results")
+DEFAULT_RESULT_SOURCE = EUR_BOT_ROOT / "exports" / "fx_research_results"
 DEFAULT_RESULT_INBOX = ROOT / "data" / "result_inbox"
 DEFAULT_RESULT_STATUS = ROOT / "data" / "research_result_status.json"
 DEFAULT_PAIR_RESEARCH_INVENTORY = ROOT / "data" / "pair_research_inventory.json"
 DEFAULT_EDGE_FORENSICS = ROOT / "data" / "cross_system_edge_forensics.json"
-DEFAULT_EUR_AGENT_DB = Path("/Users/camcam/eur_agent/data/eur_agent.sqlite3")
-DEFAULT_EUR_AGENT_EXPERIMENT = Path(
-    "/Users/camcam/eur_agent/config/agent_experiment_contract.json"
+DEFAULT_EUR_AGENT_DB = EUR_AGENT_ROOT / "data" / "eur_agent.sqlite3"
+DEFAULT_EUR_AGENT_EXPERIMENT = (
+    EUR_AGENT_ROOT / "config" / "agent_experiment_contract.json"
 )
-DEFAULT_EUR_PROFILE_VALIDATION = Path(
-    "/Users/camcam/eur_bot/data/eur_profile_validation.json"
-)
-DEFAULT_EUR_PROFILE_DATED = Path(
-    "/Users/camcam/eur_bot/data/eur_active_profile_dated_confirmation.json"
+DEFAULT_EUR_PROFILE_VALIDATION = EUR_BOT_ROOT / "data" / "eur_profile_validation.json"
+DEFAULT_EUR_PROFILE_DATED = (
+    EUR_BOT_ROOT / "data" / "eur_active_profile_dated_confirmation.json"
 )
 DEFAULT_PORTFOLIO_STATUS = ROOT / "data" / "portfolio_opportunity_report.json"
 DEFAULT_CME_CONTEXT_CONTRACT = ROOT / "config" / "cme_fx_context_contract.json"
