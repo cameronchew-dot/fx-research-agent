@@ -255,6 +255,13 @@ or a live CME subscription. See
 python3 ops/eur_cme_bar_context_diagnostic.py
 ```
 
+A separately frozen short-horizon campaign tested whether a positive SPY
+morning return predicted an executable long return from 15:30 through 15:55.
+It failed across development, validation, and dated confirmation: 1,514 trades
+could not cover the locked 2 bp per-side cost, and the signal did not beat the
+opposite-morning control. It has no Alpaca paper authority and is closed without
+retuning. See `docs/SPY_MORNING_MOMENTUM_LAST_HALF_HOUR_RESULT_V1.md`.
+
 A second, futures-native campaign then tested two mechanisms directly on the
 centralized data: participation-shock acceptance continuation and
 participation-shock failed-auction reversal. Both used volume at least `1.75x`
