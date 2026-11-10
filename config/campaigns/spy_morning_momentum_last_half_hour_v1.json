@@ -1,0 +1,99 @@
+{
+  "schema": "FX_RESEARCH_CAMPAIGN_V1",
+  "campaign_id": "CAMPAIGN_SPY_MORNING_MOMENTUM_LAST_HALF_HOUR_V1",
+  "hypothesis_id": "HYP_SPY_MORNING_MOMENTUM_LAST_HALF_HOUR_V1",
+  "created_at_utc": "2026-11-10T02:00:00Z",
+  "state": "PREDECLARED_DIAGNOSTIC",
+  "title": "SPY morning return predicts an executable final-session return",
+  "instrument": "SPY",
+  "mechanism_class": "INTRADAY_MARKET_MOMENTUM_LONG_OR_CASH",
+  "research_question": "Does a positive SPY return from the prior regular close through 10:00 America/New_York predict a positive cost-adjusted return from 15:30 through 15:55 on the same regular session?",
+  "null_hypothesis": "The long-or-cash rule has non-positive net expectancy, fails chronological partitions, or does not beat fixed always-long, opposite-signal, and prior-day-signal controls.",
+  "population": {
+    "source": "ALPACA_HISTORICAL_SIP_1MIN_ADJUSTMENT_ALL",
+    "symbol": "SPY",
+    "regular_session_only": true,
+    "window_start": "2016-01-01",
+    "window_end_inclusive": "2026-11-06",
+    "complete_required_minutes": ["09:30", "09:59", "15:30", "15:55", "15:59"],
+    "early_closes_without_15_55": "EXCLUDED"
+  },
+  "exact_specification": {
+    "prior_close": "PREVIOUS_COMPLETE_REGULAR_SESSION_15_59_MINUTE_CLOSE",
+    "signal_price": "CURRENT_REGULAR_SESSION_09_59_MINUTE_CLOSE",
+    "signal_known_at": "10:00:00_AMERICA_NEW_YORK",
+    "signal": "SIGNAL_PRICE_DIVIDED_BY_PRIOR_CLOSE_MINUS_ONE",
+    "primary_activation": "SIGNAL_STRICTLY_GREATER_THAN_ZERO",
+    "entry": "CURRENT_SESSION_15_30_MINUTE_OPEN",
+    "exit": "CURRENT_SESSION_15_55_MINUTE_OPEN",
+    "direction": "LONG_ONLY_OTHERWISE_CASH",
+    "position_size": "ONE_UNIT_NOTIONAL_RETURN",
+    "primary_one_way_cost_bps": 2.0,
+    "stress_one_way_cost_bps": 5.0,
+    "parameter_sweeps_allowed": false,
+    "threshold_sweeps_allowed": false,
+    "post_result_filtering_allowed": false
+  },
+  "partitions": {
+    "development": ["2016-01-01", "2021-12-31"],
+    "chronological_validation": ["2022-01-01", "2024-12-31"],
+    "dated_confirmation": ["2025-01-01", "2026-11-06"]
+  },
+  "controls": [
+    {
+      "control_id": "ALWAYS_LONG_EXECUTION_WINDOW",
+      "definition": "Long every complete session from 15:30 through 15:55"
+    },
+    {
+      "control_id": "OPPOSITE_MORNING_SIGN_LONG_ONLY",
+      "definition": "Long only when the current morning return is non-positive"
+    },
+    {
+      "control_id": "PRIOR_DAY_SIGNAL_LAG",
+      "definition": "Long when the immediately prior complete session morning return was positive"
+    }
+  ],
+  "metrics": {
+    "primary": [
+      "AVERAGE_DAILY_NET_RETURN",
+      "ANNUALIZED_SHARPE",
+      "PAIRED_NEWEY_WEST_T_STAT_VERSUS_CONTROLS"
+    ],
+    "secondary": [
+      "TRADE_COUNT",
+      "TRADE_FREQUENCY",
+      "AVERAGE_NET_RETURN_PER_TRADE",
+      "POSITIVE_TRADE_RATE",
+      "POSITIVE_MONTH_RATE",
+      "COMPOUNDED_RETURN",
+      "MAXIMUM_DRAWDOWN",
+      "WORST_CALENDAR_YEAR_RETURN"
+    ]
+  },
+  "review_gates": {
+    "minimum_primary_trades": {
+      "development": 500,
+      "chronological_validation": 250,
+      "dated_confirmation": 150
+    },
+    "primary_average_daily_net_return_positive_in_all_partitions": true,
+    "validation_and_dated_sharpe_minimum": 0.5,
+    "validation_plus_dated_positive_month_rate_minimum": 0.52,
+    "validation_plus_dated_maximum_drawdown_floor": -0.08,
+    "validation_plus_dated_primary_must_beat_all_controls": true,
+    "validation_plus_dated_newey_west_t_stat_minimum": 1.96,
+    "primary_and_stress_cost_scenarios_must_pass": true,
+    "review_is_not_promotion": true
+  },
+  "multiple_comparisons_policy": {
+    "confirmatory_hypothesis_count": 1,
+    "holm_bonferroni_required": false,
+    "no_post_result_variants": true
+  },
+  "authority": {
+    "automatic_approval": false,
+    "automatic_paper_activation": false,
+    "automatic_execution": false,
+    "order_authority": false
+  }
+}

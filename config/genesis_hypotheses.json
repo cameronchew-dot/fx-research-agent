@@ -465,6 +465,21 @@
       "expected_frequency": "MONTHLY_REBALANCE_WITH_ONE_MONTH_TARGET_DELAY",
       "overlap_notes": "Post-control lead from rejected V1; it carries no edge claim, cannot inherit V1 approval, and cannot use the V1 dated window as confirmatory evidence.",
       "next_action": "ADD_LOCAL_TWELVE_DATA_API_KEY_RUN_CROSS_SOURCE_REPLICATION_THEN_ACCRUE_36_FORWARD_MONTHS_FROM_2026_12_01"
+    },
+    {
+      "hypothesis_id": "HYP_SPY_MORNING_MOMENTUM_LAST_HALF_HOUR_V1",
+      "proposed_at_utc": "2026-11-10T02:00:00Z",
+      "proposed_by": "OPERATOR_AND_CODEX_LITERATURE_LEAD",
+      "state": "PROPOSED",
+      "hypothesis_type": "US_EQUITY_INTRADAY_MOMENTUM_DIAGNOSTIC",
+      "classification": "STRATEGY",
+      "priority": 31,
+      "statement": "A positive SPY return from the previous regular close through 10:00 New York time may predict a positive cost-adjusted long return from 15:30 through 15:55 on the same session.",
+      "data_requirements": ["ALPACA_HISTORICAL_SIP_1MIN_ADJUSTMENT_ALL"],
+      "dependencies": ["REGULAR_SESSION_ONLY", "FIXED_1530_ENTRY_1555_EXIT", "PRIMARY_AND_STRESS_COSTS", "SEALED_CALENDAR_PARTITIONS", "ALWAYS_OPPOSITE_AND_PRIOR_DAY_CONTROLS"],
+      "expected_frequency": "APPROXIMATELY_HALF_OF_COMPLETE_US_EQUITY_SESSIONS_BEFORE_VALIDATION",
+      "overlap_notes": "Intraday SPY timing mechanism distinct from the monthly cross-asset delayed-trend allocation; it shares SPY exposure but not holding horizon or signal construction.",
+      "next_action": "FETCH_LOCKED_SIP_HISTORY_AND_RUN_ONE_UNTUNED_EVALUATION"
     }
   ]
 }
