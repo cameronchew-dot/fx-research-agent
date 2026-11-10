@@ -36,6 +36,10 @@ the production runtime. They schedule bot and agent exports, immutable research
 ingestion, daily campaign evaluation, and weekly governed proposals. None of
 these units has broker credentials or order authority.
 
+The shared `eur-runtime-backup` service runs after Friday's market close and
+backs up all three SQLite systems. The FX research backup keeps exactly the
+latest three verified copies.
+
 ```bash
 python3 ops/research_supervisor.py init-db
 python3 ops/research_supervisor.py import-genesis

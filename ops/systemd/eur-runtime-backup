@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cd /home/ubuntu/runtime/eur_agent
+/usr/bin/python3 ops/agent_supervisor.py storage-backup
+
+cd /home/ubuntu/runtime/eur_bot
+/usr/bin/python3 scripts/eur_storage_maintenance.py backup \
+  --runtime-db data/eur_runtime.sqlite3 \
+  --research-db data/missing_research.sqlite3 \
+  --usdjpy-db data/missing_usdjpy.sqlite3 \
+  --output-file reports/eur_storage_health.json \
+  --state-file data/eur_storage_maintenance_state.json \
+  --backup-dir archives/vps_runtime_backups \
+  --env-file .env \
+  --json
+
+cd /home/ubuntu/runtime/fx_research_agent
+.venv/bin/python ops/research_storage_backup.py --retain 3

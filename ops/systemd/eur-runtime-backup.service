@@ -1,0 +1,12 @@
+[Unit]
+Description=Verified EUR runtime and research SQLite backups
+After=eur-bot-farm.service eur-agent.service
+
+[Service]
+Type=oneshot
+User=ubuntu
+ExecStart=/usr/local/sbin/eur-runtime-backup
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ReadWritePaths=/home/ubuntu/runtime/eur_bot /home/ubuntu/runtime/eur_agent /home/ubuntu/runtime/fx_research_agent
