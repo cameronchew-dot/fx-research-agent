@@ -275,6 +275,13 @@ python3 ops/alpaca_cross_asset_daily_extract.py
 python3 ops/cross_asset_short_term_reversal_research.py
 ```
 
+The locked historical result was a positive but insufficient near-miss. It
+produced 378 non-overlapping events at roughly 0.68 per week and positive
+excess-BIL averages in every chronological partition, but missed the frozen
+positive-rate and significance gates at both cost levels. It is closed without
+retuning or paper authority. See
+`docs/CROSS_ASSET_SHORT_TERM_REVERSAL_RESULT_V1.md`.
+
 A second, futures-native campaign then tested two mechanisms directly on the
 centralized data: participation-shock acceptance continuation and
 participation-shock failed-auction reversal. Both used volume at least `1.75x`

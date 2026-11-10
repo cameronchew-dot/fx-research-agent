@@ -486,7 +486,7 @@
       "hypothesis_id": "HYP_CROSS_ASSET_SHORT_TERM_REVERSAL_V1",
       "proposed_at_utc": "2026-11-10T03:00:00Z",
       "proposed_by": "OPERATOR_AND_CODEX_LITERATURE_LEAD",
-      "state": "PROPOSED",
+      "state": "REJECTED",
       "hypothesis_type": "CROSS_ASSET_SHORT_HORIZON_REVERSAL_DIAGNOSTIC",
       "classification": "STRATEGY",
       "priority": 32,
@@ -495,7 +495,8 @@
       "dependencies": ["PRIOR_ONLY_20_SESSION_VOLATILITY", "NEXT_COMMON_SESSION_OPEN_ENTRY", "NON_OVERLAPPING_THREE_SESSION_HOLDS", "PRIMARY_AND_STRESS_COSTS", "SEALED_CALENDAR_PARTITIONS", "WINNER_RANDOM_SPY_AND_BIL_CONTROLS"],
       "expected_frequency": "SEVERAL_EVENTS_PER_MONTH_TO_MULTIPLE_EVENTS_PER_WEEK_BEFORE_VALIDATION",
       "overlap_notes": "Short-horizon cross-asset overshoot mechanism, distinct from the rejected SPY intraday timing rule and monthly ETF trend allocation.",
-      "next_action": "RUN_THE_SINGLE_LOCKED_HISTORICAL_EVALUATION_WITHOUT_PARAMETER_RETUNING"
+      "evidence_ids": ["CAMPAIGN_CROSS_ASSET_SHORT_TERM_REVERSAL_V1"],
+      "next_action": "CLOSED_MISSED_SIGNIFICANCE_PAIRED_CONTROL_AND_POSITIVE_RATE_GATES_DO_NOT_RETUNE"
     }
   ]
 }

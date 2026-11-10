@@ -99,6 +99,20 @@ class CrossAssetShortTermReversalTests(unittest.TestCase):
         self.assertFalse(first["authority"]["automatic_execution"])
         self.assertIn(first["status"], {"HISTORICAL_GATE_FAIL", "HISTORICAL_GATE_PASS_REQUIRES_HUMAN_REVIEW"})
 
+    def test_sealed_result_failed_without_paper_authority(self):
+        result = json.loads(
+            Path("data/results/cross_asset_short_term_reversal_v1.json").read_text(encoding="utf-8")
+        )
+        primary = result["cost_scenarios"]["primary"]
+        combined = primary["validation_plus_dated"]["primary"]
+        self.assertEqual(result["status"], "HISTORICAL_GATE_FAIL")
+        self.assertEqual(result["population"]["event_count"], 378)
+        self.assertGreater(combined["average_excess_bil_return"], 0)
+        self.assertLess(combined["excess_bil_t_stat"], 1.96)
+        self.assertFalse(primary["gates"]["validation_plus_dated_positive_rate"])
+        self.assertFalse(result["promotion_eligible"])
+        self.assertFalse(result["authority"]["order_authority"])
+
 
 if __name__ == "__main__":
     unittest.main()
