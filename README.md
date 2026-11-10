@@ -27,6 +27,10 @@ This repository becomes the canonical home for new research hypotheses. The
 seven EUR agent records are imported once as immutable genesis history. The EUR
 agent retains its existing rows as a historical downstream mirror.
 
+On the VPS, `ops/research_storage_backup.py` creates an integrity-checked SQLite
+backup and retains the latest three copies by default. It is designed to run
+from the shared Friday-close runtime backup service.
+
 ```bash
 python3 ops/research_supervisor.py init-db
 python3 ops/research_supervisor.py import-genesis
