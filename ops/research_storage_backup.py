@@ -32,10 +32,19 @@ def backup_database(
     temporary.unlink(missing_ok=True)
 
     try:
-        with sqlite3.connect(db_path) as source, sqlite3.connect(temporary) as target:
+        source = sqlite3.connect(db_path)
+        target = sqlite3.connect(temporary)
+        try:
             source.backup(target)
-        with sqlite3.connect(temporary) as connection:
+            target.commit()
+        finally:
+            target.close()
+            source.close()
+        connection = sqlite3.connect(temporary)
+        try:
             integrity = str(connection.execute("PRAGMA integrity_check").fetchone()[0])
+        finally:
+            connection.close()
         if integrity != "ok":
             raise RuntimeError(f"backup integrity check failed: {integrity}")
         temporary.replace(destination)
