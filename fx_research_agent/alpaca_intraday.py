@@ -16,7 +16,8 @@ from typing import Any
 from zoneinfo import ZoneInfo
 
 
-DATA_ENDPOINT = "https://data.alpaca.markets/v2/stocks/SPY/bars"
+DATA_ENDPOINT_TEMPLATE = "https://data.alpaca.markets/v2/stocks/{symbol}/bars"
+DATA_ENDPOINT = DATA_ENDPOINT_TEMPLATE.format(symbol="SPY")
 NEW_YORK = ZoneInfo("America/New_York")
 CONTROL_NAMES = ("primary", "always", "opposite", "prior_day")
 REQUIRED_TIMES = ("09:30", "09:59", "15:30", "15:55", "15:59")
@@ -34,16 +35,16 @@ def _utc(value: str) -> datetime:
     return datetime.fromisoformat(value.replace("Z", "+00:00")).astimezone(timezone.utc)
 
 
-def normalize_bar(raw: dict[str, Any]) -> dict[str, str]:
+def normalize_bar(raw: dict[str, Any], *, symbol: str = "SPY") -> dict[str, str]:
     timestamp = _utc(str(raw["t"]))
     values = {name: float(raw[key]) for name, key in (("open", "o"), ("high", "h"), ("low", "l"), ("close", "c"))}
     if any(not math.isfinite(value) or value <= 0 for value in values.values()):
-        raise ValueError(f"invalid SPY price at {raw['t']}")
+        raise ValueError(f"invalid {symbol} price at {raw['t']}")
     if values["low"] > min(values["open"], values["close"]) or values["high"] < max(values["open"], values["close"]):
-        raise ValueError(f"invalid SPY OHLC ordering at {raw['t']}")
+        raise ValueError(f"invalid {symbol} OHLC ordering at {raw['t']}")
     return {
         "timestamp_utc": timestamp.isoformat().replace("+00:00", "Z"),
-        "symbol": "SPY",
+        "symbol": symbol,
         "open": format(values["open"], ".12g"),
         "high": format(values["high"], ".12g"),
         "low": format(values["low"], ".12g"),
@@ -56,7 +57,7 @@ def normalize_bar(raw: dict[str, Any]) -> dict[str, str]:
     }
 
 
-def extract_spy_minute_bars(
+def extract_symbol_minute_bars(
     output: Path,
     summary_path: Path,
     *,
@@ -64,10 +65,15 @@ def extract_spy_minute_bars(
     api_secret_key: str,
     start: str,
     end: str,
+    symbol: str,
     pause_seconds: float = 0.05,
 ) -> dict[str, Any]:
     if not api_key_id or not api_secret_key:
         raise ValueError("Alpaca data credentials are required")
+    normalized_symbol = symbol.strip().upper()
+    if not normalized_symbol or not normalized_symbol.replace(".", "").isalnum():
+        raise ValueError("invalid Alpaca symbol")
+    endpoint = DATA_ENDPOINT_TEMPLATE.format(symbol=urllib.parse.quote(normalized_symbol, safe=""))
     public_parameters = {
         "timeframe": "1Min",
         "start": start,
@@ -91,14 +97,14 @@ def extract_spy_minute_bars(
         if page_token:
             parameters["page_token"] = page_token
         request = urllib.request.Request(
-            f"{DATA_ENDPOINT}?{urllib.parse.urlencode(parameters)}",
+            f"{endpoint}?{urllib.parse.urlencode(parameters)}",
             headers=headers,
         )
         with urllib.request.urlopen(request, timeout=45) as response:
             payload = json.load(response)
         request_count += 1
         for raw in payload.get("bars") or []:
-            row = normalize_bar(raw)
+            row = normalize_bar(raw, symbol=normalized_symbol)
             timestamp = row["timestamp_utc"]
             prior = rows_by_timestamp.get(timestamp)
             if prior is not None and prior != row:
@@ -112,19 +118,19 @@ def extract_spy_minute_bars(
 
     rows = [rows_by_timestamp[key] for key in sorted(rows_by_timestamp)]
     if not rows:
-        raise ValueError("Alpaca returned no SPY minute bars")
+        raise ValueError(f"Alpaca returned no {normalized_symbol} minute bars")
     output.parent.mkdir(parents=True, exist_ok=True)
     with gzip.open(output, "wt", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
         writer.writeheader()
         writer.writerows(rows)
     summary = {
-        "schema": "ALPACA_SPY_SIP_MINUTE_EXPORT_V1",
+        "schema": "ALPACA_SYMBOL_SIP_MINUTE_EXPORT_V1",
         "source": "ALPACA_MARKET_DATA_API",
         "source_role": "HISTORICAL_RESEARCH_ONLY",
-        "endpoint": DATA_ENDPOINT,
+        "endpoint": endpoint,
         "public_parameters": public_parameters,
-        "symbol": "SPY",
+        "symbol": normalized_symbol,
         "row_count": len(rows),
         "timestamp_start_utc": rows[0]["timestamp_utc"],
         "timestamp_end_utc": rows[-1]["timestamp_utc"],
@@ -138,6 +144,28 @@ def extract_spy_minute_bars(
     summary_path.parent.mkdir(parents=True, exist_ok=True)
     summary_path.write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return summary
+
+
+def extract_spy_minute_bars(
+    output: Path,
+    summary_path: Path,
+    *,
+    api_key_id: str,
+    api_secret_key: str,
+    start: str,
+    end: str,
+    pause_seconds: float = 0.05,
+) -> dict[str, Any]:
+    return extract_symbol_minute_bars(
+        output,
+        summary_path,
+        api_key_id=api_key_id,
+        api_secret_key=api_secret_key,
+        start=start,
+        end=end,
+        symbol="SPY",
+        pause_seconds=pause_seconds,
+    )
 
 
 def load_minute_bars(path: Path) -> list[dict[str, Any]]:

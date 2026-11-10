@@ -52,6 +52,34 @@ def synthetic_minutes():
 
 
 class AlpacaIntradayTests(unittest.TestCase):
+    def test_qqq_gap_campaign_is_frozen_and_inert(self):
+        campaign = json.loads(
+            Path("config/campaigns/qqq_overnight_gap_first_half_hour_reversal_v1.json").read_text()
+        )
+        exact = campaign["exact_specification"]
+        self.assertEqual(campaign["instrument"], "QQQ")
+        self.assertEqual(exact["entry"], "CURRENT_SESSION_09_31_MINUTE_OPEN")
+        self.assertEqual(exact["exit"], "CURRENT_SESSION_09_59_MINUTE_CLOSE")
+        self.assertFalse(exact["parameter_sweeps_allowed"])
+        self.assertFalse(exact["gap_threshold_sweeps_allowed"])
+        self.assertFalse(campaign["authority"]["order_authority"])
+
+    def test_normalize_bar_supports_an_explicit_symbol(self):
+        row = normalize_bar(
+            {
+                "t": "2026-11-03T14:30:00Z",
+                "o": 100,
+                "h": 101,
+                "l": 99,
+                "c": 100.5,
+                "v": 10,
+                "n": 2,
+                "vw": 100.25,
+            },
+            symbol="QQQ",
+        )
+        self.assertEqual(row["symbol"], "QQQ")
+
     def test_campaign_is_frozen_and_inert(self):
         campaign = json.loads(
             Path("config/campaigns/spy_morning_momentum_last_half_hour_v1.json").read_text()

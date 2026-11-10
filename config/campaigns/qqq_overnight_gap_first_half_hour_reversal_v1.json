@@ -1,0 +1,121 @@
+{
+  "schema": "FX_RESEARCH_CAMPAIGN_V1",
+  "campaign_id": "CAMPAIGN_QQQ_OVERNIGHT_GAP_FIRST_HALF_HOUR_REVERSAL_V1",
+  "hypothesis_id": "HYP_QQQ_OVERNIGHT_GAP_FIRST_HALF_HOUR_REVERSAL_V1",
+  "created_at_utc": "2026-11-10T15:15:00Z",
+  "state": "PREDECLARED_DIAGNOSTIC",
+  "title": "QQQ negative overnight-gap first-half-hour reversal",
+  "instrument": "QQQ",
+  "mechanism_class": "OVERNIGHT_OVERREACTION_OPENING_LIQUIDITY_REVERSAL_LONG_OR_CASH",
+  "research_question": "Does a negative QQQ overnight return predict a positive cost-adjusted QQQ return from the 09:31 New York open through the 09:59 close?",
+  "null_hypothesis": "The long-or-cash rule has non-positive net expectancy, fails chronological partitions, or does not beat fixed always-long, positive-gap, and prior-day-signal controls.",
+  "population": {
+    "source": "ALPACA_HISTORICAL_SIP_1MIN_ADJUSTMENT_ALL",
+    "symbol": "QQQ",
+    "regular_session_only": true,
+    "window_start": "2016-01-01",
+    "window_end_inclusive": "2026-11-06",
+    "complete_required_minutes": [
+      "09:30",
+      "09:31",
+      "09:59",
+      "15:59"
+    ],
+    "early_closes": "INCLUDED_WHEN_ALL_REQUIRED_MINUTES_EXIST"
+  },
+  "exact_specification": {
+    "prior_close": "PREVIOUS_COMPLETE_REGULAR_SESSION_15_59_MINUTE_CLOSE",
+    "overnight_price": "CURRENT_REGULAR_SESSION_09_30_MINUTE_OPEN",
+    "signal": "OVERNIGHT_PRICE_DIVIDED_BY_PRIOR_CLOSE_MINUS_ONE",
+    "signal_known_at": "09:30:00_AMERICA_NEW_YORK",
+    "primary_activation": "OVERNIGHT_RETURN_STRICTLY_LESS_THAN_ZERO",
+    "entry": "CURRENT_SESSION_09_31_MINUTE_OPEN",
+    "exit": "CURRENT_SESSION_09_59_MINUTE_CLOSE",
+    "direction": "LONG_ONLY_OTHERWISE_CASH",
+    "position_size": "ONE_UNIT_NOTIONAL_RETURN",
+    "primary_one_way_cost_bps": 2.0,
+    "stress_one_way_cost_bps": 5.0,
+    "parameter_sweeps_allowed": false,
+    "gap_threshold_sweeps_allowed": false,
+    "holding_period_sweeps_allowed": false,
+    "post_result_filtering_allowed": false
+  },
+  "partitions": {
+    "development": [
+      "2016-01-01",
+      "2021-12-31"
+    ],
+    "chronological_validation": [
+      "2022-01-01",
+      "2024-12-31"
+    ],
+    "dated_confirmation": [
+      "2025-01-01",
+      "2026-11-06"
+    ]
+  },
+  "controls": [
+    {
+      "control_id": "ALWAYS_LONG_OPENING_WINDOW",
+      "definition": "Long every complete QQQ session from the 09:31 open through the 09:59 close"
+    },
+    {
+      "control_id": "POSITIVE_OVERNIGHT_GAP_LONG_ONLY",
+      "definition": "Long the identical opening window only when the current overnight return is non-negative"
+    },
+    {
+      "control_id": "PRIOR_DAY_NEGATIVE_GAP_LAG",
+      "definition": "Long the current opening window when the immediately prior complete session had a negative overnight return"
+    }
+  ],
+  "metrics": {
+    "primary": [
+      "AVERAGE_DAILY_NET_RETURN",
+      "ANNUALIZED_SHARPE",
+      "PAIRED_NEWEY_WEST_T_STAT_VERSUS_CONTROLS"
+    ],
+    "secondary": [
+      "TRADE_COUNT",
+      "TRADES_PER_WEEK",
+      "AVERAGE_AND_MEDIAN_NET_RETURN_PER_TRADE",
+      "POSITIVE_TRADE_RATE",
+      "POSITIVE_MONTH_RATE",
+      "COMPOUNDED_RETURN",
+      "MAXIMUM_DRAWDOWN",
+      "WORST_CALENDAR_YEAR_RETURN"
+    ]
+  },
+  "review_gates": {
+    "minimum_primary_trades": {
+      "development": 500,
+      "chronological_validation": 250,
+      "dated_confirmation": 150
+    },
+    "primary_average_daily_net_return_positive_in_all_partitions": true,
+    "validation_and_dated_sharpe_minimum": 0.5,
+    "validation_plus_dated_positive_month_rate_minimum": 0.52,
+    "validation_plus_dated_maximum_drawdown_floor": -0.08,
+    "validation_plus_dated_primary_must_beat_all_controls": true,
+    "validation_plus_dated_newey_west_t_stat_minimum": 1.96,
+    "primary_and_stress_cost_scenarios_must_pass": true,
+    "review_is_not_promotion": true
+  },
+  "multiple_comparisons_policy": {
+    "confirmatory_hypothesis_count": 1,
+    "no_post_result_variants": true,
+    "prior_spy_intraday_campaign_is_a_separate_failed_family": true
+  },
+  "stopping_rules": {
+    "single_historical_evaluation_after_predeclaration": true,
+    "no_gap_threshold_or_holding_period_retuning": true,
+    "no_subgroup_rescue_on_used_partitions": true,
+    "failed_campaign_closes_without_automatic_successor": true
+  },
+  "authority": {
+    "automatic_approval": false,
+    "automatic_paper_activation": false,
+    "automatic_execution": false,
+    "downstream_activation": false,
+    "order_authority": false
+  }
+}
