@@ -32,6 +32,7 @@ def main() -> int:
     parser.add_argument("--summary", type=Path, required=True)
     parser.add_argument("--start", default="2016-01-01T00:00:00Z")
     parser.add_argument("--end", default="2026-11-07T00:00:00Z")
+    parser.add_argument("--timeframe", default="1Min", choices=("1Min", "5Min", "15Min", "30Min", "1Hour"))
     args = parser.parse_args()
     _load_env(ROOT / ".env")
     key_id = os.environ.get("ALPACA_DATA_API_KEY_ID", "").strip()
@@ -46,6 +47,7 @@ def main() -> int:
         start=args.start,
         end=args.end,
         symbol=args.symbol,
+        timeframe=args.timeframe,
     )
     print(json.dumps(result, indent=2, sort_keys=True))
     return 0

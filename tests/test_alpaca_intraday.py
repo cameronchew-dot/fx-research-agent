@@ -80,6 +80,21 @@ class AlpacaIntradayTests(unittest.TestCase):
         )
         self.assertEqual(row["symbol"], "QQQ")
 
+    def test_sector_campaign_is_frozen_inert_and_frequency_targeted(self):
+        campaign = json.loads(
+            Path("config/campaigns/sector_etf_cross_sectional_overnight_reversal_v1.json").read_text()
+        )
+        exact = campaign["exact_specification"]
+        self.assertEqual(len(campaign["population"]["sector_universe"]), 9)
+        self.assertEqual(exact["entry"], "CURRENT_SESSION_09_45_BAR_OPEN")
+        self.assertEqual(exact["exit"], "CURRENT_SESSION_10_15_BAR_CLOSE")
+        self.assertFalse(exact["parameter_sweeps_allowed"])
+        self.assertEqual(
+            campaign["multiple_comparisons_policy"]["holm_first_order_two_sided_t_threshold"],
+            2.24,
+        )
+        self.assertFalse(campaign["authority"]["order_authority"])
+
     def test_campaign_is_frozen_and_inert(self):
         campaign = json.loads(
             Path("config/campaigns/spy_morning_momentum_last_half_hour_v1.json").read_text()

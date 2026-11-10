@@ -66,6 +66,7 @@ def extract_symbol_minute_bars(
     start: str,
     end: str,
     symbol: str,
+    timeframe: str = "1Min",
     pause_seconds: float = 0.05,
 ) -> dict[str, Any]:
     if not api_key_id or not api_secret_key:
@@ -74,8 +75,10 @@ def extract_symbol_minute_bars(
     if not normalized_symbol or not normalized_symbol.replace(".", "").isalnum():
         raise ValueError("invalid Alpaca symbol")
     endpoint = DATA_ENDPOINT_TEMPLATE.format(symbol=urllib.parse.quote(normalized_symbol, safe=""))
+    if timeframe not in {"1Min", "5Min", "15Min", "30Min", "1Hour"}:
+        raise ValueError("unsupported Alpaca bar timeframe")
     public_parameters = {
-        "timeframe": "1Min",
+        "timeframe": timeframe,
         "start": start,
         "end": end,
         "adjustment": "all",
@@ -125,12 +128,13 @@ def extract_symbol_minute_bars(
         writer.writeheader()
         writer.writerows(rows)
     summary = {
-        "schema": "ALPACA_SYMBOL_SIP_MINUTE_EXPORT_V1",
+        "schema": "ALPACA_SYMBOL_SIP_BAR_EXPORT_V1",
         "source": "ALPACA_MARKET_DATA_API",
         "source_role": "HISTORICAL_RESEARCH_ONLY",
         "endpoint": endpoint,
         "public_parameters": public_parameters,
         "symbol": normalized_symbol,
+        "timeframe": timeframe,
         "row_count": len(rows),
         "timestamp_start_utc": rows[0]["timestamp_utc"],
         "timestamp_end_utc": rows[-1]["timestamp_utc"],
@@ -164,6 +168,7 @@ def extract_spy_minute_bars(
         start=start,
         end=end,
         symbol="SPY",
+        timeframe="1Min",
         pause_seconds=pause_seconds,
     )
 

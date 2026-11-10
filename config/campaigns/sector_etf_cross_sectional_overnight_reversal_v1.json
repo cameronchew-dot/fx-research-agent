@@ -1,0 +1,167 @@
+{
+  "schema": "FX_RESEARCH_CAMPAIGN_V1",
+  "campaign_id": "CAMPAIGN_SECTOR_ETF_CROSS_SECTIONAL_OVERNIGHT_REVERSAL_V1",
+  "hypothesis_id": "HYP_SECTOR_ETF_CROSS_SECTIONAL_OVERNIGHT_REVERSAL_V1",
+  "created_at_utc": "2026-11-10T15:28:23Z",
+  "state": "PREDECLARED_DIAGNOSTIC",
+  "title": "Sector ETF cross-sectional overnight dislocation reversal",
+  "instrument": "US_SECTOR_ETF_PANEL",
+  "instruments": [
+    "XLB",
+    "XLE",
+    "XLF",
+    "XLI",
+    "XLK",
+    "XLP",
+    "XLU",
+    "XLV",
+    "XLY",
+    "SPY"
+  ],
+  "mechanism_class": "CROSS_SECTIONAL_OVERNIGHT_DISLOCATION_OPENING_LIQUIDITY_REVERSAL_LONG_ONLY",
+  "research_question": "Does buying the sector ETF with the lowest overnight return each session produce positive cost-adjusted opening-window returns and outperform fixed winner, random-sector, equal-weight, and SPY controls?",
+  "null_hypothesis": "The fixed cross-sectional loser rule has non-positive net expectancy, fails untouched chronological partitions, or does not beat its locked controls after costs and family-wise correction.",
+  "population": {
+    "source": "ALPACA_HISTORICAL_SIP_15MIN_ADJUSTMENT_ALL",
+    "sector_universe": [
+      "XLB",
+      "XLE",
+      "XLF",
+      "XLI",
+      "XLK",
+      "XLP",
+      "XLU",
+      "XLV",
+      "XLY"
+    ],
+    "market_control": "SPY",
+    "regular_session_only": true,
+    "window_start": "2016-01-01",
+    "window_end_inclusive": "2026-11-06",
+    "common_complete_sessions_only": true,
+    "complete_required_bar_starts": [
+      "09:30",
+      "09:45",
+      "10:15",
+      "15:45"
+    ]
+  },
+  "independence_unit": {
+    "unit": "ONE_COMMON_REGULAR_SESSION",
+    "maximum_primary_events_per_session": 1,
+    "overlapping_events": false
+  },
+  "exact_specification": {
+    "prior_close": "PRIOR_COMMON_SESSION_15_45_BAR_CLOSE",
+    "overnight_price": "CURRENT_SESSION_09_30_BAR_OPEN",
+    "overnight_return": "OVERNIGHT_PRICE_DIVIDED_BY_PRIOR_CLOSE_MINUS_ONE",
+    "selection": "SINGLE_MINIMUM_OVERNIGHT_RETURN_SECTOR_WITH_LEXICAL_SYMBOL_TIEBREAK",
+    "activation": "SELECTED_MINIMUM_OVERNIGHT_RETURN_STRICTLY_LESS_THAN_ZERO",
+    "signal_known_at": "09:30:00_AMERICA_NEW_YORK",
+    "entry": "CURRENT_SESSION_09_45_BAR_OPEN",
+    "exit": "CURRENT_SESSION_10_15_BAR_CLOSE",
+    "direction": "LONG_ONLY_OTHERWISE_CASH",
+    "position_size": "ONE_UNIT_NOTIONAL_RETURN",
+    "primary_one_way_cost_bps": 2.0,
+    "stress_one_way_cost_bps": 5.0,
+    "parameter_sweeps_allowed": false,
+    "universe_sweeps_allowed": false,
+    "dispersion_or_gap_threshold_sweeps_allowed": false,
+    "entry_or_exit_sweeps_allowed": false,
+    "post_result_filtering_allowed": false
+  },
+  "partitions": {
+    "development": [
+      "2016-01-01",
+      "2021-12-31"
+    ],
+    "chronological_validation": [
+      "2022-01-01",
+      "2024-12-31"
+    ],
+    "dated_confirmation": [
+      "2025-01-01",
+      "2026-11-06"
+    ]
+  },
+  "controls": [
+    {
+      "control_id": "MAXIMUM_OVERNIGHT_RETURN_SECTOR",
+      "definition": "Buy the sector with the highest overnight return on every primary event date using identical timing and costs"
+    },
+    {
+      "control_id": "FIXED_HASH_RANDOM_SECTOR",
+      "definition": "Buy one campaign-and-date hash-selected sector on every primary event date using identical timing and costs"
+    },
+    {
+      "control_id": "EQUAL_WEIGHT_SECTOR_BASKET",
+      "definition": "Buy the equal-weight return of all nine sectors on every primary event date using identical aggregate costs"
+    },
+    {
+      "control_id": "SPY_SAME_DATES",
+      "definition": "Buy SPY on every primary event date using identical timing and costs"
+    }
+  ],
+  "metrics": {
+    "primary": [
+      "AVERAGE_NET_RETURN_PER_EVENT",
+      "ANNUALIZED_SHARPE",
+      "PRIMARY_NEWEY_WEST_T_STAT",
+      "PAIRED_NEWEY_WEST_T_STATS_VERSUS_CONTROLS"
+    ],
+    "secondary": [
+      "EVENT_COUNT",
+      "EVENTS_PER_WEEK",
+      "AVERAGE_AND_MEDIAN_NET_RETURN",
+      "POSITIVE_EVENT_RATE",
+      "POSITIVE_MONTH_RATE",
+      "COMPOUNDED_RETURN",
+      "MAXIMUM_DRAWDOWN",
+      "WORST_CALENDAR_YEAR_RETURN",
+      "SELECTION_COUNTS_BY_SECTOR"
+    ]
+  },
+  "review_gates": {
+    "minimum_primary_events": {
+      "development": 1000,
+      "chronological_validation": 500,
+      "dated_confirmation": 300
+    },
+    "primary_average_net_return_positive_in_all_partitions": true,
+    "validation_and_dated_sharpe_minimum": 0.5,
+    "validation_plus_dated_positive_month_rate_minimum": 0.55,
+    "validation_plus_dated_maximum_drawdown_floor": -0.08,
+    "validation_plus_dated_primary_must_beat_all_controls": true,
+    "validation_plus_dated_primary_newey_west_t_stat_minimum": 2.24,
+    "validation_plus_dated_paired_newey_west_t_stat_minimum": 1.96,
+    "primary_and_stress_cost_scenarios_must_pass": true,
+    "review_is_not_promotion": true
+  },
+  "multiple_comparisons_policy": {
+    "adjacent_overnight_reversal_family_size": 2,
+    "prior_family_member": "CAMPAIGN_QQQ_OVERNIGHT_GAP_FIRST_HALF_HOUR_REVERSAL_V1",
+    "family_wise_alpha": 0.05,
+    "holm_first_order_two_sided_t_threshold": 2.24,
+    "no_post_result_variants": true
+  },
+  "stopping_rules": {
+    "single_historical_evaluation_after_predeclaration": true,
+    "no_universe_gap_dispersion_or_timing_retuning": true,
+    "no_subgroup_rescue_on_used_partitions": true,
+    "failed_campaign_closes_the_current_overnight_reversal_family": true
+  },
+  "downstream_if_historical_gate_passes": {
+    "deterministic_forward_shadow_required": true,
+    "llm_context_memory_probability_arm": "SHADOW_ONLY",
+    "llm_memory_must_be_past_only": true,
+    "probabilities_must_be_forward_calibrated": true,
+    "no_automatic_execution_or_gate_changes": true
+  },
+  "authority": {
+    "automatic_approval": false,
+    "automatic_paper_activation": false,
+    "automatic_execution": false,
+    "downstream_activation": false,
+    "order_authority": false
+  }
+}
