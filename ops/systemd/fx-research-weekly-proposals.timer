@@ -1,0 +1,10 @@
+[Unit]
+Description=Generate governed FX research proposals Sundays at 10 AM Pacific
+
+[Timer]
+OnCalendar=Sun *-*-* 10:00:00 America/Los_Angeles
+AccuracySec=5min
+Persistent=true
+
+[Install]
+WantedBy=timers.target

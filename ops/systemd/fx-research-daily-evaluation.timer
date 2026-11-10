@@ -1,0 +1,10 @@
+[Unit]
+Description=Evaluate approved FX research campaigns daily at 5 PM Pacific
+
+[Timer]
+OnCalendar=*-*-* 17:00:00 America/Los_Angeles
+AccuracySec=1min
+Persistent=true
+
+[Install]
+WantedBy=timers.target

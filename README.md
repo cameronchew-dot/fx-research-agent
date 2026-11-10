@@ -31,6 +31,11 @@ On the VPS, `ops/research_storage_backup.py` creates an integrity-checked SQLite
 backup and retains the latest three copies by default. It is designed to run
 from the shared Friday-close runtime backup service.
 
+Versioned systemd units under `ops/systemd/` replace the Mac launch agents on
+the production runtime. They schedule bot and agent exports, immutable research
+ingestion, daily campaign evaluation, and weekly governed proposals. None of
+these units has broker credentials or order authority.
+
 ```bash
 python3 ops/research_supervisor.py init-db
 python3 ops/research_supervisor.py import-genesis

@@ -1,0 +1,15 @@
+[Unit]
+Description=Evaluate approved FX research campaigns
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=ubuntu
+WorkingDirectory=/home/ubuntu/runtime/fx_research_agent
+EnvironmentFile=/home/ubuntu/runtime/fx_research_agent/.env
+ExecStart=/home/ubuntu/runtime/fx_research_agent/.venv/bin/python /home/ubuntu/runtime/fx_research_agent/ops/research_supervisor.py refresh-approved-campaigns --trigger DAILY_SCHEDULE
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ReadWritePaths=/home/ubuntu/runtime/fx_research_agent

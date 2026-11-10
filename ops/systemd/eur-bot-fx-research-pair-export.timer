@@ -1,0 +1,11 @@
+[Unit]
+Description=Export multi-pair research market data every 5 minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=5min
+AccuracySec=20s
+Persistent=true
+
+[Install]
+WantedBy=timers.target

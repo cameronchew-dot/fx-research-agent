@@ -1,0 +1,12 @@
+[Unit]
+Description=Run FX research ingest command %i every 15 minutes
+
+[Timer]
+OnBootSec=3min
+OnUnitActiveSec=15min
+AccuracySec=30s
+Persistent=true
+Unit=fx-research-ingest@%i.service
+
+[Install]
+WantedBy=timers.target

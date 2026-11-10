@@ -1,0 +1,14 @@
+[Unit]
+Description=Export EUR agent evidence for the FX research agent
+After=eur-agent.service
+
+[Service]
+Type=oneshot
+User=ubuntu
+WorkingDirectory=/home/ubuntu/runtime/eur_agent
+EnvironmentFile=/home/ubuntu/runtime/eur_agent/.env
+ExecStart=/usr/bin/python3 /home/ubuntu/runtime/eur_agent/ops/research_evidence_export.py
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ReadWritePaths=/home/ubuntu/runtime/eur_agent
