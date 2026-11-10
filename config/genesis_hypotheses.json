@@ -497,6 +497,22 @@
       "overlap_notes": "Short-horizon cross-asset overshoot mechanism, distinct from the rejected SPY intraday timing rule and monthly ETF trend allocation.",
       "evidence_ids": ["CAMPAIGN_CROSS_ASSET_SHORT_TERM_REVERSAL_V1"],
       "next_action": "CLOSED_MISSED_SIGNIFICANCE_PAIRED_CONTROL_AND_POSITIVE_RATE_GATES_DO_NOT_RETUNE"
+    },
+    {
+      "hypothesis_id": "HYP_QQQ_OVERNIGHT_GAP_FIRST_HALF_HOUR_REVERSAL_V1",
+      "proposed_at_utc": "2026-11-10T15:03:45Z",
+      "proposed_by": "OPERATOR_AND_CODEX_LITERATURE_LEAD",
+      "state": "REJECTED",
+      "hypothesis_type": "US_EQUITY_INTRADAY_OVERNIGHT_REVERSAL_DIAGNOSTIC",
+      "classification": "STRATEGY",
+      "priority": 33,
+      "statement": "A negative QQQ overnight return may reverse during an executable first-half-hour window strongly enough to produce positive net returns after costs.",
+      "data_requirements": ["ALPACA_HISTORICAL_QQQ_SIP_1MIN_ADJUSTMENT_ALL"],
+      "dependencies": ["PRIOR_COMPLETE_REGULAR_CLOSE", "NEXT_MINUTE_ENTRY_AFTER_OPEN", "FIXED_0959_EXIT", "PRIMARY_AND_STRESS_COSTS", "SEALED_CALENDAR_PARTITIONS", "ALWAYS_POSITIVE_GAP_AND_PRIOR_DAY_CONTROLS"],
+      "expected_frequency": "APPROXIMATELY_TWO_TO_THREE_TRADES_PER_WEEK",
+      "overlap_notes": "Opening-liquidity reversal on a new instrument and window, distinct from SPY last-half-hour momentum and the multi-ETF five-session reversal.",
+      "evidence_ids": ["CAMPAIGN_QQQ_OVERNIGHT_GAP_FIRST_HALF_HOUR_REVERSAL_V1"],
+      "next_action": "CLOSED_NEGATIVE_VALIDATION_DATED_AND_STRESS_EXPECTANCY_DO_NOT_RETUNE_OR_SEND_TO_LLM_SELECTOR"
     }
   ]
 }

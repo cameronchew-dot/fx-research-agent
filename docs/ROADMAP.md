@@ -249,3 +249,21 @@
   another pair campaign. See
   `CROSS_SYSTEM_EDGE_FORENSICS_RESULT_2026-11-01.md`.
 
+## Phase 11: Alpaca short-horizon diagnostics
+
+- Archive SPY morning-to-last-half-hour momentum as a decisive cost-adjusted
+  failure. Do not change its exit, add a threshold, or condition on volume
+  after reading the result.
+- Archive the cross-asset five-session overshoot reversal as a positive but
+  unproven near-miss that failed significance, paired controls, and the locked
+  positive-rate gate. Do not rescue it with a geometry sweep.
+- Archive QQQ negative overnight-gap first-half-hour reversal as a decisive
+  validation and dated-confirmation failure. It produced about 2.27 trades per
+  week but negative gross and net expectancy in both untouched partitions.
+- Do not send a historically negative base population to an LLM selector.
+  Context memory and calibrated probabilities may be tested only on a new,
+  separately predeclared forward population with strict past-only retrieval,
+  immutable arms, and no automatic policy changes.
+- Keep the monthly delayed cross-asset allocation operationally separate from
+  all failed short-horizon diagnostics.
+
