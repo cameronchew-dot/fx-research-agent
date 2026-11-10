@@ -260,6 +260,15 @@
 - Archive QQQ negative overnight-gap first-half-hour reversal as a decisive
   validation and dated-confirmation failure. It produced about 2.27 trades per
   week but negative gross and net expectancy in both untouched partitions.
+- Archive sector ETF cross-sectional overnight-dislocation reversal as a
+  decisive failure. It achieved the desired candidate cadence at 4.46 events
+  per week in validation plus dated confirmation, but gross expectancy was
+  negative, net expectancy was `-0.0415%` per event at 2 basis points per side,
+  Sharpe was `-1.08`, and maximum drawdown was `-39.71%`.
+- Treat candidate frequency and validated tradability as separate objectives.
+  Do not activate a frequent emitter merely to reach a weekly trade quota.
+- Close the current two-member overnight-reversal family without universe,
+  gap, dispersion, entry, exit, or holding-window rescue sweeps.
 - Do not send a historically negative base population to an LLM selector.
   Context memory and calibrated probabilities may be tested only on a new,
   separately predeclared forward population with strict past-only retrieval,
