@@ -1,0 +1,110 @@
+{
+  "schema": "FX_RESEARCH_CAMPAIGN_V1",
+  "campaign_id": "CAMPAIGN_CROSS_ASSET_SHORT_TERM_REVERSAL_V1",
+  "hypothesis_id": "HYP_CROSS_ASSET_SHORT_TERM_REVERSAL_V1",
+  "created_at_utc": "2026-11-10T03:00:00Z",
+  "state": "DRAFT",
+  "title": "Volatility-normalized cross-asset short-term reversal",
+  "instrument": "CROSS_ASSET_ETF_PORTFOLIO",
+  "instruments": ["SPY", "EFA", "IEF", "TLT", "GLD", "DBC", "UUP", "BIL"],
+  "mechanism_class": "CROSS_ASSET_LIQUIDITY_OVERSHOOT_REVERSAL_LONG_ONLY",
+  "research_question": "Does buying the single most negative volatility-normalized five-session move across seven liquid cross-asset ETFs after a sufficiently large overshoot produce positive three-session net excess-BIL returns?",
+  "null_hypothesis": "The fixed overshoot rule has non-positive excess-BIL expectancy, fails chronological partitions or cost stress, or does not beat recent-winner, random-selection, and SPY controls.",
+  "required_data_classes": ["ALPACA_HISTORICAL_SIP_DAILY_ADJUSTMENT_ALL"],
+  "population": {
+    "source": "ALPACA_HISTORICAL_SIP_1DAY_ADJUSTMENT_ALL",
+    "risky_assets": ["SPY", "EFA", "IEF", "TLT", "GLD", "DBC", "UUP"],
+    "cash_proxy": "BIL",
+    "window_start": "2016-01-01",
+    "window_end_inclusive": "2026-11-06",
+    "common_complete_us_trading_dates_only": true
+  },
+  "independence_unit": {
+    "unit": "ONE_NON_OVERLAPPING_THREE_SESSION_HOLDING_INTERVAL",
+    "decision_time": "COMPLETED_COMMON_DAILY_CLOSE",
+    "entry_time": "NEXT_COMMON_SESSION_OPEN",
+    "exit_time": "THIRD_COMMON_SESSION_CLOSE_AFTER_DECISION",
+    "next_signal_rule": "A_NEW_DECISION_MAY_FORM_AT_OR_AFTER_THE_PRIOR_EXIT_CLOSE",
+    "overlapping_events_count_once": true
+  },
+  "exact_specification": {
+    "return_lookback_sessions": 5,
+    "prior_volatility_sessions": 20,
+    "volatility_window_ends": "ONE_COMMON_SESSION_BEFORE_DECISION_TO_AVOID_SELF_NORMALIZATION",
+    "standardization": "FIVE_SESSION_CLOSE_RETURN_DIVIDED_BY_PRIOR_20_SESSION_DAILY_RETURN_STD_TIMES_SQRT_FIVE",
+    "selection": "SINGLE_MINIMUM_Z_SCORE_RISKY_ASSET",
+    "primary_trigger_z_at_or_below": -1.5,
+    "direction": "LONG_ONLY_OTHERWISE_BIL_CASH",
+    "entry": "NEXT_COMMON_SESSION_OPEN",
+    "holding_sessions": 3,
+    "exit": "THIRD_COMMON_SESSION_CLOSE_AFTER_DECISION",
+    "position_size": "ONE_UNIT_NOTIONAL_RETURN",
+    "cash_hurdle": "SAME_INTERVAL_BIL_OPEN_TO_CLOSE_GROSS_RETURN_WITHOUT_ARTIFICIAL_ROUND_TRIP_COST",
+    "primary_one_way_cost_bps": 5.0,
+    "stress_one_way_cost_bps": 10.0,
+    "parameter_sweeps_allowed": false,
+    "threshold_sweeps_allowed": false,
+    "holding_period_sweeps_allowed": false,
+    "post_result_filtering_allowed": false
+  },
+  "partitions": {
+    "development": ["2016-01-01", "2021-12-31"],
+    "chronological_validation": ["2022-01-01", "2024-12-31"],
+    "dated_confirmation": ["2025-01-01", "2026-11-06"]
+  },
+  "controls": [
+    {
+      "control_id": "RECENT_WINNER_SAME_DATES",
+      "definition": "Buy the maximum five-session z-score asset on every primary trigger date with identical entry, exit, and costs"
+    },
+    {
+      "control_id": "FIXED_HASH_RANDOM_ASSET_SAME_DATES",
+      "definition": "Buy one deterministic campaign-and-date hash-selected risky asset on every primary trigger date with identical entry, exit, and costs"
+    },
+    {
+      "control_id": "SPY_SAME_DATES",
+      "definition": "Buy SPY on every primary trigger date with identical entry, exit, and costs"
+    },
+    {
+      "control_id": "BIL_CASH_HURDLE",
+      "definition": "Use the same-interval BIL open-to-close gross return as the cash hurdle"
+    }
+  ],
+  "metrics": {
+    "primary": ["AVERAGE_EXCESS_BIL_RETURN", "EXCESS_BIL_T_STAT", "PAIRED_T_STATS_VERSUS_CONTROLS"],
+    "secondary": ["EVENT_COUNT", "EVENTS_PER_WEEK", "AVERAGE_AND_MEDIAN_NET_RETURN", "POSITIVE_NET_RETURN_RATE", "COMPOUNDED_RETURN", "MAXIMUM_DRAWDOWN"]
+  },
+  "review_gates": {
+    "minimum_events": {
+      "development": 100,
+      "chronological_validation": 50,
+      "dated_confirmation": 30
+    },
+    "positive_excess_bil_in_all_partitions": true,
+    "validation_and_dated_average_net_return_positive": true,
+    "validation_plus_dated_positive_event_rate_minimum": 0.52,
+    "validation_plus_dated_maximum_drawdown_floor": -0.15,
+    "validation_plus_dated_primary_must_beat_all_controls": true,
+    "validation_plus_dated_t_stat_minimum": 1.96,
+    "primary_and_stress_cost_scenarios_must_pass": true,
+    "review_is_not_promotion": true
+  },
+  "multiple_comparisons_policy": {
+    "confirmatory_hypothesis_count": 1,
+    "parameter_sweeps_allowed": false,
+    "no_post_result_variants": true
+  },
+  "stopping_rules": {
+    "single_historical_evaluation_after_predeclaration": true,
+    "no_threshold_or_holding_period_retuning": true,
+    "no_subgroup_rescue_on_used_partitions": true,
+    "failed_campaign_closes_without_automatic_successor": true
+  },
+  "authority": {
+    "automatic_approval": false,
+    "automatic_execution": false,
+    "downstream_activation": false,
+    "order_authority": false,
+    "automatic_paper_activation": false
+  }
+}

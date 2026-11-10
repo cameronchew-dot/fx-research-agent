@@ -262,6 +262,19 @@ could not cover the locked 2 bp per-side cost, and the signal did not beat the
 opposite-morning control. It has no Alpaca paper authority and is closed without
 retuning. See `docs/SPY_MORNING_MOMENTUM_LAST_HALF_HOUR_RESULT_V1.md`.
 
+The next predeclared short-horizon campaign tests one cross-asset liquidity-
+overshoot mechanism instead of another minute-timing variant. It buys the most
+negative volatility-normalized five-session move among seven liquid ETFs,
+enters at the next open, exits at the third session close, and evaluates 5 and
+10 basis points per side against recent-winner, random, SPY, and BIL controls.
+The threshold and holding period are frozen with no sweep or automatic paper
+authority. See `docs/CROSS_ASSET_SHORT_TERM_REVERSAL_V1.md` and run:
+
+```bash
+python3 ops/alpaca_cross_asset_daily_extract.py
+python3 ops/cross_asset_short_term_reversal_research.py
+```
+
 A second, futures-native campaign then tested two mechanisms directly on the
 centralized data: participation-shock acceptance continuation and
 participation-shock failed-auction reversal. Both used volume at least `1.75x`

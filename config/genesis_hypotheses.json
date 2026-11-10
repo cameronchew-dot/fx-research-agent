@@ -481,6 +481,21 @@
       "overlap_notes": "Intraday SPY timing mechanism distinct from the monthly cross-asset delayed-trend allocation; it shares SPY exposure but not holding horizon or signal construction.",
       "evidence_ids": ["CAMPAIGN_SPY_MORNING_MOMENTUM_LAST_HALF_HOUR_V1"],
       "next_action": "CLOSED_FAILED_ALL_EXPECTANCY_RISK_CONTROL_AND_SIGNIFICANCE_GATES_DO_NOT_RETUNE"
+    },
+    {
+      "hypothesis_id": "HYP_CROSS_ASSET_SHORT_TERM_REVERSAL_V1",
+      "proposed_at_utc": "2026-11-10T03:00:00Z",
+      "proposed_by": "OPERATOR_AND_CODEX_LITERATURE_LEAD",
+      "state": "PROPOSED",
+      "hypothesis_type": "CROSS_ASSET_SHORT_HORIZON_REVERSAL_DIAGNOSTIC",
+      "classification": "STRATEGY",
+      "priority": 32,
+      "statement": "The single worst volatility-normalized five-session move across seven liquid cross-asset ETFs may rebound over the next three sessions strongly enough to produce positive net excess-BIL returns.",
+      "data_requirements": ["ALPACA_HISTORICAL_SIP_DAILY_ADJUSTMENT_ALL"],
+      "dependencies": ["PRIOR_ONLY_20_SESSION_VOLATILITY", "NEXT_COMMON_SESSION_OPEN_ENTRY", "NON_OVERLAPPING_THREE_SESSION_HOLDS", "PRIMARY_AND_STRESS_COSTS", "SEALED_CALENDAR_PARTITIONS", "WINNER_RANDOM_SPY_AND_BIL_CONTROLS"],
+      "expected_frequency": "SEVERAL_EVENTS_PER_MONTH_TO_MULTIPLE_EVENTS_PER_WEEK_BEFORE_VALIDATION",
+      "overlap_notes": "Short-horizon cross-asset overshoot mechanism, distinct from the rejected SPY intraday timing rule and monthly ETF trend allocation.",
+      "next_action": "RUN_THE_SINGLE_LOCKED_HISTORICAL_EVALUATION_WITHOUT_PARAMETER_RETUNING"
     }
   ]
 }
