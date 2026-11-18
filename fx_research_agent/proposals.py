@@ -115,14 +115,19 @@ def _proposal_json_schema(maximum: int) -> dict[str, Any]:
     }
 
 
-def _anthropic_provider(policy: dict[str, Any], input_packet: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
+def _anthropic_request(
+    policy: dict[str, Any],
+    input_packet: dict[str, Any],
+    *,
+    maximum_output_tokens: int,
+) -> tuple[dict[str, Any], dict[str, Any]]:
     api_key = os.environ.get("FX_RESEARCH_ANTHROPIC_API_KEY", "").strip()
     if not api_key:
         raise ValueError("FX_RESEARCH_ANTHROPIC_API_KEY is missing")
     maximum = int(input_packet["maximum_proposals_this_cycle"])
     body = {
         "model": policy["model"],
-        "max_tokens": int(policy["maximum_output_tokens"]),
+        "max_tokens": maximum_output_tokens,
         "system": (
             "You are a governed FX research hypothesis proposer. Propose only falsifiable, "
             "causally motivated, cost-aware EUR/USD hypotheses using the supplied data. "
@@ -173,6 +178,8 @@ def _anthropic_provider(policy: dict[str, Any], input_packet: dict[str, Any]) ->
         raise ValueError(f"Anthropic proposal call failed: {exc}") from exc
     if str(raw.get("model") or "") != policy["model"]:
         raise ValueError("Anthropic response model did not match the pinned model")
+    if raw.get("stop_reason") == "max_tokens":
+        raise OutputTruncatedError("Anthropic proposal output reached the token ceiling")
     blocks = [item.get("text") for item in raw.get("content", []) if item.get("type") == "text"]
     if len(blocks) != 1:
         raise ValueError("Anthropic response did not contain one structured proposal object")
@@ -187,6 +194,29 @@ def _anthropic_provider(policy: dict[str, Any], input_packet: dict[str, Any]) ->
         "input_tokens": int(usage.get("input_tokens") or 0),
         "output_tokens": int(usage.get("output_tokens") or 0),
     }
+
+
+class OutputTruncatedError(ValueError):
+    """Raised when a structured provider response ends at its token ceiling."""
+
+
+def _anthropic_provider(policy: dict[str, Any], input_packet: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
+    configured_tokens = int(policy["maximum_output_tokens"])
+    try:
+        return _anthropic_request(
+            policy,
+            input_packet,
+            maximum_output_tokens=configured_tokens,
+        )
+    except OutputTruncatedError:
+        retry_tokens = min(max(configured_tokens * 2, 4096), 8192)
+        if retry_tokens <= configured_tokens:
+            raise
+        return _anthropic_request(
+            policy,
+            input_packet,
+            maximum_output_tokens=retry_tokens,
+        )
 
 
 def _available_data_classes(connection) -> list[str]:

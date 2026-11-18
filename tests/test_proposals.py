@@ -3,9 +3,15 @@ import sqlite3
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import call, patch
 
 from fx_research_agent.automation import register_policy
-from fx_research_agent.proposals import build_blind_input, run_proposal_cycle
+from fx_research_agent.proposals import (
+    OutputTruncatedError,
+    _anthropic_provider,
+    build_blind_input,
+    run_proposal_cycle,
+)
 from fx_research_agent.storage import initialize
 from tests.test_automation import AutomationPolicyTests
 
@@ -92,6 +98,25 @@ class ProposalTests(unittest.TestCase):
         ).fetchone()
         self.assertEqual(json.loads(row["payload_json"])["state"], "PROPOSED")
         self.assertEqual(self.connection.execute("SELECT COUNT(*) AS n FROM research_campaigns").fetchone()["n"], 0)
+
+    def test_anthropic_provider_retries_once_after_token_truncation(self):
+        policy = AutomationPolicyTests()._policy()
+        packet = {"maximum_proposals_this_cycle": 3}
+        completed = ({"proposals": []}, {"provider_request_id": "REQ2"})
+        with patch(
+            "fx_research_agent.proposals._anthropic_request",
+            side_effect=[OutputTruncatedError("truncated"), completed],
+        ) as request:
+            result = _anthropic_provider(policy, packet)
+
+        self.assertEqual(result, completed)
+        self.assertEqual(
+            request.call_args_list,
+            [
+                call(policy, packet, maximum_output_tokens=1000),
+                call(policy, packet, maximum_output_tokens=4096),
+            ],
+        )
 
     def test_duplicate_and_missing_data_do_not_enter_registry(self):
         duplicate = proposal("M5 confirmation improves failed auction timing")
