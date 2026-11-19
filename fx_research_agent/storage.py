@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Any
 
 
-SCHEMA_VERSION = "FX_RESEARCH_AGENT_DB_V11"
+SCHEMA_VERSION = "FX_RESEARCH_AGENT_DB_V12"
 
 
 def canonical_json(value: Any) -> str:
@@ -164,6 +164,22 @@ def initialize(connection: sqlite3.Connection) -> None:
             observed_at_utc TEXT NOT NULL,
             FOREIGN KEY (campaign_id) REFERENCES research_campaigns(campaign_id)
         );
+
+        CREATE TABLE IF NOT EXISTS campaign_reviews (
+            review_id TEXT PRIMARY KEY,
+            campaign_id TEXT NOT NULL,
+            run_id TEXT NOT NULL,
+            decision TEXT NOT NULL,
+            payload_hash TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            reviewed_at_utc TEXT NOT NULL,
+            reviewed_by TEXT NOT NULL,
+            FOREIGN KEY (campaign_id) REFERENCES research_campaigns(campaign_id),
+            FOREIGN KEY (run_id) REFERENCES experiment_runs(run_id)
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_campaign_reviews_campaign_time
+            ON campaign_reviews(campaign_id, reviewed_at_utc, review_id);
 
         CREATE TABLE IF NOT EXISTS proposal_runs (
             proposal_run_id TEXT PRIMARY KEY,

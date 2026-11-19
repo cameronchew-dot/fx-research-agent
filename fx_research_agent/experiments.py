@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from .campaigns import campaign_data_readiness, campaign_state
+from .campaign_reviews import latest_campaign_review
 from .evidence import load_validated_package
 from .market_data import resolve_payload_path, validate_manifest as validate_market_manifest
 from .storage import canonical_json, insert_immutable, payload_hash
@@ -15,6 +16,101 @@ from .storage import canonical_json, insert_immutable, payload_hash
 
 def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+
+
+def _source_reports(
+    records: list[dict[str, Any]],
+    campaign: dict[str, Any],
+) -> list[dict[str, Any]]:
+    reports = []
+    minimum_treatment = int(
+        campaign["review_gates"]["minimum_resolved_independent_treatment_episodes"]
+    )
+    minimum_comparator = int(
+        campaign["review_gates"]["minimum_resolved_independent_comparator_episodes"]
+    )
+    for source in sorted({str(record["outcome_source"]) for record in records}):
+        source_rows = [record for record in records if record["outcome_source"] == source]
+        treatment = [record for record in source_rows if record["cohort"] == "TREATMENT"]
+        comparator = [record for record in source_rows if record["cohort"] == "COMPARATOR"]
+        treatment_metrics = _metric_summary(treatment)
+        comparator_metrics = _metric_summary(comparator)
+        treatment_temporal_halves = _temporal_half_summaries(treatment)
+        lift = None
+        if (
+            treatment_metrics["average_net_r"] is not None
+            and comparator_metrics["average_net_r"] is not None
+        ):
+            lift = round(
+                treatment_metrics["average_net_r"] - comparator_metrics["average_net_r"],
+                6,
+            )
+        average_gate = (
+            not bool(campaign["review_gates"].get("treatment_average_net_r_must_be_positive"))
+            or (
+                treatment_metrics["average_net_r"] is not None
+                and treatment_metrics["average_net_r"] > 0
+            )
+        )
+        lift_gate = (
+            not bool(campaign["review_gates"].get("primary_lift_must_be_positive"))
+            or (lift is not None and lift > 0)
+        )
+        minimum_positive_rate = campaign["review_gates"].get(
+            "minimum_treatment_positive_net_r_rate"
+        )
+        positive_rate_gate = (
+            minimum_positive_rate is None
+            or (
+                treatment_metrics["positive_net_r_rate"] is not None
+                and treatment_metrics["positive_net_r_rate"] >= float(minimum_positive_rate)
+            )
+        )
+        minimum_half_average = campaign["review_gates"].get(
+            "minimum_each_half_average_net_r"
+        )
+        temporal_stability_gate = (
+            minimum_half_average is None
+            or all(
+                summary["average_net_r"] is not None
+                and summary["average_net_r"] > float(minimum_half_average)
+                for summary in treatment_temporal_halves.values()
+            )
+        )
+        gates_met = (
+            treatment_metrics["priced_episode_count"] >= minimum_treatment
+            and comparator_metrics["priced_episode_count"] >= minimum_comparator
+            and average_gate
+            and lift_gate
+            and positive_rate_gate
+            and temporal_stability_gate
+        )
+        reports.append(
+            {
+                "outcome_source": source,
+                "treatment": treatment_metrics,
+                "comparator": comparator_metrics,
+                "treatment_temporal_halves": treatment_temporal_halves,
+                "average_net_r_lift": lift,
+                "treatment_average_positive_gate": average_gate,
+                "primary_lift_positive_gate": lift_gate,
+                "treatment_positive_rate_gate": positive_rate_gate,
+                "treatment_temporal_stability_gate": temporal_stability_gate,
+                "minimum_treatment_episode_count": minimum_treatment,
+                "remaining_treatment_episode_count": max(
+                    0, minimum_treatment - treatment_metrics["priced_episode_count"]
+                ),
+                "minimum_comparator_episode_count": minimum_comparator,
+                "remaining_comparator_episode_count": max(
+                    0, minimum_comparator - comparator_metrics["priced_episode_count"]
+                ),
+                "sample_gates_met": gates_met,
+                "result_interpretation": (
+                    "READY_FOR_HUMAN_REVIEW" if gates_met else "ACCRUING_NO_CONCLUSION"
+                ),
+            }
+        )
+    return reports
 
 
 def _merge_immutable(target: dict[str, dict[str, Any]], records: list[Any], key: str, kind: str) -> None:
@@ -527,74 +623,34 @@ def build_evaluation(
     else:
         independent = episode_unique
         independence_policy = "FIRST_CANDIDATE_PER_DECLARED_EPISODE_ID"
-    sources = sorted({str(record["outcome_source"]) for record in independent})
-    source_reports = []
-    minimum_treatment = int(campaign["review_gates"]["minimum_resolved_independent_treatment_episodes"])
-    minimum_comparator = int(campaign["review_gates"]["minimum_resolved_independent_comparator_episodes"])
-    for source in sources:
-        source_rows = [record for record in independent if record["outcome_source"] == source]
-        treatment = [record for record in source_rows if record["cohort"] == "TREATMENT"]
-        comparator = [record for record in source_rows if record["cohort"] == "COMPARATOR"]
-        treatment_metrics = _metric_summary(treatment)
-        comparator_metrics = _metric_summary(comparator)
-        treatment_temporal_halves = _temporal_half_summaries(treatment)
-        lift = None
-        if treatment_metrics["average_net_r"] is not None and comparator_metrics["average_net_r"] is not None:
-            lift = round(treatment_metrics["average_net_r"] - comparator_metrics["average_net_r"], 6)
-        average_gate = (
-            not bool(campaign["review_gates"].get("treatment_average_net_r_must_be_positive"))
-            or (
-                treatment_metrics["average_net_r"] is not None
-                and treatment_metrics["average_net_r"] > 0
-            )
+    source_reports = _source_reports(independent, campaign)
+    campaign_review = latest_campaign_review(connection, campaign_id)
+    confirmatory_cutover = (
+        campaign_review.get("confirmatory_cutover_at_utc")
+        if campaign_review and campaign_review.get("decision") == "CONTINUE_CONFIRMATORY"
+        else None
+    )
+    confirmatory_independent = (
+        [
+            record
+            for record in independent
+            if str(record.get("decision_time_utc") or "") > str(confirmatory_cutover)
+        ]
+        if confirmatory_cutover
+        else []
+    )
+    confirmatory_source_reports = _source_reports(confirmatory_independent, campaign)
+    if confirmatory_cutover:
+        review_status = (
+            "CONFIRMATORY_READY_FOR_HUMAN_REVIEW"
+            if any(report["sample_gates_met"] for report in confirmatory_source_reports)
+            else "CONFIRMATORY_ACCRUAL"
         )
-        lift_gate = (
-            not bool(campaign["review_gates"].get("primary_lift_must_be_positive"))
-            or (lift is not None and lift > 0)
-        )
-        minimum_positive_rate = campaign["review_gates"].get(
-            "minimum_treatment_positive_net_r_rate"
-        )
-        positive_rate_gate = (
-            minimum_positive_rate is None
-            or (
-                treatment_metrics["positive_net_r_rate"] is not None
-                and treatment_metrics["positive_net_r_rate"] >= float(minimum_positive_rate)
-            )
-        )
-        minimum_half_average = campaign["review_gates"].get(
-            "minimum_each_half_average_net_r"
-        )
-        temporal_stability_gate = (
-            minimum_half_average is None
-            or all(
-                summary["average_net_r"] is not None
-                and summary["average_net_r"] > float(minimum_half_average)
-                for summary in treatment_temporal_halves.values()
-            )
-        )
-        gates_met = (
-            treatment_metrics["priced_episode_count"] >= minimum_treatment
-            and comparator_metrics["priced_episode_count"] >= minimum_comparator
-            and average_gate
-            and lift_gate
-            and positive_rate_gate
-            and temporal_stability_gate
-        )
-        source_reports.append(
-            {
-                "outcome_source": source,
-                "treatment": treatment_metrics,
-                "comparator": comparator_metrics,
-                "treatment_temporal_halves": treatment_temporal_halves,
-                "average_net_r_lift": lift,
-                "treatment_average_positive_gate": average_gate,
-                "primary_lift_positive_gate": lift_gate,
-                "treatment_positive_rate_gate": positive_rate_gate,
-                "treatment_temporal_stability_gate": temporal_stability_gate,
-                "sample_gates_met": gates_met,
-                "result_interpretation": "READY_FOR_HUMAN_REVIEW" if gates_met else "ACCRUING_NO_CONCLUSION",
-            }
+    else:
+        review_status = (
+            "READY_FOR_HUMAN_REVIEW"
+            if any(report["sample_gates_met"] for report in source_reports)
+            else "ACCRUING_NO_CONCLUSION"
         )
     return {
         "schema": "FX_RESEARCH_EXPERIMENT_EVALUATION_V1",
@@ -604,7 +660,9 @@ def build_evaluation(
         "predeclared_at_utc": approval_time,
         "evaluated_at_utc": evaluated_at,
         "evidence_cutoff_utc": evidence_cutoff,
-        "confirmatory_cutover_policy": "CANDIDATE_DECISION_TIME_STRICTLY_AFTER_HUMAN_APPROVAL",
+        "confirmatory_cutover_policy": "CANDIDATE_DECISION_TIME_STRICTLY_AFTER_CAMPAIGN_REVIEW",
+        "campaign_review": campaign_review,
+        "confirmatory_cutover_at_utc": confirmatory_cutover,
         "legacy_preapproval_evidence_excluded": True,
         "evidence_manifest_ids": evidence["manifest_ids"],
         "market_data_manifest_ids": market["manifest_ids"],
@@ -614,11 +672,9 @@ def build_evaluation(
         "independence_policy": independence_policy,
         "outcome_sources_pooled": False,
         "source_reports": source_reports,
-        "review_status": (
-            "READY_FOR_HUMAN_REVIEW"
-            if any(report["sample_gates_met"] for report in source_reports)
-            else "ACCRUING_NO_CONCLUSION"
-        ),
+        "confirmatory_independent_episode_count": len(confirmatory_independent),
+        "confirmatory_source_reports": confirmatory_source_reports,
+        "review_status": review_status,
         "automatic_promotion_allowed": False,
         "downstream_authority": "NONE",
     }
@@ -644,6 +700,10 @@ def run_campaign(
         "predeclared_at_utc": evaluation["predeclared_at_utc"],
         "evidence_manifest_ids": evaluation["evidence_manifest_ids"],
         "market_data_manifest_ids": evaluation["market_data_manifest_ids"],
+        "campaign_review_id": (
+            (evaluation.get("campaign_review") or {}).get("review_id")
+        ),
+        "confirmatory_cutover_at_utc": evaluation.get("confirmatory_cutover_at_utc"),
     }
     run_id = f"RUN_{payload_hash(evidence_identity)[:24]}"
     run_payload = {**evaluation, "run_id": run_id}
@@ -655,7 +715,12 @@ def run_campaign(
         run_payload,
         {"experiment_id": evaluation["experiment_id"], "started_at_utc": evaluation["evaluated_at_utc"]},
     )
-    for source_report in evaluation["source_reports"]:
+    finding_reports = (
+        evaluation["confirmatory_source_reports"]
+        if evaluation.get("confirmatory_cutover_at_utc")
+        else evaluation["source_reports"]
+    )
+    for source_report in finding_reports:
         finding = {
             "schema": "FX_RESEARCH_FINDING_V1",
             "run_id": run_id,
@@ -663,6 +728,11 @@ def run_campaign(
             "experiment_id": evaluation["experiment_id"],
             "predeclared_at_utc": evaluation["predeclared_at_utc"],
             "outcome_sources_pooled": False,
+            "evidence_phase": (
+                "CONFIRMATORY"
+                if evaluation.get("confirmatory_cutover_at_utc")
+                else "DEVELOPMENT"
+            ),
             **source_report,
             "automatic_promotion_allowed": False,
         }
@@ -688,5 +758,6 @@ def experiment_report(connection, campaign_id: str) -> dict[str, Any]:
         "experiment_id": experiment_id,
         "campaign_state": campaign_state(connection, campaign_id),
         "latest_evaluation": json.loads(row["payload_json"]) if row else None,
+        "latest_campaign_review": latest_campaign_review(connection, campaign_id),
         "automatic_promotion_allowed": False,
     }

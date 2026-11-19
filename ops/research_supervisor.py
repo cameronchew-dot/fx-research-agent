@@ -30,6 +30,7 @@ from fx_research_agent.campaigns import (  # noqa: E402
     register_campaign,
 )
 from fx_research_agent.experiments import experiment_report, run_campaign  # noqa: E402
+from fx_research_agent.campaign_reviews import review_campaign  # noqa: E402
 from fx_research_agent.automation import (  # noqa: E402
     automation_status,
     refresh_approved_campaigns,
@@ -83,6 +84,7 @@ from fx_research_agent.futures_context import futures_context_status  # noqa: E4
 from fx_research_agent.edge_forensics import (  # noqa: E402
     build_cross_system_edge_forensics,
 )
+from fx_research_agent.strategy_coverage import build_strategy_coverage  # noqa: E402
 
 
 DEFAULT_DB = ROOT / "data" / "fx_research_agent.sqlite3"
@@ -140,6 +142,8 @@ DEFAULT_EUR_PROFILE_DATED = (
 )
 DEFAULT_PORTFOLIO_STATUS = ROOT / "data" / "portfolio_opportunity_report.json"
 DEFAULT_CME_CONTEXT_CONTRACT = ROOT / "config" / "cme_fx_context_contract.json"
+DEFAULT_STRATEGY_COVERAGE_CONTRACT = ROOT / "config" / "strategy_coverage_contract.json"
+DEFAULT_STRATEGY_COVERAGE = ROOT / "data" / "strategy_coverage.json"
 SOURCE_REPO = "https://github.com/cameronchew-dot/eur-usd-agent.git"
 SOURCE_COMMIT = "e168603"
 SOURCE_PATH = "config/research_hypothesis_registry.json"
@@ -174,6 +178,13 @@ def main() -> int:
     sync.add_argument("--inbox-dir", type=Path, default=DEFAULT_MARKET_INBOX)
     commands.add_parser("market-data-status")
     commands.add_parser("portfolio-opportunity-report")
+    strategy_coverage = commands.add_parser("strategy-coverage")
+    strategy_coverage.add_argument("--eur-bot-root", type=Path, default=EUR_BOT_ROOT)
+    strategy_coverage.add_argument(
+        "--contract", type=Path, default=DEFAULT_STRATEGY_COVERAGE_CONTRACT
+    )
+    strategy_coverage.add_argument("--output", type=Path, default=DEFAULT_STRATEGY_COVERAGE)
+    strategy_coverage.add_argument("--no-write", action="store_true")
     futures_status = commands.add_parser("futures-context-status")
     futures_status.add_argument("--contract", type=Path, default=DEFAULT_CME_CONTEXT_CONTRACT)
     commands.add_parser("literature-panel-status")
@@ -203,6 +214,15 @@ def main() -> int:
     campaign_run.add_argument("campaign_id")
     campaign_results = commands.add_parser("experiment-status")
     campaign_results.add_argument("campaign_id")
+    campaign_review = commands.add_parser("review-campaign")
+    campaign_review.add_argument("campaign_id")
+    campaign_review.add_argument(
+        "--decision",
+        choices=("CONTINUE_CONFIRMATORY", "PARK", "REJECT"),
+        required=True,
+    )
+    campaign_review.add_argument("--reviewed-by", required=True)
+    campaign_review.add_argument("--reason", required=True)
     policy_register = commands.add_parser("register-autonomy-policy")
     policy_register.add_argument("path", nargs="?", type=Path, default=DEFAULT_AUTONOMY_POLICY)
     commands.add_parser("automation-status")
@@ -339,6 +359,15 @@ def main() -> int:
             result = build_portfolio_opportunity_report(connection, DEFAULT_EVIDENCE_INBOX)
             write_json_atomic(DEFAULT_PORTFOLIO_STATUS, result)
             print_json(result)
+        elif args.command == "strategy-coverage":
+            result = build_strategy_coverage(
+                connection,
+                eur_bot_root=args.eur_bot_root,
+                contract_path=args.contract,
+            )
+            if not args.no_write:
+                write_json_atomic(args.output, result)
+            print_json(result)
         elif args.command == "futures-context-status":
             print_json(futures_context_status(connection, args.contract))
         elif args.command == "literature-panel-status":
@@ -406,6 +435,16 @@ def main() -> int:
             )
         elif args.command == "experiment-status":
             print_json(experiment_report(connection, args.campaign_id))
+        elif args.command == "review-campaign":
+            print_json(
+                review_campaign(
+                    connection,
+                    args.campaign_id,
+                    decision=args.decision,
+                    reviewed_by=args.reviewed_by,
+                    reason=args.reason,
+                )
+            )
         elif args.command == "register-autonomy-policy":
             print_json(register_policy(connection, args.path))
         elif args.command == "automation-status":

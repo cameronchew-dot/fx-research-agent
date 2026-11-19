@@ -520,6 +520,26 @@ python3 ops/research_supervisor.py research-result-status
 Imported results are historical research evidence only. They cannot approve a
 campaign, activate a downstream profile, or grant order authority.
 
+## Campaign review and strategy coverage
+
+Campaigns that reach their locked development gate still require an immutable
+human review. A `CONTINUE_CONFIRMATORY` decision freezes a new timestamp
+cutover; only decisions strictly after that cutover count in the confirmation
+epoch. The review cannot promote a strategy or grant downstream authority.
+
+```bash
+python3 ops/research_supervisor.py review-campaign <campaign-id> \
+  --decision CONTINUE_CONFIRMATORY \
+  --reviewed-by <operator> \
+  --reason <reason>
+python3 ops/research_supervisor.py strategy-coverage --no-write
+```
+
+`strategy-coverage` joins the EUR/USD family registry, broad validation,
+active exact profiles, research campaigns, portfolio cadence, and execution
+contract into one reporting-only inventory. Unmapped families and campaigns
+remain explicit so proposal documents cannot make existing research disappear.
+
 For unattended reconciliation, install
 `ops/com.camcam.fx-research-agent.result-reconciliation.plist.example` as a
 LaunchAgent. It watches the bot's result-export directory for immediate imports

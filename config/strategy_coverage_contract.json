@@ -1,0 +1,65 @@
+{
+  "schema": "FX_STRATEGY_COVERAGE_CONTRACT_V1",
+  "status": "LOCKED_REPORTING_ONLY",
+  "groups": [
+    {
+      "group_id": "ORB_BREAKOUT_RETEST_REVERSAL",
+      "family_ids": [
+        "LONDON_ORB_BREAKOUT", "ASIA_ORB_BREAKOUT", "SYDNEY_ORB_BREAKOUT", "NY_ORB_BREAKOUT",
+        "LONDON_ORB_RETEST", "ASIA_ORB_RETEST", "SYDNEY_ORB_RETEST", "NY_ORB_RETEST",
+        "LONDON_ORB_REVERSAL", "ASIA_ORB_REVERSAL", "SYDNEY_ORB_REVERSAL", "NY_ORB_REVERSAL",
+        "JDUB_NY_ORB_FAILED_AUCTION_REVERSAL"
+      ],
+      "campaign_ids": [
+        "CAMPAIGN_EUR_LONDON_ORB_REVERSAL_CONFIRMATION_V3",
+        "CAMPAIGN_EUR_ASIA_ORB_REVERSAL_CONFIRMATION_V1"
+      ]
+    },
+    {
+      "group_id": "MOMENTUM_PULLBACK_CONTINUATION",
+      "family_ids": [
+        "HTF_TREND_CONTINUATION", "HTF_PULLBACK_CONTINUATION",
+        "DAILY_ALIGNED_H4_CONTINUATION", "MOVING_AVERAGE_REGIME_CONTINUATION",
+        "DAILY_ICHIMOKU_REGIME_CONTINUATION"
+      ],
+      "campaign_ids": ["CAMPAIGN_EUR_HTF_TREND_PULLBACK_CONTINUATION_V1"]
+    },
+    {
+      "group_id": "SESSION_MEAN_REVERSION",
+      "family_ids": [
+        "SESSION_CONDITIONED_HTF_REVERSAL", "VWAP_RECLAIM", "VWAP_MEAN_REVERSION",
+        "PRIOR_DAY_HIGH_FADE", "PRIOR_DAY_LOW_BOUNCE",
+        "SESSION_LEVEL_REACTION", "LIQUIDITY_SWEEP_REVERSAL"
+      ],
+      "campaign_ids": [
+        "CAMPAIGN_EUR_SESSION_VWAP_RECLAIM_V1",
+        "CAMPAIGN_EUR_SESSION_VWAP_STRETCH_REVERSION_V1"
+      ]
+    },
+    {
+      "group_id": "VOLATILITY_BREAKOUT_EXPANSION",
+      "family_ids": [
+        "VOLUME_SHOCK_CONTINUATION", "VOLUME_SHOCK_FADE",
+        "VOL_TERM_STRUCTURE_MISMATCH_REVERSION"
+      ],
+      "campaign_ids": []
+    },
+    {
+      "group_id": "REGIME_CONTEXT",
+      "family_ids": [
+        "RISK_SENTIMENT_REGIME_FILTER", "DAILY_STRUCTURE_CONTINUATION",
+        "DAILY_STRUCTURE_REVERSAL"
+      ],
+      "campaign_ids": [
+        "CAMPAIGN_EUR_TREND_LOCATION_RANGE_FORWARD_V1",
+        "CAMPAIGN_EUR_SPREAD_LIQUIDITY_DEGRADATION_FORWARD_V1"
+      ]
+    }
+  ],
+  "authority": {
+    "reporting_only": true,
+    "automatic_promotion": false,
+    "order_authority": false,
+    "live_authority": false
+  }
+}

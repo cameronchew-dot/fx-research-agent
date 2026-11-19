@@ -7,6 +7,7 @@ import unittest
 from pathlib import Path
 
 from fx_research_agent.campaigns import approve_campaign, register_campaign
+from fx_research_agent.campaign_reviews import review_campaign
 from fx_research_agent.evidence import register_manifest
 from fx_research_agent.experiments import run_campaign
 from fx_research_agent.storage import initialize
@@ -160,6 +161,47 @@ class ExperimentTests(unittest.TestCase):
         self.assertEqual(counterfactual["average_net_r_lift"], 2.0)
         self.assertTrue(counterfactual["sample_gates_met"])
         self.assertEqual(reports["FORWARD_SHADOW_ACTION"]["treatment"]["independent_episode_count"], 1)
+
+    def test_human_review_starts_distinct_confirmatory_epoch(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            registered = register_campaign(self.connection, self._campaign(root)[0])
+            approve_campaign(
+                self.connection,
+                "CAMPAIGN_1",
+                expected_payload_hash=registered["campaign_payload_hash"],
+                approved_by="CAMERON",
+                reason="Exact specification reviewed",
+                approved_at_utc="2026-10-13T01:00:00Z",
+            )
+            self._evidence(root)
+            development = run_campaign(
+                self.connection,
+                "CAMPAIGN_1",
+                root,
+                evaluated_at_utc="2026-10-13T11:00:00Z",
+            )
+            review = review_campaign(
+                self.connection,
+                "CAMPAIGN_1",
+                decision="CONTINUE_CONFIRMATORY",
+                reviewed_by="CAMERON",
+                reason="Continue locked forward confirmation",
+                reviewed_at_utc="2026-10-13T11:30:00Z",
+            )
+            confirmation = run_campaign(
+                self.connection,
+                "CAMPAIGN_1",
+                root,
+                evaluated_at_utc="2026-10-13T12:00:00Z",
+            )
+
+        self.assertTrue(review["inserted"])
+        self.assertNotEqual(development["run_id"], confirmation["run_id"])
+        self.assertEqual(confirmation["review_status"], "CONFIRMATORY_ACCRUAL")
+        self.assertEqual(confirmation["confirmatory_independent_episode_count"], 0)
+        self.assertEqual(confirmation["campaign_review"]["review_id"], review["review_id"])
+        self.assertEqual(confirmation["confirmatory_source_reports"], [])
 
     def test_preapproval_snapshot_records_distinct_evidence_cutoff(self):
         with tempfile.TemporaryDirectory() as directory:
