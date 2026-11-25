@@ -179,6 +179,16 @@ def _strategy_shadow_eligible_rows(
     allowed_setup_ids = {setup_id}
     if comparator_setup_id:
         allowed_setup_ids.add(comparator_setup_id)
+    cohort_rule = (
+        campaign.get("exact_specification", {}).get("cohort_rule") or {}
+    )
+    cohort_rule_type = str(cohort_rule.get("type") or "SETUP_ID")
+    treatment_sessions = {
+        str(value) for value in cohort_rule.get("treatment_session_buckets", [])
+    }
+    comparator_sessions = {
+        str(value) for value in cohort_rule.get("comparator_session_buckets", [])
+    }
     outcome_by_event = {
         str(value.get("event_id")): value
         for value in evidence["strategy_outcomes"].values()
@@ -203,7 +213,31 @@ def _strategy_shadow_eligible_rows(
             continue
         if outcome.get("same_bar_tie_policy") != population["same_bar_tie_policy"]:
             continue
-        cohort = "COMPARATOR" if event.get("setup_id") == comparator_setup_id else "TREATMENT"
+        if cohort_rule_type == "SESSION_BUCKET_MEMBERSHIP":
+            feature_packet = (
+                event.get("feature_packet")
+                if isinstance(event.get("feature_packet"), dict)
+                else {}
+            )
+            session = str(feature_packet.get("session_bucket") or "")
+            if session in treatment_sessions:
+                cohort = "TREATMENT"
+            elif session in comparator_sessions:
+                cohort = "COMPARATOR"
+            else:
+                continue
+            cohort_label = session
+        elif cohort_rule_type == "SETUP_ID":
+            cohort = (
+                "COMPARATOR"
+                if event.get("setup_id") == comparator_setup_id
+                else "TREATMENT"
+            )
+            cohort_label = event.get("setup_id")
+        else:
+            raise ValueError(
+                f"unsupported strategy-shadow cohort rule: {cohort_rule_type}"
+            )
         rows.append({
             "episode_id": event["event_id"],
             "candidate_id": event["event_id"],
@@ -213,7 +247,7 @@ def _strategy_shadow_eligible_rows(
             "outcome_source": "FORWARD_STRATEGY_SHADOW",
             "realized_net_r": outcome.get("realized_net_r"),
             "cohort": cohort,
-            "cohort_label": event.get("setup_id"),
+            "cohort_label": cohort_label,
         })
     return rows
 

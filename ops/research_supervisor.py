@@ -84,6 +84,9 @@ from fx_research_agent.futures_context import futures_context_status  # noqa: E4
 from fx_research_agent.edge_forensics import (  # noqa: E402
     build_cross_system_edge_forensics,
 )
+from fx_research_agent.signal_context_forensics import (  # noqa: E402
+    build_signal_context_forensics,
+)
 from fx_research_agent.strategy_coverage import build_strategy_coverage  # noqa: E402
 
 
@@ -132,6 +135,7 @@ DEFAULT_RESULT_INBOX = ROOT / "data" / "result_inbox"
 DEFAULT_RESULT_STATUS = ROOT / "data" / "research_result_status.json"
 DEFAULT_PAIR_RESEARCH_INVENTORY = ROOT / "data" / "pair_research_inventory.json"
 DEFAULT_EDGE_FORENSICS = ROOT / "data" / "cross_system_edge_forensics.json"
+DEFAULT_SIGNAL_CONTEXT_FORENSICS = ROOT / "data" / "signal_context_forensics.json"
 DEFAULT_EUR_AGENT_DB = EUR_AGENT_ROOT / "data" / "eur_agent.sqlite3"
 DEFAULT_EUR_AGENT_EXPERIMENT = (
     EUR_AGENT_ROOT / "config" / "agent_experiment_contract.json"
@@ -323,6 +327,15 @@ def main() -> int:
         "--eur-profile-dated", type=Path, default=DEFAULT_EUR_PROFILE_DATED
     )
     forensics.add_argument("--output", type=Path, default=DEFAULT_EDGE_FORENSICS)
+    signal_forensics = commands.add_parser("signal-context-forensics")
+    signal_forensics.add_argument(
+        "--evidence-inbox", type=Path, default=DEFAULT_EVIDENCE_INBOX
+    )
+    signal_forensics.add_argument(
+        "--output", type=Path, default=DEFAULT_SIGNAL_CONTEXT_FORENSICS
+    )
+    signal_forensics.add_argument("--instrument", default="EUR_USD")
+    signal_forensics.add_argument("--minimum-slice-count", type=int, default=5)
     args = parser.parse_args()
 
     with connect(args.db) as connection:
@@ -633,6 +646,15 @@ def main() -> int:
                 agent_experiment_contract_path=args.agent_experiment,
                 eur_profile_validation_path=args.eur_profile_validation,
                 eur_profile_dated_path=args.eur_profile_dated,
+            )
+            write_json_atomic(args.output, report)
+            print_json(report)
+        elif args.command == "signal-context-forensics":
+            report = build_signal_context_forensics(
+                connection,
+                args.evidence_inbox,
+                instrument=args.instrument,
+                minimum_slice_count=max(1, args.minimum_slice_count),
             )
             write_json_atomic(args.output, report)
             print_json(report)

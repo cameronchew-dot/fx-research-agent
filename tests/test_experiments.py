@@ -346,6 +346,116 @@ class ExperimentTests(unittest.TestCase):
         self.assertTrue(report["treatment_positive_rate_gate"])
         self.assertTrue(report["treatment_temporal_stability_gate"])
 
+    def test_strategy_shadow_can_predeclare_session_treatment_and_control(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            campaign = campaign_payload()
+            campaign["required_data_classes"] = [
+                "FORWARD_STRATEGY_SHADOW_EVENTS",
+                "FORWARD_STRATEGY_SHADOW_OUTCOMES",
+            ]
+            campaign["population"] = {
+                "source": "EUR_AGENT_STRATEGY_SHADOW_FORWARD_ONLY",
+                "mechanism_id": "HTF_ALIGNED_TREND_PULLBACK_CONTINUATION",
+                "setup_id": "H1_H4_ALIGNED_M15_EMA_PULLBACK_V1",
+                "timeframe": "M15",
+                "outcome_horizon_m15_bars": 16,
+                "entry_model": "NEXT_M15_OPEN_WITH_DECISION_SPREAD",
+                "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE",
+            }
+            campaign["exact_specification"]["cohort_rule"] = {
+                "type": "SESSION_BUCKET_MEMBERSHIP",
+                "treatment_session_buckets": ["ASIA", "LONDON"],
+                "comparator_session_buckets": ["NY_AFTERNOON"],
+            }
+            campaign["review_gates"] = {
+                "minimum_resolved_independent_treatment_episodes": 1,
+                "minimum_resolved_independent_comparator_episodes": 1,
+                "treatment_average_net_r_must_be_positive": True,
+                "primary_lift_must_be_positive": True,
+            }
+            campaign_path = root / "session_campaign.json"
+            campaign_path.write_text(json.dumps(campaign), encoding="utf-8")
+            registered = register_campaign(self.connection, campaign_path)
+            approve_campaign(
+                self.connection,
+                "CAMPAIGN_1",
+                expected_payload_hash=registered["campaign_payload_hash"],
+                approved_by="CAMERON",
+                reason="Session cohorts locked before forward collection",
+                approved_at_utc="2026-10-13T01:00:00Z",
+            )
+            events = []
+            outcomes = []
+            for index, (session, net_r) in enumerate(
+                (("ASIA", 1.5), ("NY_AFTERNOON", -1.0), ("UNMAPPED", 1.5)),
+                start=1,
+            ):
+                event_id = f"SESSION_{index}"
+                events.append(
+                    {
+                        "event_id": event_id,
+                        "mechanism_id": "HTF_ALIGNED_TREND_PULLBACK_CONTINUATION",
+                        "setup_id": "H1_H4_ALIGNED_M15_EMA_PULLBACK_V1",
+                        "instrument": "EUR_USD",
+                        "direction": "LONG",
+                        "decision_time_utc": f"2026-10-13T0{index + 1}:00:00Z",
+                        "base_timeframe": "M15",
+                        "feature_packet": {"session_bucket": session},
+                    }
+                )
+                outcomes.append(
+                    {
+                        "outcome_id": f"SESSION_OUTCOME_{index}",
+                        "event_id": event_id,
+                        "observed_at_utc": "2026-10-13T10:00:00Z",
+                        "realized_net_r": net_r,
+                        "entry_model": "NEXT_M15_OPEN_WITH_DECISION_SPREAD",
+                        "horizon_bars": 16,
+                        "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE",
+                    }
+                )
+            payload = {
+                "schema": "FX_RESEARCH_EVIDENCE_PAYLOAD_V1",
+                "manifest_id": "SESSION_EVIDENCE_TEST",
+                "data_classes": campaign["required_data_classes"],
+                "strategy_shadow_event_facts": events,
+                "strategy_shadow_outcome_facts": outcomes,
+            }
+            payload_path = root / "SESSION_EVIDENCE_TEST.payload.json.gz"
+            with gzip.open(payload_path, "wt", encoding="utf-8") as handle:
+                json.dump(payload, handle)
+            manifest = {
+                "manifest_id": "SESSION_EVIDENCE_TEST",
+                "schema": "FX_RESEARCH_EVIDENCE_EXPORT_V1",
+                "created_at_utc": "2026-10-13T10:00:00Z",
+                "source_system": "EUR_AGENT_FORWARD_EVIDENCE",
+                "instrument": "EUR_USD",
+                "window_start_utc": "2026-10-13T02:00:00Z",
+                "window_end_utc": "2026-10-13T10:00:00Z",
+                "payload_sha256": hashlib.sha256(payload_path.read_bytes()).hexdigest(),
+                "payload_path": payload_path.name,
+                "freshness_status": "FRESH",
+                "gap_status": "COMPLETE",
+                "data_classes": payload["data_classes"],
+            }
+            manifest_path = root / "SESSION_EVIDENCE_TEST.manifest.json"
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            register_manifest(self.connection, manifest_path)
+            result = run_campaign(
+                self.connection,
+                "CAMPAIGN_1",
+                root,
+                evaluated_at_utc="2026-10-13T10:00:00Z",
+            )
+
+        report = result["source_reports"][0]
+        self.assertEqual(result["eligible_candidate_count_before_episode_deduplication"], 2)
+        self.assertEqual(report["treatment"]["independent_episode_count"], 1)
+        self.assertEqual(report["comparator"]["independent_episode_count"], 1)
+        self.assertEqual(report["average_net_r_lift"], 2.5)
+        self.assertTrue(report["sample_gates_met"])
+
 
 if __name__ == "__main__":
     unittest.main()

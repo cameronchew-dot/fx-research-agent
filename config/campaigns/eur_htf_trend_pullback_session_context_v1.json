@@ -1,0 +1,88 @@
+{
+  "schema": "FX_RESEARCH_CAMPAIGN_V1",
+  "campaign_id": "CAMPAIGN_EUR_HTF_TREND_PULLBACK_SESSION_CONTEXT_V1",
+  "hypothesis_id": "HYP_EUR_HTF_TREND_PULLBACK_SESSION_CONTEXT_V1",
+  "created_at_utc": "2026-11-25T05:20:00Z",
+  "state": "DRAFT",
+  "title": "EUR/USD HTF pullback Asia-London session context",
+  "instrument": "EUR_USD",
+  "mechanism_class": "HTF_ALIGNED_TREND_PULLBACK_SESSION_CONTEXT",
+  "research_question": "Do new HTF-aligned M15 EMA20 pullback events retain positive net R in Asia and London and outperform later-session events?",
+  "null_hypothesis": "New Asia/London HTF pullback events have non-positive average net R or do not outperform the locked later-session control.",
+  "required_data_classes": [
+    "FORWARD_STRATEGY_SHADOW_EVENTS",
+    "FORWARD_STRATEGY_SHADOW_OUTCOMES"
+  ],
+  "population": {
+    "source": "EUR_AGENT_STRATEGY_SHADOW_FORWARD_ONLY",
+    "mechanism_id": "HTF_ALIGNED_TREND_PULLBACK_CONTINUATION",
+    "setup_id": "H1_H4_ALIGNED_M15_EMA_PULLBACK_V1",
+    "timeframe": "M15",
+    "entry_model": "NEXT_M15_OPEN_WITH_DECISION_SPREAD",
+    "outcome_horizon_m15_bars": 16,
+    "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE"
+  },
+  "independence_unit": {
+    "unit": "FIRST_EVENT_PER_NON_OVERLAPPING_FIXED_OUTCOME_HORIZON_WITHIN_COHORT",
+    "repeated_events_count_once": true
+  },
+  "exact_specification": {
+    "contract": "EUR_AGENT_STRATEGY_EXPANSION_SHADOW_V1",
+    "selection_origin": "POST_HOC_SESSION_LEAD_FROM_32_EVENT_DEVELOPMENT_SAMPLE",
+    "legacy_events_may_not_confirm": true,
+    "cohort_rule": {
+      "type": "SESSION_BUCKET_MEMBERSHIP",
+      "treatment_session_buckets": ["ASIA", "LONDON"],
+      "comparator_session_buckets": [
+        "LONDON_NY_OVERLAP",
+        "NY_AFTERNOON",
+        "ROLLOVER_LATE"
+      ]
+    },
+    "parameters_locked_before_new_forward_collection": true,
+    "regime_labels_are_secondary_diagnostics_only": true
+  },
+  "controls": [
+    {
+      "control_id": "LOCKED_LATER_SESSION_COMPLEMENT",
+      "definition": "The same signal specification during London/New York overlap, New York afternoon, and rollover-late sessions."
+    }
+  ],
+  "metrics": {
+    "primary": "AVERAGE_FORWARD_NET_R_LIFT_OVER_LATER_SESSION_CONTROL",
+    "secondary": [
+      "TREATMENT_AVERAGE_NET_R",
+      "MEDIAN_NET_R",
+      "POSITIVE_NET_R_RATE",
+      "TEMPORAL_HALF_STABILITY",
+      "MFE_R",
+      "MAE_R",
+      "SAMPLE_COUNT"
+    ]
+  },
+  "review_gates": {
+    "minimum_resolved_independent_treatment_episodes": 20,
+    "minimum_resolved_independent_comparator_episodes": 10,
+    "treatment_average_net_r_must_be_positive": true,
+    "primary_lift_must_be_positive": true,
+    "minimum_treatment_positive_net_r_rate": 0.5,
+    "minimum_each_half_average_net_r": 0.0,
+    "review_is_not_promotion": true
+  },
+  "multiple_comparisons_policy": {
+    "batch_id": "BATCH_EUR_HTF_PULLBACK_SESSION_CONTEXT_V1",
+    "parameter_sweeps_allowed": false,
+    "observed_development_sample_cannot_be_reused_for_confirmation": true
+  },
+  "stopping_rules": {
+    "no_early_success_declaration": true,
+    "no_early_parameter_retuning": true,
+    "park_if_locked_gate_fails_after_both_sample_minima": true
+  },
+  "authority": {
+    "automatic_approval": false,
+    "automatic_execution": false,
+    "downstream_activation": false,
+    "order_authority": false
+  }
+}

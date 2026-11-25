@@ -529,6 +529,30 @@
       "overlap_notes": "Cross-sectional sector dislocation reversal distinct from the single-instrument QQQ negative-gap test, while remaining in the same family-wise overnight-reversal research family.",
       "evidence_ids": ["CAMPAIGN_SECTOR_ETF_CROSS_SECTIONAL_OVERNIGHT_REVERSAL_V1"],
       "next_action": "CLOSED_FREQUENCY_MET_BUT_NEGATIVE_GROSS_VALIDATION_DATED_AND_STRESS_EXPECTANCY_DO_NOT_RETUNE_OR_SEND_TO_LLM_SELECTOR"
+    },
+    {
+      "hypothesis_id": "HYP_EUR_HTF_TREND_PULLBACK_SESSION_CONTEXT_V1",
+      "proposed_at_utc": "2026-11-25T05:20:00Z",
+      "proposed_by": "OPERATOR_AND_CODEX_POST_HOC_LEAD",
+      "state": "PROPOSED",
+      "hypothesis_type": "FORWARD_SESSION_CONTEXT_CONFIRMATION",
+      "classification": "CONTEXT",
+      "priority": 35,
+      "statement": "New HTF-aligned M15 EMA20 pullback events observed in Asia or London may retain positive net R and outperform the same locked setup during later trading sessions.",
+      "data_requirements": [
+        "FORWARD_STRATEGY_SHADOW_EVENTS",
+        "FORWARD_STRATEGY_SHADOW_OUTCOMES",
+        "TIMESTAMP_VALID_SESSION_BUCKET"
+      ],
+      "dependencies": [
+        "NO_REUSE_OF_32_EVENT_DEVELOPMENT_SAMPLE",
+        "LOCKED_ASIA_AND_LONDON_TREATMENT",
+        "LOCKED_LATER_SESSION_CONTROL",
+        "NON_OVERLAPPING_FIXED_HORIZONS"
+      ],
+      "expected_frequency": "APPROXIMATELY_FOUR_TREATMENT_EVENTS_PER_WEEK_FROM_DESCRIPTIVE_SAMPLE_ONLY",
+      "overlap_notes": "This is a post-hoc context lead from the existing HTF pullback campaign, not a new signal and not independent confirmation.",
+      "next_action": "BEGIN_NEW_FORWARD_ONLY_TREATMENT_AND_CONTROL_ACCRUAL_AFTER_EXPLICIT_CAMPAIGN_APPROVAL"
     }
   ]
 }
