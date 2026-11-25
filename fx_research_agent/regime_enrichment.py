@@ -539,6 +539,7 @@ def build_regime_enrichment(
     }
     rows = []
     status_counts: dict[str, int] = defaultdict(int)
+    regime_cache: dict[tuple[str, int, int], dict[str, Any]] = {}
     for event in events:
         instrument = event["instrument"]
         decision = parse_utc(event["decision_time_utc"])
@@ -553,21 +554,28 @@ def build_regime_enrichment(
                 }
             )
             continue
-        m15 = _history_as_of(
-            candles.get((instrument, "M15"), []),
-            timelines.get((instrument, "M15"), []),
-            decision,
-        )
-        h1 = _history_as_of(
-            candles.get((instrument, "H1"), []),
-            timelines.get((instrument, "H1"), []),
-            decision,
-        )
+        instrument_m15 = candles.get((instrument, "M15"), [])
+        instrument_h1 = candles.get((instrument, "H1"), [])
+        m15_timeline = timelines.get((instrument, "M15"), [])
+        h1_timeline = timelines.get((instrument, "H1"), [])
+        m15_index = bisect.bisect_right(m15_timeline, decision)
+        h1_index = bisect.bisect_right(h1_timeline, decision)
+        m15 = instrument_m15[max(0, m15_index - 500) : m15_index]
+        h1 = instrument_h1[max(0, h1_index - 500) : h1_index]
         if any(parse_utc(row["end_time_utc"]) > decision for row in m15 + h1):
             raise ValueError("future candle leaked into historical regime replay")
-        markov = _markov(m15, pip_size)
-        hmm = _hmm(m15, pip_size)
-        garch = _garch(h1, pip_size)
+        cache_key = (instrument, m15_index, h1_index)
+        cached = regime_cache.get(cache_key)
+        if cached is None:
+            cached = {
+                "markov": _markov(m15, pip_size),
+                "hmm": _hmm(m15, pip_size),
+                "garch": _garch(h1, pip_size),
+            }
+            regime_cache[cache_key] = cached
+        markov = cached["markov"]
+        hmm = cached["hmm"]
+        garch = cached["garch"]
         ready_count = sum(
             value.get("status", "").startswith("READY")
             for value in (markov, hmm, garch)
@@ -607,6 +615,7 @@ def build_regime_enrichment(
         "model_contract_sha256": contract_hash,
         "market_lineage": sources,
         "row_count": len(rows),
+        "unique_market_state_count": len(regime_cache),
         "status_counts": dict(sorted(status_counts.items())),
         "rows": rows,
         "authority": {
