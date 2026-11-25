@@ -144,8 +144,58 @@ def _signal_id(event: dict[str, Any], outcome: dict[str, Any]) -> str:
     )
 
 
+def _enrichment_index(
+    enrichment: dict[str, Any] | None,
+) -> dict[tuple[str, str], dict[str, Any]]:
+    if not enrichment:
+        return {}
+    if enrichment.get("schema") != "FX_SIGNAL_REGIME_ENRICHMENT_V1":
+        raise ValueError("unsupported signal regime enrichment schema")
+    index: dict[tuple[str, str], dict[str, Any]] = {}
+    for row in enrichment.get("rows") or []:
+        key = (str(row.get("source_population")), str(row.get("source_id")))
+        if not all(key):
+            raise ValueError("regime enrichment row is missing its source identity")
+        existing = index.get(key)
+        if existing is not None and existing != row:
+            raise ValueError(f"conflicting regime enrichment row: {key}")
+        index[key] = row
+    return index
+
+
+def _apply_regime_enrichment(
+    packet: dict[str, Any],
+    event: dict[str, Any],
+    enrichment: dict[str, Any] | None,
+) -> dict[str, Any]:
+    if not enrichment or enrichment.get("status") not in {"READY", "PARTIAL"}:
+        return packet
+    if enrichment.get("decision_time_utc") != event.get("decision_time_utc"):
+        raise ValueError("regime enrichment decision time does not match source event")
+    enriched = dict(packet)
+    markov = enrichment.get("markov") or {}
+    hmm = enrichment.get("hmm") or {}
+    garch = enrichment.get("garch") or {}
+    if markov.get("state_id"):
+        enriched["markov_state"] = markov["state_id"]
+    if hmm.get("state_id"):
+        enriched["hmm_state"] = hmm["state_id"]
+    if garch.get("volatility_state"):
+        enriched["garch_volatility_state"] = garch["volatility_state"]
+    enriched["historical_regime_enrichment"] = {
+        "historical_causal_not_forward": True,
+        "model_contract_sha256": enrichment.get("model_contract_sha256"),
+        "source_manifest_set_sha256": enrichment.get(
+            "source_manifest_set_sha256"
+        ),
+    }
+    return enriched
+
+
 def _candidate_strategy_facts(
-    candidates: list[dict[str, Any]], outcomes: list[dict[str, Any]]
+    candidates: list[dict[str, Any]],
+    outcomes: list[dict[str, Any]],
+    enrichment: dict[tuple[str, str], dict[str, Any]] | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     candidates_by_id = {str(row.get("candidate_id")): row for row in candidates}
     events: list[dict[str, Any]] = []
@@ -166,6 +216,13 @@ def _candidate_strategy_facts(
                 if isinstance(level, dict)
             ),
             default=0,
+        )
+        packet = _apply_regime_enrichment(
+            packet,
+            candidate,
+            (enrichment or {}).get(
+                ("ORIGINAL_FAILED_AUCTION_CANDIDATE", str(candidate["candidate_id"]))
+            ),
         )
         events.append(
             {
@@ -332,16 +389,38 @@ def build_signal_context_forensics(
     *,
     instrument: str = "EUR_USD",
     minimum_slice_count: int = 5,
+    regime_enrichment: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     evidence = _load_evidence(connection, evidence_inbox_dir, instrument)
+    enrichment = _enrichment_index(regime_enrichment)
+    strategy_events = []
+    for event in evidence["strategy_events"].values():
+        packet = (
+            event.get("feature_packet")
+            if isinstance(event.get("feature_packet"), dict)
+            else {}
+        )
+        strategy_events.append(
+            {
+                **event,
+                "feature_packet": _apply_regime_enrichment(
+                    packet,
+                    event,
+                    enrichment.get(
+                        ("STRATEGY_SHADOW_EVENT", str(event.get("event_id")))
+                    ),
+                ),
+            }
+        )
     strategy = build_strategy_context_report(
-        list(evidence["strategy_events"].values()),
+        strategy_events,
         list(evidence["strategy_outcomes"].values()),
         minimum_slice_count=minimum_slice_count,
     )
     candidate_events, candidate_outcomes = _candidate_strategy_facts(
         list(evidence["candidates"].values()),
         list(evidence["outcomes"].values()),
+        enrichment,
     )
     original_candidates = build_strategy_context_report(
         candidate_events,
@@ -353,6 +432,11 @@ def build_signal_context_forensics(
         "generated_at_utc": utc_now(),
         "instrument": instrument,
         "evidence_manifest_count": len(evidence["manifest_ids"]),
+        "regime_enrichment": {
+            "artifact_id": (regime_enrichment or {}).get("artifact_id"),
+            "row_count": len(enrichment),
+            "historical_causal_not_forward": bool(enrichment),
+        },
         "original_failed_auction_candidates": original_candidates,
         "strategy_shadow": strategy,
         "interpretation": {

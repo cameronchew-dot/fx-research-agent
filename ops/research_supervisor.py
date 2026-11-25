@@ -87,6 +87,7 @@ from fx_research_agent.edge_forensics import (  # noqa: E402
 from fx_research_agent.signal_context_forensics import (  # noqa: E402
     build_signal_context_forensics,
 )
+from fx_research_agent.regime_enrichment import build_regime_enrichment  # noqa: E402
 from fx_research_agent.strategy_coverage import build_strategy_coverage  # noqa: E402
 
 
@@ -136,6 +137,7 @@ DEFAULT_RESULT_STATUS = ROOT / "data" / "research_result_status.json"
 DEFAULT_PAIR_RESEARCH_INVENTORY = ROOT / "data" / "pair_research_inventory.json"
 DEFAULT_EDGE_FORENSICS = ROOT / "data" / "cross_system_edge_forensics.json"
 DEFAULT_SIGNAL_CONTEXT_FORENSICS = ROOT / "data" / "signal_context_forensics.json"
+DEFAULT_SIGNAL_REGIME_ENRICHMENT = ROOT / "data" / "signal_regime_enrichment.json"
 DEFAULT_EUR_AGENT_DB = EUR_AGENT_ROOT / "data" / "eur_agent.sqlite3"
 DEFAULT_EUR_AGENT_EXPERIMENT = (
     EUR_AGENT_ROOT / "config" / "agent_experiment_contract.json"
@@ -334,8 +336,21 @@ def main() -> int:
     signal_forensics.add_argument(
         "--output", type=Path, default=DEFAULT_SIGNAL_CONTEXT_FORENSICS
     )
+    signal_forensics.add_argument(
+        "--regime-enrichment", type=Path, default=DEFAULT_SIGNAL_REGIME_ENRICHMENT
+    )
     signal_forensics.add_argument("--instrument", default="EUR_USD")
     signal_forensics.add_argument("--minimum-slice-count", type=int, default=5)
+    regime_enrichment = commands.add_parser("signal-regime-enrichment")
+    regime_enrichment.add_argument(
+        "--evidence-inbox", type=Path, default=DEFAULT_EVIDENCE_INBOX
+    )
+    regime_enrichment.add_argument(
+        "--market-inbox", type=Path, default=DEFAULT_MARKET_INBOX
+    )
+    regime_enrichment.add_argument(
+        "--output", type=Path, default=DEFAULT_SIGNAL_REGIME_ENRICHMENT
+    )
     args = parser.parse_args()
 
     with connect(args.db) as connection:
@@ -650,14 +665,28 @@ def main() -> int:
             write_json_atomic(args.output, report)
             print_json(report)
         elif args.command == "signal-context-forensics":
+            enrichment = (
+                json.loads(args.regime_enrichment.read_text(encoding="utf-8"))
+                if args.regime_enrichment.is_file()
+                else None
+            )
             report = build_signal_context_forensics(
                 connection,
                 args.evidence_inbox,
                 instrument=args.instrument,
                 minimum_slice_count=max(1, args.minimum_slice_count),
+                regime_enrichment=enrichment,
             )
             write_json_atomic(args.output, report)
             print_json(report)
+        elif args.command == "signal-regime-enrichment":
+            enrichment = build_regime_enrichment(
+                connection,
+                args.evidence_inbox,
+                args.market_inbox,
+            )
+            write_json_atomic(args.output, enrichment)
+            print_json(enrichment)
     return 0
 
 

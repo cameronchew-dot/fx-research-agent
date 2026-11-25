@@ -78,6 +78,7 @@ python3 ops/research_supervisor.py context-build-matrix
 python3 ops/research_supervisor.py context-discover --matrix-metadata data/context_discovery/MATRIX_ID.json
 python3 ops/research_supervisor.py context-discovery-status
 python3 ops/research_supervisor.py context-export-labels --matrix-metadata data/context_discovery/MATRIX_ID.json
+python3 ops/research_supervisor.py signal-regime-enrichment
 python3 ops/research_supervisor.py signal-context-forensics
 ```
 
@@ -89,7 +90,10 @@ keeps those populations and outcome sources separate, removes fixed-horizon over
 which timestamp-valid context labels accompanied wins and losses. It covers
 session, direction, HTF alignment, candle geometry, spread/ATR, and available
 Markov, HMM, and GARCH states. Missing regime history is left missing rather
-than reconstructed with hindsight. Eligible comparisons share one false-
+than reconstructed with hindsight. A preceding daily causal replay can derive
+historical regime labels using only completed candles known at each decision;
+the derived artifact is explicitly exploratory and does not rewrite immutable
+forward evidence. Eligible comparisons share one false-
 discovery correction and remain descriptive; a promising slice must become a
 new locked forward campaign before it can influence policy. See
 `docs/SIGNAL_CONTEXT_FORENSICS.md`.
