@@ -113,6 +113,21 @@ def _current_market_manifest_ids(connection, instruments: list[str]) -> list[str
     ]
 
 
+def _manifest_inputs_unchanged(
+    previous: dict[str, Any],
+    campaign: dict[str, Any],
+    evidence_manifest_ids: list[str],
+    market_manifest_ids: list[str],
+) -> bool:
+    if previous.get("evidence_manifest_ids") != evidence_manifest_ids:
+        return False
+    market_native = (
+        campaign.get("population", {}).get("source")
+        == "SEALED_MARKET_DATA_FORWARD_ONLY_AFTER_CAMPAIGN_APPROVAL"
+    )
+    return not market_native or previous.get("market_data_manifest_ids") == market_manifest_ids
+
+
 def _build_progress_snapshot(
     campaign_id: str,
     evaluation: dict[str, Any],
@@ -183,8 +198,12 @@ def refresh_approved_campaigns(
         if (
             trigger == "EVIDENCE_SYNC_THRESHOLD_CHECK"
             and previous is not None
-            and previous.get("evidence_manifest_ids") == current_evidence_manifest_ids
-            and previous.get("market_data_manifest_ids") == current_market_manifest_ids
+            and _manifest_inputs_unchanged(
+                previous,
+                campaign,
+                current_evidence_manifest_ids,
+                current_market_manifest_ids,
+            )
         ):
             campaigns.append(
                 {

@@ -6,6 +6,7 @@ from pathlib import Path
 
 from fx_research_agent.automation import (
     _build_progress_snapshot,
+    _manifest_inputs_unchanged,
     load_policy,
     refresh_approved_campaigns,
     register_policy,
@@ -169,6 +170,35 @@ class AutomationPolicyTests(unittest.TestCase):
         self.assertEqual(first, repeated)
         self.assertEqual(first["snapshot_id"], repeated["snapshot_id"])
         self.assertNotEqual(first["snapshot_id"], advanced["snapshot_id"])
+
+    def test_market_changes_only_refresh_market_native_campaigns(self):
+        previous = {
+            "evidence_manifest_ids": ["EVIDENCE_1"],
+            "market_data_manifest_ids": ["MARKET_1"],
+        }
+        evidence_campaign = {"population": {"source": "EUR_AGENT_STRATEGY_SHADOW_FORWARD_ONLY"}}
+        market_campaign = {
+            "population": {
+                "source": "SEALED_MARKET_DATA_FORWARD_ONLY_AFTER_CAMPAIGN_APPROVAL"
+            }
+        }
+
+        self.assertTrue(
+            _manifest_inputs_unchanged(
+                previous,
+                evidence_campaign,
+                ["EVIDENCE_1"],
+                ["MARKET_1", "MARKET_2"],
+            )
+        )
+        self.assertFalse(
+            _manifest_inputs_unchanged(
+                previous,
+                market_campaign,
+                ["EVIDENCE_1"],
+                ["MARKET_1", "MARKET_2"],
+            )
+        )
 
 
 if __name__ == "__main__":
