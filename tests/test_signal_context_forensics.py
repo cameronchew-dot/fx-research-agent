@@ -100,6 +100,11 @@ class SignalContextForensicsTests(unittest.TestCase):
                         "horizon_bars": 4,
                         "target_r": 1.5,
                         "same_bar_tie_policy": "STOP_FIRST",
+                        "mfe_r": 1.5 if session == "LONDON" else 0.25,
+                        "mae_r": 0.2 if session == "LONDON" else 1.0,
+                        "exit_reason": "TARGET" if session == "LONDON" else "STOP",
+                        "spread_pips": 1.0,
+                        "stop_pips": 5.0,
                     }
                 )
         report = build_strategy_context_report(events, outcomes)
@@ -118,6 +123,11 @@ class SignalContextForensicsTests(unittest.TestCase):
         self.assertEqual(len(london), 2)
         self.assertTrue(all(row["average_net_r_lift"] == 2.5 for row in london))
         self.assertTrue(report["pooled_within_signal_context"])
+        paths = report["outcome_path_summary"]
+        self.assertEqual(paths["positive"]["count"], 20)
+        self.assertEqual(paths["non_positive"]["count"], 20)
+        self.assertEqual(paths["positive"]["mfe_at_least_1_5r_rate"], 1.0)
+        self.assertEqual(paths["non_positive"]["mae_at_least_1r_rate"], 1.0)
 
     def test_overlapping_events_are_not_counted_twice(self):
         events = []

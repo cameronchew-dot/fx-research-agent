@@ -77,6 +77,9 @@ class RegimeEnrichmentTests(unittest.TestCase):
             expected[1]["status"], "READY_HISTORICAL_CAUSAL_RESEARCH_ONLY"
         )
         self.assertEqual(expected[2]["status"], "READY_HISTORICAL_CAUSAL")
+        self.assertIn("transition_id", expected[0])
+        self.assertIn("transition_id", expected[1])
+        self.assertIn("transition_id", expected[2])
 
     def test_enrichment_is_additive_and_requires_matching_decision_time(self):
         event = {"decision_time_utc": "2026-01-02T00:00:00Z"}
@@ -86,13 +89,26 @@ class RegimeEnrichmentTests(unittest.TestCase):
             "model_contract_sha256": "contract",
             "source_manifest_set_sha256": "sources",
             "markov": {"state_id": "LONDON|UP|NORMAL"},
-            "hmm": {"state_id": "HMM_UP_NORMAL_NORMALVOL"},
-            "garch": {"volatility_state": "LOW"},
+            "hmm": {
+                "state_id": "HMM_UP_NORMAL_NORMALVOL",
+                "previous_state_id": "HMM_FLAT_NORMAL_NORMALVOL",
+                "transition_id": "HMM_FLAT_NORMAL_NORMALVOL->HMM_UP_NORMAL_NORMALVOL",
+            },
+            "garch": {
+                "volatility_state": "LOW",
+                "previous_volatility_state": "NORMAL",
+                "transition_id": "NORMAL->LOW",
+            },
         }
         original = {"session_bucket": "LONDON"}
         result = _apply_regime_enrichment(original, event, enrichment)
         self.assertEqual(original, {"session_bucket": "LONDON"})
         self.assertEqual(result["markov_state"], "LONDON|UP|NORMAL")
+        self.assertEqual(
+            result["hmm_transition"],
+            "HMM_FLAT_NORMAL_NORMALVOL->HMM_UP_NORMAL_NORMALVOL",
+        )
+        self.assertEqual(result["garch_transition"], "NORMAL->LOW")
         self.assertTrue(
             result["historical_regime_enrichment"][
                 "historical_causal_not_forward"

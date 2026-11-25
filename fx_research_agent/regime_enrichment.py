@@ -40,6 +40,7 @@ MODEL_CONTRACT = {
         "beta": 0.94,
     },
     "candle_cutoff": "CANDLE_END_TIME_LE_DECISION_TIME",
+    "transition_definition": "PREVIOUS_COMPLETED_MODEL_STATE_TO_DECISION_STATE",
     "historical_result_authority": "EXPLORATORY_ONLY_NOT_FORWARD_CONFIRMATION",
 }
 
@@ -273,6 +274,7 @@ def _markov(rows: list[dict[str, Any]], pip_size: float) -> dict[str, Any]:
     if not states:
         return {"status": "UNAVAILABLE", "state_id": None, "observation_count": 0}
     current = states[-1]
+    previous = states[-2] if len(states) >= 2 else None
     outgoing = [right for left, right in zip(states, states[1:]) if left == current]
     persistence = (
         sum(value == current for value in outgoing) / len(outgoing)
@@ -282,6 +284,8 @@ def _markov(rows: list[dict[str, Any]], pip_size: float) -> dict[str, Any]:
     return {
         "status": "READY_HISTORICAL_CAUSAL",
         "state_id": current,
+        "previous_state_id": previous,
+        "transition_id": f"{previous}->{current}" if previous else None,
         "observation_count": len(states),
         "source_state_transition_count": len(outgoing),
         "persistence_probability": (
@@ -426,33 +430,42 @@ def _hmm(rows: list[dict[str, Any]], pip_size: float) -> dict[str, Any]:
             "observation_count": len(features),
         }
     hidden, assignments = _hmm_sequence([row["vector"] for row in features])
+    def label(state: int) -> str:
+        grouped = [
+            row["raw"]
+            for row, assignment in zip(features, assignments)
+            if assignment == state
+        ]
+        delta = statistics.fmean(row["delta_pips"] for row in grouped)
+        range_ratio = statistics.fmean(row["range_ratio"] for row in grouped)
+        volume_ratio = statistics.fmean(row["volume_ratio"] for row in grouped)
+        direction = "UP" if delta > 0.35 else "DOWN" if delta < -0.35 else "FLAT"
+        volatility = (
+            "EXPANDING"
+            if range_ratio >= 1.25
+            else "COMPRESSED"
+            if range_ratio <= 0.8
+            else "NORMAL"
+        )
+        participation = (
+            "HIGHVOL"
+            if volume_ratio >= 1.25
+            else "THINVOL"
+            if volume_ratio <= 0.8
+            else "NORMALVOL"
+        )
+        return f"HMM_{direction}_{volatility}_{participation}"
+
     current_state = hidden[-1]
-    grouped = [
-        row["raw"]
-        for row, assignment in zip(features, assignments)
-        if assignment == current_state
-    ]
-    delta = statistics.fmean(row["delta_pips"] for row in grouped)
-    range_ratio = statistics.fmean(row["range_ratio"] for row in grouped)
-    volume_ratio = statistics.fmean(row["volume_ratio"] for row in grouped)
-    direction = "UP" if delta > 0.35 else "DOWN" if delta < -0.35 else "FLAT"
-    volatility = (
-        "EXPANDING"
-        if range_ratio >= 1.25
-        else "COMPRESSED"
-        if range_ratio <= 0.8
-        else "NORMAL"
-    )
-    participation = (
-        "HIGHVOL"
-        if volume_ratio >= 1.25
-        else "THINVOL"
-        if volume_ratio <= 0.8
-        else "NORMALVOL"
-    )
+    current_label = label(current_state)
+    previous_label = label(hidden[-2]) if len(hidden) >= 2 else None
     return {
         "status": "READY_HISTORICAL_CAUSAL_RESEARCH_ONLY",
-        "state_id": f"HMM_{direction}_{volatility}_{participation}",
+        "state_id": current_label,
+        "previous_state_id": previous_label,
+        "transition_id": (
+            f"{previous_label}->{current_label}" if previous_label else None
+        ),
         "hidden_state": current_state,
         "observation_count": len(features),
     }
@@ -477,20 +490,31 @@ def _garch(rows: list[dict[str, Any]], pip_size: float) -> dict[str, Any]:
     for value in returns:
         variance = max(omega + alpha * value * value + beta * variance, 1e-10)
         forecasts.append(math.sqrt(variance))
+    def label(index: int) -> tuple[str, float]:
+        history = forecasts[: index + 1]
+        latest = history[-1]
+        percentile = sum(value <= latest for value in history) / len(history)
+        state = (
+            "LOW"
+            if percentile < 0.25
+            else "NORMAL"
+            if percentile < 0.75
+            else "HIGH"
+            if percentile < 0.9
+            else "EXTREME"
+        )
+        return state, percentile
+
+    state, percentile = label(len(forecasts) - 1)
+    previous_state = label(len(forecasts) - 2)[0] if len(forecasts) >= 2 else None
     latest = forecasts[-1]
-    percentile = sum(value <= latest for value in forecasts) / len(forecasts)
-    state = (
-        "LOW"
-        if percentile < 0.25
-        else "NORMAL"
-        if percentile < 0.75
-        else "HIGH"
-        if percentile < 0.9
-        else "EXTREME"
-    )
     return {
         "status": "READY_HISTORICAL_CAUSAL",
         "volatility_state": state,
+        "previous_volatility_state": previous_state,
+        "transition_id": (
+            f"{previous_state}->{state}" if previous_state else None
+        ),
         "forecast_sigma_pips": round(closes[-1] * latest / 100.0 / pip_size, 3),
         "volatility_percentile": round(percentile, 4),
         "observation_count": len(returns),

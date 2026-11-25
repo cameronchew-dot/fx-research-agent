@@ -14,10 +14,22 @@ records the frozen model and candle-source hashes, and never edits the original
 event. Reconstructed labels remain exploratory historical evidence rather than
 forward confirmation.
 
+The same report also compares resolved-path MFE, MAE, cost proxies, and exit
+reasons for positive and non-positive outcomes, both globally and by exact
+signal. These are outcome diagnostics, not decision-time features. It also
+tests one-bar causal Markov, HMM, and GARCH state transitions. Transition
+slices share the same false-discovery family as static context slices.
+
 All eligible categorical comparisons share one Benjamini-Hochberg false-
 discovery correction. Results remain descriptive even when their corrected
 q-value is small. A post-hoc lead must become a new locked forward campaign
 before it can count as confirmation.
+
+The correction sorts all raw p-values in the report and adjusts them for the
+number and rank of comparisons. A raw p-value below 0.05 is therefore not a
+discovery when dozens or hundreds of context values were searched. The report
+uses `q <= 0.05` only as a screening threshold; even a passing slice cannot
+change trading policy without independent forward confirmation.
 
 ```bash
 python3 ops/research_supervisor.py signal-regime-enrichment

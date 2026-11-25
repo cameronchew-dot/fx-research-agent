@@ -31,6 +31,41 @@ def _summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+def _rate(values: list[float], threshold: float) -> float | None:
+    return round(sum(value >= threshold for value in values) / len(values), 6) if values else None
+
+
+def _path_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    mfe = [float(row["mfe_r"]) for row in rows if isinstance(row.get("mfe_r"), (int, float))]
+    mae = [float(row["mae_r"]) for row in rows if isinstance(row.get("mae_r"), (int, float))]
+    exit_counts: dict[str, int] = defaultdict(int)
+    spread_r = []
+    for row in rows:
+        exit_counts[str(row.get("exit_reason") or "UNKNOWN")] += 1
+        spread = row.get("spread_pips")
+        stop = row.get("stop_pips")
+        if isinstance(spread, (int, float)) and isinstance(stop, (int, float)) and float(stop) > 0:
+            spread_r.append(float(spread) / float(stop))
+    return {
+        "count": len(rows),
+        "priced_path_count": min(len(mfe), len(mae)),
+        "average_mfe_r": round(statistics.fmean(mfe), 6) if mfe else None,
+        "median_mfe_r": round(statistics.median(mfe), 6) if mfe else None,
+        "average_mae_r": round(statistics.fmean(mae), 6) if mae else None,
+        "median_mae_r": round(statistics.median(mae), 6) if mae else None,
+        "mfe_at_least_0_5r_rate": _rate(mfe, 0.5),
+        "mfe_at_least_1r_rate": _rate(mfe, 1.0),
+        "mfe_at_least_1_5r_rate": _rate(mfe, 1.5),
+        "mae_at_least_0_5r_rate": _rate(mae, 0.5),
+        "mae_at_least_1r_rate": _rate(mae, 1.0),
+        "average_entry_spread_r_proxy": (
+            round(statistics.fmean(spread_r), 6) if spread_r else None
+        ),
+        "exit_reason_counts": dict(sorted(exit_counts.items())),
+        "small_sample": len(rows) < 30,
+    }
+
+
 def _fisher_two_sided(a: int, b: int, c: int, d: int) -> float:
     row_one = a + b
     row_two = c + d
@@ -103,6 +138,9 @@ def _contexts(event: dict[str, Any]) -> dict[str, str]:
         ("markov_state", packet.get("markov_state")),
         ("hmm_state", packet.get("hmm_state")),
         ("garch_state", packet.get("garch_volatility_state")),
+        ("markov_transition", packet.get("markov_transition")),
+        ("hmm_transition", packet.get("hmm_transition")),
+        ("garch_transition", packet.get("garch_transition")),
     ):
         if (category := _available_category(source)) is not None:
             contexts[dimension] = category
@@ -206,10 +244,22 @@ def _apply_regime_enrichment(
     garch = enrichment.get("garch") or {}
     if markov.get("state_id"):
         enriched["markov_state"] = markov["state_id"]
+    if markov.get("previous_state_id"):
+        enriched["markov_previous_state"] = markov["previous_state_id"]
+    if markov.get("transition_id"):
+        enriched["markov_transition"] = markov["transition_id"]
     if hmm.get("state_id"):
         enriched["hmm_state"] = hmm["state_id"]
+    if hmm.get("previous_state_id"):
+        enriched["hmm_previous_state"] = hmm["previous_state_id"]
+    if hmm.get("transition_id"):
+        enriched["hmm_transition"] = hmm["transition_id"]
     if garch.get("volatility_state"):
         enriched["garch_volatility_state"] = garch["volatility_state"]
+    if garch.get("previous_volatility_state"):
+        enriched["garch_previous_state"] = garch["previous_volatility_state"]
+    if garch.get("transition_id"):
+        enriched["garch_transition"] = garch["transition_id"]
     enriched["historical_regime_enrichment"] = {
         "historical_causal_not_forward": True,
         "model_contract_sha256": enrichment.get("model_contract_sha256"),
@@ -287,6 +337,11 @@ def _independent_rows(
                 "decision_time_utc": decision_time,
                 "horizon_bars": int(outcome.get("horizon_bars") or 0),
                 "net_r": float(outcome["realized_net_r"]),
+                "mfe_r": outcome.get("mfe_r"),
+                "mae_r": outcome.get("mae_r"),
+                "exit_reason": outcome.get("exit_reason"),
+                "spread_pips": outcome.get("spread_pips"),
+                "stop_pips": outcome.get("stop_pips"),
                 "contexts": _contexts(event),
             }
         )
@@ -398,6 +453,19 @@ def build_strategy_context_report(
             }
         )
     pooled.sort(key=lambda row: -abs(row["average_within_signal_residual_r"]))
+    positive_rows = [row for row in rows if row["net_r"] > 0]
+    non_positive_rows = [row for row in rows if row["net_r"] <= 0]
+    path_by_signal = [
+        {
+            "signal_id": signal_id,
+            "mechanism_id": signal_rows[0]["mechanism_id"],
+            "setup_id": signal_rows[0]["setup_id"],
+            "all": _path_summary(signal_rows),
+            "positive": _path_summary([row for row in signal_rows if row["net_r"] > 0]),
+            "non_positive": _path_summary([row for row in signal_rows if row["net_r"] <= 0]),
+        }
+        for signal_id, signal_rows in sorted(by_signal.items())
+    ]
     return {
         "independent_outcome_count": len(rows),
         "signal_count": len(by_signal),
@@ -407,6 +475,17 @@ def build_strategy_context_report(
         "fdr_significant_slice_count": sum(row["fdr_q_value"] <= 0.05 for row in slices),
         "context_slices": slices,
         "pooled_within_signal_context": pooled,
+        "outcome_path_summary": {
+            "all": _path_summary(rows),
+            "positive": _path_summary(positive_rows),
+            "non_positive": _path_summary(non_positive_rows),
+            "by_signal": path_by_signal,
+            "interpretation": (
+                "MFE and MAE describe the resolved fixed-horizon path and are not "
+                "decision-time features. Winner/loss path differences are diagnostic "
+                "and cannot be used as entry filters."
+            ),
+        },
         "independence_policy": "FIRST_EVENT_PER_SIGNAL_NON_OVERLAPPING_FIXED_HORIZON",
     }
 
