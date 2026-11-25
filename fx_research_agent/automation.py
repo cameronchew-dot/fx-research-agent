@@ -102,6 +102,17 @@ def _current_evidence_manifest_ids(connection, instruments: list[str]) -> list[s
     ]
 
 
+def _current_market_manifest_ids(connection, instruments: list[str]) -> list[str]:
+    rows = connection.execute(
+        "SELECT manifest_id, payload_json FROM market_data_manifests WHERE usable_for_testing=1 ORDER BY manifest_id"
+    ).fetchall()
+    return [
+        str(row["manifest_id"])
+        for row in rows
+        if json.loads(row["payload_json"]).get("instrument") in instruments
+    ]
+
+
 def _build_progress_snapshot(
     campaign_id: str,
     evaluation: dict[str, Any],
@@ -166,11 +177,14 @@ def refresh_approved_campaigns(
             )
             continue
         previous = _latest_progress(connection, campaign_id)
-        current_manifest_ids = _current_evidence_manifest_ids(connection, campaign_instruments(campaign))
+        instruments = campaign_instruments(campaign)
+        current_evidence_manifest_ids = _current_evidence_manifest_ids(connection, instruments)
+        current_market_manifest_ids = _current_market_manifest_ids(connection, instruments)
         if (
             trigger == "EVIDENCE_SYNC_THRESHOLD_CHECK"
             and previous is not None
-            and previous.get("evidence_manifest_ids") == current_manifest_ids
+            and previous.get("evidence_manifest_ids") == current_evidence_manifest_ids
+            and previous.get("market_data_manifest_ids") == current_market_manifest_ids
         ):
             campaigns.append(
                 {

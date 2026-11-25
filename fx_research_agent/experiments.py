@@ -9,6 +9,7 @@ from typing import Any
 
 from .campaigns import campaign_data_readiness, campaign_state
 from .campaign_reviews import latest_campaign_review
+from .asia_range_compression import build_market_evaluation
 from .evidence import load_validated_package
 from .market_data import resolve_payload_path, validate_manifest as validate_market_manifest
 from .storage import canonical_json, insert_immutable, payload_hash
@@ -558,6 +559,16 @@ def build_evaluation(
     experiment = json.loads(experiment_row["payload_json"])
     requested_evaluation_time = evaluated_at_utc or utc_now()
     approval_time = str(experiment["approved_at_utc"])
+    if campaign["population"].get("source") == "SEALED_MARKET_DATA_FORWARD_ONLY_AFTER_CAMPAIGN_APPROVAL":
+        if market_inbox_dir is None:
+            raise ValueError("raw-market campaign evaluation requires a market inbox")
+        return build_market_evaluation(
+            connection,
+            campaign,
+            experiment,
+            market_inbox_dir,
+            evaluated_at_utc=requested_evaluation_time,
+        )
     evidence = _load_evidence(
         connection,
         evidence_inbox_dir,

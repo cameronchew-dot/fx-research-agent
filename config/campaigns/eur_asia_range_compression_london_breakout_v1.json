@@ -1,0 +1,106 @@
+{
+  "schema": "FX_RESEARCH_CAMPAIGN_V1",
+  "campaign_id": "CAMPAIGN_EUR_ASIA_RANGE_COMPRESSION_LONDON_BREAKOUT_V1",
+  "hypothesis_id": "HYP_AUTO_9A5D49EF224FC93E0908",
+  "created_at_utc": "2026-11-24T00:00:00Z",
+  "state": "DRAFT",
+  "title": "EUR/USD compressed Asia range London breakout continuation",
+  "instrument": "EUR_USD",
+  "mechanism_class": "ASIA_RANGE_COMPRESSION_LONDON_BREAKOUT_CONTINUATION",
+  "research_question": "Does the first completed London-morning M15 breakout from a compressed 00:00-07:00 London range continue after observed spread costs and outperform three locked controls?",
+  "null_hypothesis": "The treatment has non-positive average net R, negative median net R, or no positive average-net-R lift over each locked control.",
+  "required_data_classes": [
+    "HISTORICAL_COMPLETED_CANDLES",
+    "SPREAD_SAMPLES",
+    "DATA_QUALITY_FLAGS"
+  ],
+  "population": {
+    "source": "SEALED_MARKET_DATA_FORWARD_ONLY_AFTER_CAMPAIGN_APPROVAL",
+    "timeframe": "M15",
+    "timezone": "Europe/London",
+    "instrument_pip_size": 0.0001,
+    "entry_model": "NEXT_M15_OPEN_WITH_DECISION_SPREAD_DEDUCTED_IN_R",
+    "outcome_horizon_m15_bars": 16,
+    "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE"
+  },
+  "independence_unit": {
+    "unit": "FIRST_QUALIFIED_BREAKOUT_PER_LONDON_TRADING_DAY_WITH_NON_OVERLAPPING_16_BAR_HORIZON",
+    "repeated_events_count_once": true,
+    "treatment_controls_share_event_identity": true
+  },
+  "exact_specification": {
+    "range_window_local": "00:00:00-07:00:00",
+    "required_completed_range_bars": 28,
+    "compression_baseline_completed_london_days": 20,
+    "compression_ratio_maximum": 0.60,
+    "decision_window_local": "07:00:00-10:00:00",
+    "decision_rule": "FIRST_COMPLETED_M15_CLOSE_BEYOND_RANGE_PLUS_PAD",
+    "breakout_pad_pips_minimum": 1.0,
+    "breakout_pad_atr14_fraction": 0.05,
+    "direction": "SAME_AS_BREAKOUT",
+    "entry": "NEXT_CONTIGUOUS_M15_OPEN",
+    "stop": "RANGE_MIDPOINT_OR_MINIMUM_SIX_PIPS_FROM_ENTRY",
+    "minimum_stop_pips": 6.0,
+    "target_r": 1.5,
+    "maximum_horizon_m15_bars": 16,
+    "spread_rule": "LATEST_TRADEABLE_TIMESTAMP_VALID_SAMPLE_WITHIN_DECISION_M15_BAR",
+    "cost_model": "ONE_OBSERVED_SPREAD_DEDUCTED_FROM_GROSS_R",
+    "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE",
+    "horizon_exit": "FINAL_M15_CLOSE",
+    "preapproval_decisions_eligible": false,
+    "missing_spread_fallback": "NONE_REJECT_EVENT"
+  },
+  "controls": [
+    {
+      "control_id": "OPPOSITE_DIRECTION_SAME_EVENT",
+      "definition": "Reverse direction at the identical next M15 open while preserving the treatment stop distance, target R, horizon, and observed spread cost."
+    },
+    {
+      "control_id": "ONE_COMPLETED_M15_SHIFT_SAME_DIRECTION",
+      "definition": "Enter one completed M15 bar later in the treatment direction while preserving stop distance, target R, horizon, and observed spread cost."
+    },
+    {
+      "control_id": "UNCOMPRESSED_RANGE_COMPLEMENT",
+      "definition": "Apply the identical trigger and execution geometry to London days with a range ratio above 0.60; report separately and never pool with treatment."
+    }
+  ],
+  "metrics": {
+    "primary": "TREATMENT_AVERAGE_NET_R_AFTER_OBSERVED_SPREAD",
+    "secondary": [
+      "TREATMENT_MEDIAN_NET_R",
+      "TREATMENT_POSITIVE_NET_R_RATE",
+      "AVERAGE_NET_R_LIFT_OVER_EACH_CONTROL",
+      "MFE_R",
+      "MAE_R",
+      "PRICED_EVENT_COUNT",
+      "UNPRICED_TRIGGER_COUNT",
+      "CALENDAR_MONTH_COUNT"
+    ]
+  },
+  "review_gates": {
+    "minimum_resolved_independent_treatment_episodes": 40,
+    "minimum_resolved_independent_comparator_episodes": 40,
+    "treatment_average_net_r_must_be_positive": true,
+    "treatment_median_net_r_must_be_nonnegative": true,
+    "average_net_r_lift_over_each_control_must_be_positive": true,
+    "review_is_not_promotion": true
+  },
+  "multiple_comparisons_policy": {
+    "confirmatory_hypothesis_count": 1,
+    "parameter_sweeps_allowed": false,
+    "post_result_threshold_or_geometry_changes_require_new_hypothesis": true,
+    "control_results_cannot_be_relabelled_as_treatment": true
+  },
+  "stopping_rules": {
+    "no_early_success_declaration": true,
+    "no_early_parameter_retuning": true,
+    "fixed_first_review_at_treatment_n": 40,
+    "missing_observed_spread_blocks_pricing": true
+  },
+  "authority": {
+    "automatic_approval": false,
+    "automatic_execution": false,
+    "downstream_activation": false,
+    "order_authority": false
+  }
+}
