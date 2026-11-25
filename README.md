@@ -103,6 +103,12 @@ The first winner-path and causal-transition result found useful cost and path
 diagnostics but no FDR-surviving context edge. See
 `docs/SIGNAL_WINNER_PATH_AND_TRANSITION_RESULT_2026-11-25.md`.
 
+The companion `exit-management-research` diagnostic performs bar-ordered,
+cost-aware break-even and partial-profit comparisons after first reproducing
+the stored control outcome. Its frozen method and current decision are recorded
+in `docs/EXIT_MANAGEMENT_RESEARCH_V1.md` and
+`docs/EXIT_MANAGEMENT_RESEARCH_V1_RESULT_2026-11-25.md`.
+
 The first post-replay confirmation is the research-only London ORB HMM
 direction selector. It compares broad causal-HMM direction alignment against
 the opposed paired route and deliberately excludes post-hoc regime suffixes.
