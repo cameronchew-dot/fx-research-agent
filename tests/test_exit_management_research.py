@@ -2,6 +2,7 @@ import unittest
 
 from fx_research_agent.exit_management_research import (
     _paired_sign_p_value,
+    _population_rows,
     _simulate_policy,
 )
 
@@ -55,6 +56,33 @@ class ExitManagementResearchTests(unittest.TestCase):
 
     def test_paired_sign_test_ignores_ties(self):
         self.assertEqual(_paired_sign_p_value([1.0, 1.0, -1.0, 0.0]), 1.0)
+
+    def test_population_rows_exclude_other_instruments(self):
+        events = [
+            {
+                "event_id": instrument,
+                "instrument": instrument,
+                "mechanism_id": "M",
+                "setup_id": "S",
+                "direction": "LONG",
+                "decision_time_utc": "2026-01-01T00:00:00Z",
+            }
+            for instrument in ("EUR_USD", "AUD_USD")
+        ]
+        outcomes = [
+            {
+                "event_id": instrument,
+                "entry_model": "NEXT_M15_OPEN_WITH_DECISION_SPREAD",
+                "horizon_bars": 16,
+                "target_r": 1.5,
+                "stop_pips": 5.0,
+                "spread_pips": 1.0,
+                "realized_net_r": 1.5,
+            }
+            for instrument in ("EUR_USD", "AUD_USD")
+        ]
+        rows = _population_rows(events, outcomes, "EUR_USD")
+        self.assertEqual([row["event"]["event_id"] for row in rows], ["EUR_USD"])
 
 
 if __name__ == "__main__":

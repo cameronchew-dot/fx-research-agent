@@ -3,6 +3,7 @@ import unittest
 from fx_research_agent.signal_context_forensics import (
     _candidate_strategy_facts,
     _direction_alignment,
+    build_signal_context_forensics,
     build_strategy_context_report,
 )
 
@@ -157,6 +158,57 @@ class SignalContextForensicsTests(unittest.TestCase):
             )
         report = build_strategy_context_report(events, outcomes, minimum_slice_count=1)
         self.assertEqual(report["independent_outcome_count"], 2)
+
+    def test_report_builder_filters_strategy_events_to_requested_instrument(self):
+        class Connection:
+            pass
+
+        import unittest.mock
+
+        evidence = {
+            "manifest_ids": [],
+            "strategy_events": {
+                "EUR": {
+                    "event_id": "EUR",
+                    "instrument": "EUR_USD",
+                    "mechanism_id": "M",
+                    "setup_id": "S",
+                    "direction": "LONG",
+                    "decision_time_utc": "2026-01-01T00:00:00Z",
+                    "feature_packet": {},
+                },
+                "AUD": {
+                    "event_id": "AUD",
+                    "instrument": "AUD_USD",
+                    "mechanism_id": "M",
+                    "setup_id": "S",
+                    "direction": "LONG",
+                    "decision_time_utc": "2026-01-01T00:00:00Z",
+                    "feature_packet": {},
+                },
+            },
+            "strategy_outcomes": {
+                key: {
+                    "event_id": key,
+                    "realized_net_r": 1.0,
+                    "entry_model": "NEXT_OPEN",
+                    "horizon_bars": 4,
+                    "target_r": 1.5,
+                    "same_bar_tie_policy": "STOP_FIRST",
+                }
+                for key in ("EUR", "AUD")
+            },
+            "candidates": {},
+            "outcomes": {},
+        }
+        with unittest.mock.patch(
+            "fx_research_agent.signal_context_forensics._load_evidence",
+            return_value=evidence,
+        ):
+            result = build_signal_context_forensics(
+                Connection(), None, instrument="EUR_USD"
+            )
+        self.assertEqual(result["strategy_shadow"]["independent_outcome_count"], 1)
 
 
 if __name__ == "__main__":

@@ -218,10 +218,13 @@ def _load_m15_candles(
 def _population_rows(
     events: list[dict[str, Any]],
     outcomes: list[dict[str, Any]],
+    instrument: str,
 ) -> list[dict[str, Any]]:
     outcome_by_event = {str(row.get("event_id")): row for row in outcomes}
     candidates = []
     for event in events:
+        if event.get("instrument") != instrument:
+            continue
         outcome = outcome_by_event.get(str(event.get("event_id")))
         if not outcome:
             continue
@@ -374,9 +377,11 @@ def build_exit_management_report(
     )
     populations = {
         "ORIGINAL_FAILED_AUCTION_CANDIDATES": _population_rows(
-            candidate_events, candidate_outcomes
+            candidate_events, candidate_outcomes, instrument
         ),
-        "STRATEGY_SHADOW": _population_rows(strategy_events, strategy_outcomes),
+        "STRATEGY_SHADOW": _population_rows(
+            strategy_events, strategy_outcomes, instrument
+        ),
     }
     all_rows = [row for rows in populations.values() for row in rows]
     if not all_rows:

@@ -502,6 +502,8 @@ def build_signal_context_forensics(
     enrichment = _enrichment_index(regime_enrichment)
     strategy_events = []
     for event in evidence["strategy_events"].values():
+        if event.get("instrument") != instrument:
+            continue
         packet = (
             event.get("feature_packet")
             if isinstance(event.get("feature_packet"), dict)
@@ -525,7 +527,11 @@ def build_signal_context_forensics(
         minimum_slice_count=minimum_slice_count,
     )
     candidate_events, candidate_outcomes = _candidate_strategy_facts(
-        list(evidence["candidates"].values()),
+        [
+            row
+            for row in evidence["candidates"].values()
+            if row.get("instrument") == instrument
+        ],
         list(evidence["outcomes"].values()),
         enrichment,
     )
