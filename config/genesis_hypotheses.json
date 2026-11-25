@@ -553,6 +553,33 @@
       "expected_frequency": "APPROXIMATELY_FOUR_TREATMENT_EVENTS_PER_WEEK_FROM_DESCRIPTIVE_SAMPLE_ONLY",
       "overlap_notes": "This is a post-hoc context lead from the existing HTF pullback campaign, not a new signal and not independent confirmation.",
       "next_action": "BEGIN_NEW_FORWARD_ONLY_TREATMENT_AND_CONTROL_ACCRUAL_AFTER_EXPLICIT_CAMPAIGN_APPROVAL"
+    },
+    {
+      "hypothesis_id": "HYP_EUR_LONDON_ORB_HMM_DIRECTION_SELECTOR_V1",
+      "proposed_at_utc": "2026-11-25T17:38:37Z",
+      "proposed_by": "OPERATOR_AND_CODEX_POST_HOC_LEAD",
+      "state": "PROPOSED",
+      "hypothesis_type": "FORWARD_REGIME_DIRECTION_SELECTOR_CONFIRMATION",
+      "classification": "CONTEXT",
+      "priority": 36,
+      "statement": "For new paired London ORB failed-break events, the route aligned with the timestamp-valid causal HMM direction may outperform the simultaneously observed opposed route after identical costs and geometry.",
+      "data_requirements": [
+        "FORWARD_STRATEGY_SHADOW_EVENTS",
+        "FORWARD_STRATEGY_SHADOW_OUTCOMES",
+        "TIMESTAMP_VALID_CAUSAL_HMM_STATE"
+      ],
+      "dependencies": [
+        "NO_REUSE_OF_HISTORICAL_REGIME_REPLAY_AS_CONFIRMATION",
+        "LOCKED_ALIGNED_TREATMENT_AND_OPPOSED_CONTROL",
+        "FLAT_OR_UNAVAILABLE_HMM_STATE_EXCLUDED",
+        "NON_OVERLAPPING_FIXED_HORIZONS"
+      ],
+      "expected_frequency": "SAME_AS_NEW_PAIRED_LONDON_ORB_FAILED_BREAK_EVENTS_WITH_NONFLAT_HMM_STATE",
+      "overlap_notes": "This is a post-hoc lead from causal historical regime replay. The high-volatility suffix that motivated the lead is not selected in the confirmatory rule; only broad direction alignment is tested.",
+      "evidence_ids": [
+        "REGIME_ENRICHMENT_960d7c68b09076a829e2"
+      ],
+      "next_action": "BEGIN_NEW_FORWARD_ONLY_ALIGNED_AND_OPPOSED_ACCRUAL_AFTER_EXPLICIT_CAMPAIGN_APPROVAL"
     }
   ]
 }

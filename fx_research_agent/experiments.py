@@ -19,6 +19,27 @@ def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
 
+def _hmm_direction_alignment(event: dict[str, Any]) -> str | None:
+    packet = (
+        event.get("feature_packet")
+        if isinstance(event.get("feature_packet"), dict)
+        else {}
+    )
+    state = str(packet.get("hmm_state") or "")
+    direction = str(event.get("direction") or "").upper()
+    if not state.startswith("HMM_") or direction not in {"LONG", "SHORT"}:
+        return None
+    state_direction = state.split("_", 2)[1]
+    if state_direction not in {"UP", "DOWN"}:
+        return None
+    return (
+        "ALIGNED"
+        if (state_direction == "UP" and direction == "LONG")
+        or (state_direction == "DOWN" and direction == "SHORT")
+        else "OPPOSED"
+    )
+
+
 def _source_reports(
     records: list[dict[str, Any]],
     campaign: dict[str, Any],
@@ -227,6 +248,17 @@ def _strategy_shadow_eligible_rows(
             else:
                 continue
             cohort_label = session
+        elif cohort_rule_type == "HMM_DIRECTION_ALIGNMENT":
+            alignment = _hmm_direction_alignment(event)
+            if alignment == str(cohort_rule.get("treatment_alignment") or "ALIGNED"):
+                cohort = "TREATMENT"
+            elif alignment == str(
+                cohort_rule.get("comparator_alignment") or "OPPOSED"
+            ):
+                cohort = "COMPARATOR"
+            else:
+                continue
+            cohort_label = f"{event.get('setup_id')}::{alignment}"
         elif cohort_rule_type == "SETUP_ID":
             cohort = (
                 "COMPARATOR"

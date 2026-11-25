@@ -98,6 +98,11 @@ discovery correction and remain descriptive; a promising slice must become a
 new locked forward campaign before it can influence policy. See
 `docs/SIGNAL_CONTEXT_FORENSICS.md`.
 
+The first post-replay confirmation is the research-only London ORB HMM
+direction selector. It compares broad causal-HMM direction alignment against
+the opposed paired route and deliberately excludes post-hoc regime suffixes.
+See `docs/EUR_LONDON_ORB_HMM_DIRECTION_SELECTOR_V1.md`.
+
 ## Medium-horizon G10 trend diagnostic
 
 The locked G10 time-series momentum campaign evaluates one weekly 21/63/126-day

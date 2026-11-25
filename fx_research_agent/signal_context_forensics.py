@@ -79,6 +79,21 @@ def _bucket(value: float, cuts: tuple[float, float, float], labels: tuple[str, s
     return labels[3]
 
 
+def _direction_alignment(state_direction: str, signal_direction: str) -> str | None:
+    state = state_direction.upper()
+    signal = signal_direction.upper()
+    if state == "FLAT" or signal not in {"LONG", "SHORT"}:
+        return "FLAT" if state == "FLAT" else None
+    if state not in {"UP", "DOWN"}:
+        return None
+    return (
+        "ALIGNED"
+        if (state == "UP" and signal == "LONG")
+        or (state == "DOWN" and signal == "SHORT")
+        else "OPPOSED"
+    )
+
+
 def _contexts(event: dict[str, Any]) -> dict[str, str]:
     packet = event.get("feature_packet") if isinstance(event.get("feature_packet"), dict) else {}
     contexts: dict[str, str] = {}
@@ -91,6 +106,19 @@ def _contexts(event: dict[str, Any]) -> dict[str, str]:
     ):
         if (category := _available_category(source)) is not None:
             contexts[dimension] = category
+    signal_direction = str(event.get("direction") or "")
+    hmm_state = _available_category(packet.get("hmm_state"))
+    if hmm_state and hmm_state.startswith("HMM_"):
+        hmm_direction = hmm_state.split("_", 2)[1]
+        if (alignment := _direction_alignment(hmm_direction, signal_direction)):
+            contexts["hmm_direction_alignment"] = alignment
+    markov_state = _available_category(packet.get("markov_state"))
+    if markov_state and "|" in markov_state:
+        parts = markov_state.split("|")
+        if len(parts) >= 2 and (
+            alignment := _direction_alignment(parts[1], signal_direction)
+        ):
+            contexts["markov_direction_alignment"] = alignment
     h1 = str(packet.get("h1_trend_state") or "")
     h4 = str(packet.get("h4_trend_state") or "")
     if h1 and h4:

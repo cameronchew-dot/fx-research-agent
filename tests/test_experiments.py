@@ -9,12 +9,104 @@ from pathlib import Path
 from fx_research_agent.campaigns import approve_campaign, register_campaign
 from fx_research_agent.campaign_reviews import review_campaign
 from fx_research_agent.evidence import register_manifest
-from fx_research_agent.experiments import run_campaign
+from fx_research_agent.experiments import (
+    _hmm_direction_alignment,
+    _strategy_shadow_eligible_rows,
+    run_campaign,
+)
 from fx_research_agent.storage import initialize
 from tests.test_campaigns import campaign_payload
 
 
 class ExperimentTests(unittest.TestCase):
+    def test_hmm_direction_alignment_is_past_packet_relative_to_route(self):
+        self.assertEqual(
+            _hmm_direction_alignment(
+                {
+                    "direction": "LONG",
+                    "feature_packet": {"hmm_state": "HMM_UP_EXPANDING_HIGHVOL"},
+                }
+            ),
+            "ALIGNED",
+        )
+        self.assertEqual(
+            _hmm_direction_alignment(
+                {
+                    "direction": "SHORT",
+                    "feature_packet": {"hmm_state": "HMM_UP_EXPANDING_HIGHVOL"},
+                }
+            ),
+            "OPPOSED",
+        )
+        self.assertIsNone(
+            _hmm_direction_alignment(
+                {
+                    "direction": "LONG",
+                    "feature_packet": {"hmm_state": "HMM_FLAT_NORMAL_NORMALVOL"},
+                }
+            )
+        )
+
+    def test_hmm_direction_campaign_separates_aligned_and_opposed_routes(self):
+        campaign = campaign_payload()
+        campaign["instrument"] = "EUR_USD"
+        campaign["population"] = {
+            "source": "EUR_AGENT_STRATEGY_SHADOW_FORWARD_ONLY",
+            "mechanism_id": "LONDON_ORB_REVERSAL_CONFIRMATION",
+            "setup_id": "LONDON_ORB_SWEEP_CLOSE_INSIDE_REVERSAL_V3",
+            "comparator_setup_id": "LONDON_ORB_SWEEP_CLOSE_INSIDE_BREAKOUT_CONTROL_V3",
+            "timeframe": "M15",
+            "outcome_horizon_m15_bars": 16,
+            "entry_model": "NEXT_M15_OPEN_WITH_DECISION_SPREAD",
+            "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE",
+        }
+        campaign["exact_specification"]["cohort_rule"] = {
+            "type": "HMM_DIRECTION_ALIGNMENT",
+            "treatment_alignment": "ALIGNED",
+            "comparator_alignment": "OPPOSED",
+        }
+        events = {}
+        outcomes = {}
+        for suffix, direction, state in (
+            ("ALIGNED", "LONG", "HMM_UP_EXPANDING_HIGHVOL"),
+            ("OPPOSED", "SHORT", "HMM_UP_EXPANDING_HIGHVOL"),
+            ("FLAT", "LONG", "HMM_FLAT_NORMAL_NORMALVOL"),
+        ):
+            event_id = f"EVENT_{suffix}"
+            events[event_id] = {
+                "event_id": event_id,
+                "mechanism_id": "LONDON_ORB_REVERSAL_CONFIRMATION",
+                "setup_id": "LONDON_ORB_SWEEP_CLOSE_INSIDE_REVERSAL_V3",
+                "instrument": "EUR_USD",
+                "direction": direction,
+                "decision_time_utc": "2026-11-26T08:00:00Z",
+                "base_timeframe": "M15",
+                "feature_packet": {"hmm_state": state},
+            }
+            outcomes[event_id] = {
+                "outcome_id": f"OUTCOME_{suffix}",
+                "event_id": event_id,
+                "observed_at_utc": "2026-11-26T12:00:00Z",
+                "realized_net_r": 1.0,
+                "entry_model": "NEXT_M15_OPEN_WITH_DECISION_SPREAD",
+                "horizon_bars": 16,
+                "same_bar_tie_policy": "STOP_FIRST_CONSERVATIVE",
+            }
+        rows = _strategy_shadow_eligible_rows(
+            {"strategy_events": events, "strategy_outcomes": outcomes},
+            campaign,
+            "2026-11-25T17:40:00Z",
+            "2026-11-26T13:00:00Z",
+        )
+
+        self.assertEqual(
+            {(row["candidate_id"], row["cohort"]) for row in rows},
+            {
+                ("EVENT_ALIGNED", "TREATMENT"),
+                ("EVENT_OPPOSED", "COMPARATOR"),
+            },
+        )
+
     def setUp(self):
         self.connection = sqlite3.connect(":memory:")
         self.connection.row_factory = sqlite3.Row

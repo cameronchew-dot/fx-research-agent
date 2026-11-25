@@ -2,11 +2,18 @@ import unittest
 
 from fx_research_agent.signal_context_forensics import (
     _candidate_strategy_facts,
+    _direction_alignment,
     build_strategy_context_report,
 )
 
 
 class SignalContextForensicsTests(unittest.TestCase):
+    def test_regime_direction_alignment_is_relative_to_signal(self):
+        self.assertEqual(_direction_alignment("UP", "LONG"), "ALIGNED")
+        self.assertEqual(_direction_alignment("DOWN", "SHORT"), "ALIGNED")
+        self.assertEqual(_direction_alignment("UP", "SHORT"), "OPPOSED")
+        self.assertEqual(_direction_alignment("FLAT", "LONG"), "FLAT")
+
     def test_original_candidates_keep_outcome_source_and_context(self):
         candidates = [
             {
