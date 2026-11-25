@@ -88,6 +88,9 @@ from fx_research_agent.signal_context_forensics import (  # noqa: E402
     build_signal_context_forensics,
 )
 from fx_research_agent.regime_enrichment import build_regime_enrichment  # noqa: E402
+from fx_research_agent.exit_management_research import (  # noqa: E402
+    build_exit_management_report,
+)
 from fx_research_agent.strategy_coverage import build_strategy_coverage  # noqa: E402
 
 
@@ -138,6 +141,8 @@ DEFAULT_PAIR_RESEARCH_INVENTORY = ROOT / "data" / "pair_research_inventory.json"
 DEFAULT_EDGE_FORENSICS = ROOT / "data" / "cross_system_edge_forensics.json"
 DEFAULT_SIGNAL_CONTEXT_FORENSICS = ROOT / "data" / "signal_context_forensics.json"
 DEFAULT_SIGNAL_REGIME_ENRICHMENT = ROOT / "data" / "signal_regime_enrichment.json"
+DEFAULT_EXIT_MANAGEMENT_CONTRACT = ROOT / "config" / "exit_management_research_v1.json"
+DEFAULT_EXIT_MANAGEMENT_REPORT = ROOT / "data" / "exit_management_research.json"
 DEFAULT_EUR_AGENT_DB = EUR_AGENT_ROOT / "data" / "eur_agent.sqlite3"
 DEFAULT_EUR_AGENT_EXPERIMENT = (
     EUR_AGENT_ROOT / "config" / "agent_experiment_contract.json"
@@ -350,6 +355,19 @@ def main() -> int:
     )
     regime_enrichment.add_argument(
         "--output", type=Path, default=DEFAULT_SIGNAL_REGIME_ENRICHMENT
+    )
+    exit_management = commands.add_parser("exit-management-research")
+    exit_management.add_argument(
+        "--evidence-inbox", type=Path, default=DEFAULT_EVIDENCE_INBOX
+    )
+    exit_management.add_argument(
+        "--market-inbox", type=Path, default=DEFAULT_MARKET_INBOX
+    )
+    exit_management.add_argument(
+        "--contract", type=Path, default=DEFAULT_EXIT_MANAGEMENT_CONTRACT
+    )
+    exit_management.add_argument(
+        "--output", type=Path, default=DEFAULT_EXIT_MANAGEMENT_REPORT
     )
     args = parser.parse_args()
 
@@ -687,6 +705,16 @@ def main() -> int:
             )
             write_json_atomic(args.output, enrichment)
             print_json(enrichment)
+        elif args.command == "exit-management-research":
+            contract = json.loads(args.contract.read_text(encoding="utf-8"))
+            report = build_exit_management_report(
+                connection,
+                args.evidence_inbox,
+                args.market_inbox,
+                contract,
+            )
+            write_json_atomic(args.output, report)
+            print_json(report)
     return 0
 
 

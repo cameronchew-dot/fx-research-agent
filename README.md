@@ -80,6 +80,7 @@ python3 ops/research_supervisor.py context-discovery-status
 python3 ops/research_supervisor.py context-export-labels --matrix-metadata data/context_discovery/MATRIX_ID.json
 python3 ops/research_supervisor.py signal-regime-enrichment
 python3 ops/research_supervisor.py signal-context-forensics
+python3 ops/research_supervisor.py exit-management-research
 ```
 
 ## Signal context forensics

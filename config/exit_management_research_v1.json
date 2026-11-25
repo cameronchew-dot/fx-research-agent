@@ -1,0 +1,43 @@
+{
+  "schema": "FX_EXIT_MANAGEMENT_RESEARCH_CONTRACT_V1",
+  "instrument": "EUR_USD",
+  "frozen_at_utc": "2026-11-25T21:30:00Z",
+  "population": "INDEPENDENT_EXACT_SIGNAL_OUTCOMES_WITH_1_5R_CONTROL_AND_16_M15_BAR_HORIZON",
+  "entry_model": "NEXT_M15_OPEN_WITH_DECISION_SPREAD",
+  "initial_stop_r": -1.0,
+  "horizon_m15_bars": 16,
+  "same_bar_policy": "STOP_FIRST_CONSERVATIVE",
+  "management_activation": "NEXT_CANDLE_AFTER_1R_TOUCH",
+  "control_replay_tolerance_r": 0.02,
+  "partial_exit_cost": "HALF_POSITION_TIMES_HALF_DECISION_SPREAD_R_PROXY",
+  "policies": [
+    {
+      "policy_id": "CONTROL_1_5R",
+      "definition": "Full position exits at -1R, +1.5R, or the 16-bar horizon."
+    },
+    {
+      "policy_id": "BREAK_EVEN_AFTER_1R",
+      "definition": "Full position retains +1.5R target; after +1R is touched, stop moves to entry starting with the next candle."
+    },
+    {
+      "policy_id": "PARTIAL_1R_RUNNER_2R",
+      "definition": "Take 50% at +1R with an extra-fill cost proxy; retain the original -1R stop and target +2R on the remaining 50%."
+    },
+    {
+      "policy_id": "PARTIAL_1R_BE_RUNNER_2R",
+      "definition": "Take 50% at +1R with an extra-fill cost proxy; move the remaining stop to entry starting next candle and target +2R."
+    }
+  ],
+  "multiple_comparisons_policy": {
+    "method": "BENJAMINI_HOCHBERG",
+    "family": "ALL_THREE_ALTERNATIVES_IN_BOTH_SEPARATE_OUTCOME_POPULATIONS",
+    "q_threshold": 0.05,
+    "parameter_sweeps_allowed": false
+  },
+  "authority": {
+    "research_only": true,
+    "automatic_campaign_creation": false,
+    "automatic_execution_changes": false,
+    "order_authority": false
+  }
+}
