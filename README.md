@@ -98,6 +98,10 @@ discovery correction and remain descriptive; a promising slice must become a
 new locked forward campaign before it can influence policy. See
 `docs/SIGNAL_CONTEXT_FORENSICS.md`.
 
+The first winner-path and causal-transition result found useful cost and path
+diagnostics but no FDR-surviving context edge. See
+`docs/SIGNAL_WINNER_PATH_AND_TRANSITION_RESULT_2026-11-25.md`.
+
 The first post-replay confirmation is the research-only London ORB HMM
 direction selector. It compares broad causal-HMM direction alignment against
 the opposed paired route and deliberately excludes post-hoc regime suffixes.
