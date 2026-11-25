@@ -13,6 +13,14 @@ an up/expanding/high-volatility state and reversal in a down/expanding/high-
 volatility state. Those suffixes were observed after outcomes and are therefore
 not part of the locked forward rule.
 
+At the campaign freeze, the broader historical direction-alignment diagnostic
+did not reproduce that suffix-specific lead. Pooling the two routes produced 12
+aligned observations averaging approximately `+0.071R` and 12 opposed
+observations averaging `+0.250R`, for an aligned-minus-opposed lift of about
+`-0.179R`. The underlying per-route slices were small and no tested context
+slice survived false-discovery correction. This lowers the prior probability
+of the campaign succeeding; it does not alter the already-frozen forward rule.
+
 ## Frozen rule
 
 - Population: new `LONDON_ORB_REVERSAL_CONFIRMATION` strategy-shadow events.
